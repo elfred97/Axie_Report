@@ -23,6 +23,10 @@ class GlobalController extends Controller
         return UserModel::WHERE('username', Auth::user()->username)->FIRST();
     }
 
+    public function getUsers(){
+        return UserModel::WHERE('username', '!=', Auth::user()->username)->GET();
+    }
+
     public function updateAccountInfo(Request $request){
 
         try {

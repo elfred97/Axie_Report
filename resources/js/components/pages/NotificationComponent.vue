@@ -7,11 +7,11 @@
 				<div class="container">
 					<div class="col-lg-3 col-md-3 col-sm-12">
 						<v-datepicker 
-							v-model="date" 
+							v-model="filtersParam.date" 
 							valueType="format" 
 							placeholder="Select date" 
 							format="MM/DD/YYYY"
-							@change="getNotification"
+							@change="updateTable()"
 							/>
 					</div>
 				</div>
@@ -21,27 +21,56 @@
 					<!-- begin scrollbar -->
 					<div data-scrollbar="true" data-height="100%" v-if="notificationData.length > 0">
 						<!-- begin list-email -->
-						<ul class="list-group list-group-lg no-radius list-email">
-							<li class="list-group-item" v-for="(notification, index) in notificationData">
-								<!-- <div class="email-checkbox">
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" class="custom-control-input" data-checked="email-checkbox" id="emailCheckbox1">
-										<label class="custom-control-label" for="emailCheckbox1"></label>
-									</div>
-								</div> -->
-								<a class="email-user bg-blue">
-									<span class="text-white">{{ notification.player_name.charAt(0) }}</span>
-								</a>
-								<div class="email-info">
-									<a >
-										<span class="email-sender">{{ notification.player_name }}</span>
-										<span class="email-title">{{ notification.account_name }}</span>
-										<span class="email-desc">Gained SLP for the day <span class="text-danger">{{ notification.gained_slp_today }}</span> on {{ notification.created_at | formatDate }}</span>
-										<span class="email-time">{{ notification.created_at | formatDate }}</span>
-									</a>
-								</div>
-							</li>
-						</ul>
+						<div class="col-lg-12 col-md-12 col-sm-12">
+                        <loading :active.sync="isLoading" 
+                            :can-cancel="true" 
+                            :on-cancel="onCancel"
+                            :is-full-page="fullPage"></loading>
+                        <vuetable ref="vuetable"
+                            :api-url="'/getNotification'"
+                            :fields="fields"
+                            :css="css"
+                            :per-page="perPage"
+                            :append-params="filtersParam"
+                            data-path="data"
+                            pagination-path=""
+                            :sort-order="sortOrder"
+                            :detail-row-component="detailRow"
+                            @vuetable:pagination-data="onPaginationData"
+                            @vuetable:row-clicked="onCellClicked"
+                            @vuetable:loading="onLoading"
+                            @vuetable:loaded="onLoaded">
+                            >
+                           
+                            <div slot="actions" slot-scope="props">
+                                <button 
+                                    class="ui small button" 
+                                    @click="onActionClicked('edit-item', props.rowData)"
+                                >
+                                    <i class="edit icon"></i>
+                                </button>
+                                <button 
+                                    class="ui small button" 
+                                    @click="onActionClicked('delete-item', props.rowData)"
+                                >
+                                    <i class="delete icon"></i>
+                                </button>
+                            </div>
+                        </vuetable>
+                        <!-- End of Vuetable -->
+                    </div>
+                    <!-- Pagination Info -->
+                    <div class="col-md-6">
+                        <vuetable-pagination-info ref="paginationInfo"
+                        ></vuetable-pagination-info>
+                    </div><!-- End of Pagination Info -->
+                    <!-- Pagination Buttons -->
+                    <div class="col-md-6 text-right">
+                        <vuetable-pagination ref="pagination"
+                            @vuetable-pagination:change-page="onChangePage"
+                            :css="css.pagination"
+                        ></vuetable-pagination>
+                    </div><!-- End of Pagination Buttons -->
 						<!-- end list-email -->
 					</div>
 					<div class="text-center" v-else-if="notificationData.length == 0 && date != null">
@@ -62,13 +91,22 @@
 <script>
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
+import FieldsDef from "./ImportedFieldsDef.js";
 export default {
 	mixins : [ TableMixins ],
 	data(){
 		return {
+			fields     : FieldsDef,
+			perPage    : 15,
 			perPage: '',
+			css        : TableStyle,
 			notificationData : {},
-			date : null
+			date : null,
+			filtersParam : {
+                date : ""
+            },
+            isLoading : false,
+            fullPage  : true, 
 		}
 	},
 	methods: {

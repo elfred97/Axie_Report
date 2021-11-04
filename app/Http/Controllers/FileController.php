@@ -109,12 +109,12 @@ class FileController extends Controller
                 ->SELECT('n.*', DB::RAW('concat(p.first_name," ",p.last_name) as player_name'))
                 ->LEFTJOIN('player AS p', 'p.account_name', '=', 'n.account_name')
                 ->whereDate('n.created_at', Carbon::parse($request->date))
-                ->GET();
+                ->PAGINATE(15);
         }else
             $notification = DB::TABLE('notification as n')
                 ->SELECT('n.*', DB::RAW('concat(p.first_name," ",p.last_name) as player_name'))
                 ->LEFTJOIN('player AS p', 'p.account_name', '=', 'n.account_name')
-                ->GET();
+                ->PAGINATE(15);
 
         return $notification;
     }

@@ -49,6 +49,8 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/saveNewType', 'GlobalController@saveNewType');
     Route::get('/getType', 'GlobalController@getType');
 
+    Route::get('/getUsers', 'GlobalController@getUsers');
+
 
     Route::match(['GET', 'POST'], '/logout', 'GlobalController@logout'); //
 
