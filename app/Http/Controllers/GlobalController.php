@@ -7,6 +7,10 @@ use Auth;
 use Session;
 use Illuminate\Http\Request;
 use App\UserModel as UserModel;
+use App\TypeModel as TypeModel;
+use Illuminate\Support\Facades\Validator;
+
+use Illuminate\Support\Facades\Hash;
 
 class GlobalController extends Controller
 {
@@ -14,40 +18,7 @@ class GlobalController extends Controller
     protected function index(){
         return view('main');
     }
-    
-    protected function showLogin(){
-        return view('login');
-    }
 
-    public function getAccountInfo(){
-        return UserModel::WHERE('username', Auth::user()->username)->FIRST();
-    }
-
-    public function getUsers(){
-        return UserModel::WHERE('username', '!=', Auth::user()->username)->GET();
-    }
-
-    public function updateAccountInfo(Request $request){
-
-        try {
-            $user = UserModel::UPDATEORCREATE(
-                [ 'id' => $request->id ],
-                [
-                    'first_name' => $request->first_name,
-                    'last_name'  => $request->last_name,
-                    'username'   => $request->username,
-                ]
-            );
-            if($user)
-                return response()->json(['message' => 'Account Informations is saved'], 200);
-            else
-                return response()->json(['message' => 'There was a problem processing your request'], 500);
-        }
-        catch (\Exception $e) {
-			return response()->json(['message' => $e->getMessage()], 500);
-		}
-    }
-    
     protected function login(Request $request){
         if (Auth::check()) return redirect('/');
         $this->restoreDefaults();
@@ -78,19 +49,95 @@ class GlobalController extends Controller
     }
     
     protected function logout(Request $request){
-        // $access = new AccessController;
-        // if (isset($request->expired)) {
-        //     session()->flash('expired', 'true');
-        //     session()->flash('username', Auth::user()->username);
-        // }
-
-        // $access->removeEmergencyAccess();
-
         Auth::logout();
-
-        // $this->restoreDefaults();
-
         return redirect('login');   
+    }
+    
+    protected function showLogin(){
+        return view('login');
+    }
+
+    public function getAccountInfo(){
+        return UserModel::WHERE('username', Auth::user()->username)->FIRST();
+    }
+
+    public function getUsers(){
+        return UserModel::WHERE([['username', '!=', Auth::user()->username], ['status', '!=', 3]])->GET();
+    }
+
+    public function updateAccountInfo(Request $request){
+        try {
+            $user = UserModel::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'first_name' => $request->first_name,
+                    'middle_name'=> $request->middle_name,
+                    'last_name'  => $request->last_name,
+                    'username'   => $request->username,
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'Account Informations is saved'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }    
+
+    public function updateUser(Request $request){
+        $validator = Validator::make(
+			$request->all(),
+			[
+				'username'    => 'required',
+				'first_name'  => 'required',
+				'middle_name' => 'required',
+				'last_name'   => 'required',
+			]
+		);
+
+		if ($validator->fails())
+			return response()->json($validator->errors(), 422);
+
+		try {
+            $user = UserModel::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'username'    => $request->username,
+                    'first_name'  => $request->first_name,
+                    'middle_name' => $request->middle_name,
+                    'last_name'   => $request->last_name,
+                    'password'    => Hash::make($request->new_password),
+                    'status'      => $request->status,
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'User Informations is saved'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+    
+    public function deleteUser(Request $request){
+        try {
+            $user = UserModel::UPDATEORCREATE(
+                [ 'username' => $request->username ],
+                [                    
+                    'status'      => 3,
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'User deleted'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
     }
     
     protected function error($username, $password){
@@ -104,22 +151,56 @@ class GlobalController extends Controller
     }
 
     public function getType(){
-        return DB::TABLE('type')->GET();
+        return TypeModel::WHERE('status', '!=', 'Deleted')->ORDERBY('id', 'desc')->GET();
     }
-    
+
     public function saveNewType(Request $request){
-
+        if($request->name){
+            $type = TypeModel::CREATE([
+                'name'   => $request->name,
+                'status' => 'Active'
+            ]);
+            if($type)
+                return response()->json(['message' => 'Type saved'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
     }
 
-    public function updateorcreateType(Request $request){
-        
+    public function updateType(Request $request){
+        try {
+            $user = TypeModel::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'name'   => $request->name,
+                    'status' => $request->status,
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'Type Informations is saved'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
     }
 
-    public function getNotificationSettings(){
-
-    }
-
-    public function updateorcreateNotificationSettings(Request $request){
-        
+    public function deleteType(Request $request){
+        try {
+            $user = TypeModel::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [                    
+                    'status'      => 'Deleted',
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'Type deleted'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
     }
 }

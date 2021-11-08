@@ -37,20 +37,22 @@ Route::middleware(['auth'])->group(function(){
     Route::get('/getTotalReportbyDate', 'FileController@getTotalReportbyDate');
     
     Route::get('/getAccountInfo', 'GlobalController@getAccountInfo');
-    Route::post('/updateAccountInfo', 'GlobalController@updateAccountInfo');
     Route::get('/getNotification', 'FileController@getNotification');
+    Route::post('/updateAccountInfo', 'GlobalController@updateAccountInfo');
 
     Route::get('/getPlayers', 'PlayerController@getPlayers');
     Route::post('/saveScholar', 'PlayerController@saveScholar');
     Route::post('/deleteScholar', 'PlayerController@deleteScholar');
-
     Route::post('/importScholar', 'PlayerController@importScholar');
 
-    Route::post('/saveNewType', 'GlobalController@saveNewType');
     Route::get('/getType', 'GlobalController@getType');
-
+    Route::post('/deleteType', 'GlobalController@deleteType');
+    Route::post('/updateType', 'GlobalController@updateType');
+    Route::post('/saveNewType', 'GlobalController@saveNewType');
+    
     Route::get('/getUsers', 'GlobalController@getUsers');
-
+    Route::post('/updateUser', 'GlobalController@updateUser');
+    Route::post('/deleteUser', 'GlobalController@deleteUser');
 
     Route::match(['GET', 'POST'], '/logout', 'GlobalController@logout'); //
 

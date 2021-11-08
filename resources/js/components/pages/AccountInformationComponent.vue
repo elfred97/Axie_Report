@@ -5,7 +5,7 @@
                 <h4 class="panel-title">Account</h4>
                 <div class="panel-heading-btn">
                     <button class="btn btn-xs btn-success" @click="updateAccountInfo()">
-                        <i class="fas fa-check"></i> Save
+                        <i class="fas fa-check"></i> Update Information
                     </button>
                 </div>
             </div>
@@ -26,7 +26,7 @@
                     </div>
                     <div class="offset-md-2 col-md-4">
                         <p class="mb-0">Change Password?</p>
-                        <a @click="$root.$emit('showDialog', true, 'changePassword-form', 'Change Password', '30%')">Click Here</a>
+                        <span class="text-blue onHover" @click="$root.$emit('showDialog', true, 'changePassword-form', 'Change Password', '30%')">Click Here</span>
                     </div>
                 </div>
                 <div class="row">
@@ -50,7 +50,7 @@ export default {
     watch: {
         'accountData' : function(newVal){
             if(newVal)
-                this.form = newVal;
+                this.form = new Form(newVal);
         }
     },
     methods: {

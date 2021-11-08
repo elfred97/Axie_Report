@@ -16,6 +16,7 @@ class UserModel extends Authenticatable
         'middle_name',
         'last_name',
         'username',
-		'password'
+		'password',
+        'status',
 	];
 }

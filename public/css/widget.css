@@ -130,7 +130,9 @@
 .widget-stats.bg-white .stats-progress .progress-bar,.widget.widget-stats.bg-white .stats-progress .progress-bar{
     background:#2d353c
 }
-
+.widget-list .widget-list-item .widget-list-content{
+    width: 40%;
+}
 .widget-list .widget-list-item{
     display:table;
     width:100%;
@@ -144,7 +146,7 @@
 .widget-list .widget-list-item>div:last-child{
     padding-right:15px
 }
-.widget-list .widget-list-item+.widget-list-item .widget-list-action,.widget-list .widget-list-item+.widget-list-item .widget-list-content{
+.widget-list .widget-list-item+.widget-list-item .widget-list-action,.widget-list .widget-list-item+.widget-list-item .widget-list-content, .widget-list .widget-list-item+.widget-list-item .widget-list-status{
     border-top:1px solid #e4e7ea
 }
 .widget-list .widget-list-item .widget-list-media{
@@ -177,7 +179,7 @@
     max-width:100%;
     max-height:100%
 }
-.widget-list .widget-list-item .widget-list-content{
+.widget-list .widget-list-item .widget-list-content, .widget-list .widget-list-item .widget-list-status {
     padding:10px;
     display:table-cell;
     vertical-align:middle
@@ -189,7 +191,7 @@
     padding:10px;
     display:table-cell;
     vertical-align:middle;
-    width:20%;
+    width:25%;
     padding-left:15px;
     text-align:center
 }

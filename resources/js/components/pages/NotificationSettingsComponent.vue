@@ -5,15 +5,12 @@
                 <h4 class="panel-title">Settings</h4>
                 <div class="panel-heading-btn">                                    
                     <button class="btn btn-xs btn-success">
-                        <i class="fas fa-check"></i> Save
+                        <i class="fas fa-check"></i> Update Settings
                     </button>
                 </div>
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <h5>Notification</h5>
-                    </div>
                     <div class="col-md-4">
                         <label for="">MMR</label>
                         <input type="number" class="form-control">
@@ -27,6 +24,8 @@
                         <input type="number" class="form-control">
                     </div>
                 </div>
+                <p class="mt-2">Show / Hide</p>
+                <div class="row"></div>
             </div>
         </div>
     </div>

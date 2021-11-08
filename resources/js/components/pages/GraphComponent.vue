@@ -46,7 +46,6 @@
                 <!-- END section-title -->
                 <!-- BEGIN category-container -->
                 <div class="category-container">
-                    <div v-if="graphData.length > 0">
                         <!-- BEGIN category-sidebar -->
                         <div class="category-sidebar">
                             <ul class="category-list">
@@ -62,12 +61,12 @@
                         <!-- BEGIN category-detail -->
                         <div class="category-detail">
                             <JSCharting :options="chartOptions" class="columnChart" v-if="graphData.length > 0"></JSCharting>
+                            <div class="mt-1 text-center" v-else>
+                                <p class="text-center">No Graph Available</p>
+                            </div>
                         </div>
                         <!-- END category-detail -->
-                    </div>
-                    <div class="mt-1 text-center" v-else>
-                        <p class="text-center">No Graph Available</p>
-                    </div>
+                    
                 </div>
                 <!-- END category-container -->
             </div>

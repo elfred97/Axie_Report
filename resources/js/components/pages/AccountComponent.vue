@@ -13,19 +13,19 @@
                         <!-- Begin Account Settings -->
                         <account-information></account-information>
                         <!-- End Account Settings -->
-                        <!-- Begin Type -->
-                        <type-component></type-component>
-                        <!-- End Type -->
                         
+                        <!-- Begin Notification Settings -->
+                        <notification-settings></notification-settings>
+                        <!-- End Notification Settings -->
                     </div>
                     <div class="col-md-5">
                         <!-- Begin Users List -->
                         <users-component></users-component>
                         <!-- End Users List -->
-
-                        <!-- Begin Notification -->
-                        <notification-settings></notification-settings>
-                        <!-- End Notification -->
+                        
+                        <!-- Begin Type -->
+                        <type-component></type-component>
+                        <!-- End Type -->
                     </div>
                 </div>
             </div>
@@ -40,6 +40,8 @@ import TypeComponent from './TypeComponent.vue';
 
 // Dialog Components
 import changePasswordComponent from './changePasswordComponent.vue';
+import newUserFormComponent from './newUserFormComponent.vue';
+import updateTypeInfoComponent from './updateTypeInfoComponent.vue';
 export default {
     data(){
         return {
@@ -62,9 +64,9 @@ export default {
         'type-component'       : TypeComponent,
         'notification-settings': NotificationSettingsComponent,
         // Dialog Components
-        'changePassword-form' : changePasswordComponent,
-        // 'updateUserInfo-form' : updateUserInfoComponent,
-        // 'updateTypeInfo-form' : updateTypeInfoComponent,
+        'changePassword-form': changePasswordComponent,
+        'newUser-form'       : newUserFormComponent,
+        'updateTypeInfo-form': updateTypeInfoComponent,
     },
     methods: {
         
@@ -73,10 +75,10 @@ export default {
         object_values: function(){ //created to manipulate passed props in each components rendered
             if(this.isOpenDialogComponent === 'changePassword-form')
                 return  { userInfo : this.componentsProps.userInfo }
-            else if(this.isOpenDialogComponent === 'updateUserInfo-form')
-                return  { usersListInfo : this.componentsProps.userInfo }
+            else if(this.isOpenDialogComponent === 'newUser-form')
+                return  { usersListInfo : this.componentsProps.usersListInfo }
             else if(this.isOpenDialogComponent === 'updateTypeInfo-form')
-                return  { typeInfo : this.componentsProps.userInfo }
+                return  { typeInfo : this.componentsProps.typeInfo }
         }
     },
     mounted(){
@@ -86,7 +88,7 @@ export default {
                 this.isOpenDialogSize      = openDialogSize;
                 this.isOpenDialogTitle     = openDialogTitle;
 
-                if(openDialogComponent === 'updateUserInfo-form') this.componentsProps.usersListInfo = propsObject;
+                if(openDialogComponent === 'newUser-form') this.componentsProps.usersListInfo = propsObject;
                 else if(openDialogComponent === 'updateTypeInfo-form') this.componentsProps.typeInfo      = propsObject;
 
                 this.componentKey = this.componentKey + 1;
