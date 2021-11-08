@@ -25,6 +25,7 @@ class GlobalController extends Controller
 
         $username = $request->username;
         $password = $request->password;
+        $type = $request->type;
         $error    = 0;        
         
         $user = UserModel::WHERE('username', $username)->FIRST();

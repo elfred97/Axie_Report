@@ -90,6 +90,17 @@
 							<span id="password_error" class="errors pull-right">Password is required</span>
 						</div>
 					</div>
+					<div class="form-group m-b-20">
+						<div class="row">
+							<div class="col-md-6">
+								<label for="">Type</label>
+								<select name="type" id="type" class="form-control">
+									<option value="admin">Admin</option>
+									<option value="scholar">Scholar</option>
+								</select>
+							</div>
+						</div>
+					</div>
 					<hr/>
 					<!-- <div class="checkbox checkbox-css m-b-20">
 						<input type="checkbox" id="remember_checkbox" /> 
