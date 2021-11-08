@@ -6,8 +6,8 @@ use DB;
 use Auth;
 use Session;
 use Illuminate\Http\Request;
-use App\UserModel as UserModel;
-use App\TypeModel as TypeModel;
+use App\Models\User;
+use App\Models\Type;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Hash;
@@ -26,10 +26,10 @@ class GlobalController extends Controller
         $username = $request->username;
         $password = $request->password;
         $type = $request->type;
-        $error    = 0;        
-        
-        $user = UserModel::WHERE('username', $username)->FIRST();
-        
+        $error    = 0;
+
+        $user = User::WHERE('username', $username)->FIRST();
+
         if (empty($username)) {
             session()->flash('error', ['username', 'Please enter your username']);
             return $this->error($username, $password);
@@ -41,34 +41,34 @@ class GlobalController extends Controller
             return $this->error($username, $password);
         }
 
-        if (!Auth::attempt(array('username' => $username, 'password' => $password))) { 
-            session()->flash('error', ['password', 'Incorrect password']); 
-            return $this->error($username, $password); 
+        if (!Auth::attempt(array('username' => $username, 'password' => $password))) {
+            session()->flash('error', ['password', 'Incorrect password']);
+            return $this->error($username, $password);
         }
-        
+
         return redirect()->intended('home');
     }
-    
+
     protected function logout(Request $request){
         Auth::logout();
-        return redirect('login');   
+        return redirect('login');
     }
-    
+
     protected function showLogin(){
         return view('login');
     }
 
     public function getAccountInfo(){
-        return UserModel::WHERE('username', Auth::user()->username)->FIRST();
+        return User::WHERE('username', Auth::user()->username)->FIRST();
     }
 
     public function getUsers(){
-        return UserModel::WHERE([['username', '!=', Auth::user()->username], ['status', '!=', 3]])->GET();
+        return User::WHERE([['username', '!=', Auth::user()->username], ['status', '!=', 3]])->GET();
     }
 
     public function updateAccountInfo(Request $request){
         try {
-            $user = UserModel::UPDATEORCREATE(
+            $user = User::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'first_name' => $request->first_name,
@@ -85,7 +85,7 @@ class GlobalController extends Controller
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
-    }    
+    }
 
     public function updateUser(Request $request){
         $validator = Validator::make(
@@ -102,7 +102,7 @@ class GlobalController extends Controller
 			return response()->json($validator->errors(), 422);
 
 		try {
-            $user = UserModel::UPDATEORCREATE(
+            $user = User::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'username'    => $request->username,
@@ -122,12 +122,12 @@ class GlobalController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
-    
+
     public function deleteUser(Request $request){
         try {
-            $user = UserModel::UPDATEORCREATE(
+            $user = User::UPDATEORCREATE(
                 [ 'username' => $request->username ],
-                [                    
+                [
                     'status'      => 3,
                 ]
             );
@@ -140,7 +140,7 @@ class GlobalController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
-    
+
     protected function error($username, $password){
         session()->flash('username', $username);
         session()->flash('password', $password);
@@ -152,12 +152,12 @@ class GlobalController extends Controller
     }
 
     public function getType(){
-        return TypeModel::WHERE('status', '!=', 'Deleted')->ORDERBY('id', 'desc')->GET();
+        return Type::WHERE('status', '!=', 'Deleted')->ORDERBY('id', 'desc')->GET();
     }
 
     public function saveNewType(Request $request){
         if($request->name){
-            $type = TypeModel::CREATE([
+            $type = Type::CREATE([
                 'name'   => $request->name,
                 'status' => 'Active'
             ]);
@@ -170,7 +170,7 @@ class GlobalController extends Controller
 
     public function updateType(Request $request){
         try {
-            $user = TypeModel::UPDATEORCREATE(
+            $user = Type::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'name'   => $request->name,
@@ -189,9 +189,9 @@ class GlobalController extends Controller
 
     public function deleteType(Request $request){
         try {
-            $user = TypeModel::UPDATEORCREATE(
+            $user = Type::UPDATEORCREATE(
                 [ 'id' => $request->id ],
-                [                    
+                [
                     'status'      => 'Deleted',
                 ]
             );

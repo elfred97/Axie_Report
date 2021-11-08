@@ -1,17 +1,17 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class NotificationSettingsModel extends Model
+class NotificationSettings extends Model
 {
     //
     public $table       = 'notification_settings';
 	public $timestamps  = TRUE;
-	protected $fillable = [		
+	protected $fillable = [
         'username',
         'options',
-        'status',        
+        'status',
 	];
 }

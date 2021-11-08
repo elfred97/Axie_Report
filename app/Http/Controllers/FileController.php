@@ -8,16 +8,16 @@ use Excel;
 use Carbon\Carbon;
 use Storage;
 use Illuminate\Http\Request;
-use App\reportModel as ReportModel;
-use App\PlayerModel as PlayerModel;
+use App\Models\reportModel as ReportModel;
+use App\Models\Player;
 use App\Imports\ReportImport;
-use App\NotificationModel;
+use App\Models\Notification;
 use App\Models\importModel as ImportModel;
 
 class FileController extends Controller
 {
     public function import(Request $request){
-        Excel::import(new ReportImport, $request->file);        
+        Excel::import(new ReportImport, $request->file);
         return "File Uploaded";
     }
 
@@ -26,12 +26,12 @@ class FileController extends Controller
         $type  = $request->type;
         $where = [];
 
-        if ($type) 
+        if ($type)
             array_push($where, ['p.type', '=', $type]);
-        
+
         $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
-        
+
         return DB::TABLE('report as r')
             ->LEFTJOIN('player as p', 'p.account_name', '=', 'r.name')
             ->SELECT(
@@ -51,8 +51,8 @@ class FileController extends Controller
 
         $sortType = (isset($request->sortType)) ? $request->sortType : 'r.name';
         $type = (isset($request->type)) ? $request->type : 'Trust';
-            
-        if ($request->type) 
+
+        if ($request->type)
             array_push($where, ['p.type', '=', $request->type]);
 
         return DB::TABLE('report as r')
@@ -66,7 +66,7 @@ class FileController extends Controller
             )
             ->WHERE($where)
             ->orderBy($sortType, $request->sortOrder)
-            ->GET()                
+            ->GET()
             ->GROUPBY('account_name');
     }
 
@@ -83,14 +83,14 @@ class FileController extends Controller
         $month = $request->month;
         $type  = $request->type;
         $where = [];
-        
-        if ($year) 
+
+        if ($year)
             array_push($where, [DB::raw('YEAR(r.created_at)'), '=', $year]);
-            
-        if ($month) 
+
+        if ($month)
             array_push($where, [DB::raw('MONTH(r.created_at)'), '=', $month]);
-            
-        if ($type) 
+
+        if ($type)
             array_push($where, ['p.type', '=', $type]);
 
         return DB::TABLE('report as r')
@@ -101,7 +101,7 @@ class FileController extends Controller
             ->GET(array(
                 DB::raw('Date(r.created_at) as date'),
             ));
-    }    
+    }
 
     public function getNotification(Request $request){
         if($request->date != NULL){
@@ -118,5 +118,5 @@ class FileController extends Controller
 
         return $notification;
     }
-    
+
 }
