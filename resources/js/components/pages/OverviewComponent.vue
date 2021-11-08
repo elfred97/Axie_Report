@@ -83,11 +83,23 @@
 
                     <!-- begin col-3 -->
                     <div class="col-lg-3 col-sm-6">
-                        <div class="widget widget-stats bg-gradient-indigo m-b-10">
+                        <div class="widget widget-stats bg-gradient-grey m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
-                                <div class="stats-title">TOTAL AVERAGE</div>
-                                <div class="stats-number">{{ total_average_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-title">PENALTY</div>
+                                <div class="stats-number">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <span class="badge badge-info">1 : <b>123</b></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="badge badge-warning">2 : <b>123</b></span>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <span class="badge badge-danger">3 : <b>123</b></span>
+                                        </div>
+                                    </div>
+                                </div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>
                         </div>
@@ -99,7 +111,7 @@
                         <div class="widget widget-stats bg-gradient-aqua m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
-                                <div class="stats-title">TOTAL AVERAGE</div>
+                                <div class="stats-title">LOWEST MMR</div>
                                 <div class="stats-number">{{ total_average_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>

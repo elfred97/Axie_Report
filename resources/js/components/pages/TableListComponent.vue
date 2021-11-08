@@ -22,6 +22,22 @@
                             </label>
                         </div>
                     </div>
+                    <div class="col-lg-5 offset-lg-4 col-md-5 offset-md-4 col-sm-12">
+                        <div class="pull-right">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    1 Penalty: <span class="btn btn-xs btn-info">123</span> 
+                                </div>
+                                <div class="col-md-4">
+                                    2 Penalty: <span class="btn btn-xs btn-warning">123</span> 
+                                </div>
+                                <div class="col-md-4">
+                                    3 Penalty: <span class="btn btn-xs btn-danger">123</span> 
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row no-margin mt-1">
                     <div class="col-lg-12">

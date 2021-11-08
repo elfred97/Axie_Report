@@ -6820,6 +6820,18 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7122,6 +7134,22 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _FieldsDef_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FieldsDef.js */ "./resources/js/components/pages/FieldsDef.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -71421,33 +71449,7 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "widget widget-stats bg-gradient-indigo m-b-10"
-                },
-                [
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL AVERAGE")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.total_average_slp
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm._m(6),
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
               _c(
@@ -71458,7 +71460,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "stats-content" }, [
                     _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL AVERAGE")
+                      _vm._v("LOWEST MMR")
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "stats-number" }, [
@@ -71533,8 +71535,45 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-      _c("i", { staticClass: "fas fa-divide fa-fw" })
+    return _c("div", { staticClass: "col-lg-3 col-sm-6" }, [
+      _c(
+        "div",
+        { staticClass: "widget widget-stats bg-gradient-grey m-b-10" },
+        [
+          _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
+            _c("i", { staticClass: "fas fa-divide fa-fw" })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "stats-content" }, [
+            _c("div", { staticClass: "stats-title" }, [_vm._v("PENALTY")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "stats-number" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("span", { staticClass: "badge badge-info" }, [
+                    _vm._v("1 : "),
+                    _c("b", [_vm._v("123")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("span", { staticClass: "badge badge-warning" }, [
+                    _vm._v("2 : "),
+                    _c("b", [_vm._v("123")])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("span", { staticClass: "badge badge-danger" }, [
+                    _vm._v("3 : "),
+                    _c("b", [_vm._v("123")])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ]
+      )
     ])
   },
   function() {
@@ -72624,7 +72663,9 @@ var render = function() {
                 ])
               ]
             )
-          ])
+          ]),
+          _vm._v(" "),
+          _vm._m(0)
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row no-margin mt-1" }, [
@@ -73163,7 +73204,43 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "col-lg-5 offset-lg-4 col-md-5 offset-md-4 col-sm-12" },
+      [
+        _c("div", { staticClass: "pull-right" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-4" }, [
+              _vm._v("\n                                1 Penalty: "),
+              _c("span", { staticClass: "btn btn-xs btn-info" }, [
+                _vm._v("123")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _vm._v("\n                                2 Penalty: "),
+              _c("span", { staticClass: "btn btn-xs btn-warning" }, [
+                _vm._v("123")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _vm._v("\n                                3 Penalty: "),
+              _c("span", { staticClass: "btn btn-xs btn-danger" }, [
+                _vm._v("123")
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
