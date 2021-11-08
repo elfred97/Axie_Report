@@ -6,7 +6,7 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
-	
+
 	<!-- ================== BEGIN FAVICON ================== -->
 	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
 	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
@@ -15,8 +15,8 @@
 	<link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
 	<meta name="msapplication-TileColor" content="#00aba9">
 	<meta name="theme-color" content="#ffffff">
-	<!-- ================== END FAVICON ================== -->  	
-	
+	<!-- ================== END FAVICON ================== -->
+
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('fontawesome/css/all.css') }}" rel="stylesheet" />
@@ -43,14 +43,14 @@
 	<!-- begin #page-loader -->
 	<div id="page-loader" class="fade show"><span class="spinner"></span></div>
 	<!-- end #page-loader -->
-	
+
 	<!-- begin login-cover -->
 	<div class="login-cover">
 		<div class="login-cover-image" style="background-image: url(../assets/img/login-bg/login-bg-17.jpg)" data-id="login-cover-image"></div>
 		<div class="login-cover-bg"></div>
 	</div>
 	<!-- end login-cover -->
-	
+
 	<!-- begin #page-container -->
 	<div id="page-container" class="fade">
 		<!-- begin login -->
@@ -58,7 +58,7 @@
 			<!-- begin brand -->
 			<div class="login-header">
 				<div class="brand">
-					<span class="logo"><img src="../img/pet-logo-white.png" alt=""></span> 
+					<span class="logo"><img src="../img/pet-logo-white.png" alt=""></span>
 					<b>Axie Management Tracker</b>
 					<!-- <small>responsive bootstrap 4 admin template</small> -->
 				</div>
@@ -71,23 +71,15 @@
 					<div class="form-group m-b-20">
 						<div class="">
 							<label for="">Username</label>
-							@if(session()->has('username'))
-							<input type="text" placeholder="Username" id="username" name="username" class="form-control" value="{{session('username')}}" required>
-							@else
-							<input type="text" placeholder="Username" id="username" name="username" class="form-control" required autofocus>
-							@endif
-							<span id="user_error" class="errors pull-right">Username is required</span>
+                            <input type="text" placeholder="Username" id="username" name="username" class="form-control" value="{{old('username')}}" required>
+                            @error('username') <span id="user_error">{{ $message }}</span> @enderror
 						</div>
 					</div>
 					<div class="form-group m-b-20">
 						<div class="">
 							<label for="">Password</label>
-							@if(session()->has('password'))
-							<input type="password" placeholder="Password" id="password" name="password" class="form-control" value="{{session('password')}}" required>
-							@else
-							<input type="password" placeholder="Password" id="password" name="password" class="form-control" requires autofocus>
-							@endif
-							<span id="password_error" class="errors pull-right">Password is required</span>
+                            <input type="password" placeholder="Password" id="password" name="password" class="form-control" value="{{session('password')}}" required>
+                            @error('password') <span id="user_error" >{{ $message }}</span> @enderror
 						</div>
 					</div>
 					<div class="form-group m-b-20">
@@ -95,15 +87,15 @@
 							<div class="col-md-6">
 								<label for="">Type</label>
 								<select name="type" id="type" class="form-control">
-									<option value="admin">Admin</option>
-									<option value="scholar">Scholar</option>
+									<option value="admin" {{ old('type') =='admin' ? "selected" : '' }}>Admin</option>
+									<option value="scholar" {{ old('type') =='scholar' ? "selected" : '' }}>Scholar</option>
 								</select>
 							</div>
 						</div>
 					</div>
 					<hr/>
 					<!-- <div class="checkbox checkbox-css m-b-20">
-						<input type="checkbox" id="remember_checkbox" /> 
+						<input type="checkbox" id="remember_checkbox" />
 						<label for="remember_checkbox">
 							Remember Me
 						</label>
@@ -121,7 +113,7 @@
 		<!-- end login -->
 	</div>
 	<!-- end page container -->
-	
+
 	<!-- ================== BEGIN BASE JS ================== -->
 	<script src="{{ asset('assets/js/app.min.js') }}"></script>
 	<script src="{{ asset('assets/js/default.min.js') }}"></script>
@@ -151,7 +143,7 @@
             }
         }
     </script>
-	
+
 	@if (session()->has('error'))
         <script>
             error = <?php echo json_encode(session('error'))?>;

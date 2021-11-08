@@ -17,25 +17,27 @@ use Illuminate\Support\Facades\Route;
 //     return view('main');
 // });
 
-Route::middleware(['guest'])->group(function(){
-    Route::get('login', 'GlobalController@showLogin')->name('login');
-    Route::post('login', 'GlobalController@login');
+Auth::routes();
 
-    Route::get('registration', function () { return view('registration'); });
-    Route::post('registration', 'GlobalController@registration');
-});
+//Route::middleware(['guest'])->group(function(){
+//    Route::get('login', 'GlobalController@showLogin')->name('login');
+//    Route::post('login', 'GlobalController@login');
+//
+//    Route::get('registration', function () { return view('registration'); });
+//    Route::post('registration', 'GlobalController@registration');
+//});
 
 Route::middleware(['auth'])->group(function(){
     Route::redirect('/', '/home')->name('home');
 
-    
+
     Route::get('/getGraph', 'FileController@getGraph');
     Route::get('/getReport', 'FileController@getReport');
     Route::post('/importFile', 'FileController@import');
     Route::get('/getTotalReport', 'FileController@getTotalReport');
     Route::get('/getImportedReport', 'FileController@getImportedReport');
     Route::get('/getTotalReportbyDate', 'FileController@getTotalReportbyDate');
-    
+
     Route::get('/getAccountInfo', 'GlobalController@getAccountInfo');
     Route::get('/getNotification', 'FileController@getNotification');
     Route::post('/updateAccountInfo', 'GlobalController@updateAccountInfo');
@@ -49,12 +51,12 @@ Route::middleware(['auth'])->group(function(){
     Route::post('/deleteType', 'GlobalController@deleteType');
     Route::post('/updateType', 'GlobalController@updateType');
     Route::post('/saveNewType', 'GlobalController@saveNewType');
-    
+
     Route::get('/getUsers', 'GlobalController@getUsers');
     Route::post('/updateUser', 'GlobalController@updateUser');
     Route::post('/deleteUser', 'GlobalController@deleteUser');
 
-    Route::match(['GET', 'POST'], '/logout', 'GlobalController@logout'); //
+    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
 
     /********************** VUE COMPONENTS *************************/
     Route::middleware(['vue.components'])->group(function(){

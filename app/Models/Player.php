@@ -1,15 +1,15 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PlayerModel extends Model
+class Player extends Model
 {
     //
     public $table       = 'player';
 	public $timestamps  = TRUE;
-	protected $fillable = [		
+	protected $fillable = [
         'first_name',
         'middle_name',
         'last_name',
