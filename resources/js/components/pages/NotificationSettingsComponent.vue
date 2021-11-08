@@ -24,8 +24,73 @@
                         <input type="number" class="form-control">
                     </div>
                 </div>
-                <p class="mt-2">Show / Hide</p>
-                <div class="row"></div>
+                <p class="mt-2 mb-2">Show / Hide</p>
+                <div class="row">
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1" checked>
+                            <label class="custom-control-label" for="customSwitch1">Total SLP</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Total Unclaimed</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Total Claimed</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Total SLP Today</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Total SLP Yesterday</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Total Average</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Penalty</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                    <div class="col-md-3 col-sm-6 mb-2">
+                        <!-- begin custom-switches -->
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="customSwitch1">
+                            <label class="custom-control-label" for="customSwitch1">Lowest MMR</label>
+                        </div>
+                        <!-- end custom-switches -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

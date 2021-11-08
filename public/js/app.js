@@ -6667,6 +6667,71 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -71254,9 +71319,153 @@ var staticRenderFns = [
             ])
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "mt-2" }, [_vm._v("Show / Hide")]),
+          _c("p", { staticClass: "mt-2 mb-2" }, [_vm._v("Show / Hide")]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" })
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1", checked: "" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Total SLP")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Total Unclaimed")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Total Claimed")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Total SLP Today")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Total SLP Yesterday")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Total Average")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Penalty")]
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+              _c("div", { staticClass: "custom-control custom-switch" }, [
+                _c("input", {
+                  staticClass: "custom-control-input",
+                  attrs: { type: "checkbox", id: "customSwitch1" }
+                }),
+                _vm._v(" "),
+                _c(
+                  "label",
+                  {
+                    staticClass: "custom-control-label",
+                    attrs: { for: "customSwitch1" }
+                  },
+                  [_vm._v("Lowest MMR")]
+                )
+              ])
+            ])
+          ])
         ])
       ])
     ])
