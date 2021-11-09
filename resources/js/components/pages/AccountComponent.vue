@@ -17,6 +17,10 @@
                         <!-- Begin Notification Settings -->
                         <notification-settings></notification-settings>
                         <!-- End Notification Settings -->
+
+                        <!-- Begin Notification Settings -->
+                        <reminder-component></reminder-component>
+                        <!-- End Notification Settings -->
                     </div>
                     <div class="col-md-5">
                         <!-- Begin Users List -->
@@ -35,6 +39,7 @@
 <script>
 import NotificationSettingsComponent from './NotificationSettingsComponent.vue'
 import AccountInformationComponent from './AccountInformationComponent.vue';
+import ReminderComponent from './ReminderComponent.vue';
 import UsersComponent from './UsersComponent.vue';
 import TypeComponent from './TypeComponent.vue';
 
@@ -60,6 +65,7 @@ export default {
     },
     components : {
         'account-information'  : AccountInformationComponent,
+        'reminder-component'   : ReminderComponent,
         'users-component'      : UsersComponent,
         'type-component'       : TypeComponent,
         'notification-settings': NotificationSettingsComponent,
