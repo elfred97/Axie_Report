@@ -95138,6 +95138,9 @@ var routes = [{
   path: '/home',
   component: __webpack_require__(/*! ./components/pages/HomeComponent.vue */ "./resources/js/components/pages/HomeComponent.vue")["default"]
 }, {
+  path: '/scholars',
+  component: __webpack_require__(/*! ./components/pages/HomeComponent.vue */ "./resources/js/components/pages/HomeComponent.vue")["default"]
+}, {
   path: '/import',
   component: __webpack_require__(/*! ./components/pages/ImportComponent.vue */ "./resources/js/components/pages/ImportComponent.vue")["default"]
 }, {
