@@ -16,9 +16,10 @@ class vueComponentsMiddleware
      */
     public function handle($request, Closure $next) {
         $route         = $request->route;
-        
+
         $vueComponents = [
             'home',
+            'scholars',
             'import',
             'players',
             'notification',
@@ -30,7 +31,7 @@ class vueComponentsMiddleware
             'scholar_account',
             'scholar_notification',            
         ];
-        
+
         if (!in_array($route, $vueComponents))
             abort(404);
 

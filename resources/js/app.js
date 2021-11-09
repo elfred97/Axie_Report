@@ -81,6 +81,7 @@ Vue.component('footer-component', require('./components/layout/FooterComponent.v
 const routes = [
     { path: '*', redirect: '/home'},
     { path: '/home', component: require('./components/pages/HomeComponent.vue').default },
+    { path: '/scholars', component: require('./components/pages/HomeComponent.vue').default },
     { path: '/import', component: require('./components/pages/ImportComponent.vue').default },
     { path: '/players', component: require('./components/pages/PlayerComponent.vue').default },
     { path: '/settings', component: require('./components/pages/AccountComponent.vue').default },
@@ -93,7 +94,7 @@ const routes = [
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-  
+
 const router = new VueRouter({
     mode: 'history',
     routes // short for `routes: routes`
@@ -102,5 +103,5 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     next();
 })
-  
+
 const app = new Vue(Vue.util.extend({ router })).$mount('#app');

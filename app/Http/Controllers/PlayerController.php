@@ -6,19 +6,19 @@ use File;
 use Excel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\reportModel as ReportModel;
-use App\PlayerModel as PlayerModel;
+use App\Models\reportModel as ReportModel;
+use App\Models\Player;
 use App\Imports\PlayerImport;
 
 class PlayerController extends Controller
 {
     public function getPlayers(Request $request){
         $where = [];
-        if ($request->type) 
+        if ($request->type)
             array_push($where, ['type', '=', $request->type]);
-        return PlayerModel::
+        return Player::
             SELECT(
-                '*',                
+                '*',
                 DB::RAW('CONCAT(first_name, " ", last_name) as player_name')
             )
             ->WHERE($where)
@@ -45,7 +45,7 @@ class PlayerController extends Controller
 			return response()->json($validator->errors(), 422);
 
 		try {
-            $scholar = PlayerModel::UPDATEORCREATE(
+            $scholar = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'ronin_address'      => $request->ronin_address,
@@ -72,7 +72,7 @@ class PlayerController extends Controller
     }
     public function deleteScholar(Request $request){
         $id = isset($request->id) ? $request->id : NULL;
-        $scholar = PlayerModel::WHERE('id', $id)->FIRST();
+        $scholar = Player::WHERE('id', $id)->FIRST();
 
         if(empty($scholar))
             return response()->json(['message' => 'Invalid Reference Key'], 422);

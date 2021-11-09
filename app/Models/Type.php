@@ -1,16 +1,16 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class TypeModel extends Model
+class Type extends Model
 {
     //
     public $table       = 'type';
 	public $timestamps  = TRUE;
-	protected $fillable = [		
+	protected $fillable = [
         'name',
-        'status',        
+        'status',
 	];
 }
