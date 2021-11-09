@@ -5875,11 +5875,12 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NotificationSettingsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationSettingsComponent.vue */ "./resources/js/components/pages/NotificationSettingsComponent.vue");
 /* harmony import */ var _AccountInformationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AccountInformationComponent.vue */ "./resources/js/components/pages/AccountInformationComponent.vue");
-/* harmony import */ var _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./UsersComponent.vue */ "./resources/js/components/pages/UsersComponent.vue");
-/* harmony import */ var _TypeComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TypeComponent.vue */ "./resources/js/components/pages/TypeComponent.vue");
-/* harmony import */ var _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./changePasswordComponent.vue */ "./resources/js/components/pages/changePasswordComponent.vue");
-/* harmony import */ var _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./newUserFormComponent.vue */ "./resources/js/components/pages/newUserFormComponent.vue");
-/* harmony import */ var _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./updateTypeInfoComponent.vue */ "./resources/js/components/pages/updateTypeInfoComponent.vue");
+/* harmony import */ var _ReminderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReminderComponent.vue */ "./resources/js/components/pages/ReminderComponent.vue");
+/* harmony import */ var _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UsersComponent.vue */ "./resources/js/components/pages/UsersComponent.vue");
+/* harmony import */ var _TypeComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TypeComponent.vue */ "./resources/js/components/pages/TypeComponent.vue");
+/* harmony import */ var _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./changePasswordComponent.vue */ "./resources/js/components/pages/changePasswordComponent.vue");
+/* harmony import */ var _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./newUserFormComponent.vue */ "./resources/js/components/pages/newUserFormComponent.vue");
+/* harmony import */ var _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./updateTypeInfoComponent.vue */ "./resources/js/components/pages/updateTypeInfoComponent.vue");
 //
 //
 //
@@ -5914,6 +5915,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -5940,13 +5946,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   components: {
     'account-information': _AccountInformationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    'users-component': _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    'type-component': _TypeComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    'reminder-component': _ReminderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    'users-component': _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    'type-component': _TypeComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
     'notification-settings': _NotificationSettingsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     // Dialog Components
-    'changePassword-form': _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
-    'newUser-form': _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    'updateTypeInfo-form': _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    'changePassword-form': _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
+    'newUser-form': _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    'updateTypeInfo-form': _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   methods: {},
   computed: {
@@ -70129,7 +70136,9 @@ var render = function() {
                 [
                   _c("account-information"),
                   _vm._v(" "),
-                  _c("notification-settings")
+                  _c("notification-settings"),
+                  _vm._v(" "),
+                  _c("reminder-component")
                 ],
                 1
               ),
@@ -72232,6 +72241,174 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85&":
+/*!**************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85& ***!
+  \**************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [_vm._v("Reminder")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "panel-heading-btn" }, [
+            _c("button", { staticClass: "btn btn-xs btn-success" }, [
+              _c("i", { staticClass: "fas fa-plus" }),
+              _vm._v(" New Reminder\n                ")
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c(
+                  "table",
+                  {
+                    staticClass:
+                      "table table-bordered widget-table widget-table-rounded",
+                    attrs: { "data-id": "widget" }
+                  },
+                  [
+                    _c("thead", [
+                      _c("tr", [
+                        _c("th", [_vm._v("Description")]),
+                        _vm._v(" "),
+                        _c("th", { staticClass: "text-center" }, [
+                          _vm._v("Date")
+                        ]),
+                        _vm._v(" "),
+                        _c("th")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("tbody", [
+                      _c("tr", [
+                        _c("td", [
+                          _c("h5", { staticClass: "widget-table-title" }, [
+                            _vm._v("Payroll reminder")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            { staticClass: "widget-table-desc m-b-15 mb-0" },
+                            [
+                              _vm._v(
+                                "To all scholars, your payroll will be delayed today"
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-nowrap text-center" }, [
+                          _c(
+                            "b",
+                            {
+                              staticClass: "text-inverse",
+                              attrs: {
+                                "data-id": "widget-elm",
+                                "data-light-class": "text-inverse",
+                                "data-dark-class": "text-white"
+                              }
+                            },
+                            [_vm._v("09/24/2021")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-default btn-xs" },
+                            [
+                              _c("i", { staticClass: "fas fa-pencil-alt" }),
+                              _vm._v(
+                                "\n                                            Edit"
+                              )
+                            ]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tr", [
+                        _c("td", [
+                          _c("h5", { staticClass: "widget-table-title" }, [
+                            _vm._v("Inspire 2")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "p",
+                            { staticClass: "widget-table-desc m-b-15 mb-0" },
+                            [
+                              _vm._v(
+                                "Cinematic aerial performance for filmmakers."
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-nowrap text-center" }, [
+                          _c(
+                            "b",
+                            {
+                              staticClass: "text-inverse",
+                              attrs: {
+                                "data-id": "widget-elm",
+                                "data-light-class": "text-inverse",
+                                "data-dark-class": "text-white"
+                              }
+                            },
+                            [_vm._v("09/24/2021")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", { staticClass: "text-center" }, [
+                          _c(
+                            "button",
+                            { staticClass: "btn btn-default btn-xs" },
+                            [
+                              _c("i", { staticClass: "fas fa-pencil-alt" }),
+                              _vm._v(
+                                "\n                                            Edit"
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -95545,6 +95722,59 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   titleClass: "text-center aligned",
   dataClass: "text-center aligned"
 }]);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/ReminderComponent.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/pages/ReminderComponent.vue ***!
+  \*************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReminderComponent.vue?vue&type=template&id=74872e85& */ "./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/ReminderComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85& ***!
+  \********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReminderComponent.vue?vue&type=template&id=74872e85& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
