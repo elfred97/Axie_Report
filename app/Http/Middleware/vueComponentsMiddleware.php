@@ -24,8 +24,11 @@ class vueComponentsMiddleware
             'notification',
             'settings',
             '403',
-            null
-            // 'patient'
+            null,
+
+            'scholar_home',
+            'scholar_account',
+            'scholar_notification',            
         ];
         
         if (!in_array($route, $vueComponents))

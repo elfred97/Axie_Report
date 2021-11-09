@@ -8,7 +8,7 @@
                 <!-- begin row -->
                 <div class="row row-space-10 m-b-20">
                     <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-md-20">
                         <div class="widget widget-stats bg-gradient-secondary m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-equals fa-fw"></i></div>
                             <div class="stats-content">
@@ -20,8 +20,8 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="widget widget-stats bg-gradient-orange m-b-10">
+                    <div class="col-md-20">
+                        <div class="widget widget-stats bg-gradient-muted m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fab fa-bitcoin fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL UNCLAIMED SLP</div>
@@ -32,7 +32,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-md-20">
                         <div class="widget widget-stats bg-pink m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-money-bill fa-fw"></i></div>
                             <div class="stats-content">
@@ -45,7 +45,7 @@
                     <!-- end col-3 -->
 
                     <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-md-20">
                         <div class="widget widget-stats bg-gradient-teal m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-calendar fa-fw"></i></div>
                             <div class="stats-content">
@@ -57,7 +57,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-md-20">
                         <div class="widget widget-stats bg-gradient-blue m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-calendar-check fa-fw"></i></div>
                             <div class="stats-content">
@@ -69,7 +69,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
+                    <div class="col-md-20">
                         <div class="widget widget-stats bg-gradient-purple m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
@@ -79,36 +79,11 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end col-3 -->   
+                    <!-- end col-3 -->
 
-                    <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="widget widget-stats bg-gradient-grey m-b-10">
-                            <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
-                            <div class="stats-content">
-                                <div class="stats-title">PENALTY</div>
-                                <div class="stats-number">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <span class="badge badge-info">1 : <b>123</b></span>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span class="badge badge-warning">2 : <b>123</b></span>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <span class="badge badge-danger">3 : <b>123</b></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
-                            </div>
-                        </div>
-                    </div>
-                    <!-- end col-3 -->   
-                    
-                    <!-- begin col-3 -->
-                    <div class="col-lg-3 col-sm-6">
-                        <div class="widget widget-stats bg-gradient-aqua m-b-10">
+                     <!-- begin col-3 -->
+                    <div class="col-md-20">
+                        <div class="widget widget-stats bg-gradient-lime m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">LOWEST MMR</div>
@@ -117,7 +92,53 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end col-3 -->                    
+                    <!-- end col-3 -->
+
+                    <!-- begin col-3 -->
+                    <div class="col-md-20">
+                        <div class="widget widget-stats bg-gradient-cyan m-b-10">
+                            <div class="stats-icon stats-icon-lg"><i class="fas fa-exclamation-triangle fa-fw"></i></div>
+                            <div class="stats-content">
+                                <div class="stats-title">1st PENALTY</div>
+                                <div class="stats-number">
+                                    9
+                                </div>
+                                <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col-3 -->
+
+                    <!-- begin col-3 -->
+                    <div class="col-md-20">
+                        <div class="widget widget-stats bg-gradient-orange m-b-10">
+                            <div class="stats-icon stats-icon-lg"><i class="fas fa-exclamation-triangle fa-fw"></i></div>
+                            <div class="stats-content">
+                                <div class="stats-title">2nd PENALTY</div>
+                                <div class="stats-number">
+                                    89
+                                </div>
+                                <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col-3 -->
+
+                    <!-- begin col-3 -->
+                    <div class="col-md-20">
+                        <div class="widget widget-stats bg-gradient-danger m-b-10">
+                            <div class="stats-icon stats-icon-lg"><i class="fas fa-exclamation-triangle fa-fw"></i></div>
+                            <div class="stats-content">
+                                <div class="stats-title">3rd PENALTY</div>
+                                <div class="stats-number">
+                                    12
+                                </div>
+                                <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end col-3 -->
+                    
                 </div>
                 <!-- end row -->
             </div>

@@ -45,6 +45,7 @@ import TypeComponent from './TypeComponent.vue';
 
 // Dialog Components
 import changePasswordComponent from './changePasswordComponent.vue';
+import addReminderFormComponent from './addReminderFormComponent.vue';
 import newUserFormComponent from './newUserFormComponent.vue';
 import updateTypeInfoComponent from './updateTypeInfoComponent.vue';
 export default {
@@ -60,6 +61,7 @@ export default {
                     usersListInfo: null,
                     typeInfo     : null,
                     settingsInfo : null,
+                    reminder     : null,
             }
         }
     },
@@ -73,6 +75,7 @@ export default {
         'changePassword-form': changePasswordComponent,
         'newUser-form'       : newUserFormComponent,
         'updateTypeInfo-form': updateTypeInfoComponent,
+        'add-reminder-form'  : addReminderFormComponent,
     },
     methods: {
         
@@ -85,6 +88,8 @@ export default {
                 return  { usersListInfo : this.componentsProps.usersListInfo }
             else if(this.isOpenDialogComponent === 'updateTypeInfo-form')
                 return  { typeInfo : this.componentsProps.typeInfo }
+            else if(this.isOpenDialogComponent === 'add-reminder-form')
+                return  { reminder : this.componentsProps.reminder }
         }
     },
     mounted(){
@@ -96,6 +101,7 @@ export default {
 
                 if(openDialogComponent === 'newUser-form') this.componentsProps.usersListInfo = propsObject;
                 else if(openDialogComponent === 'updateTypeInfo-form') this.componentsProps.typeInfo      = propsObject;
+                else if(openDialogComponent === 'add-reminder-form') this.componentsProps.reminder      = propsObject;
 
                 this.componentKey = this.componentKey + 1;
             });

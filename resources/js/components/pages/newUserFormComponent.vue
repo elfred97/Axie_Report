@@ -57,13 +57,13 @@ export default {
     data(){
         return {
             form : new Form({
-                username : null,
-                first_name : null,
-                middle_name : null,
-                last_name : null,
-                new_password : null,
-                confirm_password : null,
-                status : 1
+                username        : null,
+                first_name      : null,
+                middle_name     : null,
+                last_name       : null,
+                new_password    : null,
+                confirm_password: null,
+                status          : 1
             }),
         }
     },
