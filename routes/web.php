@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+use \App\Http\Controllers\Scholars\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,21 +15,42 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('main');
-// });
 
 Auth::routes();
 
-//Route::middleware(['guest'])->group(function(){
-//    Route::get('login', 'GlobalController@showLogin')->name('login');
-//    Route::post('login', 'GlobalController@login');
-//
-//    Route::get('registration', function () { return view('registration'); });
-//    Route::post('registration', 'GlobalController@registration');
-//});
 
-Route::middleware(['auth'])->group(function(){
+
+//put dedicated scholars route here
+
+//Route::middleware('auth')->group(function () {
+//    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
+//});
+//
+
+//Route::get('',function () {
+//    if(Auth::id()) {
+//        if(Auth::guard('admins')->check()) {
+//            return redirect(url('home'));
+//        } else {
+//            return redirect(url('scholars'));
+//        }
+//
+//    } else {
+//        return redirect(url('login'));
+//    }
+//});
+//
+Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
+    Route::get('/',[HomeController::class,'index'])->name('scholar.home');
+
+    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
+    Route::middleware(['vue.components'])->group(function(){
+        Route::get('/{route}', 'GlobalController@index'); //
+    });
+});
+
+
+Route::middleware(['auth:admins'])->group(function(){
     Route::redirect('/', '/home')->name('home');
 
 
@@ -63,3 +86,4 @@ Route::middleware(['auth'])->group(function(){
         Route::get('/{route}', 'GlobalController@index'); //
     });
 });
+

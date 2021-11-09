@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -37,6 +38,8 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+//        $this->middleware('guest:admins')->except('logout');
+//        $this->middleware('guest:scholars')->except('logout');
     }
 
     public function showLoginForm()
@@ -53,4 +56,30 @@ class LoginController extends Controller
     {
         return $request->only($this->username(), 'password');
     }
+
+    protected function guard()
+    {
+        $type = \request('type');
+        $type = in_array($type, ['admins', 'scholars']) ? $type : 'scholars';
+        return Auth::guard($type);
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if(\auth()->guard('admins')->check()) {
+            return redirect(url('home'));
+        } else {
+            return redirect(url('scholars'));
+        }
+    }
+
+    public function redirectTo(Request $request)
+    {
+        if(\auth()->guard('admins')->check()) {
+            return redirect(url('home'));
+        } else {
+            return redirect(url('scholars'));
+        }
+    }
+
 }

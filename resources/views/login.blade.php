@@ -71,14 +71,14 @@
 					<div class="form-group m-b-20">
 						<div class="">
 							<label for="">Username</label>
-                            <input type="text" placeholder="Username" id="username" name="username" class="form-control" value="{{old('username')}}" required>
+                            <input type="text" placeholder="Username" id="username" name="username" class="form-control" value="{{old('username','mhardz_sko')}}" required>
                             @error('username') <span id="user_error">{{ $message }}</span> @enderror
 						</div>
 					</div>
 					<div class="form-group m-b-20">
 						<div class="">
 							<label for="">Password</label>
-                            <input type="password" placeholder="Password" id="password" name="password" class="form-control" value="{{session('password')}}" required>
+                            <input type="password" placeholder="Password" id="password" name="password" class="form-control" value="{{old('password','123456')}}" required>
                             @error('password') <span id="user_error" >{{ $message }}</span> @enderror
 						</div>
 					</div>
@@ -87,8 +87,8 @@
 							<div class="col-md-6">
 								<label for="">Type</label>
 								<select name="type" id="type" class="form-control">
-									<option value="admin" {{ old('type') =='admin' ? "selected" : '' }}>Admin</option>
-									<option value="scholar" {{ old('type') =='scholar' ? "selected" : '' }}>Scholar</option>
+                                    <option value="scholars" {{ old('type') =='scholars' ? "selected" : '' }}>Scholar</option>
+                                    <option value="admins" {{ old('type') =='admins' ? "selected" : '' }}>Admin</option>
 								</select>
 							</div>
 						</div>
