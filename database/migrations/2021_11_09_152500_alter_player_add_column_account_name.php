@@ -14,7 +14,7 @@ class AlterPlayerAddColumnAccountName extends Migration
     public function up()
     {
         Schema::table('player', function (Blueprint $table) {
-            $table->string('account_name', 255)->nullable()->after('ronin_address')->default(NULL);
+            $table->string('account_name', 50)->nullable()->after('ronin_address')->default(NULL);
         });
 
 
