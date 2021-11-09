@@ -86,6 +86,8 @@ const routes = [
     { path: '/players', component: require('./components/pages/PlayerComponent.vue').default },
     { path: '/settings', component: require('./components/pages/AccountComponent.vue').default },
     { path: '/notification', component: require('./components/pages/NotificationComponent.vue').default },
+
+    { path: '/scholar_home', component: require('./components/scholar_pages/Home/ScholarHomeComponent.vue').default },
 ]
 /**
  * Next, we will create a fresh Vue application instance and attach it to

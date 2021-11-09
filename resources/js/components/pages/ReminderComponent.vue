@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">Reminder</h4>
                 <div class="panel-heading-btn">
-                    <button class="btn btn-xs btn-success">
+                    <button class="btn btn-xs btn-success" @click="$root.$emit('showDialog', true, 'add-reminder-form', 'New Reminder', '30%')">
                         <i class="fas fa-plus"></i> New Reminder
                     </button>
                 </div>
@@ -26,7 +26,7 @@
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <h5 class="widget-table-title">Payroll reminder</h5>
+                                            <h6 class="widget-table-title">Payroll reminder</h6>
                                             <p class="widget-table-desc m-b-15 mb-0">To all scholars, your payroll will be delayed today</p>
                                         </td>
                                         <td class="text-nowrap text-center">
@@ -42,7 +42,7 @@
                                     </tr>
                                     <tr>
                                         <td>
-                                            <h5 class="widget-table-title">Inspire 2</h5>
+                                            <h6 class="widget-table-title">Inspire 2</h6>
                                             <p class="widget-table-desc m-b-15 mb-0">Cinematic aerial performance for filmmakers.</p>
                                         </td>
                                         <td class="text-nowrap text-center">
