@@ -8,7 +8,7 @@ use Excel;
 use Carbon\Carbon;
 use Storage;
 use Illuminate\Http\Request;
-use App\Models\reportModel as ReportModel;
+use App\Models\Report;
 use App\Models\Player;
 use App\Imports\ReportImport;
 use App\Models\Notification;
@@ -59,7 +59,6 @@ class FileController extends Controller
             ->LEFTJOIN('player as p', 'p.account_name', '=', 'r.name')
             ->SELECT(
                 'r.name as account_name',
-                'p.status',
                 DB::RAW('concat(p.first_name," ",p.last_name) as player_name'),
                 'p.penalty',
                 'r.*'

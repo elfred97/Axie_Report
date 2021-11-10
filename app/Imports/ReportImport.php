@@ -2,9 +2,9 @@
 
 namespace App\Imports;
 
-use App\reportModel;
-use App\PlayerModel;
-use App\NotificationModel;
+use App\Models\Report;
+use App\Models\Player;
+use App\Models\Notification;
 
 use Carbon\Carbon;
 
@@ -20,19 +20,19 @@ class ReportImport implements ToCollection
     {
         //
         $counter = 0;
-        $batch = (count(reportModel::GET()) > 0) ? reportModel::max('batch') : 0;
-        foreach ($rows as $row) 
+        $batch = (count(Report::GET()) > 0) ? Report::max('batch') : 0;
+        foreach ($rows as $row)
         {
             if($counter > 0){
-                $report = reportModel::WHERE('name', $row[2])->latest('created_at')->first();
-                $player = PlayerModel::WHERE('account_name', $row[2])->first();
+                $report = Report::WHERE('name', $row[2])->latest('created_at')->first();
+                $player = Player::WHERE('account_name', $row[2])->first();
 
                 $thirty_percent = 0;
                 $forty_percent = 0;
-                
+
                 if(!empty($report)){
                     $gained_slp_today = $row[6] - $report->total_slp;
-                    
+
                     if(!empty($player)){
                         $today = Carbon::now();
                         $date_started = Carbon::parse($player->date_started);
@@ -50,7 +50,7 @@ class ReportImport implements ToCollection
                         }
                         if($gained_slp_today < 75){
                             $penalty = $player->penalty + 1;
-                            NotificationModel::CREATE([
+                            Notification::CREATE([
                                 'account_name' => $row[2],
                                 'gained_slp_today' => $gained_slp_today,
                                 'penalty' => $penalty,
@@ -59,10 +59,10 @@ class ReportImport implements ToCollection
                         else{
                             $penalty = $player->penalty;
                         }
-                        
 
-                        PlayerModel::WHERE('account_name', $row[2])->update(
-                            [ 
+
+                        Player::WHERE('account_name', $row[2])->update(
+                            [
                                 'penalty'       => $penalty,
                                 'scholar_share' => $player->scholar_share + $scholar_share,
                                 'manager_share' => $player->manager_share + $manager_share,
@@ -75,14 +75,14 @@ class ReportImport implements ToCollection
                     $gained_slp_today = $row[6];
                     $thirty_percent = $gained_slp_today * 0.3;
                     // PlayerModel::WHERE('account_name', $row[2])->update(
-                    //     [ 
+                    //     [
                     //         'penalty'       => $player->penalty + $penalty,
                     //         'scholar_share' => $player->scholar_share + $scholar_share,
                     //         'manager_share' => $player->manager_share + $manager_share,
                     //     ]
                     // );
                 }
-                reportModel::create([
+                Report::create([
                     'ronin_address'    => $row[0],
                     'name'             => $row[2],
                     'batch'            => $batch + 1,

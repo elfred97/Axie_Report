@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-class reportModel extends Model
+class Report extends Model
 {
     //
     public $table       = 'report';
