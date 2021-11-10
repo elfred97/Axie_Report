@@ -44,9 +44,9 @@ Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
     Route::get('/', [HomeController::class,'index'])->name('scholar.name');
 
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
-    Route::middleware(['vue.components'])->group(function(){
-        Route::get('/{route}', 'GlobalController@index'); //
-    });
+//    Route::middleware(['vue.components'])->group(function(){
+//        Route::get('/{route}', 'GlobalController@index'); //
+//    });
 });
 
 

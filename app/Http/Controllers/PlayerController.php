@@ -6,7 +6,7 @@ use File;
 use Excel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\reportModel as ReportModel;
+use App\Models\report as ReportModel;
 use App\Models\Player;
 use App\Imports\PlayerImport;
 
