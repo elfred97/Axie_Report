@@ -34,10 +34,12 @@ class FileController extends Controller
 
         return DB::TABLE('report as r')
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
+            ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
+            ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->SELECT(
                 'r.name as account_name',
                 'p.type',
-                DB::RAW('CONCAT(p.first_name, " ", p.last_name) as player_name'),
+                DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
                 'r.*'
                 )
             ->where($where)
