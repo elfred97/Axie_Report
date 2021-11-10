@@ -19,15 +19,15 @@ class vueComponentsMiddleware
 
         $vueComponents = [
             'home',
-            'scholars',
             'import',
             'players',
             'notification',
             'settings',
             '403',
             null,
-
-            'scholar_home',
+            
+            'scholars',
+            // 'scholar_home',
             'scholar_account',
             'scholar_notification',            
         ];

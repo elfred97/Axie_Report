@@ -11,6 +11,7 @@ require('./bootstrap');
 window.Vue = require('vue');
 import Vue from 'vue';
 
+import { store } from '../js/store/store';
 
 import Form from 'vform';
 window.Form = Form;
@@ -78,30 +79,21 @@ Vue.component('header-component', require('./components/layout/HeaderComponent.v
 Vue.component('copyright-component', require('./components/layout/CopyRightComponent.vue').default);
 Vue.component('footer-component', require('./components/layout/FooterComponent.vue').default);
 
-const routes = [
-    { path: '*', redirect: '/home'},
-    { path: '/home', component: require('./components/pages/HomeComponent.vue').default },
-    { path: '/scholars', component: require('./components/pages/HomeComponent.vue').default },
-    { path: '/import', component: require('./components/pages/ImportComponent.vue').default },
-    { path: '/players', component: require('./components/pages/PlayerComponent.vue').default },
-    { path: '/settings', component: require('./components/pages/AccountComponent.vue').default },
-    { path: '/notification', component: require('./components/pages/NotificationComponent.vue').default },
+import { routes } from './routes';
 
-    { path: '/scholar_home', component: require('./components/scholar_pages/Home/ScholarHomeComponent.vue').default },
-]
+const router = new VueRouter({
+    mode: 'history',
+    routes // short for `routes: routes`
+})
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const router = new VueRouter({
-    mode: 'history',
-    routes // short for `routes: routes`
-})
-
 router.beforeEach((to, from, next) => {
+    console.log(to);
     next();
 })
 
-const app = new Vue(Vue.util.extend({ router })).$mount('#app');
+const app = new Vue(Vue.util.extend({ router, store })).$mount('#app');
