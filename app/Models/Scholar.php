@@ -34,4 +34,9 @@ class Scholar extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function player()
+    {
+        return $this->hasOneThrough(Player::class,PlayerScholarHistory::class)->latest('created_at');
+    }
 }

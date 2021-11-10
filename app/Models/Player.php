@@ -15,4 +15,9 @@ class Player extends Model
         'scholar_share',
         'manager_share'
     ];
+
+    public function scholar()
+    {
+        return $this->hasOneThrough(Scholar::class,PlayerScholarHistory::class);
+    }
 }

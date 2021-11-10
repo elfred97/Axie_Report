@@ -33,10 +33,9 @@ class FileController extends Controller
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
 
         return DB::TABLE('report as r')
-            ->LEFTJOIN('player as p', 'p.account_name', '=', 'r.name')
+            ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->SELECT(
                 'r.name as account_name',
-                'p.status',
                 'p.type',
                 DB::RAW('CONCAT(p.first_name, " ", p.last_name) as player_name'),
                 'r.*'
@@ -56,7 +55,7 @@ class FileController extends Controller
             array_push($where, ['p.type', '=', $request->type]);
 
         return DB::TABLE('report as r')
-            ->LEFTJOIN('player as p', 'p.account_name', '=', 'r.name')
+            ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->SELECT(
                 'r.name as account_name',
                 DB::RAW('concat(p.first_name," ",p.last_name) as player_name'),
@@ -94,7 +93,7 @@ class FileController extends Controller
 
         return DB::TABLE('report as r')
             ->SELECT(DB::raw("SUM(r.total_slp) as slp, SUM(r.unclaimed) as unclaimed, SUM(r.claimed) as claimed, DATE(r.created_at) as date"))
-            ->LEFTJOIN('player AS p', 'p.account_name', '=', 'r.name')
+            ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->groupBy('date')
             ->where($where)
             ->GET(array(
@@ -106,13 +105,13 @@ class FileController extends Controller
         if($request->date != NULL){
             $notification = DB::TABLE('notification as n')
                 ->SELECT('n.*', DB::RAW('concat(p.first_name," ",p.last_name) as player_name'))
-                ->LEFTJOIN('player AS p', 'p.account_name', '=', 'n.account_name')
+                ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
                 ->whereDate('n.created_at', Carbon::parse($request->date))
                 ->PAGINATE(15);
         }else
             $notification = DB::TABLE('notification as n')
                 ->SELECT('n.*', DB::RAW('concat(p.first_name," ",p.last_name) as player_name'))
-                ->LEFTJOIN('player AS p', 'p.account_name', '=', 'n.account_name')
+                ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
                 ->PAGINATE(15);
 
         return $notification;
