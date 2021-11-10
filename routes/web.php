@@ -53,7 +53,6 @@ Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
 Route::middleware(['auth:admins'])->group(function(){
     Route::redirect('/', '/home')->name('home');
 
-
     Route::get('/getGraph', 'FileController@getGraph');
     Route::get('/getReport', 'FileController@getReport');
     Route::post('/importFile', 'FileController@import');

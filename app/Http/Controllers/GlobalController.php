@@ -151,8 +151,9 @@ class GlobalController extends Controller
         session()->flush();
     }
 
-    public function getType(){
-        return Type::WHERE('status', '!=', 'Deleted')->ORDERBY('id', 'desc')->GET();
+    public function getType(Request $request){
+        $status = $request->status;
+        return Type::WHERE([['status', '!=', 'Deleted'], ['status', '!=', $status]])->ORDERBY('id', 'desc')->GET();
     }
 
     public function saveNewType(Request $request){

@@ -41,7 +41,7 @@ import NotificationSettingsComponent from './NotificationSettingsComponent.vue'
 import AccountInformationComponent from './AccountInformationComponent.vue';
 import ReminderComponent from './ReminderComponent.vue';
 import UsersComponent from './UsersComponent.vue';
-import TypeComponent from './TypeComponent.vue';
+import TypeComponent from './TypeListComponent.vue';
 
 // Dialog Components
 import changePasswordComponent from './changePasswordComponent.vue';

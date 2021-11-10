@@ -22,6 +22,13 @@ export const routes = [
         }
     },
     { 
+        path: '/scholarList', 
+        component: require('./components/pages/ScholarListComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+    { 
         path: '/settings', 
         component: require('./components/pages/AccountComponent.vue').default,
         meta : {

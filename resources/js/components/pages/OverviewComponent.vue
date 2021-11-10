@@ -238,7 +238,6 @@ export default {
         },
         getAverage(data){
             let total = 0;
-            console.log(data);
             data.forEach(element => {
                 total += parseInt(element.slp);
             });
@@ -246,7 +245,7 @@ export default {
         }
     },
     mounted(){
-        this.getTotal();
+        this.getTotal();        
         this.$events.$on('graph-filter-set', (eventData) => this.onFilterSet(eventData));
         this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
     }

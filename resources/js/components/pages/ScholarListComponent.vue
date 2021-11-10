@@ -1,12 +1,6 @@
 <template>
     <div>
-         <!-- BEGIN #overview -->
-        <div id="player" class="section-container main-content-view bg-white">
-            <dialog-component v-bind:isOpen="addScholarDialog" v-on:isClose="addScholarDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
-                <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="addScholarDialog = false"></scholar-form-component>
-            </dialog-component>
-            <!-- BEGIN container -->
-            <!-- <div class="container"> -->
+        <div class="section-container main-content-view bg-white" id="scholars">
             <!-- BEGIN row -->
             <div class="row no-margin mt-2">
                 <div class="col-lg-2 col-md-2 col-sm-12">
@@ -55,7 +49,7 @@
                         data-path="data"
                         pagination-path=""
                         :sort-order="sortOrder"
-                        :detail-row-component="detailRow"
+                        
                         :append-params="filtersParam"
                         @vuetable:pagination-data="onPaginationData"
                         @vuetable:row-clicked="onCellClicked"
@@ -99,18 +93,14 @@
                 </div><!-- End of Pagination Buttons -->
             </div>
             <!-- END row -->
-            <!-- </div> -->
-            <!-- END container -->
         </div>
-        <!-- END # -->
     </div>
 </template>
 <script lang="ts">
-import ScholarFormComponent from './ScholarFormComponent.vue';
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
 import FieldsDef from "./PlayerFieldsDef.js";
-import PlayerDetailRow from './PlayerDetailRow.vue';
+// import PlayerDetailRow from './PlayerDetailRow.vue';
 export default {
     mixins : [ TableMixins ],
     data () {
@@ -119,7 +109,7 @@ export default {
             perPage    : 15,
             data       : [],
             import_file: '',
-            detailRow  : PlayerDetailRow,
+            // detailRow  : PlayerDetailRow,
             sortOrder  : [
                 {
                     field    : "type",   // Choose the Defualt Sorted Data by name
@@ -127,9 +117,9 @@ export default {
                 }
             ],
             css             : TableStyle,
-            selected_scholar: {},
+            selected_scholar: {},            
             filtersParam    : {
-                type : ""
+                type: ""
             },
             addScholarDialog: false,
             actionType      : 'new',
@@ -143,9 +133,9 @@ export default {
                 this.updateTable();
         }
     },
-    components:{
-        'scholar-form-component' : ScholarFormComponent
-    },
+    // components:{
+    //     'scholar-form-component' : ScholarFormComponent
+    // },
     methods:{
         addPlayer(){
             this.addScholarDialog = true;

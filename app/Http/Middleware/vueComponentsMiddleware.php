@@ -21,6 +21,7 @@ class vueComponentsMiddleware
             'home',
             'import',
             'players',
+            'scholarList',
             'notification',
             'settings',
             '403',

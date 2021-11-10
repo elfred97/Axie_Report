@@ -30,10 +30,13 @@
                                 </li>                                
                                 <li v-if="getGuardType == 'admins'">
                                     <router-link to="/import">Import</router-link>
-                                </li>
+                                </li>                                
                                 <li>
                                     <router-link to="/players" v-if="getGuardType == 'admins'">Players</router-link>
                                     <router-link to="/scholar_account" v-else>Account</router-link>
+                                </li>
+                                <li v-if="getGuardType == 'admins'">
+                                    <router-link to="/scholarList">Scholars</router-link>
                                 </li>
                                 <li>
                                     <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>
@@ -115,7 +118,6 @@ export default {
     },
     computed : {
         getGuardType(){
-            console.log(this.$store.state.global_guard_type);
             return this.$store.state.global_guard_type;
         }
     },

@@ -34,21 +34,7 @@
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4 col-sm-12">
-                        <div class="dataTables_length" id="data-table-default_length">
-                            <label>Type 
-                                <select 
-                                    name="data-table-default_length" 
-                                    aria-controls="data-table-default" 
-                                    class="custom-select custom-select-sm form-control form-control-sm"
-                                    v-model="filtersParam.type"
-                                    @change="updateTable()"
-                                    >
-                                        <option value="">All</option>
-                                        <option value="Decent">Decent</option>
-                                        <option value="Trust">Trust</option>
-                                </select> 
-                            </label>
-                        </div>
+                        <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                     </div>
                     <div class="col-md-6">
                         <div class="pull-right">
@@ -162,6 +148,12 @@ export default {
                     direction: 'desc',
                 },
             ],
+        }
+    },
+    watch : {
+        'filtersParam.type' : function(newVal){
+            if(newVal)
+                this.updateTable();
         }
     },
     methods:{

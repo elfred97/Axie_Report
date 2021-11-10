@@ -75,6 +75,7 @@ Vue.filter('formatDate', function(date){
 });
 
 Vue.component('dialog-component', require('./components/layout/DialogComponent.vue').default);
+Vue.component('type-component', require('./components/layout/TypeComponent.vue').default);
 Vue.component('header-component', require('./components/layout/HeaderComponent.vue').default);
 Vue.component('copyright-component', require('./components/layout/CopyRightComponent.vue').default);
 Vue.component('footer-component', require('./components/layout/FooterComponent.vue').default);
@@ -92,7 +93,6 @@ const router = new VueRouter({
  */
 
 router.beforeEach((to, from, next) => {
-    console.log(to);
     next();
 })
 
