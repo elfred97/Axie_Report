@@ -1,0 +1,60 @@
+export const routes = [
+    { path: '*', redirect: '/home'},
+    { 
+        path: '/home', 
+        component: require('./components/pages/HomeComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+    { 
+        path: '/import', 
+        component: require('./components/pages/ImportComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+    { 
+        path: '/players', 
+        component: require('./components/pages/PlayerComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+    { 
+        path: '/settings', 
+        component: require('./components/pages/AccountComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+    {
+        path: '/notification', 
+        component: require('./components/pages/NotificationComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+
+    { 
+        path: '/scholars', 
+        component: require('./components/scholar_pages/Home/ScholarHomeComponent.vue').default,
+        meta : {
+            admins : false,
+        }
+    },
+    { 
+        path: '/scholar_account', 
+        component: require('./components/scholar_pages/Account/ScholarAccountComponent.vue').default,
+        meta : {
+            admins : false,
+        }
+    },
+    { 
+        path: '/scholar_notification', 
+        component: require('./components/scholar_pages/Notification/ScholarNotificationComponent.vue').default,
+        meta : {
+            admins : false,
+        }
+    },
+]

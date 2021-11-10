@@ -25,16 +25,19 @@
                         <div class=" collapse navbar-collapse" id="navbar-collapse">
                             <ul class="nav">
                                 <li>
-                                    <router-link to="/home">Home</router-link>
-                                </li>
-                                <li>
+                                    <router-link to="/home" v-if="getGuardType == 'admins'">Home</router-link>
+                                    <router-link to="/scholars" v-else>Home</router-link>
+                                </li>                                
+                                <li v-if="getGuardType == 'admins'">
                                     <router-link to="/import">Import</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/players">Players</router-link>
+                                    <router-link to="/players" v-if="getGuardType == 'admins'">Players</router-link>
+                                    <router-link to="/scholar_account" v-else>Account</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/notification">Notification</router-link>
+                                    <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>
+                                    <router-link to="/scholar_notification" v-else>Notification</router-link>
                                 </li>
                             </ul>
                         </div>
@@ -71,7 +74,8 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <center>
-                                                    <router-link to="/notification" class="btn btn-sm btn-default">View All</router-link>
+                                                    <router-link to="/notification" class="btn btn-sm btn-default" v-if="getGuardType == 'admins'">View All</router-link>
+                                                    <router-link to="/scholar_notification" class="btn btn-sm btn-default" v-else>View All</router-link>
                                                     <!-- <button class="btn btn-sm btn-default">View All</button> -->
                                                 </center>
                                             </div>
@@ -86,8 +90,8 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!-- <span href="javascript:;" class="dropdown-item">Settings</span> -->
-                                    <router-link to="/settings" class="dropdown-item">Settings</router-link>
-                                    <div class="dropdown-divider"></div>
+                                    <router-link to="/settings" v-if="getGuardType == 'admins'" class="dropdown-item">Settings</router-link>
+                                    <div class="dropdown-divider" ></div>
                                     <a href="/logout" class="dropdown-item">Log Out</a>
                                 </div>
                             </li>
@@ -109,30 +113,43 @@ export default {
             accountData     : {},
         }
     },
+    computed : {
+        getGuardType(){
+            console.log(this.$store.state.global_guard_type);
+            return this.$store.state.global_guard_type;
+        }
+    },
     methods: {
         getNotification(){
-            this.axios.get('/getNotification',{
-                params : {
-                    date : 'today'
-                }
-			})
-            .then((response) => {
-                this.notificationData = response.data;
-            })
-            .catch((error) => {
-                // this.clearAll();
-                console.log(error.response.data)
-            })
+            if(this.$store.state.global_guard_type == 'admins'){
+                this.axios.get('/getNotification',{
+                    params : {
+                        date : 'today'
+                    }
+                })
+                .then((response) => {
+                    this.notificationData = response.data;
+                })
+                .catch((error) => {
+                    // this.clearAll();
+                    console.log(error.response.data)
+                })
+            }
+            else{
+
+            }
         },
         getAccountInfo(){
-            this.axios.get('/getAccountInfo')
-            .then((response) => {
-                this.accountData = response.data;
-            })
-            .catch((error) => {
-                // this.clearAll();
-                console.log(error.response.data)
-            })
+            if(this.$store.state.global_guard_type == 'admins'){
+                this.axios.get('/getAccountInfo')
+                .then((response) => {
+                    this.accountData = response.data;
+                })
+                .catch((error) => {
+                    // this.clearAll();
+                    console.log(error.response.data)
+                })
+            }
         }
     },
     created(){
@@ -140,7 +157,7 @@ export default {
         this.getAccountInfo();
         this.$events.on('update_notification', (data) => {
             this.getNotification();
-        });
+        });        
     }
 }
 </script>

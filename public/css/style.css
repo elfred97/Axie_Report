@@ -80,6 +80,10 @@ body{
     color: #00acac !important;
     font-weight: bold;
 }
+.header .header-nav .nav{
+    display: flex;
+    justify-content: flex-end;
+}
 .header .header-nav .nav>li>a{
     font-size: 13px;
 }

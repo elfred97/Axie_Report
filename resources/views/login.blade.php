@@ -71,14 +71,14 @@
 					<div class="form-group m-b-20">
 						<div class="">
 							<label for="">Username</label>
-                            <input type="text" placeholder="Username" id="username" name="username" class="form-control" value="{{old('username','mhardz_sko')}}" required>
+                            <input type="text" placeholder="Username" id="username" name="username" class="form-control" value="{{old('username','')}}" required>
                             @error('username') <span id="user_error">{{ $message }}</span> @enderror
 						</div>
 					</div>
 					<div class="form-group m-b-20">
 						<div class="">
 							<label for="">Password</label>
-                            <input type="password" placeholder="Password" id="password" name="password" class="form-control" value="{{old('password','123456')}}" required>
+                            <input type="password" placeholder="Password" id="password" name="password" class="form-control" value="{{old('password','')}}" required>
                             @error('password') <span id="user_error" >{{ $message }}</span> @enderror
 						</div>
 					</div>
