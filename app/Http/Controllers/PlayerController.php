@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Type;
 use DB;
 use File;
 use Excel;
@@ -92,5 +93,24 @@ class PlayerController extends Controller
     public function import(Request $request){
         Excel::import(new PlayerImport, $request->file);
         return "File Uploaded";
+    }
+
+
+    public function getPenaltyCount($type_id = null)
+    {
+        $type = $type_id ? Type::findOrNew($type_id)->name :'All';
+        if(!$type) {
+            return $this->buildErrorJson('Type not found!');
+        }
+
+        $penalty_counts = Player::select('players.penalty', DB::raw('count(*) as total'))
+            ->groupBy('players.penalty')
+            ->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
+            ->leftJoin('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->when($type_id, function ($q) use ($type_id) {
+                $q->whereRaw('s.type_id='.(int) $type_id);
+            })->get();
+
+        return $this->buildJson(['penalties' => $penalty_counts, 'type' => $type]);
     }
 }

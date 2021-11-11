@@ -50,6 +50,8 @@ Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
 });
 
 
+
+
 Route::middleware(['auth:admins'])->group(function(){
     Route::redirect('/', '/home')->name('home');
     Route::post('saveNotificationSettings’', [NotificationSettingControler::class,'save'])->name('scholar.name');
@@ -80,6 +82,8 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('/getUsers', 'GlobalController@getUsers');
     Route::post('/updateUser', 'GlobalController@updateUser');
     Route::post('/deleteUser', 'GlobalController@deleteUser');
+
+    Route::get('penalty-count/{type?}', 'PlayerController@getPenaltyCount');
 
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
 
