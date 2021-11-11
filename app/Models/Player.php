@@ -9,6 +9,7 @@ class Player extends Model
     public $timestamps = true;
     protected $fillable = [
         'account_name',
+        'password',
         'ronin_address',
         'market_place_email',
         'penalty',
@@ -23,6 +24,6 @@ class Player extends Model
 
     public function reports()
     {
-        return $this->hasMany(Report::class,'name','account_name');
+        return $this->hasMany(Report::class,'ronin_address','ronin_address');
     }
 }
