@@ -2,8 +2,8 @@
     <div>
          <!-- BEGIN #overview -->
         <div id="player" class="section-container main-content-view bg-white">
-            <dialog-component v-bind:isOpen="addScholarDialog" v-on:isClose="addScholarDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
-                <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="addScholarDialog = false"></scholar-form-component>
+            <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
+                <player-form-component v-bind:scholarData="selected_player" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></player-form-component>
             </dialog-component>
             <!-- BEGIN container -->
             <!-- <div class="container"> -->
@@ -106,7 +106,7 @@
     </div>
 </template>
 <script lang="ts">
-import ScholarFormComponent from './ScholarFormComponent.vue';
+import PlayerFormComponent from './PlayerFormComponent.vue';
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
 import FieldsDef from "./PlayerFieldsDef.js";
@@ -127,11 +127,11 @@ export default {
                 }
             ],
             css             : TableStyle,
-            selected_scholar: {},
+            selected_player : {},
             filtersParam    : {
                 type : ""
             },
-            addScholarDialog: false,
+            openDialog: false,
             actionType      : 'new',
             isLoading       : false,
             fullPage        : true,
@@ -144,17 +144,17 @@ export default {
         }
     },
     components:{
-        'scholar-form-component' : ScholarFormComponent
+        'player-form-component' : PlayerFormComponent
     },
     methods:{
         addPlayer(){
-            this.addScholarDialog = true;
+            this.openDialog = true;
             this.actionType = 'new';
-            this.selected_scholar = {}
+            this.selected_player = {}
         },
         editScholar(data){
-            this.selected_scholar = data;
-            this.addScholarDialog = true;
+            this.selected_player = data;
+            this.openDialog = true;
             this.actionType = 'update';
         },
         deleteScholar(id){
@@ -212,7 +212,7 @@ export default {
             this.updateTable();
         });
         this.$root.$on('isClose', (data) => {
-            this.addScholarDialog = false;
+            this.openDialog = false;
         });
     }
 }
