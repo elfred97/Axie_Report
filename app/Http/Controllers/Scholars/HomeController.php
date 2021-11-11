@@ -4,6 +4,10 @@ namespace App\Http\Controllers\Scholars;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Excel;
+use File;
+use App\Models\Scholar;
+use App\Imports\ScholarImport;
 
 class HomeController extends Controller
 {
@@ -25,5 +29,9 @@ class HomeController extends Controller
     public function index()
     {
         return view('main');
+    }
+    public function import(Request $request){
+        Excel::import(new ScholarImport, $request->file);
+        return "File Uploaded";
     }
 }

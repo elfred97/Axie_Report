@@ -38,7 +38,7 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->SELECT(
                 'r.name as account_name',
-                'p.type',
+                's.type_id',
                 DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
                 'r.*'
                 )

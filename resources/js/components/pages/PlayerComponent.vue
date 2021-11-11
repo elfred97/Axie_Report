@@ -34,8 +34,8 @@
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="pull-right">
                         <input name="file" type="file" ref="file" @change="importPlayer()" class="hide">
-                        <button class="btn btn-primary btn-sm"  @click="addPlayer"><i class="fa fa-plus"></i> Add New Scholar </button>
-                        <button class="btn btn-warning btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Scholar </button>
+                        <button class="btn btn-primary btn-sm"  @click="addPlayer"><i class="fa fa-plus"></i> Add New Axie Account </button>
+                        <button class="btn btn-warning btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Axie Account </button>
                     </div>
                 </div>
             </div>
@@ -191,7 +191,7 @@ export default {
             let formData = new FormData();
             formData.append('file', this.import_file);
 
-            this.axios.post('/importScholar',
+            this.axios.post('/importPlayer',
                 formData,
                 {
                     headers: {

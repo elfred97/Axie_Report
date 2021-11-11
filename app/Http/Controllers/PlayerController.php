@@ -19,8 +19,11 @@ class PlayerController extends Controller
         return Player::
             SELECT(
                 '*',
-                DB::RAW('CONCAT(first_name, " ", last_name) as player_name')
+                's.*',
+                DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name')
             )
+            ->LEFTJOIN('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
+            ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->WHERE($where)
             ->PAGINATE($request->per_page);
     }
@@ -86,7 +89,7 @@ class PlayerController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
-    public function importScholar(Request $request){
+    public function import(Request $request){
         Excel::import(new PlayerImport, $request->file);
         return "File Uploaded";
     }

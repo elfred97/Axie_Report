@@ -152,8 +152,15 @@ class GlobalController extends Controller
     }
 
     public function getType(Request $request){
+        $where = [];
         $status = $request->status;
-        return Type::WHERE([['status', '!=', 'Deleted'], ['status', '!=', $status]])->ORDERBY('id', 'desc')->GET();
+        
+        if($status)
+            array_push($where, ['status', '=', $status]);
+
+        array_push($where, ['status', '!=', 'Deleted']);
+        
+        return Type::WHERE($where)->ORDERBY('id', 'desc')->GET();
     }
 
     public function saveNewType(Request $request){

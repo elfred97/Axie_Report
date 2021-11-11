@@ -69571,7 +69571,7 @@ __webpack_require__.r(__webpack_exports__);
             let formData = new FormData();
             formData.append('file', this.import_file);
 
-            this.axios.post('/importScholar',
+            this.axios.post('/importPlayer',
                 formData,
                 {
                     headers: {
@@ -69696,64 +69696,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_0__["TableMixins"] ],
@@ -69791,7 +69733,7 @@ __webpack_require__.r(__webpack_exports__);
     //     'scholar-form-component' : ScholarFormComponent
     // },
     methods:{
-        addPlayer(){
+        addScholar(){
             this.addScholarDialog = true;
             this.actionType = 'new';
             this.selected_scholar = {}
@@ -69820,7 +69762,7 @@ __webpack_require__.r(__webpack_exports__);
             },() =>this.$noty.error("Cancel: Item not removed")
             )            
         },
-        importPlayer(){
+        importScholar(){
             this.import_file = this.$refs.file.files[0];
 
             this.$alertify.confirmWithTitle("Import CSV File", "Confirm to upload file"+"</br>"+this.import_file.name, 
@@ -70350,7 +70292,7 @@ var render = function() {
                     [
                       _vm.getGuardType == "admins"
                         ? _c("router-link", { attrs: { to: "/players" } }, [
-                            _vm._v("Players")
+                            _vm._v("Axie Accounts")
                           ])
                         : _c(
                             "router-link",
@@ -72548,7 +72490,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fa fa-plus" }),
-                  _vm._v(" Add New Scholar ")
+                  _vm._v(" Add New Axie Account ")
                 ]
               ),
               _vm._v(" "),
@@ -72564,7 +72506,7 @@ var render = function() {
                 },
                 [
                   _c("i", { staticClass: "fa fa-plus" }),
-                  _vm._v(" Import Scholar ")
+                  _vm._v(" Import Axie Account ")
                 ]
               )
             ])
@@ -73605,7 +73547,7 @@ var render = function() {
                 attrs: { name: "file", type: "file" },
                 on: {
                   change: function($event) {
-                    return _vm.importPlayer()
+                    return _vm.importScholar()
                   }
                 }
               }),
@@ -73614,7 +73556,7 @@ var render = function() {
                 "button",
                 {
                   staticClass: "btn btn-primary btn-sm",
-                  on: { click: _vm.addPlayer }
+                  on: { click: _vm.addScholar }
                 },
                 [
                   _c("i", { staticClass: "fa fa-plus" }),
@@ -73639,154 +73581,6 @@ var render = function() {
               )
             ])
           ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row no-margin mt-1" }, [
-          _c(
-            "div",
-            { staticClass: "col-lg-12 col-md-12 col-sm-12" },
-            [
-              _c("loading", {
-                attrs: {
-                  active: _vm.isLoading,
-                  "can-cancel": true,
-                  "on-cancel": _vm.onCancel,
-                  "is-full-page": _vm.fullPage
-                },
-                on: {
-                  "update:active": function($event) {
-                    _vm.isLoading = $event
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c("vuetable", {
-                ref: "vuetable",
-                attrs: {
-                  "api-url": "/getPlayers",
-                  fields: _vm.fields,
-                  css: _vm.css,
-                  "per-page": _vm.perPage,
-                  "data-path": "data",
-                  "pagination-path": "",
-                  "sort-order": _vm.sortOrder,
-                  "append-params": _vm.filtersParam
-                },
-                on: {
-                  "vuetable:pagination-data": _vm.onPaginationData,
-                  "vuetable:row-clicked": _vm.onCellClicked,
-                  "vuetable:loading": _vm.onLoading,
-                  "vuetable:loaded": _vm.onLoaded
-                },
-                scopedSlots: _vm._u([
-                  {
-                    key: "detailRowIndicator",
-                    fn: function(props) {
-                      return [
-                        _c("div", [
-                          _vm.$refs.vuetable.isVisibleDetailRow(
-                            props.rowData.id
-                          )
-                            ? _c("i", { staticClass: "fas fa-minus-circle" })
-                            : _c("i", { staticClass: "fas fa-plus-circle" })
-                        ])
-                      ]
-                    }
-                  },
-                  {
-                    key: "player_status",
-                    fn: function(props) {
-                      return _c("div", {}, [
-                        _c("div", [
-                          props.rowData.status == "PLAYING"
-                            ? _c(
-                                "span",
-                                { staticClass: "text-bold text-success" },
-                                [_vm._v("PLAYING")]
-                              )
-                            : props.rowData.status == "RESIGNED"
-                            ? _c(
-                                "span",
-                                { staticClass: "text-bold text-danger" },
-                                [_vm._v("RESIGNED")]
-                              )
-                            : props.rowData.status == "TERMINATED"
-                            ? _c(
-                                "span",
-                                { staticClass: "text-bold text-danger" },
-                                [_vm._v("TERMINATED")]
-                              )
-                            : _c(
-                                "span",
-                                {
-                                  staticClass:
-                                    "text-bold text-default uppercase"
-                                },
-                                [_vm._v(_vm._s(props.rowData.status))]
-                              )
-                        ])
-                      ])
-                    }
-                  },
-                  {
-                    key: "action",
-                    fn: function(props) {
-                      return _c("div", {}, [
-                        _c("div", { staticClass: "btn-group" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-white btn-xs",
-                              on: {
-                                click: function($event) {
-                                  return _vm.editScholar(props.rowData)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-pencil-alt" })]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-white btn-xs",
-                              on: {
-                                click: function($event) {
-                                  return _vm.deleteScholar(props.rowData.id)
-                                }
-                              }
-                            },
-                            [_c("i", { staticClass: "fa fa-trash" })]
-                          )
-                        ])
-                      ])
-                    }
-                  }
-                ])
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-6" },
-            [_c("vuetable-pagination-info", { ref: "paginationInfo" })],
-            1
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "col-md-6 text-right" },
-            [
-              _c("vuetable-pagination", {
-                ref: "pagination",
-                attrs: { css: _vm.css.pagination },
-                on: { "vuetable-pagination:change-page": _vm.onChangePage }
-              })
-            ],
-            1
-          )
         ])
       ]
     )

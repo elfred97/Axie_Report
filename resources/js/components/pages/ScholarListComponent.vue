@@ -27,72 +27,14 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="pull-right">
-                        <input name="file" type="file" ref="file" @change="importPlayer()" class="hide">
-                        <button class="btn btn-primary btn-sm"  @click="addPlayer"><i class="fa fa-plus"></i> Add New Scholar </button>
+                        <input name="file" type="file" ref="file" @change="importScholar()" class="hide">
+                        <button class="btn btn-primary btn-sm"  @click="addScholar"><i class="fa fa-plus"></i> Add New Scholar </button>
                         <button class="btn btn-warning btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Scholar </button>
                     </div>
                 </div>
             </div>
             <!-- END row -->
-            <!-- BEGIN row -->
-            <div class="row no-margin mt-1">
-                <div class="col-lg-12 col-md-12 col-sm-12">
-                    <loading :active.sync="isLoading" 
-                        :can-cancel="true" 
-                        :on-cancel="onCancel"
-                        :is-full-page="fullPage"></loading>
-                    <vuetable ref="vuetable"
-                        :api-url="'/getPlayers'"
-                        :fields="fields"
-                        :css="css"
-                        :per-page="perPage"
-                        data-path="data"
-                        pagination-path=""
-                        :sort-order="sortOrder"
-                        
-                        :append-params="filtersParam"
-                        @vuetable:pagination-data="onPaginationData"
-                        @vuetable:row-clicked="onCellClicked"
-                        @vuetable:loading="onLoading"
-                        @vuetable:loaded="onLoaded">
-                        <template slot="detailRowIndicator" slot-scope="props">
-                            <div>
-                                <i v-if="$refs.vuetable.isVisibleDetailRow(props.rowData.id)"
-                                    class="fas fa-minus-circle"></i>
-                                <i v-else class="fas fa-plus-circle"></i>
-                            </div>
-                        </template>
-                        <div slot="player_status" slot-scope="props">
-                            <div>
-                                <span v-if="props.rowData.status == 'PLAYING'" class="text-bold text-success">PLAYING</span>
-                                <span v-else-if="props.rowData.status == 'RESIGNED'" class="text-bold text-danger">RESIGNED</span>
-                                <span v-else-if="props.rowData.status == 'TERMINATED'" class="text-bold text-danger">TERMINATED</span>
-                                <span v-else class="text-bold text-default uppercase">{{ props.rowData.status }}</span>
-                            </div>
-                        </div>
-                        <div slot="action" slot-scope="props">
-                            <div class="btn-group">
-                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> </button>
-                                <button class="btn btn-white btn-xs" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> </button>
-                            </div>
-                        </div>
-                    </vuetable>
-                    <!-- Vuetable -->
-                </div>
-                <!-- Pagination Info -->
-                <div class="col-md-6">
-                    <vuetable-pagination-info ref="paginationInfo"
-                    ></vuetable-pagination-info>
-                </div><!-- End of Pagination Info -->
-                <!-- Pagination Buttons -->
-                <div class="col-md-6 text-right">
-                    <vuetable-pagination ref="pagination"
-                        @vuetable-pagination:change-page="onChangePage"
-                        :css="css.pagination"
-                    ></vuetable-pagination>
-                </div><!-- End of Pagination Buttons -->
-            </div>
-            <!-- END row -->
+           
         </div>
     </div>
 </template>
@@ -137,7 +79,7 @@ export default {
     //     'scholar-form-component' : ScholarFormComponent
     // },
     methods:{
-        addPlayer(){
+        addScholar(){
             this.addScholarDialog = true;
             this.actionType = 'new';
             this.selected_scholar = {}
@@ -166,7 +108,7 @@ export default {
             },() =>this.$noty.error("Cancel: Item not removed")
             )            
         },
-        importPlayer(){
+        importScholar(){
             this.import_file = this.$refs.file.files[0];
 
             this.$alertify.confirmWithTitle("Import CSV File", "Confirm to upload file"+"</br>"+this.import_file.name, 

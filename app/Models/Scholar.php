@@ -22,8 +22,9 @@ class Scholar extends Authenticatable
         'last_name',
         'username',
         'password',
+        'date_started',
         'status',
-        'type'
+        'type_id'
     ];
 
     /**

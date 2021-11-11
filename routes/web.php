@@ -67,7 +67,9 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('/getPlayers', 'PlayerController@getPlayers');
     Route::post('/saveScholar', 'PlayerController@saveScholar');
     Route::post('/deleteScholar', 'PlayerController@deleteScholar');
-    Route::post('/importScholar', 'PlayerController@importScholar');
+    Route::post('/importPlayer', 'PlayerController@import');
+
+    Route::post('/importScholar', [HomeController::class,'import'])->name('scholar.import');
 
     Route::get('/getType', 'GlobalController@getType');
     Route::post('/deleteType', 'GlobalController@deleteType');

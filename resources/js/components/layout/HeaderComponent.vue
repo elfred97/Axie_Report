@@ -32,7 +32,7 @@
                                     <router-link to="/import">Import</router-link>
                                 </li>                                
                                 <li>
-                                    <router-link to="/players" v-if="getGuardType == 'admins'">Players</router-link>
+                                    <router-link to="/players" v-if="getGuardType == 'admins'">Axie Accounts</router-link>
                                     <router-link to="/scholar_account" v-else>Account</router-link>
                                 </li>
                                 <li v-if="getGuardType == 'admins'">
