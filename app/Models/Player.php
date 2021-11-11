@@ -9,6 +9,7 @@ class Player extends Model
     public $timestamps = true;
     protected $fillable = [
         'account_name',
+        'password',
         'ronin_address',
         'market_place_email',
         'penalty',
@@ -19,5 +20,10 @@ class Player extends Model
     public function scholar()
     {
         return $this->hasOneThrough(Scholar::class,PlayerScholarHistory::class);
+    }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class,'ronin_address','ronin_address');
     }
 }
