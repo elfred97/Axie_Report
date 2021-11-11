@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use \App\Http\Controllers\Scholars\HomeController;
+use \App\Http\Controllers\NotificationSettingControler;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,7 +43,6 @@ Auth::routes();
 //
 Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
     Route::get('/', [HomeController::class,'index'])->name('scholar.name');
-
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
 //    Route::middleware(['vue.components'])->group(function(){
 //        Route::get('/{route}', 'GlobalController@index'); //
@@ -52,6 +52,7 @@ Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
 
 Route::middleware(['auth:admins'])->group(function(){
     Route::redirect('/', '/home')->name('home');
+    Route::post('saveNotificationSettings’', [NotificationSettingControler::class,'save'])->name('scholar.name');
 
     Route::get('/getGraph', 'FileController@getGraph');
     Route::get('/getReport', 'FileController@getReport');

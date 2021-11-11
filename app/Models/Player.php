@@ -20,4 +20,9 @@ class Player extends Model
     {
         return $this->hasOneThrough(Scholar::class,PlayerScholarHistory::class);
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class,'name','account_name');
+    }
 }
