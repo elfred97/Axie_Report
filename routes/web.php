@@ -70,6 +70,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::post('/importPlayer', 'PlayerController@import');
 
     Route::post('/importScholar', [HomeController::class,'import'])->name('scholar.import');
+    Route::get('/getScholars', [HomeController::class,'getScholars'])->name('scholar.getScholars');
 
     Route::get('/getType', 'GlobalController@getType');
     Route::post('/deleteType', 'GlobalController@deleteType');

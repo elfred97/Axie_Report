@@ -34,4 +34,7 @@ class HomeController extends Controller
         Excel::import(new ScholarImport, $request->file);
         return "File Uploaded";
     }
+    public function getScholars(Request $request){
+        return Scholar::PAGINATE(15);
+    }
 }

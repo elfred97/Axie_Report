@@ -1,6 +1,9 @@
 <template>
     <div>
-        <div class="section-container main-content-view bg-white" id="scholars">
+        <div id="scholars" class="section-container main-content-view bg-white">
+            <dialog-component v-bind:isOpen="addScholarDialog" v-on:isClose="addScholarDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
+                <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="addScholarDialog = false"></scholar-form-component>
+            </dialog-component>
             <!-- BEGIN row -->
             <div class="row no-margin mt-2">
                 <div class="col-lg-2 col-md-2 col-sm-12">
@@ -34,14 +37,58 @@
                 </div>
             </div>
             <!-- END row -->
-           
+            <!-- BEGIN row -->
+            <div class="row no-margin mt-1">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <loading :active.sync="isLoading" 
+                        :can-cancel="true" 
+                        :on-cancel="onCancel"
+                        :is-full-page="fullPage"></loading>
+                    <vuetable ref="vuetable"
+                        :api-url="'/getScholars'"
+                        :fields="fields"
+                        :css="css"
+                        :per-page="perPage"
+                        data-path="data"
+                        pagination-path=""
+                        :sort-order="sortOrder"
+                        :append-params="filtersParam"
+                        @vuetable:pagination-data="onPaginationData"
+                        @vuetable:row-clicked="onCellClicked"
+                        @vuetable:loading="onLoading"
+                        @vuetable:loaded="onLoaded">
+                        
+                        <div slot="action" slot-scope="props">
+                            <div class="btn-group">
+                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> </button>
+                                <button class="btn btn-white btn-xs" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> </button>
+                            </div>
+                        </div>
+                    </vuetable>
+                    <!-- Vuetable -->
+                </div>
+                <!-- Pagination Info -->
+                <div class="col-md-6">
+                    <vuetable-pagination-info ref="paginationInfo"
+                    ></vuetable-pagination-info>
+                </div><!-- End of Pagination Info -->
+                <!-- Pagination Buttons -->
+                <div class="col-md-6 text-right">
+                    <vuetable-pagination ref="pagination"
+                        @vuetable-pagination:change-page="onChangePage"
+                        :css="css.pagination"
+                    ></vuetable-pagination>
+                </div><!-- End of Pagination Buttons -->
+            </div>
+            <!-- END row -->
         </div>
     </div>
 </template>
 <script lang="ts">
+import ScholarFormComponent from './ScholarFormComponent.vue';
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
-import FieldsDef from "./PlayerFieldsDef.js";
+import FieldsDef from "./ScholarsListFieldsDef.js";
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 export default {
     mixins : [ TableMixins ],
@@ -75,9 +122,9 @@ export default {
                 this.updateTable();
         }
     },
-    // components:{
-    //     'scholar-form-component' : ScholarFormComponent
-    // },
+    components:{
+        'scholar-form-component' : ScholarFormComponent
+    },
     methods:{
         addScholar(){
             this.addScholarDialog = true;
