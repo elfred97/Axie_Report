@@ -10,6 +10,7 @@ use Storage;
 use Illuminate\Http\Request;
 use App\Models\Report;
 use App\Models\Player;
+use App\Models\Type;
 use App\Imports\ReportImport;
 use App\Models\Notification;
 use App\Models\importModel as ImportModel;
@@ -86,6 +87,8 @@ class FileController extends Controller
         $type  = $request->type;
         $where = [];
 
+        // $typeData = Type::WHERE('id', $type)->FIRST();
+
         if ($year)
             array_push($where, [DB::raw('YEAR(r.created_at)'), '=', $year]);
 
@@ -93,11 +96,13 @@ class FileController extends Controller
             array_push($where, [DB::raw('MONTH(r.created_at)'), '=', $month]);
 
         if ($type)
-            array_push($where, ['p.type', '=', $type]);
+            array_push($where, ['s.type_id', '=', $type]);
 
         return DB::TABLE('report as r')
             ->SELECT(DB::raw("SUM(r.total_slp) as slp, SUM(r.unclaimed) as unclaimed, SUM(r.claimed) as claimed, DATE(r.created_at) as date"))
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
+            ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'p.id')
+            ->LEFTJOIN('scholars as s', 's.id', '=', 'history.scholar_id')
             ->groupBy('date')
             ->where($where)
             ->GET(array(

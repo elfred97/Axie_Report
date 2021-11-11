@@ -101,7 +101,7 @@
                             <div class="stats-content">
                                 <div class="stats-title">1st PENALTY</div>
                                 <div class="stats-number">
-                                    9
+                                    {{ penalties.first }}
                                 </div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>
@@ -116,7 +116,7 @@
                             <div class="stats-content">
                                 <div class="stats-title">2nd PENALTY</div>
                                 <div class="stats-number">
-                                    89
+                                    {{ penalties.second }}
                                 </div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>
@@ -131,7 +131,7 @@
                             <div class="stats-content">
                                 <div class="stats-title">3rd PENALTY</div>
                                 <div class="stats-number">
-                                    12
+                                    {{ penalties.third }}
                                 </div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>
@@ -163,7 +163,12 @@ export default {
                 selected_year : '',
                 selected_month: '',
                 selected_type : '',
-            }
+            },
+            penalties : {
+                first : 0,
+                second : 0,
+                third : 0,
+            },
         }
     },
     methods:{
@@ -242,11 +247,35 @@ export default {
                 total += parseInt(element.slp);
             });
             this.total_average_slp = Math.round(total / data.length);
-        }
+        },
+        getPenalties(filter){
+
+            if(filter.selected_type != ''){
+                this.axios.get('/penalty-count/'+filter.selected_type)
+                .then((response) => {
+                    response.data.penalties.forEach( element => {
+                        if(element.penalty == 1)
+                            this.penalties.first = element.total;
+                        else if(element.penalty == 2)
+                            this.penalties.second = element.total;
+                        else if(element.penalty == 3)
+                            this.penalties.third = element.total;
+                    });
+                })
+                .catch((error) => {
+                    // this.clearAll();
+                    console.log("error")
+                })
+            }
+        },
     },
     mounted(){
         this.getTotal();        
-        this.$events.$on('graph-filter-set', (eventData) => this.onFilterSet(eventData));
+        this.$events.$on('graph-filter-set', (eventData) => {
+            this.filters = eventData;
+            this.onFilterSet(eventData);
+            this.getPenalties(eventData);
+        });
         this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
     }
 }

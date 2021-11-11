@@ -5,44 +5,53 @@
             <!-- BEGIN container -->
             <div class="container">
                 <!-- BEGIN section-title -->
-                <h4 class="section-title clearfix">
-                    <div class="row">
-                        <div class="col-lg-8">
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <label for="">Year</label>
-                                    <select name="" id="" class="form-control" v-model="filter.selected_year" @change="getGraph()">
-                                        <option value=""></option>
-                                        <option :value="year" v-for="year in year">{{ year}}</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="">Month</label>
-                                    <select name="" id="" class="form-control" v-model="filter.selected_month" @change="getGraph()">
-                                        <option value=""></option>
-                                        <option :value="index + 1" v-for="(month, index) in month">{{ month }}</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2">
-                                    <label for="">Type</label>
-                                    <select name="" id="" class="form-control" v-model="filter.selected_type" @change="getGraph()">
-                                        <option value="">All</option>
-                                        <option value="Trust">Trust</option>
-                                        <option value="Decent">Decent</option>
-                                    </select>
-                                </div>
-                                <div class="col-lg-2">
-                                    
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="row">
+                            <div class="col-lg-2">
+                                <div class="dataTables_length" id="data-table-default_length">
+                                    <label>Year 
+                                        <select 
+                                            name="data-table-default_length" 
+                                            aria-controls="data-table-default" 
+                                            class="custom-select custom-select-sm form-control form-control-sm"
+                                            @change="getGraph"
+                                            v-model="filter.selected_year"
+                                            >
+                                                <option :value="year" v-for="year in year">{{ year}}</option>
+                                        </select> 
+                                    </label>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <!-- <div class="pull-right">
-                                <a href="#" class="btn btn-primary btn-sm">SHOW ALL</a>
-                            </div> -->
+                            <div class="col-lg-2">
+                                <div class="dataTables_length" id="data-table-default_length">
+                                    <label>Month 
+                                        <select 
+                                            name="data-table-default_length" 
+                                            aria-controls="data-table-default" 
+                                            class="custom-select custom-select-sm form-control form-control-sm"
+                                            @change="getGraph"
+                                            v-model="filter.selected_month"
+                                            >
+                                                <option :value="index + 1" v-for="(month, index) in month">{{ month }}</option>
+                                        </select> 
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <type-component :type="filter.selected_type" @updateType="filter.selected_type = $event"></type-component>
+                            </div>
+                            <div class="col-lg-2">
+                                
+                            </div>
                         </div>
                     </div>
-                </h4>
+                    <div class="col-lg-4">
+                        <!-- <div class="pull-right">
+                            <a href="#" class="btn btn-primary btn-sm">SHOW ALL</a>
+                        </div> -->
+                    </div>
+                </div>
                 <!-- END section-title -->
                 <!-- BEGIN category-container -->
                 <div class="category-container">
@@ -108,6 +117,12 @@ export default {
                 selected_type : '',
 
             },
+            selected_type : '',
+        }
+    },
+    watch : {
+        'filter.selected_type': function(newVal){
+            this.getGraph();
         }
     },
     methods: {
@@ -132,7 +147,7 @@ export default {
                             moment(element.date).format('YYYY, MM, D'), 
                            element.slp
                         ])
-                });                
+                });
                 this.graphData = response.data;
                 this.$events.fire('graph-filter-set', this.filter);
                 this.$events.fire('graph-data', response.data);
@@ -140,13 +155,12 @@ export default {
             .catch((error) => {
                 // this.clearAll();
             })
-        }
+        },
     },
     components: {
       JSCharting,
     },
     mounted(){
-        this.filter.selected_type = '';
         this.filter.selected_year = moment().format('YYYY');
         this.filter.selected_month = moment().format('M');
         // console.log(this.month[moment().format('M')])

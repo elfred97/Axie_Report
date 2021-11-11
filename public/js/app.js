@@ -5939,7 +5939,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     updateType: function updateType(event) {
-      if (this.type) this.$emit('updateType', this.selected);else if (this.type_id) this.$emit('updateTypeID', this.selected);
+      this.$emit('updateType', event.target.value);
     }
   },
   created: function created() {
@@ -6256,6 +6256,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -6283,8 +6292,14 @@ __webpack_require__.r(__webpack_exports__);
         selected_year: '',
         selected_month: '',
         selected_type: ''
-      }
+      },
+      selected_type: ''
     };
+  },
+  watch: {
+    'filter.selected_type': function filterSelected_type(newVal) {
+      this.getGraph();
+    }
   },
   methods: {
     getGraph: function getGraph() {
@@ -6319,7 +6334,6 @@ __webpack_require__.r(__webpack_exports__);
     JSCharting: jscharting_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    this.filter.selected_type = '';
     this.filter.selected_year = moment().format('YYYY');
     this.filter.selected_month = moment().format('M'); // console.log(this.month[moment().format('M')])
 
@@ -7022,6 +7036,11 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         selected_year: '',
         selected_month: '',
         selected_type: ''
+      },
+      penalties: {
+        first: 0,
+        second: 0,
+        third: 0
       }
     };
   },
@@ -7100,17 +7119,35 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         total += parseInt(element.slp);
       });
       this.total_average_slp = Math.round(total / data.length);
+    },
+    getPenalties: function getPenalties(filter) {
+      var _this3 = this;
+
+      if (filter.selected_type != '') {
+        this.axios.get('/penalty-count/' + filter.selected_type).then(function (response) {
+          response.data.penalties.forEach(function (element) {
+            if (element.penalty == 1) _this3.penalties.first = element.total;else if (element.penalty == 2) _this3.penalties.second = element.total;else if (element.penalty == 3) _this3.penalties.third = element.total;
+          });
+        })["catch"](function (error) {
+          // this.clearAll();
+          console.log("error");
+        });
+      }
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.getTotal();
     this.$events.$on('graph-filter-set', function (eventData) {
-      return _this3.onFilterSet(eventData);
+      _this4.filters = eventData;
+
+      _this4.onFilterSet(eventData);
+
+      _this4.getPenalties(eventData);
     });
     this.$events.$on('graph-data', function (eventData) {
-      return _this3.getAverage(eventData);
+      return _this4.getAverage(eventData);
     });
   }
 });
@@ -70923,15 +70960,9 @@ var render = function() {
               _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
               _vm._v(" "),
               _vm._l(_vm.typeData, function(type_data) {
-                return _c(
-                  "option",
-                  {
-                    domProps: {
-                      value: _vm.type ? type_data.name : type_data.id
-                    }
-                  },
-                  [_vm._v(_vm._s(type_data.name))]
-                )
+                return _c("option", { domProps: { value: type_data.id } }, [
+                  _vm._v(_vm._s(type_data.name))
+                ])
               })
             ],
             2
@@ -71232,181 +71263,156 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "section-container", attrs: { id: "graph" } }, [
       _c("div", { staticClass: "container" }, [
-        _c("h4", { staticClass: "section-title clearfix" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-lg-8" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-lg-2" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Year")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-lg-8" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "dataTables_length",
+                    attrs: { id: "data-table-default_length" }
+                  },
+                  [
+                    _c("label", [
+                      _vm._v("Year \n                                    "),
+                      _c(
+                        "select",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filter.selected_year,
-                          expression: "filter.selected_year"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { name: "", id: "" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.filter,
-                              "selected_year",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filter.selected_year,
+                              expression: "filter.selected_year"
+                            }
+                          ],
+                          staticClass:
+                            "custom-select custom-select-sm form-control form-control-sm",
+                          attrs: {
+                            name: "data-table-default_length",
+                            "aria-controls": "data-table-default"
                           },
-                          function($event) {
-                            return _vm.getGraph()
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.filter,
+                                  "selected_year",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                              _vm.getGraph
+                            ]
                           }
-                        ]
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }),
-                      _vm._v(" "),
-                      _vm._l(_vm.year, function(year) {
-                        return _c("option", { domProps: { value: year } }, [
-                          _vm._v(_vm._s(year))
-                        ])
-                      })
-                    ],
-                    2
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-2" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Month")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
+                        },
+                        _vm._l(_vm.year, function(year) {
+                          return _c("option", { domProps: { value: year } }, [
+                            _vm._v(_vm._s(year))
+                          ])
+                        }),
+                        0
+                      )
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-2" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "dataTables_length",
+                    attrs: { id: "data-table-default_length" }
+                  },
+                  [
+                    _c("label", [
+                      _vm._v("Month \n                                    "),
+                      _c(
+                        "select",
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filter.selected_month,
-                          expression: "filter.selected_month"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { name: "", id: "" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.filter,
-                              "selected_month",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.filter.selected_month,
+                              expression: "filter.selected_month"
+                            }
+                          ],
+                          staticClass:
+                            "custom-select custom-select-sm form-control form-control-sm",
+                          attrs: {
+                            name: "data-table-default_length",
+                            "aria-controls": "data-table-default"
                           },
-                          function($event) {
-                            return _vm.getGraph()
+                          on: {
+                            change: [
+                              function($event) {
+                                var $$selectedVal = Array.prototype.filter
+                                  .call($event.target.options, function(o) {
+                                    return o.selected
+                                  })
+                                  .map(function(o) {
+                                    var val = "_value" in o ? o._value : o.value
+                                    return val
+                                  })
+                                _vm.$set(
+                                  _vm.filter,
+                                  "selected_month",
+                                  $event.target.multiple
+                                    ? $$selectedVal
+                                    : $$selectedVal[0]
+                                )
+                              },
+                              _vm.getGraph
+                            ]
                           }
-                        ]
+                        },
+                        _vm._l(_vm.month, function(month, index) {
+                          return _c(
+                            "option",
+                            { domProps: { value: index + 1 } },
+                            [_vm._v(_vm._s(month))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-lg-3" },
+                [
+                  _c("type-component", {
+                    attrs: { type: _vm.filter.selected_type },
+                    on: {
+                      updateType: function($event) {
+                        _vm.filter.selected_type = $event
                       }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }),
-                      _vm._v(" "),
-                      _vm._l(_vm.month, function(month, index) {
-                        return _c(
-                          "option",
-                          { domProps: { value: index + 1 } },
-                          [_vm._v(_vm._s(month))]
-                        )
-                      })
-                    ],
-                    2
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-2" }, [
-                  _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
-                  _vm._v(" "),
-                  _c(
-                    "select",
-                    {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.filter.selected_type,
-                          expression: "filter.selected_type"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: { name: "", id: "" },
-                      on: {
-                        change: [
-                          function($event) {
-                            var $$selectedVal = Array.prototype.filter
-                              .call($event.target.options, function(o) {
-                                return o.selected
-                              })
-                              .map(function(o) {
-                                var val = "_value" in o ? o._value : o.value
-                                return val
-                              })
-                            _vm.$set(
-                              _vm.filter,
-                              "selected_type",
-                              $event.target.multiple
-                                ? $$selectedVal
-                                : $$selectedVal[0]
-                            )
-                          },
-                          function($event) {
-                            return _vm.getGraph()
-                          }
-                        ]
-                      }
-                    },
-                    [
-                      _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "Trust" } }, [
-                        _vm._v("Trust")
-                      ]),
-                      _vm._v(" "),
-                      _c("option", { attrs: { value: "Decent" } }, [
-                        _vm._v("Decent")
-                      ])
-                    ]
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-lg-2" })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-lg-4" })
-          ])
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-lg-2" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-4" })
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "category-container" }, [
@@ -72504,11 +72510,81 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(7),
+            _c("div", { staticClass: "col-md-20" }, [
+              _c(
+                "div",
+                { staticClass: "widget widget-stats bg-gradient-cyan m-b-10" },
+                [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "stats-content" }, [
+                    _c("div", { staticClass: "stats-title" }, [
+                      _vm._v("1st PENALTY")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "stats-number" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.penalties.first) +
+                          "\n                            "
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(8),
+            _c("div", { staticClass: "col-md-20" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "widget widget-stats bg-gradient-orange m-b-10"
+                },
+                [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "stats-content" }, [
+                    _c("div", { staticClass: "stats-title" }, [
+                      _vm._v("2nd PENALTY")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "stats-number" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.penalties.second) +
+                          "\n                            "
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(9)
+            _c("div", { staticClass: "col-md-20" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "widget widget-stats bg-gradient-danger m-b-10"
+                },
+                [
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "stats-content" }, [
+                    _c("div", { staticClass: "stats-title" }, [
+                      _vm._v("3rd PENALTY")
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "stats-number" }, [
+                      _vm._v(
+                        "\n                                " +
+                          _vm._s(_vm.penalties.third) +
+                          "\n                            "
+                      )
+                    ])
+                  ])
+                ]
+              )
+            ])
           ])
         ])
       ]
@@ -72576,78 +72652,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-20" }, [
-      _c(
-        "div",
-        { staticClass: "widget widget-stats bg-gradient-cyan m-b-10" },
-        [
-          _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-            _c("i", { staticClass: "fas fa-exclamation-triangle fa-fw" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "stats-content" }, [
-            _c("div", { staticClass: "stats-title" }, [_vm._v("1st PENALTY")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stats-number" }, [
-              _vm._v(
-                "\n                                9\n                            "
-              )
-            ])
-          ])
-        ]
-      )
+    return _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
+      _c("i", { staticClass: "fas fa-exclamation-triangle fa-fw" })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-20" }, [
-      _c(
-        "div",
-        { staticClass: "widget widget-stats bg-gradient-orange m-b-10" },
-        [
-          _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-            _c("i", { staticClass: "fas fa-exclamation-triangle fa-fw" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "stats-content" }, [
-            _c("div", { staticClass: "stats-title" }, [_vm._v("2nd PENALTY")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stats-number" }, [
-              _vm._v(
-                "\n                                89\n                            "
-              )
-            ])
-          ])
-        ]
-      )
+    return _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
+      _c("i", { staticClass: "fas fa-exclamation-triangle fa-fw" })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-20" }, [
-      _c(
-        "div",
-        { staticClass: "widget widget-stats bg-gradient-danger m-b-10" },
-        [
-          _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-            _c("i", { staticClass: "fas fa-exclamation-triangle fa-fw" })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "stats-content" }, [
-            _c("div", { staticClass: "stats-title" }, [_vm._v("3rd PENALTY")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "stats-number" }, [
-              _vm._v(
-                "\n                                12\n                            "
-              )
-            ])
-          ])
-        ]
-      )
+    return _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
+      _c("i", { staticClass: "fas fa-exclamation-triangle fa-fw" })
     ])
   }
 ]

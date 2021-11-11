@@ -10,7 +10,7 @@
                     v-model="selected"
                     >
                         <option value="">All</option>
-                        <option :value="(type)? type_data.name: type_data.id" v-for="type_data in typeData">{{ type_data.name }}</option>                        
+                        <option :value="type_data.id" v-for="type_data in typeData">{{ type_data.name }}</option>
                 </select> 
             </label>
         </div>
@@ -51,12 +51,7 @@ export default {
             })
         },
         updateType(event) {
-            
-            if(this.type)
-                this.$emit('updateType', this.selected);
-
-            else if(this.type_id)
-                this.$emit('updateTypeID', this.selected);
+            this.$emit('updateType', event.target.value);
         },
     },
     created(){
