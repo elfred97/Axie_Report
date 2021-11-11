@@ -27,7 +27,9 @@ class PlayerController extends Controller
             ->WHERE($where)
             ->PAGINATE($request->per_page);
     }
-
+    public function getAllPlayers(){
+        return Player::GET();
+    }
     public function saveScholar(Request $request){
         // dd($request->id);
         $validator = Validator::make(

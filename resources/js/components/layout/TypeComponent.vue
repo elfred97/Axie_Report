@@ -7,9 +7,10 @@
                     aria-controls="data-table-default" 
                     class="custom-select custom-select-sm form-control form-control-sm"
                     @change="updateType"
+                    v-model="selected"
                     >
                         <option value="">All</option>
-                        <option :value="type.name" v-for="type in typeData">{{ type.name }}</option>
+                        <option :value="(type)? type_data.name: type_data.id" v-for="type_data in typeData">{{ type_data.name }}</option>                        
                 </select> 
             </label>
         </div>
@@ -17,12 +18,23 @@
 </template>
 <script>
 export default {
-    props: ['type'],
+    props: ['type', 'type_id'],
     data() {
         return {
             typeData : {},
-            selected : null,
+            selected : '',
+            typeValue : '',
         }
+    },
+    watch : {
+        'type' : function(newVal){
+            if(newVal)
+                this.selected = newVal;
+        },
+        'type_id' : function(newVal){
+            if(newVal)
+                this.selected = newVal;
+        },
     },
     methods : {
         getType(){
@@ -39,15 +51,16 @@ export default {
             })
         },
         updateType(event) {
-            // console.log(event.target.value)
-            this.$emit('updateType', event.target.value);
             
+            if(this.type)
+                this.$emit('updateType', this.selected);
+
+            else if(this.type_id)
+                this.$emit('updateTypeID', this.selected);
         },
     },
-    mounted(){
+    created(){
         this.getType();
-        if(this.type)
-            this.selected = this.type;
     }
 }
 </script>

@@ -51,6 +51,11 @@ Vue.use(VueNoty, {
     // closeWith: ['click', 'button'],
 });
 
+/** Multiselect */
+import MultiSelect from 'vue-multiselect';
+import "vue-multiselect/dist/vue-multiselect.min.css";
+Vue.component('multi-select', MultiSelect);
+
 import Vuetable from 'vuetable-2';
 import VuetablePagination from 'vuetable-2/src/components/VuetablePagination';
 import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo';

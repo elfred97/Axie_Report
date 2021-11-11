@@ -9,10 +9,10 @@ class Player extends Model
     public $timestamps = true;
     protected $fillable = [
         'account_name',
-        'password',
         'ronin_address',
         'market_place_email',
         'penalty',
+        'password',
         'scholar_share',
         'manager_share'
     ];

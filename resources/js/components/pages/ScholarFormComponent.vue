@@ -3,10 +3,11 @@
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="">Username <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="account_name" v-model="form.account_name">
+                <input type="text" class="form-control" name="account_name" v-model="form.username">
                 <div v-if="form.errors.has('username')" v-html="form.errors.get('username')" class="text-danger text-bold"/>
             </div>
         </div>
+        <hr>
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="">First Name <span class="text-danger">*</span></label>
@@ -28,45 +29,58 @@
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="">Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" name="scholar_email" v-model="form.scholar_email">
-                <div v-if="form.errors.has('scholar_email')" v-html="form.errors.get('scholar_email')" class="text-danger text-bold"/>
-            </div>
+                <input type="email" class="form-control" name="scholar_email" v-model="form.email">
+                <div v-if="form.errors.has('email')" v-html="form.errors.get('email')" class="text-danger text-bold"/>
+            </div>            
 
-            <div class="col-md-4">
-                <label for="">Email Password <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="email_password" v-model="form.email_password">
-                <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
-            </div>
-        </div>
-        <div class="row mt-2">
             <div class="col-md-4">
                 <label for="">Date Started <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" name="date_started" v-model="form.date_started">
                 <div v-if="form.errors.has('date_started')" v-html="form.errors.get('date_started')" class="text-danger text-bold"/>
             </div>
-
-            <div class="col-md-4">
-                <label for="">Type</label>
-                <select name="scholar_type" class="form-control"  v-model="form.type">
-                    <option value="Decent">Decent</option>
-                    <option value="Trust">Trust</option>
-                </select>
-            </div>
-
-            <div class="col-md-4">
-                <label for="">Status</label>
-                <select name="status" id="" class="form-control"  v-model="form.status">
-                    <option value="Playing">Playing</option>
-                    <option value="Resigned">Resigned</option>
-                    <option value="Terminated">Terminated</option>
-                    <option value="For QR">For QR</option>
-                    <option value="Terminated">Terminated</option>
-                    <option value="No Axie">No Axie</option>
-                </select>
-            </div>
-            
         </div>
+        <hr>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <type-component :type_id="form.type_id" @updateTypeID="form.type_id = $event"></type-component>
+            </div>
 
+            <div class="col-md-4">                
+                <div class="dataTables_length" id="data-table-default_length">
+                    <label>Status
+                        <select 
+                            name="data-table-default_length" 
+                            aria-controls="data-table-default" 
+                            class="custom-select custom-select-sm form-control form-control-sm"
+                            v-model="form.status"
+                            >
+                                <option value="Playing">Playing</option>
+                                <option value="Resigned">Resigned</option>
+                                <option value="Terminated">Terminated</option>
+                                <option value="For QR">For QR</option>
+                                <option value="No Axie">No Axie</option>
+                        </select> 
+                    </label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label for="">Axie Account</label>
+                <multi-select 
+                            v-model="selected"
+                            :multiple="false"
+                            @search-change="searchPlayer"
+                            @select="selectAxieAccount"
+                            track-by="id"
+                            :show-label="false"
+                            :options="options"
+                            :custom-label="customLabel"
+                            >
+                        </multi-select>
+            </div>
+        </div>
         <div class="row mt-2">
             <div class="col-md-12">
                 <p><i>Note: The default share of scholar is 30% for the first 30 days. After 30 days the scholar's share will be updated to 40%.</i></p>
@@ -98,18 +112,21 @@ export default {
                 scholar_email     : '',
                 market_place_email: '',
                 email_password    : '',
-                type              : 'Decent',
+                type_id           : '',
                 status            : 'Playing',
                 date_started      : '',
-            })
+            }),
+            options           : [],
+            selected          : {}
         }
     },
     watch : {
         'scholarData': function(newVal){
             if(newVal){
                 this.form = new Form(newVal);
+                this.selected = newVal;
             }
-        }
+        },
     },
     methods:{
         submitForm(){
@@ -131,24 +148,45 @@ export default {
         },
         resetForm(){
             this.form = new Form({
-                id                : NULL,
-                ronin_address     : '',
-                first_name        : '',
-                middle_name       : '',
-                last_name         : '',
-                account_name      : '',
-                scholar_email     : '',
-                market_place_email: '',
-                email_password    : '',
-                type              : 'Decent',
-                status            : 'Playing',
-                date_started      : '',
+                id          : NULL,
+                first_name  : '',
+                middle_name : '',
+                last_name   : '',
+                username    : '',
+                account_name: '',
+                email       : '',
+                password    : '',
+                type_id     : '',
+                status      : 'Active',
+                date_started: '',
             })
+        },
+        searchPlayer(query){
+            this.axios.get('getAllPlayers', {
+                params : {
+                    term : query
+                }
+            })
+            .then((response) => {
+                // console.log(response.data);
+                this.options = response.data
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+        },
+        customLabel ({ account_name }) {
+            return `${account_name}`
+        },
+        selectAxieAccount(eventData){
+            this.form.account_name = eventData.account_name;
         }
     },
     mounted(){
-        if(this.scholarData)
-            this.form = new Form(this.scholarData);
+        this.searchPlayer();
+        if(this.scholarData){
+            this.form = new Form(this.scholarData);            
+        }
         else{
             this.resetForm();
         }

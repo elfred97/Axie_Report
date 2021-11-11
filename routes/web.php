@@ -66,12 +66,13 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::post('/updateAccountInfo', 'GlobalController@updateAccountInfo');
 
     Route::get('/getPlayers', 'PlayerController@getPlayers');
-    Route::post('/saveScholar', 'PlayerController@saveScholar');
+    Route::get('/getAllPlayers', 'PlayerController@getAllPlayers');
     Route::post('/deleteScholar', 'PlayerController@deleteScholar');
     Route::post('/importPlayer', 'PlayerController@import');
-
+    
     Route::post('/importScholar', [HomeController::class,'import'])->name('scholar.import');
     Route::get('/getScholars', [HomeController::class,'getScholars'])->name('scholar.getScholars');
+    Route::post('/saveScholar', [HomeController::class,'save'])->name('scholar.save');
 
     Route::get('/getType', 'GlobalController@getType');
     Route::post('/deleteType', 'GlobalController@deleteType');

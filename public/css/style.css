@@ -169,7 +169,7 @@ label{
 .dataTables_length{
     display: inline-flex;
 }
-.custom-select.custom-select-sm{
+.custom-select.custom-select-sm, .custom-input.custom-input-sm{
     margin: 0 8px;
     padding-right: 2rem;
 
@@ -177,6 +177,20 @@ label{
 .dataTables_length label{
     align-items: center;
 }
+/* Multi Select */
+.multiselect, .multiselect__input, .multiselect__single{
+    font-size: 12px !important;
+}
+.multiselect__tags{
+    padding: 4px 40px 0 8px !important;
+}
+.multiselect__tags{
+    min-height: 1px !important;
+}
+.multiselect, .multiselect__select {
+    height: 30px !important;
+}
+
 /* List Email */
 .inbox .list-email{
     border-top:1px solid #e4e7ea;

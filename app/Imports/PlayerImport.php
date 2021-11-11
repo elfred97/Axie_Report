@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Player;
+use App\Models\Player;
 
 use Carbon\Carbon;
 
@@ -25,7 +25,8 @@ class PlayerImport implements ToCollection
                     'account_name'       => $row[0],
                     'ronin_address'      => $row[1],
                     'market_place_email' => $row[2],
-                    'penalty'            => 0,                    
+                    'password'           => $row[3],
+                    'penalty'            => 0,
                     'scholar_share'      => 0,
                     'manager_share'      => 0,
                 ]);

@@ -1,8 +1,8 @@
 <template>
     <div>
         <div id="scholars" class="section-container main-content-view bg-white">
-            <dialog-component v-bind:isOpen="addScholarDialog" v-on:isClose="addScholarDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
-                <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="addScholarDialog = false"></scholar-form-component>
+            <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
+                <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></scholar-form-component>
             </dialog-component>
             <!-- BEGIN row -->
             <div class="row no-margin mt-2">
@@ -25,10 +25,17 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                     <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="dataTables_length" id="data-table-default_length">
+                        <label>Search 
+                            <input type="text" aria-controls="data-table-default" class="custom-input custom-input-sm form-control form-control-sm" v-model="filtersParam.term" @submit="updateTable">
+                        </label>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="pull-right">
                         <input name="file" type="file" ref="file" @change="importScholar()" class="hide">
                         <button class="btn btn-primary btn-sm"  @click="addScholar"><i class="fa fa-plus"></i> Add New Scholar </button>
@@ -57,11 +64,12 @@
                         @vuetable:row-clicked="onCellClicked"
                         @vuetable:loading="onLoading"
                         @vuetable:loaded="onLoaded">
-                        
+
                         <div slot="action" slot-scope="props">
                             <div class="btn-group">
-                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> </button>
-                                <button class="btn btn-white btn-xs" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> </button>
+                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit </button>
+                                <button class="btn btn-white btn-xs text-danger" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> Delete </button>
+                                <button class="btn btn-white btn-xs text-primary" @click="changeScholarPassword(props.rowData.id)"><i class="fa fa-lock"></i> Change Password </button>
                             </div>
                         </div>
                     </vuetable>
@@ -108,9 +116,10 @@ export default {
             css             : TableStyle,
             selected_scholar: {},            
             filtersParam    : {
-                type: ""
+                type: "",
+                term : ""
             },
-            addScholarDialog: false,
+            openDialog: false,
             actionType      : 'new',
             isLoading       : false,
             fullPage        : true,
@@ -127,13 +136,13 @@ export default {
     },
     methods:{
         addScholar(){
-            this.addScholarDialog = true;
+            this.openDialog = true;
             this.actionType = 'new';
             this.selected_scholar = {}
         },
         editScholar(data){
             this.selected_scholar = data;
-            this.addScholarDialog = true;
+            this.openDialog = true;
             this.actionType = 'update';
         },
         deleteScholar(id){
@@ -184,6 +193,9 @@ export default {
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
+        },
+        changeScholarPassword(data){
+
         }
     },
     mounted(){
@@ -191,7 +203,7 @@ export default {
             this.updateTable();
         });
         this.$root.$on('isClose', (data) => {
-            this.addScholarDialog = false;
+            this.openDialog = false;
         });
     }
 }
