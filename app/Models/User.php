@@ -47,6 +47,6 @@ class User extends Authenticatable
 
     public function notification_settings()
     {
-        return $this->hasOne(NotificationSettings::class);
+        return $this->hasOne(NotificationSettings::class,'model_id','id')->where('model','App\Models\User');
     }
 }
