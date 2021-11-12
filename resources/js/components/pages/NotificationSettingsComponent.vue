@@ -129,7 +129,7 @@ export default {
         getSettings(){
             this.axios.get('getNotificationSettings')
             .then((response) =>{
-                this.options = JSON.parse(response.data.options);
+                this.options = JSON.parse(response.data.notification_settings.options);
             })
             .catch((error) => {
                 console.log(error);
@@ -150,7 +150,7 @@ export default {
         }
     },
     mounted() {
-        // this.getSettings();
+        this.getSettings();
     },
 }
 </script>
