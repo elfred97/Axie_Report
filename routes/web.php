@@ -87,6 +87,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::post('/deleteUser', 'GlobalController@deleteUser');
 
     Route::get('penalty-count/{type?}', 'PlayerController@getPenaltyCount');
+    Route::get('getLowestMMR', 'PlayerController@getLowestMMR');
 
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
 

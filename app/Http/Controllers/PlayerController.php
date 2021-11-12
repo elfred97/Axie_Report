@@ -115,4 +115,34 @@ class PlayerController extends Controller
 
         return $this->buildJson(['penalties' => $penalty_counts, 'type' => $type]);
     }
+
+    public function getLowestMMR(Request $request)
+    {
+        $type_id = $request->type_id;
+        $year = $request->year;
+        $month = $request->month;
+
+        $type = $type_id ? Type::findOrNew($type_id)->name : 'All';
+
+//        $player_counts = Player::query()
+        $player_counts = DB::table('players')
+            ->select(DB::raw('count(*) as total'))
+            ->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
+            ->leftJoin('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->leftJoin('report as r', 'r.ronin_address', '=', 'players.ronin_address')
+            ->where('mmr','<', 800)
+            ->when($type_id, function ($q) use ($type_id) {
+                $q->whereRaw('s.type_id=' . (int)$type_id);
+            })
+            ->when($year, function ($q) use ($year) {
+                $q->whereYear('r.created_at', '=', $year);
+            })
+            ->when($month, function ($q) use ($month) {
+                $q->whereMonth('r.created_at', '=', $month);
+            })
+            ->groupBy('players.account_name')
+            ->get()->count();
+
+        return $this->buildJson(['lowest_mmr_counts' => $player_counts]);
+    }
 }

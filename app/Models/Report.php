@@ -40,4 +40,8 @@ class Report extends Model
 
         return $report;
     }
+
+    public function players(){
+        return $this->belongsTo(Player::class,'ronin_address','ronin_address');
+    }
 }
