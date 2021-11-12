@@ -55,7 +55,7 @@ class FileController extends Controller
         $type = (isset($request->type)) ? $request->type : 'Trust';
 
         if ($request->type)
-            array_push($where, ['p.type', '=', $request->type]);
+            array_push($where, ['s.type_id', '=', $request->type]);
 
         return DB::TABLE('report as r')
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')

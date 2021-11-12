@@ -8,19 +8,16 @@
                     <div class="col-lg-3 col-md-3 col-sm-12">
                         <type-component :type="type" @updateType="type = $event"></type-component>
                     </div>
-                    <div class="col-lg-5 offset-lg-4 col-md-5 offset-md-4 col-sm-12">
-                        <div class="pull-right">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    1 Penalty: <span class="btn btn-xs btn-info">123</span> 
-                                </div>
-                                <div class="col-md-4">
-                                    2 Penalty: <span class="btn btn-xs btn-warning">123</span> 
-                                </div>
-                                <div class="col-md-4">
-                                    3 Penalty: <span class="btn btn-xs btn-danger">123</span> 
-                                </div>
-
+                    <div class="col-lg-4 offset-lg-5 col-md-4 offset-md-5 col-sm-12">
+                        <div class="row">
+                            <div class="col-lg-4">
+                                1st Penalty: <span class="btn btn-xs btn-info">{{ penalties.first }}</span> 
+                            </div>
+                            <div class="col-lg-4">
+                                2nd Penalty: <span class="btn btn-xs btn-warning">{{ penalties.second }}</span> 
+                            </div>
+                            <div class="col-lg-4">
+                                3rd Penalty: <span class="btn btn-xs btn-danger">{{ penalties.third }}</span> 
                             </div>
                         </div>
                     </div>
@@ -211,7 +208,11 @@ export default {
                 type : '',
                 order : "desc",
             },
-
+            penalties : {
+                first : 0,
+                second : 0,
+                third : 0,
+            }
         }
     },
     watch:{
@@ -225,8 +226,16 @@ export default {
             this.getReport();
         },
         'type' : function(newVal){
-            if(newVal)
-                this.getReport();
+            if(newVal == '')
+            {
+                this.penalties = {
+                    first : 0,
+                    second : 0,
+                    third : 0,
+                }
+            }
+            this.getReport();
+            this.getPenalties(newVal);
         }
     },
     methods: {
@@ -256,8 +265,26 @@ export default {
             if(this.sortOrder.type == type){
                 this.sortOrder.order = (this.sortOrder.order == 'asc') ? 'desc' : 'asc';
             }
-
             this.sortOrder.type = type;
+        },
+        getPenalties(type){
+            if(type != ''){
+                this.axios.get('/penalty-count/'+type)
+                .then((response) => {
+                    response.data.penalties.forEach( element => {
+                        if(element.penalty == 1)
+                            this.penalties.first = element.total;
+                        else if(element.penalty == 2)
+                            this.penalties.second = element.total;
+                        else if(element.penalty == 3)
+                            this.penalties.third = element.total;
+                    });
+                })
+                .catch((error) => {
+                    // this.clearAll();
+                    console.log("error")
+                })
+            }
         }
     },
     created(){
