@@ -54,7 +54,8 @@ Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
 
 Route::middleware(['auth:admins'])->group(function(){
     Route::redirect('/', '/home')->name('home');
-    Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('scholar.name');
+    Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('notifications.save');
+    Route::get('getNotificationSettings', [NotificationSettingControler::class,'get'])->name('notification.get');
 
     Route::get('/getGraph', 'FileController@getGraph');
     Route::get('/getReport', 'FileController@getReport');
