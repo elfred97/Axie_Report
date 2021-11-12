@@ -38,6 +38,6 @@ class Scholar extends Authenticatable
 
     public function player()
     {
-        return $this->hasOneThrough(Player::class,PlayerScholarHistory::class)->latest('created_at');
+        return $this->hasOneThrough(Player::class,PlayerScholarHistory::class,'player_id','id','id','scholar_id')->latest('created_at');
     }
 }
