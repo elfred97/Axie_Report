@@ -25,7 +25,12 @@
                     </div>
                     <div class="col-md-3">
                         <label for="">Target SLP Unit</label>
-                        <input type="number" class="form-control" v-model="options.target_slp_unit">
+                        <select id="target_slp_unit" class="form-control" v-model="options.target_slp_unit">
+                            <option value=""></option>
+                            <option value="PHP">PHP</option>
+                            <option value="USD">USD</option>
+                            <option value="JPY">JPY</option>
+                        </select>
                     </div>
                 </div>
                 <p class="mt-2 mb-2">Show / Hide</p>
@@ -33,7 +38,7 @@
                     <div class="col-md-3 col-sm-6 mb-2">
                         <!-- begin custom-switches -->
                         <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="toal_slp" v-model="options.total_slp">
+                            <input type="checkbox" class="custom-control-input" id="total_slp" v-model="options.total_slp">
                             <label class="custom-control-label" for="total_slp">Total SLP</label>
                         </div>
                         <!-- end custom-switches -->
@@ -122,17 +127,30 @@ export default {
     },
     methods: {
         getSettings(){
-
+            this.axios.get('getNotificationSettings')
+            .then((response) =>{
+                this.options = JSON.parse(response.data.options);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         },
         saveSettings(){
             this.axios.post('saveNotificationSettings', {
                 status : 1,
-                options : this.options
+                options : JSON.stringify(this.options)
+            })
+            .then((response) =>{
+                if(response.data.is_error == false)
+                    this.$noty.success("Notification Settings Saved");
+            })
+            .catch((error) => {
+                console.log(error);
             })
         }
     },
     mounted() {
-        this.getSettings();
+        // this.getSettings();
     },
 }
 </script>

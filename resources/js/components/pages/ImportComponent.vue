@@ -186,7 +186,7 @@ export default {
                 // console.log(response.data);
                 this.import_file = '';
                 this.$refs.file.value = '';
-                this.$noty.success("File Imported");;
+                this.$noty.success("File Imported");
                 this.updateTable();
                 this.$events.fire('update_notification');
                 this.$events.fire('update_scholars_table');

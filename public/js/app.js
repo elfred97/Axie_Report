@@ -6573,8 +6573,6 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$noty.success("File Imported");
 
-        ;
-
         _this2.updateTable();
 
         _this2.$events.fire('update_notification');
@@ -6839,6 +6837,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6860,16 +6863,29 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getSettings: function getSettings() {},
+    getSettings: function getSettings() {
+      var _this = this;
+
+      this.axios.get('getNotificationSettings').then(function (response) {
+        _this.options = JSON.parse(response.data.options);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     saveSettings: function saveSettings() {
+      var _this2 = this;
+
       this.axios.post('saveNotificationSettings', {
         status: 1,
-        options: this.options
+        options: JSON.stringify(this.options)
+      }).then(function (response) {
+        if (response.data.is_error == false) _this2.$noty.success("Notification Settings Saved");
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   },
-  mounted: function mounted() {
-    this.getSettings();
+  mounted: function mounted() {// this.getSettings();
   }
 });
 
@@ -72253,27 +72269,47 @@ var render = function() {
           _c("div", { staticClass: "col-md-3" }, [
             _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Unit")]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.options.target_slp_unit,
-                  expression: "options.target_slp_unit"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number" },
-              domProps: { value: _vm.options.target_slp_unit },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.target_slp_unit,
+                    expression: "options.target_slp_unit"
                   }
-                  _vm.$set(_vm.options, "target_slp_unit", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { id: "target_slp_unit" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.options,
+                      "target_slp_unit",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
                 }
-              }
-            })
+              },
+              [
+                _c("option", { attrs: { value: "" } }),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "PHP" } }, [_vm._v("PHP")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "USD" } }, [_vm._v("USD")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "JPY" } }, [_vm._v("JPY")])
+              ]
+            )
           ])
         ]),
         _vm._v(" "),
@@ -72292,7 +72328,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "toal_slp" },
+                attrs: { type: "checkbox", id: "total_slp" },
                 domProps: {
                   checked: Array.isArray(_vm.options.total_slp)
                     ? _vm._i(_vm.options.total_slp, null) > -1
