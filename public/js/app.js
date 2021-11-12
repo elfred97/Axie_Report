@@ -6862,7 +6862,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     getSettings: function getSettings() {},
     saveSettings: function saveSettings() {
-      this.axios.post('saveNotificationSettings’', {
+      this.axios.post('saveNotificationSettings', {
         status: 1,
         options: this.options
       });
