@@ -6573,8 +6573,6 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.$noty.success("File Imported");
 
-        ;
-
         _this2.updateTable();
 
         _this2.$events.fire('update_notification');
@@ -6839,6 +6837,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6860,11 +6863,25 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getSettings: function getSettings() {},
+    getSettings: function getSettings() {
+      var _this = this;
+
+      this.axios.get('getNotificationSettings').then(function (response) {
+        _this.options = JSON.parse(response.data.notification_settings.options);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     saveSettings: function saveSettings() {
+      var _this2 = this;
+
       this.axios.post('saveNotificationSettings', {
         status: 1,
-        options: this.options
+        options: JSON.stringify(this.options)
+      }).then(function (response) {
+        if (response.data.is_error == false) _this2.$noty.success("Notification Settings Saved");
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   },
@@ -7065,6 +7082,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         first: 0,
         second: 0,
         third: 0
+      },
+      options: {
+        mmr: '',
+        minimum_slp: '',
+        target_slp_price: '',
+        target_slp_unit: '',
+        total_slp: true,
+        total_unclaimed: true,
+        total_claimed: true,
+        total_slp_today: true,
+        total_slp_yesterday: true,
+        total_average: true,
+        penalty: true,
+        lowest_mmr: true
       }
     };
   },
@@ -7157,21 +7188,31 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           console.log("error");
         });
       }
+    },
+    getNotificationSettings: function getNotificationSettings() {
+      var _this4 = this;
+
+      this.axios.get('getNotificationSettings').then(function (response) {
+        _this4.options = JSON.parse(response.data.notification_settings.options);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   mounted: function mounted() {
-    var _this4 = this;
+    var _this5 = this;
 
+    this.getNotificationSettings();
     this.getTotal();
     this.$events.$on('graph-filter-set', function (eventData) {
-      _this4.filters = eventData;
+      _this5.filters = eventData;
 
-      _this4.onFilterSet(eventData);
+      _this5.onFilterSet(eventData);
 
-      _this4.getPenalties(eventData);
+      _this5.getPenalties(eventData);
     });
     this.$events.$on('graph-data', function (eventData) {
-      return _this4.getAverage(eventData);
+      return _this5.getAverage(eventData);
     });
   }
 });
@@ -72253,27 +72294,47 @@ var render = function() {
           _c("div", { staticClass: "col-md-3" }, [
             _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Unit")]),
             _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.options.target_slp_unit,
-                  expression: "options.target_slp_unit"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number" },
-              domProps: { value: _vm.options.target_slp_unit },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.target_slp_unit,
+                    expression: "options.target_slp_unit"
                   }
-                  _vm.$set(_vm.options, "target_slp_unit", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { id: "target_slp_unit" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.options,
+                      "target_slp_unit",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
                 }
-              }
-            })
+              },
+              [
+                _c("option", { attrs: { value: "" } }),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "PHP" } }, [_vm._v("PHP")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "USD" } }, [_vm._v("USD")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "JPY" } }, [_vm._v("JPY")])
+              ]
+            )
           ])
         ]),
         _vm._v(" "),
@@ -72292,7 +72353,7 @@ var render = function() {
                   }
                 ],
                 staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "toal_slp" },
+                attrs: { type: "checkbox", id: "total_slp" },
                 domProps: {
                   checked: Array.isArray(_vm.options.total_slp)
                     ? _vm._i(_vm.options.total_slp, null) > -1
@@ -72773,264 +72834,302 @@ var render = function() {
       [
         _c("div", { staticClass: "container" }, [
           _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                {
-                  staticClass:
-                    "widget widget-stats bg-gradient-secondary m-b-10"
-                },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL SLP")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.total_slp
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                { staticClass: "widget widget-stats bg-gradient-muted m-b-10" },
-                [
-                  _vm._m(1),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL UNCLAIMED SLP")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.total_unclaimed
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c("div", { staticClass: "widget widget-stats bg-pink m-b-10" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-content" }, [
-                  _c("div", { staticClass: "stats-title" }, [
-                    _vm._v("TOTAL CLAIMED")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-number" }, [
-                    _vm._v(
-                      _vm._s(
-                        _vm.total_claimed
-                          .toString()
-                          .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                      )
-                    )
-                  ])
+            _vm.options.total_slp == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "widget widget-stats bg-gradient-secondary m-b-10"
+                    },
+                    [
+                      _vm._m(0),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("TOTAL SLP")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.total_slp
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
                 ])
-              ])
-            ]),
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                { staticClass: "widget widget-stats bg-gradient-teal m-b-10" },
-                [
-                  _vm._m(3),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL SLP TODAY")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.today_slp
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm.options.total_unclaimed == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "widget widget-stats bg-gradient-muted m-b-10"
+                    },
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("TOTAL UNCLAIMED SLP")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.total_unclaimed
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                { staticClass: "widget widget-stats bg-gradient-blue m-b-10" },
-                [
-                  _vm._m(4),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL SLP YESTERDAY")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.yesterday_slp
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm.options.total_claimed == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    { staticClass: "widget widget-stats bg-pink m-b-10" },
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("TOTAL CLAIMED")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.total_claimed
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "widget widget-stats bg-gradient-purple m-b-10"
-                },
-                [
-                  _vm._m(5),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("TOTAL AVERAGE")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.total_average_slp
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm.options.total_slp_today == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "widget widget-stats bg-gradient-teal m-b-10"
+                    },
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("TOTAL SLP TODAY")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.today_slp
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                { staticClass: "widget widget-stats bg-gradient-lime m-b-10" },
-                [
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("LOWEST MMR")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm.total_average_slp
-                            .toString()
-                            .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                        )
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm.options.total_slp_yesterday == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "widget widget-stats bg-gradient-blue m-b-10"
+                    },
+                    [
+                      _vm._m(4),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("TOTAL SLP YESTERDAY")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.yesterday_slp
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                { staticClass: "widget widget-stats bg-gradient-cyan m-b-10" },
-                [
-                  _vm._m(7),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("1st PENALTY")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(_vm.penalties.first) +
-                          "\n                            "
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm.options.total_average == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "widget widget-stats bg-gradient-purple m-b-10"
+                    },
+                    [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("TOTAL AVERAGE")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.total_average_slp
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "widget widget-stats bg-gradient-orange m-b-10"
-                },
-                [
-                  _vm._m(8),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("2nd PENALTY")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(_vm.penalties.second) +
-                          "\n                            "
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ]),
+            _vm.options.lowest_mmr == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "widget widget-stats bg-gradient-lime m-b-10"
+                    },
+                    [
+                      _vm._m(6),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("LOWEST MMR")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            _vm._s(
+                              _vm.total_average_slp
+                                .toString()
+                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+                            )
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
             _vm._v(" "),
-            _c("div", { staticClass: "col-md-20" }, [
-              _c(
-                "div",
-                {
-                  staticClass: "widget widget-stats bg-gradient-danger m-b-10"
-                },
-                [
-                  _vm._m(9),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "stats-content" }, [
-                    _c("div", { staticClass: "stats-title" }, [
-                      _vm._v("3rd PENALTY")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "stats-number" }, [
-                      _vm._v(
-                        "\n                                " +
-                          _vm._s(_vm.penalties.third) +
-                          "\n                            "
-                      )
-                    ])
-                  ])
-                ]
-              )
-            ])
+            _vm.options.penalty == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "widget widget-stats bg-gradient-cyan m-b-10"
+                    },
+                    [
+                      _vm._m(7),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("1st PENALTY")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.penalties.first) +
+                              "\n                            "
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.options.penalty == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "widget widget-stats bg-gradient-orange m-b-10"
+                    },
+                    [
+                      _vm._m(8),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("2nd PENALTY")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.penalties.second) +
+                              "\n                            "
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.options.penalty == true
+              ? _c("div", { staticClass: "col-md-20" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "widget widget-stats bg-gradient-danger m-b-10"
+                    },
+                    [
+                      _vm._m(9),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "stats-content" }, [
+                        _c("div", { staticClass: "stats-title" }, [
+                          _vm._v("3rd PENALTY")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "stats-number" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.penalties.third) +
+                              "\n                            "
+                          )
+                        ])
+                      ])
+                    ]
+                  )
+                ])
+              : _vm._e()
           ])
         ])
       ]

@@ -8,7 +8,7 @@
                 <!-- begin row -->
                 <div class="row row-space-10 m-b-20">
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.total_slp == true">
                         <div class="widget widget-stats bg-gradient-secondary m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-equals fa-fw"></i></div>
                             <div class="stats-content">
@@ -20,7 +20,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.total_unclaimed == true">
                         <div class="widget widget-stats bg-gradient-muted m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fab fa-bitcoin fa-fw"></i></div>
                             <div class="stats-content">
@@ -32,7 +32,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.total_claimed == true">
                         <div class="widget widget-stats bg-pink m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-money-bill fa-fw"></i></div>
                             <div class="stats-content">
@@ -45,7 +45,7 @@
                     <!-- end col-3 -->
 
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.total_slp_today == true">
                         <div class="widget widget-stats bg-gradient-teal m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-calendar fa-fw"></i></div>
                             <div class="stats-content">
@@ -57,7 +57,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.total_slp_yesterday == true">
                         <div class="widget widget-stats bg-gradient-blue m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-calendar-check fa-fw"></i></div>
                             <div class="stats-content">
@@ -69,7 +69,7 @@
                     </div>
                     <!-- end col-3 -->
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.total_average == true">
                         <div class="widget widget-stats bg-gradient-purple m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
@@ -82,7 +82,7 @@
                     <!-- end col-3 -->
 
                      <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.lowest_mmr == true">
                         <div class="widget widget-stats bg-gradient-lime m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
@@ -95,7 +95,7 @@
                     <!-- end col-3 -->
 
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.penalty == true">
                         <div class="widget widget-stats bg-gradient-cyan m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-exclamation-triangle fa-fw"></i></div>
                             <div class="stats-content">
@@ -110,7 +110,7 @@
                     <!-- end col-3 -->
 
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.penalty == true">
                         <div class="widget widget-stats bg-gradient-orange m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-exclamation-triangle fa-fw"></i></div>
                             <div class="stats-content">
@@ -125,7 +125,7 @@
                     <!-- end col-3 -->
 
                     <!-- begin col-3 -->
-                    <div class="col-md-20">
+                    <div class="col-md-20" v-if="options.penalty == true">
                         <div class="widget widget-stats bg-gradient-danger m-b-10">
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-exclamation-triangle fa-fw"></i></div>
                             <div class="stats-content">
@@ -150,7 +150,7 @@
 <script>
 export default {
     data(){
-        return {
+        return {            
             data             : {},
             total_data       : {},
             today_slp        : 0,
@@ -168,6 +168,20 @@ export default {
                 first : 0,
                 second : 0,
                 third : 0,
+            },
+            options : {
+                mmr                : '',
+                minimum_slp        : '',
+                target_slp_price   : '',
+                target_slp_unit    : '',
+                total_slp          : true,
+                total_unclaimed    : true,
+                total_claimed      : true,
+                total_slp_today    : true,
+                total_slp_yesterday: true,
+                total_average      : true,
+                penalty            : true,
+                lowest_mmr         : true,
             },
         }
     },
@@ -268,9 +282,19 @@ export default {
                 })
             }
         },
+        getNotificationSettings(){
+            this.axios.get('getNotificationSettings')
+            .then((response) =>{
+                this.options = JSON.parse(response.data.notification_settings.options);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        }
     },
     mounted(){
-        this.getTotal();        
+        this.getNotificationSettings();
+        this.getTotal();
         this.$events.$on('graph-filter-set', (eventData) => {
             this.filters = eventData;
             this.onFilterSet(eventData);
