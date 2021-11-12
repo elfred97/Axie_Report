@@ -6835,14 +6835,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      settings: {}
+      settings: {},
+      options: {
+        mmr: '',
+        minimum_slp: '',
+        target_slp_price: '',
+        target_slp_unit: '',
+        total_slp: true,
+        total_unclaimed: true,
+        total_claimed: true,
+        total_slp_today: true,
+        total_slp_yesterday: false,
+        total_average: false,
+        penalty: true,
+        lowest_mmr: false
+      }
     };
   },
   methods: {
-    getSettings: function getSettings() {}
+    getSettings: function getSettings() {},
+    saveSettings: function saveSettings() {
+      this.axios.post('saveNotificationSettings’', {
+        status: 1,
+        options: this.options
+      });
+    }
   },
   mounted: function mounted() {
     this.getSettings();
@@ -7749,9 +7773,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -7764,6 +7785,11 @@ __webpack_require__.r(__webpack_exports__);
       sortOrder: {
         type: '',
         order: "desc"
+      },
+      penalties: {
+        first: 0,
+        second: 0,
+        third: 0
       }
     };
   },
@@ -7778,7 +7804,16 @@ __webpack_require__.r(__webpack_exports__);
       this.getReport();
     },
     'type': function type(newVal) {
-      if (newVal) this.getReport();
+      if (newVal == '') {
+        this.penalties = {
+          first: 0,
+          second: 0,
+          third: 0
+        };
+      }
+
+      this.getReport();
+      this.getPenalties(newVal);
     }
   },
   methods: {
@@ -7807,6 +7842,20 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.sortOrder.type = type;
+    },
+    getPenalties: function getPenalties(type) {
+      var _this2 = this;
+
+      if (type != '') {
+        this.axios.get('/penalty-count/' + type).then(function (response) {
+          response.data.penalties.forEach(function (element) {
+            if (element.penalty == 1) _this2.penalties.first = element.total;else if (element.penalty == 2) _this2.penalties.second = element.total;else if (element.penalty == 3) _this2.penalties.third = element.total;
+          });
+        })["catch"](function (error) {
+          // this.clearAll();
+          console.log("error");
+        });
+      }
     }
   },
   created: function created() {
@@ -72097,208 +72146,605 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "panel panel-default" }, [
-        _c("div", { staticClass: "panel-heading" }, [
-          _c("h4", { staticClass: "panel-title" }, [_vm._v("Settings")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "panel-heading-btn" }, [
-            _c("button", { staticClass: "btn btn-xs btn-success" }, [
+  return _c("div", [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [
+        _c("h4", { staticClass: "panel-title" }, [_vm._v("Settings")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-heading-btn" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-xs btn-success",
+              on: {
+                click: function($event) {
+                  return _vm.saveSettings()
+                }
+              }
+            },
+            [
               _c("i", { staticClass: "fas fa-check" }),
               _vm._v(" Update Settings\n                ")
-            ])
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("MMR")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.options.mmr,
+                  expression: "options.mmr"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number" },
+              domProps: { value: _vm.options.mmr },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.options, "mmr", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Minimum SLP")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.options.minimum_slp,
+                  expression: "options.minimum_slp"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number" },
+              domProps: { value: _vm.options.minimum_slp },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.options, "minimum_slp", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Value")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.options.target_slp_price,
+                  expression: "options.target_slp_price"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number" },
+              domProps: { value: _vm.options.target_slp_price },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.options, "target_slp_price", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Unit")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.options.target_slp_unit,
+                  expression: "options.target_slp_unit"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "number" },
+              domProps: { value: _vm.options.target_slp_unit },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.options, "target_slp_unit", $event.target.value)
+                }
+              }
+            })
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "panel-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("MMR")]),
-              _vm._v(" "),
+        _c("p", { staticClass: "mt-2 mb-2" }, [_vm._v("Show / Hide")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
               _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "number" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("Minimum SLP")]),
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_slp,
+                    expression: "options.total_slp"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "toal_slp" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_slp)
+                    ? _vm._i(_vm.options.total_slp, null) > -1
+                    : _vm.options.total_slp
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_slp,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.options, "total_slp", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_slp", $$c)
+                    }
+                  }
+                }
+              }),
               _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "number" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Value")]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: { type: "number" }
-              })
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_slp" }
+                },
+                [_vm._v("Total SLP")]
+              )
             ])
           ]),
           _vm._v(" "),
-          _c("p", { staticClass: "mt-2 mb-2" }, [_vm._v("Show / Hide")]),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_unclaimed,
+                    expression: "options.total_unclaimed"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_unclaimed" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_unclaimed)
+                    ? _vm._i(_vm.options.total_unclaimed, null) > -1
+                    : _vm.options.total_unclaimed
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_unclaimed,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_unclaimed",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_unclaimed",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_unclaimed", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_unclaimed" }
+                },
+                [_vm._v("Total Unclaimed")]
+              )
+            ])
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1", checked: "" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Total SLP")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_claimed,
+                    expression: "options.total_claimed"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_claimed" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_claimed)
+                    ? _vm._i(_vm.options.total_claimed, null) > -1
+                    : _vm.options.total_claimed
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_claimed,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_claimed",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_claimed",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_claimed", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_claimed" }
+                },
+                [_vm._v("Total Claimed")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Total Unclaimed")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_slp_today,
+                    expression: "options.total_slp_today"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_slp_today" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_slp_today)
+                    ? _vm._i(_vm.options.total_slp_today, null) > -1
+                    : _vm.options.total_slp_today
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_slp_today,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_today",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_today",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_slp_today", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_slp_today" }
+                },
+                [_vm._v("Total SLP Today")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Total Claimed")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_slp_yesterday,
+                    expression: "options.total_slp_yesterday"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_slp_yesterday" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_slp_yesterday)
+                    ? _vm._i(_vm.options.total_slp_yesterday, null) > -1
+                    : _vm.options.total_slp_yesterday
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_slp_yesterday,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_yesterday",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_yesterday",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_slp_yesterday", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_slp_yesterday" }
+                },
+                [_vm._v("Total SLP Yesterday")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Total SLP Today")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_average,
+                    expression: "options.total_average"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_average" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_average)
+                    ? _vm._i(_vm.options.total_average, null) > -1
+                    : _vm.options.total_average
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_average,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_average",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_average",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_average", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_average" }
+                },
+                [_vm._v("Total Average")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Total SLP Yesterday")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.penalty,
+                    expression: "options.penalty"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "penalty" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.penalty)
+                    ? _vm._i(_vm.options.penalty, null) > -1
+                    : _vm.options.penalty
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.penalty,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.options, "penalty", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "penalty",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "penalty", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "penalty" }
+                },
+                [_vm._v("Penalty")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
                   {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Total Average")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Penalty")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-              _c("div", { staticClass: "custom-control custom-switch" }, [
-                _c("input", {
-                  staticClass: "custom-control-input",
-                  attrs: { type: "checkbox", id: "customSwitch1" }
-                }),
-                _vm._v(" "),
-                _c(
-                  "label",
-                  {
-                    staticClass: "custom-control-label",
-                    attrs: { for: "customSwitch1" }
-                  },
-                  [_vm._v("Lowest MMR")]
-                )
-              ])
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.lowest_mmr,
+                    expression: "options.lowest_mmr"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "lowest_mmr" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.lowest_mmr)
+                    ? _vm._i(_vm.options.lowest_mmr, null) > -1
+                    : _vm.options.lowest_mmr
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.lowest_mmr,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.options, "lowest_mmr", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "lowest_mmr",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "lowest_mmr", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "lowest_mmr" }
+                },
+                [_vm._v("Lowest MMR")]
+              )
             ])
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -74615,7 +75061,36 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _vm._m(0)
+          _c(
+            "div",
+            {
+              staticClass: "col-lg-4 offset-lg-5 col-md-4 offset-md-5 col-sm-12"
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-lg-4" }, [
+                  _vm._v("\n                            1st Penalty: "),
+                  _c("span", { staticClass: "btn btn-xs btn-info" }, [
+                    _vm._v(_vm._s(_vm.penalties.first))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-4" }, [
+                  _vm._v("\n                            2nd Penalty: "),
+                  _c("span", { staticClass: "btn btn-xs btn-warning" }, [
+                    _vm._v(_vm._s(_vm.penalties.second))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-lg-4" }, [
+                  _vm._v("\n                            3rd Penalty: "),
+                  _c("span", { staticClass: "btn btn-xs btn-danger" }, [
+                    _vm._v(_vm._s(_vm.penalties.third))
+                  ])
+                ])
+              ])
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row no-margin mt-1" }, [
@@ -75154,43 +75629,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "col-lg-5 offset-lg-4 col-md-5 offset-md-4 col-sm-12" },
-      [
-        _c("div", { staticClass: "pull-right" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _vm._v("\n                                1 Penalty: "),
-              _c("span", { staticClass: "btn btn-xs btn-info" }, [
-                _vm._v("123")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _vm._v("\n                                2 Penalty: "),
-              _c("span", { staticClass: "btn btn-xs btn-warning" }, [
-                _vm._v("123")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _vm._v("\n                                3 Penalty: "),
-              _c("span", { staticClass: "btn btn-xs btn-danger" }, [
-                _vm._v("123")
-              ])
-            ])
-          ])
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -97714,21 +98153,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuejs_noty__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vuejs_noty__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var vuejs_noty_dist_vuejs_noty_css__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuejs-noty/dist/vuejs-noty.css */ "./node_modules/vuejs-noty/dist/vuejs-noty.css");
 /* harmony import */ var vuejs_noty_dist_vuejs_noty_css__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vuejs_noty_dist_vuejs_noty_css__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
-/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_22___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_22__);
-/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css");
-/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css__WEBPACK_IMPORTED_MODULE_23___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_dist_vue_multiselect_min_css__WEBPACK_IMPORTED_MODULE_23__);
-/* harmony import */ var vuetable_2__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuetable-2 */ "./node_modules/vuetable-2/dist/vuetable-2.js");
-/* harmony import */ var vuetable_2__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vuetable_2__WEBPACK_IMPORTED_MODULE_14__);
-/* harmony import */ var vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePagination */ "./node_modules/vuetable-2/src/components/VuetablePagination.vue");
-/* harmony import */ var vuetable_2_src_components_VuetablePaginationInfo__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePaginationInfo */ "./node_modules/vuetable-2/src/components/VuetablePaginationInfo.vue");
-/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js");
-/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
-/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_18__);
-/* harmony import */ var vue_alertify__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue-alertify */ "./node_modules/vue-alertify/es/index.js");
-/* harmony import */ var vue_modaltor__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vue-modaltor */ "./node_modules/vue-modaltor/dist/vue-modaltor.js");
-/* harmony import */ var vue_modaltor__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(vue_modaltor__WEBPACK_IMPORTED_MODULE_20__);
-/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vue-multiselect */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.js");
+/* harmony import */ var vue_multiselect__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vue-multiselect/dist/vue-multiselect.min.css */ "./node_modules/vue-multiselect/dist/vue-multiselect.min.css");
+/* harmony import */ var vue_multiselect_dist_vue_multiselect_min_css__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(vue_multiselect_dist_vue_multiselect_min_css__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var vuetable_2__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuetable-2 */ "./node_modules/vuetable-2/dist/vuetable-2.js");
+/* harmony import */ var vuetable_2__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(vuetable_2__WEBPACK_IMPORTED_MODULE_15__);
+/* harmony import */ var vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePagination */ "./node_modules/vuetable-2/src/components/VuetablePagination.vue");
+/* harmony import */ var vuetable_2_src_components_VuetablePaginationInfo__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! vuetable-2/src/components/VuetablePaginationInfo */ "./node_modules/vuetable-2/src/components/VuetablePaginationInfo.vue");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/index.esm.js");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! vue2-datepicker/index.css */ "./node_modules/vue2-datepicker/index.css");
+/* harmony import */ var vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker_index_css__WEBPACK_IMPORTED_MODULE_19__);
+/* harmony import */ var vue_alertify__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! vue-alertify */ "./node_modules/vue-alertify/es/index.js");
+/* harmony import */ var vue_modaltor__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! vue-modaltor */ "./node_modules/vue-modaltor/dist/vue-modaltor.js");
+/* harmony import */ var vue_modaltor__WEBPACK_IMPORTED_MODULE_21___default = /*#__PURE__*/__webpack_require__.n(vue_modaltor__WEBPACK_IMPORTED_MODULE_21__);
+/* harmony import */ var _routes__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./routes */ "./resources/js/routes.js");
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -97776,22 +98215,22 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuejs_noty__WEBPACK_IMPORTED_MODU
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('multi-select', vue_multiselect__WEBPACK_IMPORTED_MODULE_22___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('multi-select', vue_multiselect__WEBPACK_IMPORTED_MODULE_13___default.a);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vuetable', vuetable_2__WEBPACK_IMPORTED_MODULE_14___default.a);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vuetable-pagination', vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_15__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vuetable-pagination-info', vuetable_2_src_components_VuetablePaginationInfo__WEBPACK_IMPORTED_MODULE_16__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vuetable', vuetable_2__WEBPACK_IMPORTED_MODULE_15___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vuetable-pagination', vuetable_2_src_components_VuetablePagination__WEBPACK_IMPORTED_MODULE_16__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('vuetable-pagination-info', vuetable_2_src_components_VuetablePaginationInfo__WEBPACK_IMPORTED_MODULE_17__["default"]);
 /* DatePicker */
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('v-datepicker', vue2_datepicker__WEBPACK_IMPORTED_MODULE_17__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('v-datepicker', vue2_datepicker__WEBPACK_IMPORTED_MODULE_18__["default"]);
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_alertify__WEBPACK_IMPORTED_MODULE_19__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_alertify__WEBPACK_IMPORTED_MODULE_20__["default"]);
 
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_modaltor__WEBPACK_IMPORTED_MODULE_20___default.a);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_modaltor__WEBPACK_IMPORTED_MODULE_21___default.a);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDate', function (date) {
   if (!date) return '';
   return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('L');
@@ -97804,7 +98243,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('footer-component', __webpa
 
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
   mode: 'history',
-  routes: _routes__WEBPACK_IMPORTED_MODULE_21__["routes"] // short for `routes: routes`
+  routes: _routes__WEBPACK_IMPORTED_MODULE_22__["routes"] // short for `routes: routes`
 
 });
 /**
