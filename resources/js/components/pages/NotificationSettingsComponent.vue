@@ -125,7 +125,7 @@ export default {
 
         },
         saveSettings(){
-            this.axios.post('saveNotificationSettings’', {
+            this.axios.post('saveNotificationSettings', {
                 status : 1,
                 options : this.options
             })
