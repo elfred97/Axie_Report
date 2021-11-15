@@ -68,11 +68,13 @@ class FileController extends Controller
                 'r.*'
             )
             ->WHERE($where)
-            ->orderBy($sortType, $request->sortOrder)
+            // ->orderBy($sortType, $request->sortOrder)
+            ->orderBy($sortType, 'asc')
 //            ->GROUPBY('account_name')
-            ->paginate($request->get('per_page', 15))->withQueryString();
+            ->paginate($request->get('per_page', 15));
 
-        return $this->buildJson(compact('reports'));
+        // return $this->buildJson(compact('reports'));
+        return $reports;
     }
 
     public function getTotalReportbyDate(Request $request){

@@ -7635,98 +7635,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _FieldsDef_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FieldsDef.js */ "./resources/js/components/pages/FieldsDef.js");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
+/* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
+/* harmony import */ var _FieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./FieldsDef.js */ "./resources/js/components/pages/FieldsDef.js");
+/* harmony import */ var _ImportedDetailRow_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ImportedDetailRow.vue */ "./resources/js/components/pages/ImportedDetailRow.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -7832,14 +7746,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+ // import FieldsDef from "./ImportedFieldsDef.js";
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_TableMixins__WEBPACK_IMPORTED_MODULE_0__["TableMixins"]],
   data: function data() {
-    return {
-      fields: _FieldsDef_js__WEBPACK_IMPORTED_MODULE_0__["default"],
-      perPage: 10,
+    return _defineProperty({
+      fields: _FieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+      perPage: 15,
       data: [],
       reportData: {},
       type: '',
+      css: _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"],
+      detailRow: _ImportedDetailRow_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
       sortOrder: {
         type: '',
         order: "desc"
@@ -7848,8 +7769,25 @@ __webpack_require__.r(__webpack_exports__);
         first: 0,
         second: 0,
         third: 0
-      }
-    };
+      },
+      filtersParam: {
+        type: ""
+      },
+      fullPage: true,
+      isLoading: false
+    }, "sortOrder", [{
+      field: 'average_per_day',
+      // Choose the Defualt Sorted Data by name
+      direction: 'desc'
+    }, {
+      field: 'ronin_address',
+      // Choose the Defualt Sorted Data by name
+      direction: 'desc'
+    }, {
+      field: 'created_at',
+      // Choose the Defualt Sorted Data by name
+      direction: 'desc'
+    }]);
   },
   watch: {
     'reportData': function reportData(newVal) {
@@ -7861,7 +7799,7 @@ __webpack_require__.r(__webpack_exports__);
     'sortOrder.order': function sortOrderOrder(newVal) {
       this.getReport();
     },
-    'type': function type(newVal) {
+    'filtersParam.type': function filtersParamType(newVal) {
       if (newVal == '') {
         this.penalties = {
           first: 0,
@@ -7870,27 +7808,27 @@ __webpack_require__.r(__webpack_exports__);
         };
       }
 
-      this.getReport();
+      this.updateTable();
       this.getPenalties(newVal);
     }
   },
   methods: {
-    getReport: function getReport() {
-      var _this = this;
-
-      this.axios.get('/getReport', {
-        params: {
-          type: this.type,
-          sortType: this.sortOrder.type,
-          sortOrder: this.sortOrder.order
-        }
-      }).then(function (response) {
-        _this.reportData = response.data;
-      })["catch"](function (error) {
-        // this.clearAll();
-        console.log(error.response.data);
-      });
-    },
+    // getReport(){
+    //     this.axios.get('/getReport', {
+    //         params:{
+    //             type     : this.type,
+    //             sortType : this.sortOrder.type,
+    //             sortOrder: this.sortOrder.order,
+    //         }
+    //     })
+    //     .then((response) => {
+    //         this.reportData = response.data;
+    //     })
+    //     .catch((error) => {
+    //         // this.clearAll();
+    //         console.log(error.response.data)
+    //     })
+    // },
     getDayEarn: function getDayEarn(data) {
       if (data.length >= 2) return data[data.length - 1].total_slp - data[data.length - 2].total_slp;else return data[data.length - 1].total_slp;
     },
@@ -7909,14 +7847,14 @@ __webpack_require__.r(__webpack_exports__);
       };
     },
     getPenalties: function getPenalties(type) {
-      var _this2 = this;
+      var _this = this;
 
       if (type != '') {
         this.axios.get('/penalty-count/' + type).then(function (response) {
-          _this2.resetPenalties();
+          _this.resetPenalties();
 
           response.data.penalties.forEach(function (element) {
-            if (element.penalty == 1) _this2.penalties.first = element.total;else if (element.penalty == 2) _this2.penalties.second = element.total;else if (element.penalty == 3) _this2.penalties.third = element.total;
+            if (element.penalty == 1) _this.penalties.first = element.total;else if (element.penalty == 2) _this.penalties.second = element.total;else if (element.penalty == 3) _this.penalties.third = element.total;
           });
         })["catch"](function (error) {
           // this.clearAll();
@@ -7924,9 +7862,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
-  },
-  created: function created() {
-    this.getReport();
   }
 });
 
@@ -75260,10 +75195,10 @@ var render = function() {
             { staticClass: "col-lg-3 col-md-3 col-sm-12" },
             [
               _c("type-component", {
-                attrs: { type: _vm.type },
+                attrs: { type: _vm.filtersParam.type },
                 on: {
                   updateType: function($event) {
-                    _vm.type = $event
+                    _vm.filtersParam.type = $event
                   }
                 }
               })
@@ -75304,536 +75239,169 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row no-margin mt-1" }, [
-          _c("div", { staticClass: "col-lg-12" }, [
-            _c("table", { staticClass: "footable table" }, [
-              _c("thead", [
-                _c("tr", [
-                  _c(
-                    "th",
-                    {
-                      staticClass: "onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("p.status")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "p.status" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Status\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.name")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [{ active: _vm.sortOrder.type === "r.name" }]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Account Name\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("p.first_name")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "p.first_name" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Scholar Name\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("p.penalty")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "p.penalty" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Penalty\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.mmr")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [{ active: _vm.sortOrder.type === "r.mmr" }]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            MMR\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.gained_slp_today")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              {
-                                active:
-                                  _vm.sortOrder.type === "r.gained_slp_today"
-                              }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            1 Day Earn\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.created_at")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "r.created_at" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Date\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.average_per_day")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              {
-                                active:
-                                  _vm.sortOrder.type === "r.average_per_day"
-                              }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Ave Per Day\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.unclaimed")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "r.unclaimed" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Unclaimed\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.claimed")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "r.claimed" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Claimed\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.total_slp")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              { active: _vm.sortOrder.type === "r.total_slp" }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Total SLP\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "th",
-                    {
-                      staticClass: "text-center onHover",
-                      on: {
-                        click: function($event) {
-                          return _vm.sortTable("r.last_claim_date")
-                        }
-                      }
-                    },
-                    [
-                      [
-                        _c(
-                          "div",
-                          {
-                            class: [
-                              {
-                                active:
-                                  _vm.sortOrder.type === "r.last_claim_date"
-                              }
-                            ]
-                          },
-                          [
-                            _vm._v(
-                              "\n                                            Last Claim\n                                            "
-                            ),
-                            _vm.sortOrder.order == "desc"
-                              ? _c("i", { staticClass: "fas fa-caret-down" })
-                              : _c("i", { staticClass: "fas fa-caret-up" })
-                          ]
-                        )
-                      ]
-                    ],
-                    2
-                  )
-                ])
-              ]),
+          _c(
+            "div",
+            { staticClass: "col-lg-12 col-md-12 col-sm-12" },
+            [
+              _c("loading", {
+                attrs: {
+                  active: _vm.isLoading,
+                  "can-cancel": true,
+                  "on-cancel": _vm.onCancel,
+                  "is-full-page": _vm.fullPage
+                },
+                on: {
+                  "update:active": function($event) {
+                    _vm.isLoading = $event
+                  }
+                }
+              }),
               _vm._v(" "),
               _c(
-                "tbody",
-                _vm._l(_vm.reportData, function(data, index) {
-                  return _c("tr", [
-                    _c("td", [_vm._v(_vm._s(data[data.length - 1].status))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(data[data.length - 1].account_name))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(_vm._s(data[data.length - 1].player_name))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      data[data.length - 1].penalty == 0
-                        ? _c(
-                            "span",
-                            { staticClass: "text-bold text-default" },
-                            [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(data[data.length - 1].penalty) +
-                                  "\n                                    "
-                              )
-                            ]
+                "vuetable",
+                {
+                  ref: "vuetable",
+                  attrs: {
+                    "api-url": "/getReport",
+                    fields: _vm.fields,
+                    css: _vm.css,
+                    "per-page": _vm.perPage,
+                    "append-params": _vm.filtersParam,
+                    "data-path": "data",
+                    "pagination-path": "",
+                    "sort-order": _vm.sortOrder,
+                    "detail-row-component": _vm.detailRow
+                  },
+                  on: {
+                    "vuetable:pagination-data": _vm.onPaginationData,
+                    "vuetable:row-clicked": _vm.onCellClicked,
+                    "vuetable:loading": _vm.onLoading,
+                    "vuetable:loaded": _vm.onLoaded
+                  },
+                  scopedSlots: _vm._u([
+                    {
+                      key: "mmr_field",
+                      fn: function(props) {
+                        return [
+                          _c("div", [
+                            props.rowData.mmr < _vm.lowest_mmr
+                              ? _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.mmr) +
+                                      "\n                                "
+                                  )
+                                ])
+                              : _c("span", { staticClass: "text-default" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.mmr) +
+                                      "\n                                "
+                                  )
+                                ])
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "detailRowIndicator",
+                      fn: function(props) {
+                        return [
+                          _c("div", [
+                            _vm.$refs.vuetable.isVisibleDetailRow(
+                              props.rowData.id
+                            )
+                              ? _c("i", { staticClass: "fas fa-minus-circle" })
+                              : _c("i", { staticClass: "fas fa-plus-circle" })
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "actions",
+                      fn: function(props) {
+                        return _c("div", {}, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "ui small button",
+                              on: {
+                                click: function($event) {
+                                  return _vm.onActionClicked(
+                                    "view-item",
+                                    props.rowData
+                                  )
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "zoom icon" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "ui small button",
+                              on: {
+                                click: function($event) {
+                                  return _vm.onActionClicked(
+                                    "edit-item",
+                                    props.rowData
+                                  )
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "edit icon" })]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "ui small button",
+                              on: {
+                                click: function($event) {
+                                  return _vm.onActionClicked(
+                                    "delete-item",
+                                    props.rowData
+                                  )
+                                }
+                              }
+                            },
+                            [_c("i", { staticClass: "delete icon" })]
                           )
-                        : data[data.length - 1].penalty == 1
-                        ? _c("span", { staticClass: "text-bold text-info" }, [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(data[data.length - 1].penalty) +
-                                "\n                                    "
-                            )
-                          ])
-                        : data[data.length - 1].penalty == 2
-                        ? _c(
-                            "span",
-                            { staticClass: "text-bold text-warning" },
-                            [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(data[data.length - 1].penalty) +
-                                  "\n                                    "
-                              )
-                            ]
-                          )
-                        : _c("span", { staticClass: "text-bold text-danger" }, [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(data[data.length - 1].penalty) +
-                                "\n                                    "
-                            )
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(
-                        "\n                                    " +
-                          _vm._s(data[data.length - 1].mmr) +
-                          "\n                                "
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm.getDayEarn(data) < 75
-                        ? _c("span", { staticClass: "btn btn-danger btn-xs" }, [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(_vm.getDayEarn(data)) +
-                                "\n                                    "
-                            )
-                          ])
-                        : _c("span", [
-                            _vm._v(
-                              "\n                                        " +
-                                _vm._s(_vm.getDayEarn(data)) +
-                                "\n                                    "
-                            )
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(
-                        _vm._s(
-                          _vm._f("formatDate")(data[data.length - 1].created_at)
-                        )
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(data[data.length - 1].average_per_day))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(data[data.length - 1].unclaimed))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(data[data.length - 1].claimed))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(_vm._s(data[data.length - 1].total_slp))
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _vm._v(
-                        _vm._s(data[data.length - 1].last_claim_days) +
-                          " by " +
-                          _vm._s(
-                            _vm._f("formatDate")(
-                              data[data.length - 1].last_claim_date
-                            )
-                          )
-                      )
-                    ])
+                        ])
+                      }
+                    }
                   ])
-                }),
-                0
+                },
+                [
+                  _vm._v(
+                    "\n                        >\n                        "
+                  )
+                ]
               )
-            ])
-          ])
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [_c("vuetable-pagination-info", { ref: "paginationInfo" })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-6 text-right" },
+            [
+              _c("vuetable-pagination", {
+                ref: "pagination",
+                attrs: { css: _vm.css.pagination },
+                on: { "vuetable-pagination:change-page": _vm.onChangePage }
+              })
+            ],
+            1
+          )
         ])
       ]
     )
@@ -99043,40 +98611,58 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([{
   name: "facility_name",
-  title: 'Status'
+  title: 'Status',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: 'Name'
+  name: "account_name",
+  title: 'Account Name'
 }, {
-  name: "address",
-  title: 'Agent Name'
+  name: "player_name",
+  title: 'Scholar Name'
 }, {
-  name: "address",
-  title: '稼働開始日'
+  name: "penalty",
+  title: 'Penalty',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: '稼働日数'
+  name: "mmr",
+  title: 'MMR',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: 'Totalペナルティ'
+  name: "gained_slp_today",
+  title: '1 Day SLP',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: '現在のSLP獲得量'
+  name: "created_at",
+  title: 'Date',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: '30%'
+  name: "average_per_day",
+  title: 'Ave Per Day',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: '40%'
+  name: "unclaimed",
+  title: 'Unclaimed',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: '合計'
+  name: "claimed",
+  title: 'Claimed',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "address",
-  title: '7Dペナルティ'
+  name: "total_slp",
+  title: 'Total SLP',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }, {
-  name: "phone",
-  title: "Plactice 期間",
+  name: "last_claim_date",
+  title: "Last Claim Date",
   titleClass: "text-center aligned",
   dataClass: "text-center aligned"
 }]);
