@@ -6504,6 +6504,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -6523,6 +6533,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       isLoading: false,
       fullPage: true,
+      lowest_mmr: 800,
       sortOrder: [{
         field: 'average_per_day',
         // Choose the Defualt Sorted Data by name
@@ -6736,6 +6747,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationSettingsMixins */ "./resources/js/components/pages/NotificationSettingsMixins.js");
 //
 //
 //
@@ -6842,7 +6854,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__["NotificationSettingsMixins"]],
   data: function data() {
     return {
       settings: {},
@@ -6863,23 +6877,14 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getSettings: function getSettings() {
-      var _this = this;
-
-      this.axios.get('getNotificationSettings').then(function (response) {
-        _this.options = JSON.parse(response.data.notification_settings.options);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
     saveSettings: function saveSettings() {
-      var _this2 = this;
+      var _this = this;
 
       this.axios.post('saveNotificationSettings', {
         status: 1,
         options: JSON.stringify(this.options)
       }).then(function (response) {
-        if (response.data.is_error == false) _this2.$noty.success("Notification Settings Saved");
+        if (response.data.is_error == false) _this.$noty.success("Notification Settings Saved");
       })["catch"](function (error) {
         console.log(error);
       });
@@ -6901,6 +6906,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationSettingsMixins */ "./resources/js/components/pages/NotificationSettingsMixins.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7062,7 +7068,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 //
 //
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__["NotificationSettingsMixins"]],
   data: function data() {
     return {
       data: {},
@@ -7190,17 +7198,8 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         });
       }
     },
-    getNotificationSettings: function getNotificationSettings() {
-      var _this4 = this;
-
-      this.axios.get('getNotificationSettings').then(function (response) {
-        _this4.options = JSON.parse(response.data.notification_settings.options);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
     getLowestMMR: function getLowestMMR(filter) {
-      var _this5 = this;
+      var _this4 = this;
 
       this.axios.get('/getLowestMMR', {
         params: {
@@ -7209,28 +7208,28 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           type_id: filter.selected_type
         }
       }).then(function (response) {
-        _this5.mmr_count = response.data.lowest_mmr_counts;
+        _this4.mmr_count = response.data.lowest_mmr_counts;
       })["catch"](function (error) {
         console.log(error);
       });
     }
   },
   mounted: function mounted() {
-    var _this6 = this;
+    var _this5 = this;
 
-    this.getNotificationSettings();
     this.getTotal();
+    this.getSettings();
     this.$events.$on('graph-filter-set', function (eventData) {
-      _this6.filters = eventData;
+      _this5.filters = eventData;
 
-      _this6.onFilterSet(eventData);
+      _this5.onFilterSet(eventData);
 
-      _this6.getPenalties(eventData);
+      _this5.getPenalties(eventData);
 
-      _this6.getLowestMMR(eventData);
+      _this5.getLowestMMR(eventData);
     });
     this.$events.$on('graph-data', function (eventData) {
-      return _this6.getAverage(eventData);
+      return _this5.getAverage(eventData);
     });
   }
 });
@@ -71862,6 +71861,30 @@ var render = function() {
                   },
                   scopedSlots: _vm._u([
                     {
+                      key: "mmr_field",
+                      fn: function(props) {
+                        return [
+                          _c("div", [
+                            props.rowData.mmr < _vm.lowest_mmr
+                              ? _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.mmr) +
+                                      "\n                                "
+                                  )
+                                ])
+                              : _c("span", { staticClass: "text-default" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.mmr) +
+                                      "\n                                "
+                                  )
+                                ])
+                          ])
+                        ]
+                      }
+                    },
+                    {
                       key: "detailRowIndicator",
                       fn: function(props) {
                         return [
@@ -71992,15 +72015,15 @@ var render = function() {
       _c("div", { staticClass: "row" }, [
         _c("div", { staticClass: "col-md-3" }, [
           _c("p", { staticClass: "no-margin" }, [
-            _c("b", [_vm._v("MMR: ")]),
-            _vm._v(_vm._s(_vm.rowData.mmr))
+            _c("b", [_vm._v("Manager Share: ")]),
+            _vm._v(_vm._s(_vm.rowData.manager_share))
           ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-3" }, [
           _c("p", { staticClass: "no-margin" }, [
-            _c("b", [_vm._v("Rank: ")]),
-            _vm._v(_vm._s(_vm.rowData.rank))
+            _c("b", [_vm._v("Scholar Share: ")]),
+            _vm._v(_vm._s(_vm.rowData.scholar_share))
           ])
         ]),
         _vm._v(" "),
@@ -99403,23 +99426,35 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   title: 'Total SLP',
   titleClass: 'center aligned',
   dataClass: 'center aligned'
-}, // {
+}, {
+  name: "mmr_field",
+  title: 'MMR',
+  titleClass: 'center aligned',
+  dataClass: 'center aligned'
+}, {
+  name: "rank",
+  title: 'Rank',
+  titleClass: 'center aligned',
+  dataClass: 'center aligned'
+} // {
 //   name: "last_claim",
 //   title: 'Last Claim Date',
 //   titleClass: 'center aligned',
 //   dataClass: 'center aligned',
 // },
-{
-  name: "manager_share",
-  title: 'Manager Share',
-  titleClass: 'center aligned',
-  dataClass: 'center aligned'
-}, {
-  name: "scholar_share",
-  title: 'Scholar Share',
-  titleClass: 'center aligned',
-  dataClass: 'center aligned'
-} // {
+// {
+//   name: "manager_share",
+//   title: 'Manager Share',
+//   titleClass: 'center aligned',
+//   dataClass: 'center aligned',
+// },
+// {
+//   name: "scholar_share",
+//   title: 'Scholar Share',
+//   titleClass: 'center aligned',
+//   dataClass: 'center aligned',
+// },
+// {
 //   name: "action",
 //   title: "Action",
 //   titleClass: "text-center aligned",
@@ -99564,6 +99599,32 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotificationSettingsComponent_vue_vue_type_template_id_e74b016e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/NotificationSettingsMixins.js":
+/*!*********************************************************************!*\
+  !*** ./resources/js/components/pages/NotificationSettingsMixins.js ***!
+  \*********************************************************************/
+/*! exports provided: NotificationSettingsMixins */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationSettingsMixins", function() { return NotificationSettingsMixins; });
+var NotificationSettingsMixins = {
+  methods: {
+    getSettings: function getSettings() {
+      var _this = this;
+
+      this.axios.get('getNotificationSettings').then(function (response) {
+        _this.options = JSON.parse(response.data.notification_settings.options);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
+};
 
 /***/ }),
 

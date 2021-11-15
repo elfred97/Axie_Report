@@ -16,7 +16,12 @@ use Illuminate\Support\Facades\Hash;
 class GlobalController extends Controller
 {
     //
-    protected function index(){
+    protected function index(Request $request){
+        $user = $request->user();
+        $user->load('notification_settings');
+
+        // $notification_settings = $user->notification_settings;
+        // return view('main', compact('notification_settings'));
         return view('main');
     }
 

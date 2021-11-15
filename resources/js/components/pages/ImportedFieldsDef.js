@@ -69,24 +69,36 @@ export default [
     titleClass: 'center aligned',
     dataClass: 'center aligned',
   },
+  {
+    name: "mmr_field",
+    title: 'MMR',
+    titleClass: 'center aligned',
+    dataClass: 'center aligned',    
+  },
+  {
+    name: "rank",
+    title: 'Rank',
+    titleClass: 'center aligned',
+    dataClass: 'center aligned',
+  },
   // {
   //   name: "last_claim",
   //   title: 'Last Claim Date',
   //   titleClass: 'center aligned',
   //   dataClass: 'center aligned',
   // },
-  {
-    name: "manager_share",
-    title: 'Manager Share',
-    titleClass: 'center aligned',
-    dataClass: 'center aligned',
-  },
-  {
-    name: "scholar_share",
-    title: 'Scholar Share',
-    titleClass: 'center aligned',
-    dataClass: 'center aligned',
-  },
+  // {
+  //   name: "manager_share",
+  //   title: 'Manager Share',
+  //   titleClass: 'center aligned',
+  //   dataClass: 'center aligned',
+  // },
+  // {
+  //   name: "scholar_share",
+  //   title: 'Scholar Share',
+  //   titleClass: 'center aligned',
+  //   dataClass: 'center aligned',
+  // },
   // {
   //   name: "action",
   //   title: "Action",

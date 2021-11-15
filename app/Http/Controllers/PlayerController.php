@@ -129,7 +129,7 @@ class PlayerController extends Controller
             ->select(DB::raw('count(*) as total'))
             ->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
             ->leftJoin('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->leftJoin('report as r', 'r.ronin_address', '=', 'players.ronin_address')
+            ->leftJoin('report as r', 'r.name', '=', 'players.account_name')
             ->where('mmr','<', 800)
             ->when($type_id, function ($q) use ($type_id) {
                 $q->whereRaw('s.type_id=' . (int)$type_id);
@@ -141,7 +141,9 @@ class PlayerController extends Controller
                 $q->whereMonth('r.created_at', '=', $month);
             })
             ->groupBy('players.account_name')
-            ->get()->count();
+            ->get()
+            ->count();
+
 
         return $this->buildJson(['lowest_mmr_counts' => $player_counts]);
     }

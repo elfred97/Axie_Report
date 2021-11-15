@@ -64,6 +64,16 @@
                             @vuetable:loading="onLoading"
                             @vuetable:loaded="onLoaded">
                             >
+                            <template slot="mmr_field" slot-scope="props">
+                                <div>
+                                    <span class="text-danger" v-if="props.rowData.mmr < lowest_mmr">
+                                        {{ props.rowData.mmr }}
+                                    </span>
+                                    <span class="text-default" v-else>
+                                        {{ props.rowData.mmr}}
+                                    </span>
+                                </div>
+                            </template>
                             <template slot="detailRowIndicator" slot-scope="props">
                                 <div>
                                     <i v-if="$refs.vuetable.isVisibleDetailRow(props.rowData.id)"
@@ -133,7 +143,8 @@ export default {
                 type : ""
             },
             isLoading : false,
-            fullPage  : true, 
+            fullPage  : true,
+            lowest_mmr : 800,
             sortOrder  : [
                 {
                     field    : 'average_per_day',// Choose the Defualt Sorted Data by name
@@ -193,6 +204,6 @@ export default {
             })
 
         }
-    }
+    },    
 }
 </script>

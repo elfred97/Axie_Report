@@ -3,10 +3,10 @@
         <div class="field">
             <div class="row">
                 <div class="col-md-3">
-                    <p class="no-margin"><b>MMR: </b>{{ rowData.mmr }}</p>
+                    <p class="no-margin"><b>Manager Share: </b>{{ rowData.manager_share }}</p>
                 </div>
                 <div class="col-md-3">
-                    <p class="no-margin"><b>Rank: </b>{{ rowData.rank }}</p>
+                    <p class="no-margin"><b>Scholar Share: </b>{{ rowData.scholar_share }}</p>
                 </div>
             
                 <div class="col-md-3" v-if="rowData.last_claim_days">

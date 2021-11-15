@@ -148,7 +148,9 @@
     </div>
 </template>
 <script>
+import { NotificationSettingsMixins } from './NotificationSettingsMixins';
 export default {
+    mixins : [ NotificationSettingsMixins ],
     data(){
         return {            
             data             : {},
@@ -283,15 +285,6 @@ export default {
                 })
             }
         },
-        getNotificationSettings(){
-            this.axios.get('getNotificationSettings')
-            .then((response) =>{
-                this.options = JSON.parse(response.data.notification_settings.options);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-        },
         getLowestMMR(filter){
             this.axios.get('/getLowestMMR', {
                 params : {
@@ -300,7 +293,7 @@ export default {
                     type_id : filter.selected_type,
                 }
             })
-            .then((response) => {
+            .then((response) => {                
                 this.mmr_count = response.data.lowest_mmr_counts;
             })
             .catch((error) =>{
@@ -309,8 +302,8 @@ export default {
         },
     },
     mounted(){
-        this.getNotificationSettings();
         this.getTotal();
+        this.getSettings();
         this.$events.$on('graph-filter-set', (eventData) => {
             this.filters = eventData;
             this.onFilterSet(eventData);

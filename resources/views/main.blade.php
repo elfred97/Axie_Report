@@ -45,6 +45,7 @@
 	</div>
 	<script>
         var global_guard_type = "<?php if(\auth()->guard('admins')->check()) echo 'admins'; else echo 'scholars';?>";
+		
 		// alert(global_guard_type);
     </script>
     <!-- ================== BEGIN BASE JS ================== -->
