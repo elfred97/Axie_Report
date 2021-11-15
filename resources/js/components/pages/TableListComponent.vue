@@ -267,10 +267,18 @@ export default {
             }
             this.sortOrder.type = type;
         },
+        resetPenalties(){
+            this.penalties = {
+                first : 0,
+                second : 0,
+                third : 0,
+            }
+        },
         getPenalties(type){
             if(type != ''){
                 this.axios.get('/penalty-count/'+type)
                 .then((response) => {
+                    this.resetPenalties();
                     response.data.penalties.forEach( element => {
                         if(element.penalty == 1)
                             this.penalties.first = element.total;
@@ -279,6 +287,7 @@ export default {
                         else if(element.penalty == 3)
                             this.penalties.third = element.total;
                     });
+                    
                 })
                 .catch((error) => {
                     // this.clearAll();

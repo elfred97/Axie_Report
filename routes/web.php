@@ -85,6 +85,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('/getUsers', 'GlobalController@getUsers');
     Route::post('/updateUser', 'GlobalController@updateUser');
     Route::post('/deleteUser', 'GlobalController@deleteUser');
+    Route::post('/changePassword', 'GlobalController@changePassword');
 
     Route::get('penalty-count/{type?}', 'PlayerController@getPenaltyCount');
     Route::get('getLowestMMR', 'PlayerController@getLowestMMR');
