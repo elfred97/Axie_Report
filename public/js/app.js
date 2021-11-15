@@ -7154,19 +7154,20 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
           sortOrder: 'desc'
         }
       }).then(function (response) {
-        _this2.total_data = response.data;
+        _this2.total_data = response.data.data;
+        console.log(response.data.data);
         var total_slp = 0;
         var total_claimed = 0;
         var total_unclaimed = 0;
 
-        for (var _i = 0, _Object$entries = Object.entries(response.data); _i < _Object$entries.length; _i++) {
+        for (var _i = 0, _Object$entries = Object.entries(response.data.data); _i < _Object$entries.length; _i++) {
           var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
               key = _Object$entries$_i[0],
               value = _Object$entries$_i[1];
 
-          total_slp += parseInt(value[value.length - 1].total_slp);
-          total_claimed += parseInt(value[value.length - 1].claimed);
-          total_unclaimed += parseInt(value[value.length - 1].unclaimed);
+          total_slp += parseInt(value.total_slp);
+          total_claimed += parseInt(value.claimed);
+          total_unclaimed += parseInt(value.unclaimed);
         }
 
         _this2.total_slp = total_slp;
@@ -7761,6 +7762,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: '',
       css: _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"],
       detailRow: _ImportedDetailRow_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+      lowest_mmr: 800,
       sortOrder: {
         type: '',
         order: "desc"
@@ -75185,7 +75187,7 @@ var render = function() {
     _c(
       "div",
       {
-        staticClass: "section-container bg-white",
+        staticClass: "section-container bg-white mb-2",
         attrs: { id: "table-list" }
       },
       [
@@ -98626,7 +98628,7 @@ __webpack_require__.r(__webpack_exports__);
   titleClass: "text-center aligned",
   dataClass: "text-center aligned"
 }, {
-  name: "mmr",
+  name: "mmr_field",
   title: 'MMR',
   titleClass: "text-center aligned",
   dataClass: "text-center aligned"
@@ -98639,7 +98641,10 @@ __webpack_require__.r(__webpack_exports__);
   name: "created_at",
   title: 'Date',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+  }
 }, {
   name: "average_per_day",
   title: 'Ave Per Day',

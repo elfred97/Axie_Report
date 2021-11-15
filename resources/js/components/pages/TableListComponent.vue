@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- BEGIN #tablet-list -->
-        <div id="table-list" class="section-container bg-white">
+        <div id="table-list" class="section-container bg-white mb-2">
             <!-- BEGIN container -->
             <!-- <div class="container"> -->
                 <div class="row no-margin">
@@ -119,6 +119,7 @@ export default {
             type      : '',
             css       : TableStyle,
             detailRow : ImportedDetailRow,
+            lowest_mmr : 800,
             sortOrder : {
                 type : '',
                 order: "desc",

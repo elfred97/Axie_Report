@@ -238,15 +238,17 @@ export default {
                 }
             })
             .then((response) => {
-                this.total_data = response.data;
+                this.total_data = response.data.data;
+
+                console.log(response.data.data);
                 let total_slp = 0;
                 let total_claimed = 0;
                 let total_unclaimed = 0;
 
-                for (const [key, value] of Object.entries(response.data)) {
-                    total_slp += parseInt(value[value.length - 1].total_slp);
-                    total_claimed += parseInt(value[value.length - 1].claimed);
-                    total_unclaimed += parseInt(value[value.length - 1].unclaimed);
+                for (const [key, value] of Object.entries(response.data.data)) {
+                    total_slp += parseInt(value.total_slp);
+                    total_claimed += parseInt(value.claimed);
+                    total_unclaimed += parseInt(value.unclaimed);
                 }
                 this.total_slp = total_slp;
                 this.total_claimed = total_claimed;
