@@ -20,7 +20,7 @@ export default [
         dataClass: "text-center aligned",
     },
     {
-        name: "mmr",
+        name: "mmr_field",
         title: 'MMR',
         titleClass: "text-center aligned",
         dataClass: "text-center aligned",
@@ -36,6 +36,9 @@ export default [
         title: 'Date',
         titleClass: "text-center aligned",
         dataClass: "text-center aligned",        
+        formatter: value => {            
+            return '<span>'+ moment(value).format('MMM D, YYYY') +'</span>';
+        }
     },
     {
         name: "average_per_day",
