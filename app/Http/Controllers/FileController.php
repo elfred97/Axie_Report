@@ -57,7 +57,7 @@ class FileController extends Controller
         if ($request->type)
             array_push($where, ['s.type_id', '=', $request->type]);
 
-        return DB::TABLE('report as r')
+        $reports =  DB::TABLE('report as r')
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
@@ -69,8 +69,10 @@ class FileController extends Controller
             )
             ->WHERE($where)
             ->orderBy($sortType, $request->sortOrder)
-            ->GET()
-            ->GROUPBY('account_name');
+//            ->GROUPBY('account_name')
+            ->paginate($request->get('per_page', 15))->withQueryString();
+
+        return $this->buildJson(compact('reports'));
     }
 
     public function getTotalReportbyDate(Request $request){
