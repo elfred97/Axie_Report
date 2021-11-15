@@ -33,7 +33,8 @@ class NotificationSettingControler extends Controller
         $user = $request->user();
         $user->load('notification_settings');
 
-        return $this->buildJson(['notification_settings' => $user->notification_settings]);
+        $notification_settings = $user->notification_settings;
+        return $this->buildJson(compact('notification_settings'));
     }
 
 }

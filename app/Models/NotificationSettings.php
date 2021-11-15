@@ -16,6 +16,10 @@ class NotificationSettings extends Model
         'status',
     ];
 
+    protected $casts = [
+        'options' => 'array',
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class,'id','model_id')->where('model','App\Models\User');
