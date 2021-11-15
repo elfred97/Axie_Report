@@ -34,10 +34,12 @@ class HomeController extends Controller
     {
         return view('main');
     }
+
     public function import(Request $request){
         Excel::import(new ScholarImport, $request->file);
         return "File Uploaded";
     }
+
     public function getScholars(Request $request){
         return Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'players.id', '=', 'history.player_id')
@@ -65,7 +67,7 @@ class HomeController extends Controller
         );
 
         if($validator->fails())
-            return response()->json($vaidator->errors(), 422);
+            return response()->json($validator->errors(), 422);
 
         try {
             $scholar = Scholar::UPDATEORCREATE(
