@@ -22,6 +22,16 @@ class ReportImport implements ToCollection
         //
         $counter = 0;
         $batch = (count(Report::GET()) > 0) ? Report::max('batch') : 0;
+
+        $notification_settings = auth()->user()->notification_settings;
+        $mmr = '';
+        $minimum_slp = '';
+
+        if($notification_settings) {
+            $mmr = $notification_settings->options['mmr'] ?? '';
+            $minimum_slp = $notification_settings->options['minimum_slp'] ?? '';
+        }
+
         foreach ($rows as $row)
         {
             if($counter > 0){
