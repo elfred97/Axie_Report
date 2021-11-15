@@ -87,7 +87,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">LOWEST MMR</div>
-                                <div class="stats-number">{{ total_average_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number">{{ mmr_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>
                         </div>
@@ -169,6 +169,7 @@ export default {
                 second : 0,
                 third : 0,
             },
+            mmr_count : 0,
             options : {
                 mmr                : '',
                 minimum_slp        : '',
@@ -290,7 +291,22 @@ export default {
             .catch((error) => {
                 console.log(error);
             })
-        }
+        },
+        getLowestMMR(filter){
+            this.axios.get('/getLowestMMR', {
+                params : {
+                    month : filter.selected_month,
+                    year : filter.selected_year,
+                    type_id : filter.selected_type,
+                }
+            })
+            .then((response) => {
+                this.mmr_count = response.data.lowest_mmr_counts;
+            })
+            .catch((error) =>{
+                console.log(error);
+            })
+        },
     },
     mounted(){
         this.getNotificationSettings();
@@ -299,6 +315,7 @@ export default {
             this.filters = eventData;
             this.onFilterSet(eventData);
             this.getPenalties(eventData);
+            this.getLowestMMR(eventData);
         });
         this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
     }

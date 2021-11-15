@@ -7,6 +7,7 @@ use Auth;
 use Session;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Type;
 use Illuminate\Support\Facades\Validator;
 
@@ -93,8 +94,8 @@ class GlobalController extends Controller
 			[
 				'username'    => 'required',
 				'first_name'  => 'required',
-				'middle_name' => 'required',
 				'last_name'   => 'required',
+				// 'middle_name' => 'required',
 			]
 		);
 
@@ -205,6 +206,45 @@ class GlobalController extends Controller
             );
             if($user)
                 return response()->json(['message' => 'Type deleted'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
+    public function changePassword(Request $request){
+
+        $validator = Validator::make(
+			$request->all(),
+			[
+				'password'         => 'required',
+				'new_password'     => 'required|required_with:confirm_password|same:confirm_password',
+				'confirm_password' => 'required',
+				// 'middle_name' => 'required',
+			]
+		);
+
+        if ($validator->fails())
+			return response()->json($validator->errors(), 422);
+
+        $password         = $request->password;
+        $new_password     = $request->new_password;
+        $confirm_password = $request->confirm_password;
+
+        if(!Hash::check($password, Auth::user()->password))
+            return response()->json(['password' => 'Password did not match'], 422);
+        
+        try{
+            $user = User::UPDATEORCREATE(
+                [ 'username' => Auth::user()->username ],
+                [
+                    'password'      => Hash::make($new_password),
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'User password changed'], 200);
             else
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }
