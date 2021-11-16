@@ -57,6 +57,10 @@ class FileController extends Controller
         if ($request->type)
             array_push($where, ['s.type_id', '=', $request->type]);
 
+
+        $latest_id_per_account = DB::table('report as r')
+                        ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
+
         $reports =  DB::TABLE('report as r')
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
@@ -70,6 +74,7 @@ class FileController extends Controller
             ->WHERE($where)
             // ->orderBy($sortType, $request->sortOrder)
             ->orderBy($sortType, 'asc')
+            ->whereIn('r.id', $latest_id_per_account)
 //            ->GROUPBY('account_name')
             ->paginate($request->get('per_page', 15));
 
