@@ -21,7 +21,9 @@
                             {{ getSLPChange_24H }} %
                     </small>
                 </h3>
-                
+                <div class="btn-group">
+                    <button class="btn btn-xs btn-info"><i class="fas fa-bell"></i> Remind SLP Price</button>
+                </div>                
             </div>
         </div>
             

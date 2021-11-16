@@ -131,7 +131,7 @@ export default {
         saveSettings(){
             this.axios.post('saveNotificationSettings', {
                 status : 1,
-                options : JSON.stringify(this.options)
+                options : this.options
             })
             .then((response) =>{
                 if(response.data.is_error == false)

@@ -12,7 +12,7 @@ class Notification extends Model
 	protected $fillable = [
 		'id',
 		'account_name',
-        'gained_slp_today',
-        'penalty',
+        'category',
+        'status',
 	];
 }

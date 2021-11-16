@@ -24,12 +24,12 @@ class ReportImport implements ToCollection
         $batch = (count(Report::GET()) > 0) ? Report::max('batch') : 0;
 
         $notification_settings = auth()->user()->notification_settings;
-        $mmr = '';
-        $minimum_slp = '';
+        $mmr = 800;
+        $minimum_slp = 75;
 
         if($notification_settings) {
-            $mmr = $notification_settings->options['mmr'] ?? '';
-            $minimum_slp = $notification_settings->options['minimum_slp'] ?? '';
+            $mmr = $notification_settings->options['mmr'] ?? 800;
+            $minimum_slp = $notification_settings->options['minimum_slp'] ?? 75;
         }
 
         foreach ($rows as $row)
@@ -40,18 +40,18 @@ class ReportImport implements ToCollection
 
                 $thirty_percent = 0;
                 $forty_percent = 0;
-
+                
                 if(!empty($report)){
                     $gained_slp_today = $row[6] - $report->total_slp;
-
+                    
                     if(!empty($player)){
-                        $today = Carbon::now();
+                        // Check shcolar share
                         $date_started = Carbon::parse($player->date_started);
-                        $interval = $date_started->diff($today)->days;
-
+                        $interval = $date_started->diff(Carbon::now())->days;
+                        // Check interval
                         if($interval <= 30){
-                            $manager_share = $gained_slp_today * 0.7;
-                            $scholar_share = $gained_slp_today * 0.3;
+                            $manager_share  = $gained_slp_today * 0.7;
+                            $scholar_share  = $gained_slp_today * 0.3;
                             $thirty_percent = $scholar_share + $report->thirty_percent;
                         }
                         else{
@@ -59,19 +59,27 @@ class ReportImport implements ToCollection
                             $scholar_share = $gained_slp_today * 0.4;
                             $forty_percent = $scholar_share + $report->forty_percent;
                         }
-                        if($gained_slp_today < 75){
-                            $penalty = $player->penalty + 1;
+                        // Check Penalty                        
+                        $penalty = $player->penalty;
+                        if($gained_slp_today < $minimum_slp){
+                            $penalty = $penalty + 1;
                             Notification::CREATE([
                                 'account_name' => $row[2],
-                                'gained_slp_today' => $gained_slp_today,
-                                'penalty' => $penalty,
+                                'category'     => 1,
+                                'status'       => 1,
                             ]);
                         }
-                        else{
-                            $penalty = $player->penalty;
+
+                        // Check MMR
+                        if($row[14] < $mmr){
+                            Notification::CREATE([
+                                'account_name' => $row[2],
+                                'category'     => 2,
+                                'status'       => 1,
+                            ]);
                         }
 
-
+                        // Update Player
                         Player::WHERE('account_name', $row[2])->update(
                             [
                                 'penalty'       => $penalty,
@@ -82,17 +90,10 @@ class ReportImport implements ToCollection
                     }
                 }
                 else{
-                    // $penalty = ($row[6] > 75) ? 0 : 1;
                     $gained_slp_today = $row[6];
-                    $thirty_percent = $gained_slp_today * 0.3;
-                    // PlayerModel::WHERE('account_name', $row[2])->update(
-                    //     [
-                    //         'penalty'       => $player->penalty + $penalty,
-                    //         'scholar_share' => $player->scholar_share + $scholar_share,
-                    //         'manager_share' => $player->manager_share + $manager_share,
-                    //     ]
-                    // );
+                    $thirty_percent   = $gained_slp_today * 0.3;
                 }
+
                 Report::create([
                     'ronin_address'    => $row[0],
                     'name'             => $row[2],

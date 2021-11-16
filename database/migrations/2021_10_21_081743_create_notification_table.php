@@ -17,8 +17,8 @@ class CreateNotificationTable extends Migration
             Schema::create('notification', function(Blueprint $table){
                 $table->increments('id');
                 $table->text('account_name')->nullable();
-                $table->integer('gained_slp_today')->nullable()->default(NULL);
-                $table->integer('penalty')->nullable()->default(NULL);           
+                $table->tinyInteger('category')->nullable()->default(NULL);
+                $table->tinyInteger('status')->nullable()->default(NULL);           
                 $table->timestamps();
             });
         }

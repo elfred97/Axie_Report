@@ -6882,7 +6882,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.post('saveNotificationSettings', {
         status: 1,
-        options: JSON.stringify(this.options)
+        options: this.options
       }).then(function (response) {
         if (response.data.is_error == false) _this.$noty.success("Notification Settings Saved");
       })["catch"](function (error) {
@@ -8447,6 +8447,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -8496,6 +8498,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SLPUpdateComponent.vue */ "./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue");
 /* harmony import */ var _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatsComponent.vue */ "./resources/js/components/scholar_pages/Home/StatsComponent.vue");
+/* harmony import */ var _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScholarPenaltyComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue");
+/* harmony import */ var _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScholarImportListComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue");
 //
 //
 //
@@ -8517,12 +8521,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
+    'stats-component': _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     'slp-update-component': _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    'stats-component': _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+    'scholar-penalty-component': _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    'scholar-import-list-component': _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   }
 });
 
@@ -76563,7 +76590,9 @@ var render = function() {
                 )
               ])
             : _vm._e()
-        ])
+        ]),
+        _vm._v(" "),
+        _vm._m(1)
       ])
     ])
   ])
@@ -76576,6 +76605,17 @@ var staticRenderFns = [
     return _c("h5", [
       _vm._v("Smooth Love Potion \n                "),
       _c("span", { staticClass: "badge badge-inverse" }, [_vm._v("SLP")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "btn-group" }, [
+      _c("button", { staticClass: "btn btn-xs btn-info" }, [
+        _c("i", { staticClass: "fas fa-bell" }),
+        _vm._v(" Remind SLP Price")
+      ])
     ])
   }
 ]
@@ -76614,10 +76654,122 @@ var render = function() {
           _c("div", { staticClass: "col-md-7" }, [_c("stats-component")], 1)
         ])
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "section-container bg-white" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [_c("scholar-penalty-component")],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "section-container bg-white" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [_c("scholar-import-list-component")],
+            1
+          )
+        ])
+      ])
     ])
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [_vm._v("Daily Record")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" })
+          ])
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e&":
+/*!*********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e& ***!
+  \*********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "panel panel-default" }, [
+        _c("div", { staticClass: "panel-heading" }, [
+          _c("h4", { staticClass: "panel-title" }, [_vm._v("Daily Record")])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-md-12" })
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -99209,7 +99361,7 @@ var NotificationSettingsMixins = {
       var _this = this;
 
       this.axios.get('getNotificationSettings').then(function (response) {
-        _this.options = JSON.parse(response.data.notification_settings.options);
+        _this.options = response.data.notification_settings.options;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -100593,6 +100745,112 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarHomeComponent_vue_vue_type_template_id_29a2ef2e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarHomeComponent_vue_vue_type_template_id_29a2ef2e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6& */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6& ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ScholarPenaltyComponent_vue_vue_type_template_id_0758c78e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e& */ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _ScholarPenaltyComponent_vue_vue_type_template_id_0758c78e___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ScholarPenaltyComponent_vue_vue_type_template_id_0758c78e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e& ***!
+  \***************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPenaltyComponent_vue_vue_type_template_id_0758c78e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue?vue&type=template&id=0758c78e&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPenaltyComponent_vue_vue_type_template_id_0758c78e___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPenaltyComponent_vue_vue_type_template_id_0758c78e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
