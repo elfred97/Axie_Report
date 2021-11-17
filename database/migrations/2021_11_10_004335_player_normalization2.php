@@ -13,7 +13,7 @@ class PlayerNormalization2 extends Migration
      */
     public function up()
     {
-//        Schema::rename('player','players');
+        Schema::rename('player','players');
 
         Schema::create('player_scholar_histories', function (Blueprint $table) {
             $table->increments('id');
