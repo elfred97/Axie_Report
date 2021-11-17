@@ -22,11 +22,9 @@ class PlayerNormalization2 extends Migration
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
             $table->foreign('scholar_id')
-                ->references('id')->on('scholars')
-                ->onDelete('cascade');
+                ->references('id')->on('scholars');
             $table->foreign('player_id')
-                ->references('id')->on('players')
-                ->onDelete('cascade');
+                ->references('id')->on('players');
         });
 
 //        Schema::create('reminders', function (Blueprint $table) {
