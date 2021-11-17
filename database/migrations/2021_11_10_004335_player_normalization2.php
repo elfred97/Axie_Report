@@ -13,7 +13,7 @@ class PlayerNormalization2 extends Migration
      */
     public function up()
     {
-//        Schema::rename('player','players');
+        Schema::rename('player','players');
 
         Schema::create('player_scholar_histories', function (Blueprint $table) {
             $table->increments('id');
@@ -21,12 +21,7 @@ class PlayerNormalization2 extends Migration
             $table->integer('player_id')->unsigned();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
-            $table->foreign('scholar_id')
-                ->references('id')->on('scholars')
-                ->onDelete('cascade');
-            $table->foreign('player_id')
-                ->references('id')->on('players')
-                ->onDelete('cascade');
+            $table->index(['scholar_id', 'player_id']);
         });
 
 //        Schema::create('reminders', function (Blueprint $table) {

@@ -20,8 +20,8 @@ class CreateUserTable extends Migration
                 $table->text('middle_name')->nullable()->default(NULL);
                 $table->text('last_name')->nullable();
                 $table->string('username', 255)->nullable()->default(NULL);
-                $table->text('password')->nullable()->default(NULL);                
-                $table->integer('status', 3)->nullable()->default(1);        
+                $table->text('password')->nullable()->default(NULL);
+                $table->tinyInteger('status')->nullable()->default(1);
                 $table->timestamps();
             });
         }
