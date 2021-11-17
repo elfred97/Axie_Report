@@ -76821,41 +76821,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-2" }, [
-        _c(
-          "div",
-          {
-            staticClass: "dataTables_length",
-            attrs: { id: "data-table-default_length" }
-          },
-          [
-            _c(
-              "label",
-              [
-                _vm._v("Date \n                    "),
-                _c("v-datepicker", {
-                  attrs: { range: "" },
-                  on: {
-                    change: function($event) {
-                      return _vm.updateTable()
-                    }
-                  },
-                  model: {
-                    value: _vm.filtersParam.date,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filtersParam, "date", $$v)
-                    },
-                    expression: "filtersParam.date"
-                  }
-                })
-              ],
-              1
-            )
-          ]
-        )
-      ])
-    ]),
+    _vm._m(0),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
       _c(
@@ -76887,7 +76853,6 @@ var render = function() {
                 "per-page": _vm.perPage,
                 "data-path": "data",
                 "sort-order": _vm.sortOrder,
-                "append-params": _vm.filtersParam,
                 "pagination-path": ""
               },
               on: {
@@ -77005,7 +76970,25 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-md-2" }, [
+        _c(
+          "div",
+          {
+            staticClass: "dataTables_length",
+            attrs: { id: "data-table-default_length" }
+          },
+          [_c("label", [_vm._v("Date \n                    ")])]
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

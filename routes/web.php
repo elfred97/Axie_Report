@@ -42,6 +42,8 @@ Auth::routes();
 //});
 //
 Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
+    Route::get('getScholarImport', 'GlobalController@getScholarImport');
+
     Route::get('/', [HomeController::class,'index'])->name('scholar.name');
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');    
     Route::middleware(['vue.components'])->group(function(){

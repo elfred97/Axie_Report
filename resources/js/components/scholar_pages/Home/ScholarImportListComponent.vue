@@ -4,7 +4,7 @@
             <div class="col-md-2">
                 <div class="dataTables_length" id="data-table-default_length">
                     <label>Date 
-                        <v-datepicker v-model="filtersParam.date" range @change="updateTable()" class=""></v-datepicker>
+                        <!-- <v-datepicker v-model="filtersParam.date" range @change="updateTable()" class=""></v-datepicker> -->
                     </label>
                 </div>
             </div>
@@ -22,7 +22,7 @@
                     :per-page="perPage"
                     data-path="data"
                     :sort-order="sortOrder"
-                    :append-params="filtersParam"
+                    
                     pagination-path=""
                     @vuetable:pagination-data="onPaginationData"
                     @vuetable:row-clicked="onCellClicked"

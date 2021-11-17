@@ -259,6 +259,6 @@ class GlobalController extends Controller
     }
 
     public function getScholarImport(Request $request){
-        return Player::PAGINATE(15);
+        return "Hey";
     }
 }
