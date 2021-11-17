@@ -7312,12 +7312,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -7369,9 +7363,6 @@ __webpack_require__.r(__webpack_exports__);
       this.form = new Form({
         id: NULL,
         ronin_address: '',
-        first_name: '',
-        middle_name: '',
-        last_name: '',
         account_name: '',
         scholar_email: '',
         market_place_email: '',
@@ -7381,8 +7372,29 @@ __webpack_require__.r(__webpack_exports__);
         date_started: ''
       });
     },
-    uploadQRCode: function uploadQRCode() {},
-    updateQR: function updateQR() {}
+    uploadQRCode: function uploadQRCode() {
+      var _this2 = this;
+
+      var formData = new FormData();
+      formData.append('file', this.qr_code_file);
+      formData.append('account_name', this.form.account_name);
+      this.axios.post('/uploadQRCode', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        _this2.qr_code_file = '';
+        _this2.$refs.qr_code_file.value = '';
+        console.log(response.data);
+
+        _this2.$noty.success("QR Code Uploaded");
+
+        _this2.updateTable();
+      });
+    },
+    updateQR: function updateQR() {
+      this.qr_code_file = this.$refs.qr_code_file.files[0];
+    }
   },
   mounted: function mounted() {
     if (this.scholarData) this.form = new Form(this.scholarData);else {
@@ -74081,39 +74093,6 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.password,
-              expression: "form.password"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", name: "password" },
-          domProps: { value: _vm.form.password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "password", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.form.errors.has("password")
-          ? _c("div", {
-              staticClass: "text-danger text-bold",
-              domProps: { innerHTML: _vm._s(_vm.form.errors.get("password")) }
-            })
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(4),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
               value: _vm.form.date_started,
               expression: "form.date_started"
             }
@@ -74160,14 +74139,14 @@ var render = function() {
           [
             _c("div", { staticClass: "input-group" }, [
               _c("input", {
-                ref: "file",
+                ref: "qr_code_file",
                 staticClass: "form-control no-margin no-padding",
                 staticStyle: { padding: "1px 3px !important" },
-                attrs: { name: "file", type: "file" },
+                attrs: { name: "qr_code", type: "file" },
                 on: { change: _vm.updateQR }
               }),
               _vm._v(" "),
-              _vm._m(5)
+              _vm._m(4)
             ])
           ]
         )
@@ -74181,7 +74160,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(6),
+    _vm._m(5),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
@@ -74227,15 +74206,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
       _vm._v("Marketplace Email "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Email Password "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
