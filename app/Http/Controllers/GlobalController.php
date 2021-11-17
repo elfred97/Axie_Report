@@ -25,6 +25,14 @@ class GlobalController extends Controller
         return view('main');
     }
 
+    public function redirectMain(){
+        if(auth()->guard('admins')->check()) {
+            return redirect('home');
+        }
+
+        return redirect('scholars');
+    }
+
     protected function login(Request $request){
         if (Auth::check()) return redirect('/');
         $this->restoreDefaults();
@@ -160,12 +168,12 @@ class GlobalController extends Controller
     public function getType(Request $request){
         $where = [];
         $status = $request->status;
-        
+
         if($status)
             array_push($where, ['status', '=', $status]);
 
         array_push($where, ['status', '!=', 'Deleted']);
-        
+
         return Type::WHERE($where)->ORDERBY('id', 'desc')->GET();
     }
 
@@ -240,7 +248,7 @@ class GlobalController extends Controller
 
         if(!Hash::check($password, Auth::user()->password))
             return response()->json(['password' => 'Password did not match'], 422);
-        
+
         try{
             $user = User::UPDATEORCREATE(
                 [ 'username' => Auth::user()->username ],

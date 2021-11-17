@@ -41,21 +41,14 @@ Auth::routes();
 //    }
 //});
 //
-Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
+Route::middleware(['auth:scholars'])->group(function(){
+    Route::get('scholars', [HomeController::class,'index'])->name('scholar.name');
     Route::get('getScholarImport', 'GlobalController@getScholarImport');
 
-    Route::get('/', [HomeController::class,'index'])->name('scholar.name');
-    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');    
-    Route::middleware(['vue.components'])->group(function(){
-        Route::get('/{route}', 'GlobalController@index'); //
-    });
 });
 
-
-
-
 Route::middleware(['auth:admins'])->group(function(){
-    Route::redirect('/', '/home')->name('home');
+
     Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('notifications.save');
     Route::get('getNotificationSettings', [NotificationSettingControler::class,'get'])->name('notification.get');
     Route::post('uploadQRCode', 'PlayerController@uploadQR');
@@ -92,12 +85,16 @@ Route::middleware(['auth:admins'])->group(function(){
 
     Route::get('penalty-count/{type?}', 'PlayerController@getPenaltyCount');
     Route::get('getLowestMMR', 'PlayerController@getLowestMMR');
+});
 
-    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout'); //
 
-    /********************** VUE COMPONENTS *************************/
+//put here route that was accessed by both admin and scholars
+
+Route::middleware(['auth:admins,scholars'])->group(function(){
+    Route::get('/','GlobalController@redirectMain');
+    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
+
     Route::middleware(['vue.components'])->group(function(){
         Route::get('/{route}', 'GlobalController@index'); //
     });
 });
-
