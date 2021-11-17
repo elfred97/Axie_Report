@@ -21,10 +21,12 @@ class PlayerNormalization2 extends Migration
             $table->integer('player_id')->unsigned();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
-            $table->foreign('scholar_id')
-                ->references('id')->on('scholars');
-            $table->foreign('player_id')
-                ->references('id')->on('players');
+            $table->foreignId('scholar_id')
+                ->nullable()
+                ->constrained();
+            $table->foreignId('player_id')
+                ->nullable()
+                ->constrained();
         });
 
 //        Schema::create('reminders', function (Blueprint $table) {
