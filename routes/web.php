@@ -42,6 +42,8 @@ Auth::routes();
 //});
 //
 Route::middleware(['auth:scholars'])->prefix('scholars')->group(function(){
+    Route::get('getScholarImport', 'GlobalController@getScholarImport');
+
     Route::get('/', [HomeController::class,'index'])->name('scholar.name');
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');    
     Route::middleware(['vue.components'])->group(function(){
@@ -56,7 +58,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::redirect('/', '/home')->name('home');
     Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('notifications.save');
     Route::get('getNotificationSettings', [NotificationSettingControler::class,'get'])->name('notification.get');
-    Route::get('src/{username}', 'GlobalController@showFile');
+    Route::post('uploadQRCode', 'PlayerController@uploadQR');
 
     Route::get('/getGraph', 'FileController@getGraph');
     Route::get('/getReport', 'FileController@getReport');

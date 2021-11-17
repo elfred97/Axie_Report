@@ -21,12 +21,6 @@
                 <input type="email" class="form-control" name="market_place_email" v-model="form.market_place_email">
                 <div v-if="form.errors.has('market_place_email')" v-html="form.errors.get('market_place_email')" class="text-danger text-bold"/>
             </div>
-
-            <div class="col-md-4">
-                <label for="">Email Password <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="password" v-model="form.password">
-                <div v-if="form.errors.has('password')" v-html="form.errors.get('password')" class="text-danger text-bold"/>
-            </div>
         
             <div class="col-md-4">
                 <label for="">Date Started <span class="text-danger">*</span></label>
@@ -40,7 +34,7 @@
                 <label for="">Upload QR Code Image</label>
                 <form class="form-horizontal" @submit.prevent="uploadQRCode">
                     <div class="input-group">
-                        <input name="file" type="file" ref="file" @change="updateQR" class="form-control no-margin no-padding" style="padding: 1px 3px !important">
+                        <input name="qr_code" type="file" ref="qr_code_file" @change="updateQR" class="form-control no-margin no-padding" style="padding: 1px 3px !important">
                         <div class="input-group-btn">
                             <button class="btn btn-sm btn-primary" type="submit">
                                 Upload
@@ -120,9 +114,6 @@ export default {
             this.form = new Form({
                 id                : NULL,
                 ronin_address     : '',
-                first_name        : '',
-                middle_name       : '',
-                last_name         : '',
                 account_name      : '',
                 scholar_email     : '',
                 market_place_email: '',
@@ -133,10 +124,27 @@ export default {
             })
         },
         uploadQRCode(){
+            let formData = new FormData();
+            formData.append('file', this.qr_code_file);
+            formData.append('account_name', this.form.account_name)
 
+            this.axios.post('/uploadQRCode',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then((response) => {
+                this.qr_code_file = '';
+                this.$refs.qr_code_file.value = '';
+                console.log(response.data);
+                this.$noty.success("QR Code Uploaded");
+                this.updateTable();
+            })
         },
         updateQR(){
-
+            this.qr_code_file = this.$refs.qr_code_file.files[0];
         }
     },
     mounted(){

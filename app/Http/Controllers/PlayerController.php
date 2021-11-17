@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\Type;
 use DB;
 use File;
+use Storage;
 use Excel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -146,5 +147,27 @@ class PlayerController extends Controller
 
 
         return $this->buildJson(['lowest_mmr_counts' => $player_counts]);
+    }
+
+    public function uploadQR(Request $request){
+        $path = 'assets/codes/'.$request->file->getClientOriginalName();
+        $save = Storage::put($path, file_get_contents($request->file));
+        if($save)
+            try {
+                $user = Player::UPDATEORCREATE(
+                    [ 'account_name' => $request->account_name ],
+                    [
+                        'qr_code'   => $path,
+                        'qr_code_date'=> Carbon::now(),                        
+                    ]
+                );
+                if($user)
+                    return response()->json(['message' => 'QR Code Uploaded'], 200);
+                else
+                    return response()->json(['message' => 'There was a problem processing your request'], 500);
+            }
+            catch (\Exception $e) {
+                return response()->json(['message' => $e->getMessage()], 500);
+            }
     }
 }

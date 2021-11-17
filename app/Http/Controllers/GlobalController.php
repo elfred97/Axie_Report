@@ -259,10 +259,6 @@ class GlobalController extends Controller
     }
 
     public function getScholarImport(Request $request){
-        return Player::PAGINATE(15);
-    }
-
-    public function showFile($username, Request $request){
-        return File::get(public_path("img/QR/"+$username+".jpg"));
+        return "Hey";
     }
 }
