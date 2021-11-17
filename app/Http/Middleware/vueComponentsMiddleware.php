@@ -30,7 +30,8 @@ class vueComponentsMiddleware
             'scholars',
             // 'scholar_home',
             'scholar_account',
-            'scholar_notification',            
+            'scholar_payroll',
+            'scholar_notification',
         ];
 
         if (!in_array($route, $vueComponents))

@@ -58,6 +58,13 @@ export const routes = [
         }
     },
     { 
+        path: '/scholar_payroll', 
+        component: require('./components/scholar_pages/Payroll/ScholarPayrollComponent.vue').default,
+        meta : {
+            admins : false,
+        }
+    },
+    { 
         path: '/scholar_notification', 
         component: require('./components/scholar_pages/Notification/ScholarNotificationComponent.vue').default,
         meta : {

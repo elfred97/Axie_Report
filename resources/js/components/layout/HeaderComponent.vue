@@ -40,7 +40,7 @@
                                 </li>
                                 <li>
                                     <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>
-                                    <router-link to="/scholar_notification" v-else>Notification</router-link>
+                                    <router-link to="/scholar_payroll" v-else>Payroll History</router-link>
                                 </li>
                             </ul>
                         </div>

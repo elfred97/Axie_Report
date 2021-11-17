@@ -7155,7 +7155,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         }
       }).then(function (response) {
         _this2.total_data = response.data.data;
-        console.log(response.data.data);
         var total_slp = 0;
         var total_claimed = 0;
         var total_unclaimed = 0;
@@ -7319,32 +7318,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -7407,7 +7380,9 @@ __webpack_require__.r(__webpack_exports__);
         status: 'Playing',
         date_started: ''
       });
-    }
+    },
+    uploadQRCode: function uploadQRCode() {},
+    updateQR: function updateQR() {}
   },
   mounted: function mounted() {
     if (this.scholarData) this.form = new Form(this.scholarData);else {
@@ -8473,8 +8448,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.axios.get('https://api.coingecko.com/api/v3/coins/smooth-love-potion?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true').then(function (response) {
-        _this.SLPData = response.data;
-        console.log(response.data);
+        _this.SLPData = response.data; // console.log(response.data);
       })["catch"](function (error) {
         console.log('Error: ' + error);
       });
@@ -8529,17 +8503,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -8550,6 +8513,267 @@ __webpack_require__.r(__webpack_exports__);
     'slp-update-component': _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     'scholar-penalty-component': _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     'scholar-import-list-component': _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _pages_TableMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../pages/TableMixins */ "./resources/js/components/pages/TableMixins.js");
+/* harmony import */ var _pages_TableStyle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../pages/TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
+/* harmony import */ var _ScholarImportedFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScholarImportedFieldsDef.js */ "./resources/js/components/scholar_pages/Home/ScholarImportedFieldsDef.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_pages_TableMixins__WEBPACK_IMPORTED_MODULE_0__["TableMixins"]],
+  data: function data() {
+    return {
+      fields: _ScholarImportedFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+      perPage: 15,
+      css: _pages_TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"],
+      filtersParam: {
+        date: ''
+      },
+      isLoading: false,
+      fullPage: true,
+      sortOrder: [{
+        field: "type",
+        // Choose the Defualt Sorted Data by name
+        direction: "desc" // Sorting Direction
+
+      }]
+    };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {};
   }
 });
 
@@ -69905,6 +70129,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_1__["TableMixins"] ],
     data () {
@@ -69968,7 +70200,7 @@ __webpack_require__.r(__webpack_exports__);
                 });
                 // End of Request
             },() =>this.$noty.error("Cancel: Item not removed")
-            )            
+            )
         },
         importPlayer(){
             this.import_file = this.$refs.file.files[0];
@@ -69999,7 +70231,7 @@ __webpack_require__.r(__webpack_exports__);
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
-        }
+        },
     },
     mounted(){
         this.$events.on('update_scholars_table', (data) => {
@@ -70800,8 +71032,8 @@ var render = function() {
                           )
                         : _c(
                             "router-link",
-                            { attrs: { to: "/scholar_notification" } },
-                            [_vm._v("Notification")]
+                            { attrs: { to: "/scholar_payroll" } },
+                            [_vm._v("Payroll History")]
                           )
                     ],
                     1
@@ -73330,8 +73562,8 @@ var render = function() {
               modalWidth: "50%",
               dialogTitle:
                 _vm.actionType == "new"
-                  ? "Add New Scholar"
-                  : "Update Scholar Information"
+                  ? "Add New Axie Account"
+                  : "Update Axie Account Information"
             },
             on: {
               isClose: function($event) {
@@ -73536,6 +73768,27 @@ var render = function() {
                     }
                   },
                   {
+                    key: "qr_code_field",
+                    fn: function(props) {
+                      return [
+                        _c("div", [
+                          props.rowData.qr_code_date
+                            ? _c("span", [
+                                _c("p", { staticClass: "no-margin" }, [
+                                  _vm._v("Last Updated: ")
+                                ]),
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(props.rowData.qr_code_date) +
+                                    "\n                            "
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]
+                    }
+                  },
+                  {
                     key: "player_status",
                     fn: function(props) {
                       return _c("div", {}, [
@@ -73585,20 +73838,26 @@ var render = function() {
                                 }
                               }
                             },
-                            [_c("i", { staticClass: "fa fa-pencil-alt" })]
+                            [
+                              _c("i", { staticClass: "fa fa-pencil-alt" }),
+                              _vm._v(" Edit")
+                            ]
                           ),
                           _vm._v(" "),
                           _c(
                             "button",
                             {
-                              staticClass: "btn btn-white btn-xs",
+                              staticClass: "btn btn-white btn-xs text-danger",
                               on: {
                                 click: function($event) {
                                   return _vm.deleteScholar(props.rowData.id)
                                 }
                               }
                             },
-                            [_c("i", { staticClass: "fa fa-trash" })]
+                            [
+                              _c("i", { staticClass: "fa fa-trash" }),
+                              _vm._v(" Delete")
+                            ]
                           )
                         ])
                       ])
@@ -73787,135 +74046,6 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.first_name,
-              expression: "form.first_name"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", name: "first_name" },
-          domProps: { value: _vm.form.first_name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "first_name", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.form.errors.has("first_name")
-          ? _c("div", {
-              staticClass: "text-danger text-bold",
-              domProps: { innerHTML: _vm._s(_vm.form.errors.get("first_name")) }
-            })
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Middle Name")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.middle_name,
-              expression: "form.middle_name"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", name: "middle_name" },
-          domProps: { value: _vm.form.middle_name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "middle_name", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(3),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.last_name,
-              expression: "form.last_name"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", name: "last_name" },
-          domProps: { value: _vm.form.last_name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "last_name", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.form.errors.has("last_name")
-          ? _c("div", {
-              staticClass: "text-danger text-bold",
-              domProps: { innerHTML: _vm._s(_vm.form.errors.get("last_name")) }
-            })
-          : _vm._e()
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(4),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.scholar_email,
-              expression: "form.scholar_email"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "email", name: "scholar_email" },
-          domProps: { value: _vm.form.scholar_email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "scholar_email", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.form.errors.has("scholar_email")
-          ? _c("div", {
-              staticClass: "text-danger text-bold",
-              domProps: {
-                innerHTML: _vm._s(_vm.form.errors.get("scholar_email"))
-              }
-            })
-          : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(5),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
               value: _vm.form.market_place_email,
               expression: "form.market_place_email"
             }
@@ -73944,44 +74074,40 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(6),
+        _vm._m(3),
         _vm._v(" "),
         _c("input", {
           directives: [
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.email_password,
-              expression: "form.email_password"
+              value: _vm.form.password,
+              expression: "form.password"
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", name: "email_password" },
-          domProps: { value: _vm.form.email_password },
+          attrs: { type: "text", name: "password" },
+          domProps: { value: _vm.form.password },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.form, "email_password", $event.target.value)
+              _vm.$set(_vm.form, "password", $event.target.value)
             }
           }
         }),
         _vm._v(" "),
-        _vm.form.errors.has("email_password")
+        _vm.form.errors.has("password")
           ? _c("div", {
               staticClass: "text-danger text-bold",
-              domProps: {
-                innerHTML: _vm._s(_vm.form.errors.get("email_password"))
-              }
+              domProps: { innerHTML: _vm._s(_vm.form.errors.get("password")) }
             })
           : _vm._e()
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-2" }, [
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(7),
+        _vm._m(4),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -74013,108 +74139,49 @@ var render = function() {
               }
             })
           : _vm._e()
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.type,
-                expression: "form.type"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { name: "scholar_type" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.form,
-                  "type",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "Decent" } }, [_vm._v("Decent")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Trust" } }, [_vm._v("Trust")])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.status,
-                expression: "form.status"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { name: "status", id: "" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.form,
-                  "status",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "Playing" } }, [_vm._v("Playing")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Resigned" } }, [
-              _vm._v("Resigned")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Terminated" } }, [
-              _vm._v("Terminated")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "For QR" } }, [_vm._v("For QR")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "Terminated" } }, [
-              _vm._v("Terminated")
-            ]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "No Axie" } }, [_vm._v("No Axie")])
-          ]
-        )
       ])
     ]),
     _vm._v(" "),
-    _vm._m(8),
+    _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Upload QR Code Image")]),
+        _vm._v(" "),
+        _c(
+          "form",
+          {
+            staticClass: "form-horizontal",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.uploadQRCode.apply(null, arguments)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                ref: "file",
+                staticClass: "form-control no-margin no-padding",
+                staticStyle: { padding: "1px 3px !important" },
+                attrs: { name: "file", type: "file" },
+                on: { change: _vm.updateQR }
+              }),
+              _vm._v(" "),
+              _vm._m(5)
+            ])
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("img", {
+          staticClass: "img-fluid",
+          attrs: { src: _vm.form.qr_code, alt: "" }
+        })
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(6),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
@@ -74159,33 +74226,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
-      _vm._v("First Name "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Last Name "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Scholar Email "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [
       _vm._v("Marketplace Email "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
@@ -74206,6 +74246,22 @@ var staticRenderFns = [
     return _c("label", { attrs: { for: "" } }, [
       _vm._v("Date Started "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "input-group-btn" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-sm btn-primary", attrs: { type: "submit" } },
+        [
+          _vm._v(
+            "\n                            Upload\n                        "
+          )
+        ]
+      )
     ])
   },
   function() {
@@ -76503,9 +76559,111 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "section-container" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+            _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12" }, [
+              _c("div", { staticClass: "account-container" }, [
+                _c("div", { staticClass: "account-sidebar" }, [
+                  _c("div", { staticClass: "account-sidebar-cover" }, [
+                    _c("img", {
+                      attrs: { src: "assets/img/cover/cover-1.jpg", alt: "" }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "account-sidebar-content" }, [
+                    _c("h4", [_vm._v("Your Account")]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "mb-2 mb-lg-4" }, [
+                      _vm._v(
+                        "\n                                    Modify an order, track a shipment, and update your account info.\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "mb-2 mb-lg-4" }, [
+                      _vm._v(
+                        "\n                                    All you need in one place. All with a few simple clicks.\n                                "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "account-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("h4", [_vm._v("Account Information")]),
+                      _vm._v(" "),
+                      _c("ul", { staticClass: "nav nav-list" }, [
+                        _c("li", [
+                          _c("b", [_vm._v("Name: ")]),
+                          _vm._v(
+                            "\n                                            Elfred Tapar\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", [_vm._v("Account Name: ")]),
+                          _vm._v(
+                            "\n                                            Elfred Tapar\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", [_vm._v("Ronin Address: ")]),
+                          _vm._v(
+                            "\n                                            ronin:18fdd60c4666927dd212e47e2af190ba826fd3a8\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", [_vm._v("Email: ")]),
+                          _vm._v(
+                            "\n                                            elfredtapar@gmail.com\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", [_vm._v("Status: ")]),
+                          _vm._v(
+                            "\n                                            Playing\n                                        "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c("b", [_vm._v("Type: ")]),
+                          _vm._v(
+                            "\n                                            Decent\n                                        "
+                          )
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("h4", [_vm._v("QR Code")]),
+                      _vm._v(" "),
+                      _c("img", {
+                        staticClass: "img-fluid",
+                        attrs: { src: "/assets/logo.png", alt: "" }
+                      })
+                    ])
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -76662,19 +76820,6 @@ var render = function() {
           _c(
             "div",
             { staticClass: "col-md-12" },
-            [_c("scholar-penalty-component")],
-            1
-          )
-        ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "section-container bg-white" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-          _c(
-            "div",
-            { staticClass: "col-md-12" },
             [_c("scholar-import-list-component")],
             1
           )
@@ -76705,28 +76850,192 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "panel panel-default" }, [
-        _c("div", { staticClass: "panel-heading" }, [
-          _c("h4", { staticClass: "panel-title" }, [_vm._v("Daily Record")])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "panel-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-12" })
-          ])
-        ])
+  return _c("div", [
+    _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-md-2" }, [
+        _c(
+          "div",
+          {
+            staticClass: "dataTables_length",
+            attrs: { id: "data-table-default_length" }
+          },
+          [
+            _c(
+              "label",
+              [
+                _vm._v("Date \n                    "),
+                _c("v-datepicker", {
+                  attrs: { range: "" },
+                  on: {
+                    change: function($event) {
+                      return _vm.updateTable()
+                    }
+                  },
+                  model: {
+                    value: _vm.filtersParam.date,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filtersParam, "date", $$v)
+                    },
+                    expression: "filtersParam.date"
+                  }
+                })
+              ],
+              1
+            )
+          ]
+        )
       ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-2" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c("loading", {
+            attrs: {
+              active: _vm.isLoading,
+              "can-cancel": true,
+              "on-cancel": _vm.onCancel,
+              "is-full-page": _vm.fullPage
+            },
+            on: {
+              "update:active": function($event) {
+                _vm.isLoading = $event
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c(
+            "vuetable",
+            {
+              ref: "vuetable",
+              attrs: {
+                "api-url": "/getScholarImport",
+                fields: _vm.fields,
+                css: _vm.css,
+                "per-page": _vm.perPage,
+                "data-path": "data",
+                "sort-order": _vm.sortOrder,
+                "append-params": _vm.filtersParam,
+                "pagination-path": ""
+              },
+              on: {
+                "vuetable:pagination-data": _vm.onPaginationData,
+                "vuetable:row-clicked": _vm.onCellClicked,
+                "vuetable:loading": _vm.onLoading,
+                "vuetable:loaded": _vm.onLoaded
+              },
+              scopedSlots: _vm._u([
+                {
+                  key: "mmr_field",
+                  fn: function(props) {
+                    return [
+                      _c("div", [
+                        props.rowData.mmr < _vm.lowest_mmr
+                          ? _c("span", { staticClass: "text-danger" }, [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.rowData.mmr) +
+                                  "\n                        "
+                              )
+                            ])
+                          : _c("span", { staticClass: "text-default" }, [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(props.rowData.mmr) +
+                                  "\n                        "
+                              )
+                            ])
+                      ])
+                    ]
+                  }
+                },
+                {
+                  key: "actions",
+                  fn: function(props) {
+                    return _c("div", {}, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ui small button",
+                          on: {
+                            click: function($event) {
+                              return _vm.onActionClicked(
+                                "view-item",
+                                props.rowData
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "zoom icon" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ui small button",
+                          on: {
+                            click: function($event) {
+                              return _vm.onActionClicked(
+                                "edit-item",
+                                props.rowData
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "edit icon" })]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "ui small button",
+                          on: {
+                            click: function($event) {
+                              return _vm.onActionClicked(
+                                "delete-item",
+                                props.rowData
+                              )
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "delete icon" })]
+                      )
+                    ])
+                  }
+                }
+              ])
+            },
+            [_vm._v("\n                >\n                ")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-6" },
+        [_c("vuetable-pagination-info", { ref: "paginationInfo" })],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-6 text-right" },
+        [
+          _c("vuetable-pagination", {
+            ref: "pagination",
+            attrs: { css: _vm.css.pagination },
+            on: { "vuetable-pagination:change-page": _vm.onChangePage }
+          })
+        ],
+        1
+      )
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -76967,6 +77276,504 @@ var render = function() {
   return _c("div")
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6&":
+/*!************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6& ***!
+  \************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm._m(0)
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("div", { staticClass: "section-container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "vertical-box-row" }, [
+              _c("div", { staticClass: "vertical-box-cell" }, [
+                _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "slimScrollDiv",
+                      staticStyle: {
+                        position: "relative",
+                        overflow: "hidden",
+                        width: "auto",
+                        height: "100%"
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            overflow: "hidden",
+                            width: "auto",
+                            height: "100%"
+                          },
+                          attrs: {
+                            "data-scrollbar": "true",
+                            "data-height": "100%",
+                            "data-init": "true"
+                          }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "list-group list-group-lg no-radius list-email"
+                            },
+                            [
+                              _c(
+                                "li",
+                                { staticClass: "list-group-item unread" },
+                                [
+                                  _c("div", { staticClass: "email-checkbox" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "custom-control custom-checkbox"
+                                      },
+                                      [
+                                        _c("input", {
+                                          staticClass: "custom-control-input",
+                                          attrs: {
+                                            type: "checkbox",
+                                            "data-checked": "email-checkbox",
+                                            id: "emailCheckbox1"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("label", {
+                                          staticClass: "custom-control-label",
+                                          attrs: { for: "emailCheckbox1" }
+                                        })
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "email-user bg-blue",
+                                      attrs: { href: "email_detail.html" }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "text-white" },
+                                        [_vm._v("F")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "email-info" }, [
+                                    _c(
+                                      "a",
+                                      { attrs: { href: "email_detail.html" } },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-sender" },
+                                          [_vm._v("Facebook Blueprint")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-title" },
+                                          [
+                                            _vm._v(
+                                              "Newly released courses, holiday marketing tips, how-to video, and more!"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-desc" },
+                                          [
+                                            _vm._v(
+                                              "Sed scelerisque dui lacus, quis pellentesque lorem tincidunt rhoncus. Nulla accumsan elit pharetra, lacinia turpis nec, varius erat."
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-time" },
+                                          [_vm._v("Today")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                { staticClass: "list-group-item unread" },
+                                [
+                                  _c("div", { staticClass: "email-checkbox" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "custom-control custom-checkbox"
+                                      },
+                                      [
+                                        _c("input", {
+                                          staticClass: "custom-control-input",
+                                          attrs: {
+                                            type: "checkbox",
+                                            "data-checked": "email-checkbox",
+                                            id: "emailCheckbox2"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("label", {
+                                          staticClass: "custom-control-label",
+                                          attrs: { for: "emailCheckbox2" }
+                                        })
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "email-user bg-indigo",
+                                      attrs: { href: "email_detail.html" }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "text-white" },
+                                        [_vm._v("C")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "email-info" }, [
+                                    _c(
+                                      "a",
+                                      { attrs: { href: "email_detail.html" } },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-sender" },
+                                          [_vm._v("Color Admin")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-title" },
+                                          [
+                                            _vm._v(
+                                              "Color Admin dashboard v2 is ready for live"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-desc" },
+                                          [
+                                            _vm._v(
+                                              "Proin interdum aliquam urna, quis lobortis magna tincidunt ac. Integer sed pulvinar neque..."
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-time" },
+                                          [_vm._v("Today")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "li",
+                                { staticClass: "list-group-item unread" },
+                                [
+                                  _c("div", { staticClass: "email-checkbox" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "custom-control custom-checkbox"
+                                      },
+                                      [
+                                        _c("input", {
+                                          staticClass: "custom-control-input",
+                                          attrs: {
+                                            type: "checkbox",
+                                            "data-checked": "email-checkbox",
+                                            id: "emailCheckbox3"
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c("label", {
+                                          staticClass: "custom-control-label",
+                                          attrs: { for: "emailCheckbox3" }
+                                        })
+                                      ]
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass: "email-user bg-grey",
+                                      attrs: { href: "email_detail.html" }
+                                    },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "text-white" },
+                                        [_vm._v("W")]
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "email-info" }, [
+                                    _c(
+                                      "a",
+                                      { attrs: { href: "email_detail.html" } },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-sender" },
+                                          [_vm._v("support@wrapbootstrap.com")]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-title" },
+                                          [
+                                            _vm._v(
+                                              "Bootstrap v4.0 is coming soon"
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-desc" },
+                                          [
+                                            _vm._v(
+                                              "Praesent id pulvinar orci. Donec ac metus non ligula faucibus venenatis. Suspendisse tortor est, placerat eu dui sed..."
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-time" },
+                                          [_vm._v("Today")]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("div", { staticClass: "email-checkbox" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "custom-control custom-checkbox"
+                                    },
+                                    [
+                                      _c("input", {
+                                        staticClass: "custom-control-input",
+                                        attrs: {
+                                          type: "checkbox",
+                                          "data-checked": "email-checkbox",
+                                          id: "emailCheckbox4"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("label", {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "emailCheckbox4" }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "email-user bg-grey",
+                                    attrs: { href: "email_detail.html" }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass:
+                                        "fab fa-github-alt text-white"
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "email-info" }, [
+                                  _c(
+                                    "a",
+                                    { attrs: { href: "email_detail.html" } },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-sender" },
+                                        [_vm._v("Github")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-title" },
+                                        [_vm._v("Sidebar animation bugfix")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-desc" },
+                                        [
+                                          _vm._v(
+                                            "Nam sit amet lacinia massa, sit amet blandit urna. Duis pharetra ex id ipsum posuere..."
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-time" },
+                                        [_vm._v("2 days ago")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("li", { staticClass: "list-group-item" }, [
+                                _c("div", { staticClass: "email-checkbox" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "custom-control custom-checkbox"
+                                    },
+                                    [
+                                      _c("input", {
+                                        staticClass: "custom-control-input",
+                                        attrs: {
+                                          type: "checkbox",
+                                          "data-checked": "email-checkbox",
+                                          id: "emailCheckbox5"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("label", {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "emailCheckbox5" }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "email-user bg-grey",
+                                    attrs: { href: "email_detail.html" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "text-white" }, [
+                                      _vm._v("W")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "email-info" }, [
+                                  _c(
+                                    "a",
+                                    { attrs: { href: "email_detail.html" } },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-sender" },
+                                        [_vm._v("Wrapbootstrap")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-title" },
+                                        [
+                                          _vm._v(
+                                            "Bootstrap Framework is awesome"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-desc" },
+                                        [
+                                          _vm._v(
+                                            "Etiam enim ipsum, malesuada in consectetur interdum, malesuada et lacus. Aenean faucibus turpis lorem..."
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-time" },
+                                        [_vm._v("1 week ago")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ])
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -99594,10 +100401,10 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   title: '',
   width: "1%"
 }, {
-  name: "type",
-  title: 'Type',
+  name: "qr_code_field",
+  title: 'QR Code',
   titleClass: 'center aligned',
-  dataClass: 'center aligned uppercase'
+  dataClass: 'center aligned'
 }, {
   name: "ronin_address",
   title: 'Ronin Address',
@@ -100760,15 +101567,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6& */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=template&id=c64cf8b6&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ScholarImportListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarImportListComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarImportListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -100782,6 +101591,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarImportListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarImportListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarImportListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -100800,6 +101623,81 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarImportListComponent_vue_vue_type_template_id_c64cf8b6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarImportedFieldsDef.js":
+/*!********************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarImportedFieldsDef.js ***!
+  \********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  name: "ronin_address",
+  title: 'Ronin Address'
+}, {
+  name: "batch",
+  title: 'Batch',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "average_per_day",
+  title: 'Average SLP / Day'
+}, {
+  name: "penalty",
+  title: 'Penalty',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "unclaimed",
+  title: 'Unclaimed',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "claimed",
+  title: 'Claimed',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "total_slp",
+  title: 'Total SLP',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "last_claim_days",
+  title: 'Last Claim Days',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "last_claim_date",
+  title: 'Last Claim Date',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned",
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+  }
+}, {
+  name: "created_at",
+  title: 'Date',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned",
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+  }
+}, {
+  name: "mmr_field",
+  title: 'MMR',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "rank",
+  title: 'Rank',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}]);
 
 /***/ }),
 
@@ -100962,6 +101860,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue":
+/*!***********************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ScholarPayrollComponent_vue_vue_type_template_id_de2a77d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6& */ "./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6&");
+/* harmony import */ var _ScholarPayrollComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarPayrollComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarPayrollComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ScholarPayrollComponent_vue_vue_type_template_id_de2a77d6___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ScholarPayrollComponent_vue_vue_type_template_id_de2a77d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPayrollComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarPayrollComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPayrollComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6& ***!
+  \******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPayrollComponent_vue_vue_type_template_id_de2a77d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=template&id=de2a77d6&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPayrollComponent_vue_vue_type_template_id_de2a77d6___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPayrollComponent_vue_vue_type_template_id_de2a77d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/routes.js":
 /*!********************************!*\
   !*** ./resources/js/routes.js ***!
@@ -101020,6 +101987,12 @@ var routes = [{
 }, {
   path: '/scholar_account',
   component: __webpack_require__(/*! ./components/scholar_pages/Account/ScholarAccountComponent.vue */ "./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue")["default"],
+  meta: {
+    admins: false
+  }
+}, {
+  path: '/scholar_payroll',
+  component: __webpack_require__(/*! ./components/scholar_pages/Payroll/ScholarPayrollComponent.vue */ "./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue")["default"],
   meta: {
     admins: false
   }

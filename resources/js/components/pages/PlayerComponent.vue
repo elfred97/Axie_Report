@@ -2,7 +2,7 @@
     <div>
          <!-- BEGIN #overview -->
         <div id="player" class="section-container main-content-view bg-white">
-            <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
+            <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Axie Account' : 'Update Axie Account Information'">
                 <player-form-component v-bind:scholarData="selected_player" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></player-form-component>
             </dialog-component>
             <!-- BEGIN container -->
@@ -68,6 +68,14 @@
                                 <i v-else class="fas fa-plus-circle"></i>
                             </div>
                         </template>
+                        <template slot="qr_code_field" slot-scope="props">
+                            <div>
+                                <span v-if="props.rowData.qr_code_date">
+                                    <p class="no-margin">Last Updated: </p>
+                                    {{ props.rowData.qr_code_date }}
+                                </span>
+                            </div>
+                        </template>
                         <div slot="player_status" slot-scope="props">
                             <div>
                                 <span v-if="props.rowData.status == 'PLAYING'" class="text-bold text-success">PLAYING</span>
@@ -78,8 +86,8 @@
                         </div>
                         <div slot="action" slot-scope="props">
                             <div class="btn-group">
-                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> </button>
-                                <button class="btn btn-white btn-xs" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> </button>
+                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit</button>
+                                <button class="btn btn-white btn-xs text-danger" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> Delete</button>
                             </div>
                         </div>
                     </vuetable>
@@ -174,7 +182,7 @@ export default {
                 });
                 // End of Request
             },() =>this.$noty.error("Cancel: Item not removed")
-            )            
+            )
         },
         importPlayer(){
             this.import_file = this.$refs.file.files[0];
@@ -205,7 +213,7 @@ export default {
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
-        }
+        },
     },
     mounted(){
         this.$events.on('update_scholars_table', (data) => {

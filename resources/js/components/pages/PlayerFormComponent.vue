@@ -15,30 +15,7 @@
             </div>
         </div>
         <div class="row mt-2">
-            <div class="col-md-4">
-                <label for="">First Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="first_name" v-model="form.first_name">
-                <div v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" class="text-danger text-bold"/>
-            </div>
-
-            <div class="col-md-4">
-                <label for="">Middle Name</label>
-                <input type="text" class="form-control" name="middle_name"  v-model="form.middle_name">
-            </div>
-
-            <div class="col-md-4">
-                <label for="">Last Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="last_name" v-model="form.last_name">
-                <div v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" class="text-danger text-bold"/>
-            </div>
-        </div>
-        <div class="row mt-2">
-            <div class="col-md-4">
-                <label for="">Scholar Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" name="scholar_email" v-model="form.scholar_email">
-                <div v-if="form.errors.has('scholar_email')" v-html="form.errors.get('scholar_email')" class="text-danger text-bold"/>
-            </div>
-
+           
             <div class="col-md-4">
                 <label for="">Marketplace Email <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" name="market_place_email" v-model="form.market_place_email">
@@ -47,37 +24,34 @@
 
             <div class="col-md-4">
                 <label for="">Email Password <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" name="email_password" v-model="form.email_password">
-                <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
+                <input type="text" class="form-control" name="password" v-model="form.password">
+                <div v-if="form.errors.has('password')" v-html="form.errors.get('password')" class="text-danger text-bold"/>
             </div>
-        </div>
-        <div class="row mt-2">
+        
             <div class="col-md-4">
                 <label for="">Date Started <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" name="date_started" v-model="form.date_started">
                 <div v-if="form.errors.has('date_started')" v-html="form.errors.get('date_started')" class="text-danger text-bold"/>
             </div>
+        </div>
 
-            <div class="col-md-4">
-                <label for="">Type</label>
-                <select name="scholar_type" class="form-control"  v-model="form.type">
-                    <option value="Decent">Decent</option>
-                    <option value="Trust">Trust</option>
-                </select>
+        <div class="row mt-2">
+            <div class="col-md-6">
+                <label for="">Upload QR Code Image</label>
+                <form class="form-horizontal" @submit.prevent="uploadQRCode">
+                    <div class="input-group">
+                        <input name="file" type="file" ref="file" @change="updateQR" class="form-control no-margin no-padding" style="padding: 1px 3px !important">
+                        <div class="input-group-btn">
+                            <button class="btn btn-sm btn-primary" type="submit">
+                                Upload
+                            </button>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <div class="col-md-4">
-                <label for="">Status</label>
-                <select name="status" id="" class="form-control"  v-model="form.status">
-                    <option value="Playing">Playing</option>
-                    <option value="Resigned">Resigned</option>
-                    <option value="Terminated">Terminated</option>
-                    <option value="For QR">For QR</option>
-                    <option value="Terminated">Terminated</option>
-                    <option value="No Axie">No Axie</option>
-                </select>
+            <div class="col-md-6">
+                <img :src="form.qr_code" alt="" class="img-fluid">
             </div>
-            
         </div>
 
         <div class="row mt-2">
@@ -157,6 +131,12 @@ export default {
                 status            : 'Playing',
                 date_started      : '',
             })
+        },
+        uploadQRCode(){
+
+        },
+        updateQR(){
+
         }
     },
     mounted(){

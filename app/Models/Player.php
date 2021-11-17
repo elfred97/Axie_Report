@@ -14,7 +14,9 @@ class Player extends Model
         'penalty',
         'password',
         'scholar_share',
-        'manager_share'
+        'manager_share',
+        'qr_code',
+        'qr_code_date',
     ];
 
     public function scholar()

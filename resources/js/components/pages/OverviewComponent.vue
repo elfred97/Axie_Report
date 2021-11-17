@@ -240,7 +240,6 @@ export default {
             .then((response) => {
                 this.total_data = response.data.data;
 
-                console.log(response.data.data);
                 let total_slp = 0;
                 let total_claimed = 0;
                 let total_unclaimed = 0;
