@@ -1,4 +1,4 @@
-Dear {{ $user->first_name }} <br><br>
+Dear {{ $user->first_name ?? 'Scholar' }} <br><br>
 
 I want to notify you about the payroll.
 

@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -12,14 +13,18 @@ class SlpUpdate extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $slp_value;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $slp_value)
     {
         $this->user = $user;
+        $this->subject = 'SLP Updated ' . Carbon::now()->format('Y-m-d h:i:s');
+        $this->slp_value = $slp_value;
     }
 
     /**
