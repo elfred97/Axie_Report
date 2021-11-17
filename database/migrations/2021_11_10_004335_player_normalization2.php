@@ -17,14 +17,11 @@ class PlayerNormalization2 extends Migration
 
         Schema::create('player_scholar_histories', function (Blueprint $table) {
             $table->increments('id');
-            $table->foreignId('scholar_id')
-                ->nullable()
-                ->constrained();
-            $table->foreignId('player_id')
-                ->nullable()
-                ->constrained();
+            $table->integer('scholar_id')->unsigned();
+            $table->integer('player_id')->unsigned();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
+            $table->index(['scholar_id', 'player_id']);
         });
 
 //        Schema::create('reminders', function (Blueprint $table) {
