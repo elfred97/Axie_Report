@@ -52,6 +52,9 @@ class RemindPayroll extends Command
 
         $this->line('Sending to : ' . $scholar_emails );
 
+        //temporary for testing cron job
+        $scholar_emails = ['mhardz07@gmail.com'];
+
         if($scholar_emails) {
             Mail::to($scholar_emails)->send(new \App\Mail\PayrollReminder(null));
         }

@@ -1,5 +1,5 @@
 Dear {{ $user->first_name ?? 'Scholar' }} <br><br>
 
-SLP Update
+SLP Price : PHP{{ $slp_value }}
 
 Note: this is a sample email for project development.
