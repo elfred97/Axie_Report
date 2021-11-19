@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -20,6 +21,7 @@ class PayrollReminder extends Mailable
     public function __construct($user)
     {
         $this->user = $user;
+        $this->subject = 'Payroll Reminder for ' . Carbon::now()->format('F Y');
     }
 
     /**

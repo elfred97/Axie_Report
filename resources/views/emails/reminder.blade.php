@@ -1,4 +1,4 @@
-Dear {{ $user->first_name }} <br><br>
+Dear {{  $user->first_name ?? 'Scholar' }} <br><br>
 
 This is a reminder.
 
