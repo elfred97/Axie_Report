@@ -216,7 +216,7 @@ export default {
         },
     },
     mounted(){
-        this.$events.on('update_scholars_table', (data) => {
+        this.$events.on('update_players_table', (data) => {
             this.updateTable();
         });
         this.$root.$on('isClose', (data) => {

@@ -146,7 +146,8 @@ export default {
                         [
                             moment(element.date).format('YYYY, MM, D'), 
                            element.slp
-                        ])
+                        ]
+                    )
                 });
                 this.graphData = response.data;
                 this.$events.fire('graph-filter-set', this.filter);

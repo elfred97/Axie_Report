@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
 use File;
 use Excel;
 use Carbon\Carbon;
@@ -137,6 +138,18 @@ class FileController extends Controller
                 ->PAGINATE(15);
 
         return $notification;
+    }
+
+    public function showFile($file_name, Request $request){
+        // $type = $request->type;
+        // if($type == 'qr_code'){
+        //     if ($file_name){
+                // return Storage::get('qr_codes/samuel_johnson.JPG');
+                return File::get(public_path('file.jpg'));
+        //     }
+        //     else
+        //         return Storage::get(public_path('img/'.'default.jpg'));
+        // }
     }
 
 }

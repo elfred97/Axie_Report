@@ -5825,6 +5825,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7327,7 +7332,8 @@ __webpack_require__.r(__webpack_exports__);
         email_password: '',
         type: 'Decent',
         status: 'Playing',
-        date_started: ''
+        date_started: '',
+        qr_code: 'default.jpg'
       })
     };
   },
@@ -7377,6 +7383,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var formData = new FormData();
       formData.append('file', this.qr_code_file);
+      formData.append('id', this.form.ronin_address);
       formData.append('account_name', this.form.account_name);
       this.axios.post('/uploadQRCode', formData, {
         headers: {
@@ -7385,11 +7392,10 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         _this2.qr_code_file = '';
         _this2.$refs.qr_code_file.value = '';
-        console.log(response.data);
 
         _this2.$noty.success("QR Code Uploaded");
 
-        _this2.updateTable();
+        _this2.$events.fire('update_players_table');
       });
     },
     updateQR: function updateQR() {
@@ -8396,6 +8402,152 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      userData: {},
+      onEdit: false
+    };
+  },
+  methods: {
+    getScholarInformation: function getScholarInformation() {
+      var _this = this;
+
+      this.axios.get("getScholarInformation").then(function (response) {
+        console.log(response.data);
+        _this.userData = response.data;
+      })["catch"](function (error) {
+        console.log(error.data);
+      });
+    },
+    updateRoninWallet: function updateRoninWallet() {
+      var _this2 = this;
+
+      this.axios.post('updateRoninWallet', {
+        ronin_wallet: this.userData.ronin_wallet
+      }).then(function (response) {
+        _this2.$noty.success(response.data.message);
+
+        _this2.onEdit = false;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    }
+  },
+  created: function created() {
+    this.getScholarInformation();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue?vue&type=script&lang=js& ***!
@@ -8436,22 +8588,80 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       SLPData: null,
       SLP_Price: 0,
-      currency: 'php'
+      currency: 'php',
+      price_changes: {}
     };
   },
   computed: {
     getSLPPrice: function getSLPPrice() {
-      if (this.SLPData) if (this.currency == 'php') return '₱ ' + this.SLPData.market_data.current_price.php;else if (this.currency == 'usd') return '$ ' + this.SLPData.market_data.current_price.usd;else if (this.currency == 'jpy') return '¥ ' + this.SLPData.market_data.current_price.jpy;
-    },
-    getSLPChange_24H: function getSLPChange_24H() {
       if (this.SLPData) {
-        var changes = parseFloat(this.SLPData.market_data.price_change_percentage_24h).toFixed(2);
-        return changes;
+        return this.currency.toUpperCase() + ' ' + this.SLPData.market_data.current_price[this.currency];
       }
     }
   },
@@ -8460,14 +8670,83 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.axios.get('https://api.coingecko.com/api/v3/coins/smooth-love-potion?tickers=true&market_data=true&community_data=true&developer_data=true&sparkline=true').then(function (response) {
-        _this.SLPData = response.data; // console.log(response.data);
+        _this.SLPData = response.data;
       })["catch"](function (error) {
         console.log('Error: ' + error);
       });
+    },
+    getSLPChange: function getSLPChange(duration) {
+      if (this.SLPData) {
+        var market_data = this.SLPData.market_data;
+        if (duration == '7d') return market_data.price_change_percentage_7d_in_currency[this.currency].toFixed(2);else if (duration == '14d') return market_data.price_change_percentage_14d_in_currency[this.currency].toFixed(2);else if (duration == '30d') return market_data.price_change_percentage_30d_in_currency[this.currency].toFixed(2);else if (duration == '24h') return market_data.price_change_percentage_24h_in_currency[this.currency].toFixed(2);
+      }
     }
   },
   mounted: function mounted() {
     this.getSLPUpdate();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var jscharting_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jscharting-vue */ "./node_modules/jscharting-vue/src/main.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      chartOptions: {
+        debug: false,
+        type: 'line',
+        legend: {
+          template: '%icon %name',
+          position: 'inside top left'
+        },
+        title_label_color: "red",
+        defaultPoint_marker_type: 'none',
+        xAxis_crosshair_enabled: true,
+        yAxis_formatString: '',
+        series: [{
+          name: 'October',
+          points: [[new Date(2021, 10, 1), 160], [new Date(2021, 10, 2), 400], [new Date(2021, 10, 3), 300], [new Date(2021, 10, 4), 600], [new Date(2021, 10, 5), 800], [new Date(2021, 10, 6), 800], [new Date(2021, 10, 7), 800], [new Date(2021, 10, 8), 780], [new Date(2021, 10, 9), 500], [new Date(2021, 10, 10), 300]]
+        }]
+      }
+    };
+  },
+  methods: {
+    getGraph: function getGraph() {
+      this.axios.get('/getScholarGraph').then(function (response) {})["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    }
+  },
+  components: {
+    JSCharting: jscharting_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    this.getGraph();
   }
 });
 
@@ -8482,10 +8761,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SLPUpdateComponent.vue */ "./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue");
-/* harmony import */ var _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatsComponent.vue */ "./resources/js/components/scholar_pages/Home/StatsComponent.vue");
-/* harmony import */ var _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScholarPenaltyComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue");
-/* harmony import */ var _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScholarImportListComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue");
+/* harmony import */ var _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatsComponent.vue */ "./resources/js/components/scholar_pages/Home/StatsComponent.vue");
+/* harmony import */ var _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SLPUpdateComponent.vue */ "./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue");
+/* harmony import */ var _ScholarGraphComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScholarGraphComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue");
+/* harmony import */ var _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScholarPenaltyComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue");
+/* harmony import */ var _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ScholarImportListComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue");
 //
 //
 //
@@ -8515,16 +8795,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    'stats-component': _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    'slp-update-component': _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    'scholar-penalty-component': _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    'scholar-import-list-component': _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    'stats-component': _StatsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'slp-update-component': _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    'scholar-graph-component': _ScholarGraphComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    'scholar-penalty-component': _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    'scholar-import-list-component': _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }
 });
 
@@ -8641,8 +8937,145 @@ __webpack_require__.r(__webpack_exports__);
         // Choose the Defualt Sorted Data by name
         direction: "desc" // Sorting Direction
 
-      }]
+      }],
+      lowest_mmr: 800
     };
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      average_per_day: 0,
+      yesterday_slp: 0,
+      today_slp: 0,
+      unclaimed: 0,
+      claimed: 0,
+      penalty: 0,
+      mmr: 0
+    };
+  },
+  methods: {
+    getScholarReport: function getScholarReport() {
+      var _this = this;
+
+      this.axios.get('getScholarReport').then(function (response) {
+        var report = response.data;
+
+        if (report.length > 0) {
+          _this.unclaimed = report[report.length - 1].unclaimed;
+          _this.claimed = report[report.length - 1].claimed;
+          _this.penalty = report[report.length - 1].penalty;
+          _this.average_per_day = report[report.length - 1].average_per_day;
+          _this.today_slp = report[report.length - 1].gained_slp_today;
+          _this.mmr = report[report.length - 1].mmr;
+
+          if (report.length > 1) {
+            _this.yesterday_slp = report[report.length - 2].gained_slp_today;
+          }
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  created: function created() {
+    this.getScholarReport();
   }
 });
 
@@ -8657,7 +9090,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
 //
 //
 //
@@ -70246,7 +70678,7 @@ __webpack_require__.r(__webpack_exports__);
         },
     },
     mounted(){
-        this.$events.on('update_scholars_table', (data) => {
+        this.$events.on('update_players_table', (data) => {
             this.updateTable();
         });
         this.$root.$on('isClose', (data) => {
@@ -71056,167 +71488,196 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "header-nav" }, [
-            _c("ul", { staticClass: "nav pull-right" }, [
-              _c("li", { staticClass: "dropdown dropdown-hover" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "header-cart",
-                    attrs: { href: "#", "data-toggle": "dropdown" }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-bell" }),
-                    _vm._v(" "),
-                    _vm.notificationData.length > 0
-                      ? _c("span", { staticClass: "total" }, [
-                          _vm._v(_vm._s(_vm.notificationData.length))
-                        ])
-                      : _c("span", { staticClass: "total" }, [_vm._v("0")]),
-                    _vm._v(" "),
-                    _c("span", { staticClass: "arrow top" })
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "dropdown-menu dropdown-menu-cart p-0" },
-                  [
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "cart-body scroll-h h-15" }, [
-                      _vm.notificationData.length > 0
-                        ? _c(
-                            "ul",
-                            { staticClass: "cart-item" },
-                            _vm._l(_vm.notificationData, function(
-                              notification
-                            ) {
-                              return _c("li", [
-                                _c("div", { staticClass: "cart-item-info" }, [
-                                  _c("small", { staticClass: "pull-right" }, [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm._f("formatDate")(
-                                          notification.created_at
-                                        )
-                                      )
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("h4", [
-                                    _c("b", [
-                                      _vm._v(_vm._s(notification.player_name))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "pull-right" }, [
-                                      _vm._v(_vm._s(notification.account_name))
-                                    ])
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", { staticClass: "price" }, [
-                                    _vm._v(
-                                      _vm._s(notification.gained_slp_today) +
-                                        " SLP"
-                                    )
-                                  ])
-                                ])
-                              ])
-                            }),
-                            0
-                          )
-                        : _c("p", { staticClass: "text-center no-margin" }, [
-                            _vm._v(
-                              " No Notification\n                                    "
-                            )
-                          ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "card-footer" }, [
-                      _c("div", { staticClass: "row" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col-lg-12" },
-                          [
-                            _c(
-                              "center",
-                              [
-                                _vm.getGuardType == "admins"
-                                  ? _c(
-                                      "router-link",
-                                      {
-                                        staticClass: "btn btn-sm btn-default",
-                                        attrs: { to: "/notification" }
-                                      },
-                                      [_vm._v("View All")]
-                                    )
-                                  : _c(
-                                      "router-link",
-                                      {
-                                        staticClass: "btn btn-sm btn-default",
-                                        attrs: { to: "/scholar_notification" }
-                                      },
-                                      [_vm._v("View All")]
-                                    )
-                              ],
-                              1
-                            )
-                          ],
-                          1
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "dropdown dropdown-hover" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-toggle",
-                    attrs: { href: "#", "data-toggle": "dropdown" }
-                  },
-                  [
-                    _c("span", { staticClass: "d-none d-md-inline" }, [
-                      _vm._v(
-                        _vm._s(_vm.accountData.first_name) +
-                          " " +
-                          _vm._s(_vm.accountData.last_name)
-                      )
-                    ])
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "dropdown-menu dropdown-menu-right" },
-                  [
-                    _vm.getGuardType == "admins"
-                      ? _c(
-                          "router-link",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { to: "/settings" }
-                          },
-                          [_vm._v("Settings")]
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-divider" }),
-                    _vm._v(" "),
+            _vm.getGuardType == "admins"
+              ? _c("ul", { staticClass: "nav pull-right" }, [
+                  _c("li", { staticClass: "dropdown dropdown-hover" }, [
                     _c(
                       "a",
                       {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/logout" }
+                        staticClass: "header-cart",
+                        attrs: { href: "#", "data-toggle": "dropdown" }
                       },
-                      [_vm._v("Log Out")]
+                      [
+                        _c("i", { staticClass: "fa fa-bell" }),
+                        _vm._v(" "),
+                        _vm.notificationData.length > 0
+                          ? _c("span", { staticClass: "total" }, [
+                              _vm._v(_vm._s(_vm.notificationData.length))
+                            ])
+                          : _c("span", { staticClass: "total" }, [_vm._v("0")]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "arrow top" })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "dropdown-menu dropdown-menu-cart p-0" },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "cart-body scroll-h h-15" }, [
+                          _vm.notificationData.length > 0
+                            ? _c(
+                                "ul",
+                                { staticClass: "cart-item" },
+                                _vm._l(_vm.notificationData, function(
+                                  notification
+                                ) {
+                                  return _c("li", [
+                                    _c(
+                                      "div",
+                                      { staticClass: "cart-item-info" },
+                                      [
+                                        _c(
+                                          "small",
+                                          { staticClass: "pull-right" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("formatDate")(
+                                                  notification.created_at
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("h4", [
+                                          _c("b", [
+                                            _vm._v(
+                                              _vm._s(notification.player_name)
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "span",
+                                            { staticClass: "pull-right" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  notification.account_name
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("p", { staticClass: "price" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              notification.gained_slp_today
+                                            ) + " SLP"
+                                          )
+                                        ])
+                                      ]
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
+                            : _c(
+                                "p",
+                                { staticClass: "text-center no-margin" },
+                                [
+                                  _vm._v(
+                                    " No Notification\n                                    "
+                                  )
+                                ]
+                              )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-footer" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-12" },
+                              [
+                                _c(
+                                  "center",
+                                  [
+                                    _vm.getGuardType == "admins"
+                                      ? _c(
+                                          "router-link",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-default",
+                                            attrs: { to: "/notification" }
+                                          },
+                                          [_vm._v("View All")]
+                                        )
+                                      : _c(
+                                          "router-link",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-default",
+                                            attrs: {
+                                              to: "/scholar_notification"
+                                            }
+                                          },
+                                          [_vm._v("View All")]
+                                        )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ])
+                      ]
                     )
-                  ],
-                  1
-                )
-              ])
-            ])
+                  ]),
+                  _vm._v(" "),
+                  _c("li", { staticClass: "dropdown dropdown-hover" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-toggle",
+                        attrs: { href: "#", "data-toggle": "dropdown" }
+                      },
+                      [
+                        _c("span", { staticClass: "d-none d-md-inline" }, [
+                          _vm._v(
+                            _vm._s(_vm.accountData.first_name) +
+                              " " +
+                              _vm._s(_vm.accountData.last_name)
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "dropdown-menu dropdown-menu-right" },
+                      [
+                        _vm.getGuardType == "admins"
+                          ? _c(
+                              "router-link",
+                              {
+                                staticClass: "dropdown-item",
+                                attrs: { to: "/settings" }
+                              },
+                              [_vm._v("Settings")]
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "dropdown-divider" }),
+                        _vm._v(" "),
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "/logout" }
+                          },
+                          [_vm._v("Log Out")]
+                        )
+                      ],
+                      1
+                    )
+                  ])
+                ])
+              : _c("ul", { staticClass: "nav pull-right" }, [_vm._m(3)])
           ])
         ])
       ])
@@ -71271,6 +71732,14 @@ var staticRenderFns = [
       _c("h4", { staticClass: "cart-title text-center" }, [
         _vm._v("Not meeting 75 SLP ")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", [
+      _c("a", { attrs: { href: "/logout" } }, [_vm._v("Log Out")])
     ])
   }
 ]
@@ -74155,7 +74624,7 @@ var render = function() {
       _c("div", { staticClass: "col-md-6" }, [
         _c("img", {
           staticClass: "img-fluid",
-          attrs: { src: _vm.form.qr_code, alt: "" }
+          attrs: { src: "uploads/" + _vm.form.qr_code, alt: "" }
         })
       ])
     ]),
@@ -76529,100 +76998,224 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "section-container" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-            _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12" }, [
-              _c("div", { staticClass: "account-container" }, [
-                _c("div", { staticClass: "account-sidebar" }, [
-                  _c("div", { staticClass: "account-sidebar-cover" }, [
-                    _c("img", {
-                      attrs: { src: "assets/img/cover/cover-1.jpg", alt: "" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "account-sidebar-content" }, [
-                    _c("h4", [_vm._v("Your Account")]),
+  return _c("div", [
+    _c("div", { staticClass: "section-container" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+          _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12" }, [
+            _c("div", { staticClass: "account-container" }, [
+              _c("div", { staticClass: "account-sidebar" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "account-sidebar-content text-center" },
+                  [
+                    _c("h4", [_vm._v(_vm._s(_vm.userData.account_name))]),
                     _vm._v(" "),
-                    _c("p", { staticClass: "mb-2 mb-lg-4" }, [
-                      _vm._v(
-                        "\n                                    Modify an order, track a shipment, and update your account info.\n                                "
-                      )
+                    _c("p", { staticClass: "mb-2 mt-2" }, [
+                      _vm._v("Scan QR Code")
                     ]),
                     _vm._v(" "),
-                    _c("p", { staticClass: "mb-2 mb-lg-4" }, [
-                      _vm._v(
-                        "\n                                    All you need in one place. All with a few simple clicks.\n                                "
-                      )
-                    ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "account-body" }, [
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("h4", [_vm._v("Account Information")]),
-                      _vm._v(" "),
-                      _c("ul", { staticClass: "nav nav-list" }, [
-                        _c("li", [
-                          _c("b", [_vm._v("Name: ")]),
-                          _vm._v(
-                            "\n                                            Elfred Tapar\n                                        "
-                          )
-                        ]),
+                    _c("img", {
+                      staticClass: "img-fluid",
+                      attrs: {
+                        src: "/uploads/" + _vm.userData.qr_code,
+                        alt: ""
+                      }
+                    })
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "account-body" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-7" }, [
+                    _c("h4", [_vm._v("Account Information")]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
                         _vm._v(" "),
-                        _c("li", [
-                          _c("b", [_vm._v("Account Name: ")]),
+                        _c("p", [
                           _vm._v(
-                            "\n                                            Elfred Tapar\n                                        "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c("b", [_vm._v("Ronin Address: ")]),
-                          _vm._v(
-                            "\n                                            ronin:18fdd60c4666927dd212e47e2af190ba826fd3a8\n                                        "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c("b", [_vm._v("Email: ")]),
-                          _vm._v(
-                            "\n                                            elfredtapar@gmail.com\n                                        "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c("b", [_vm._v("Status: ")]),
-                          _vm._v(
-                            "\n                                            Playing\n                                        "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("li", [
-                          _c("b", [_vm._v("Type: ")]),
-                          _vm._v(
-                            "\n                                            Decent\n                                        "
+                            " " +
+                              _vm._s(_vm.userData.first_name) +
+                              " " +
+                              _vm._s(_vm.userData.last_name)
                           )
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("h4", [_vm._v("QR Code")]),
+                      ]),
                       _vm._v(" "),
-                      _c("img", {
-                        staticClass: "img-fluid",
-                        attrs: { src: "/assets/logo.png", alt: "" }
-                      })
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Account Name")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(" " + _vm._s(_vm.userData.account_name) + " ")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-12" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Ronin Address")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(" " + _vm._s(_vm.userData.ronin_address) + " ")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(" " + _vm._s(_vm.userData.email) + " ")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Date Started")
+                        ]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(
+                            " " +
+                              _vm._s(
+                                _vm._f("formatDate")(_vm.userData.date_started)
+                              ) +
+                              " "
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(" " + _vm._s(_vm.userData.status) + " ")
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
+                        _vm._v(" "),
+                        _c("p", [
+                          _vm._v(" " + _vm._s(_vm.userData.type_name) + " ")
+                        ])
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "panel panel-default" }, [
+                      _c(
+                        "div",
+                        { staticClass: "panel-heading bg-gradient-lime" },
+                        [
+                          _c("h4", { staticClass: "panel-title text-white" }, [
+                            _vm._v("Ronin Wallet")
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "panel-heading-btn" }, [
+                            _vm.onEdit == false
+                              ? _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-xs btn-default",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.onEdit = !_vm.onEdit
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", {
+                                      staticClass: "fas fa-pencil-alt"
+                                    }),
+                                    _vm._v(" Edit")
+                                  ]
+                                )
+                              : _c(
+                                  "button",
+                                  {
+                                    staticClass: "btn btn-xs btn-white",
+                                    on: {
+                                      click: function($event) {
+                                        _vm.onEdit = !_vm.onEdit
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _c("i", { staticClass: "fas fa-times" }),
+                                    _vm._v(" Cancel")
+                                  ]
+                                )
+                          ])
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-12" }, [
+                            _c("label", { attrs: { for: "" } }, [
+                              _vm._v("Ronin Wallet")
+                            ]),
+                            _vm._v(" "),
+                            _vm.onEdit == true
+                              ? _c("div", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.userData.ronin_wallet,
+                                        expression: "userData.ronin_wallet"
+                                      }
+                                    ],
+                                    staticClass: "form-control mb-2",
+                                    attrs: { type: "text" },
+                                    domProps: {
+                                      value: _vm.userData.ronin_wallet
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.userData,
+                                          "ronin_wallet",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  }),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "pull-right" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-primary btn-xs",
+                                        on: { click: _vm.updateRoninWallet }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-check"
+                                        }),
+                                        _vm._v(" Save")
+                                      ]
+                                    )
+                                  ])
+                                ])
+                              : _c("p", [
+                                  _vm._v(_vm._s(_vm.userData.ronin_wallet))
+                                ])
+                          ])
+                        ])
+                      ])
                     ])
                   ])
                 ])
@@ -76631,6 +77224,16 @@ var staticRenderFns = [
           ])
         ])
       ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "account-sidebar-cover" }, [
+      _c("img", { attrs: { src: "assets/img/cover/cover-1.jpg", alt: "" } })
     ])
   }
 ]
@@ -76656,72 +77259,246 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "select",
-          {
-            directives: [
+    _c(
+      "div",
+      {
+        staticClass:
+          "card border-0 bg-dark-darker-transparent-9 text-white text-truncate mb-3"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "mb-3 text-grey" }, [
+            _c(
+              "select",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.currency,
-                expression: "currency"
-              }
-            ],
-            attrs: { name: "", id: "" },
-            on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.currency = $event.target.multiple
-                  ? $$selectedVal
-                  : $$selectedVal[0]
-              }
-            }
-          },
-          [
-            _c("option", { attrs: { value: "usd" } }, [_vm._v("USD")]),
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.currency,
+                    expression: "currency"
+                  }
+                ],
+                attrs: { name: "", id: "" },
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.currency = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "usd" } }, [_vm._v("USD")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "php" } }, [_vm._v("PHP")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "jpy" } }, [_vm._v("JPY")])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-flex align-items-center mb-1" }, [
+            _c("h2", { staticClass: "text-white mb-0" }, [
+              _c(
+                "span",
+                {
+                  attrs: {
+                    "data-animation": "number",
+                    "data-value": _vm.getSLPPrice
+                  }
+                },
+                [_vm._v(_vm._s(_vm.getSLPPrice))]
+              )
+            ]),
             _vm._v(" "),
-            _c("option", { attrs: { value: "php" } }, [_vm._v("PHP")]),
+            _vm._m(0)
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "mb-3 text-grey" }, [
+            _vm.getSLPChange("24h") < 0
+              ? _c("i", { staticClass: "fa fa-caret-down" })
+              : _c("i", { staticClass: "fa fa-caret-up" }),
             _vm._v(" "),
-            _c("option", { attrs: { value: "jpy" } }, [_vm._v("JPY")])
-          ]
-        )
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-12" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("h3", [
-          _vm._v(_vm._s(_vm.getSLPPrice) + "\n                "),
-          _vm.getSLPChange_24H < 0
-            ? _c("small", { staticClass: "text-danger ml-2" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.getSLPChange_24H) +
-                    "  %                              \n                "
+            _c(
+              "span",
+              {
+                attrs: {
+                  "data-animation": "number",
+                  "data-value": _vm.getSLPChange("24h")
+                }
+              },
+              [_vm._v(" " + _vm._s(_vm.getSLPChange("24h")) + " ")]
+            ),
+            _vm._v("% compare to 24 Hours\n            ")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-flex mb-2" }, [
+            _c("div", { staticClass: "d-flex align-items-center" }, [
+              _vm.getSLPChange("7d") > 0
+                ? _c("i", { staticClass: "fa fa-circle text-green f-s-8 mr-2" })
+                : _c("i", { staticClass: "fa fa-circle text-red f-s-8 mr-2" }),
+              _vm._v(
+                "\n                    7 Days Price Changes\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex align-items-center ml-auto" }, [
+              _c("div", { staticClass: "width-50 text-right pl-2 f-w-600" }, [
+                _vm.getSLPChange("7d") > 0
+                  ? _c("i", { staticClass: "fa fa-caret-up" })
+                  : _c("i", { staticClass: "fa fa-caret-down" }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    attrs: {
+                      "data-animation": "number",
+                      "data-value": _vm.getSLPChange("7d")
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.getSLPChange("7d")) +
+                        "\n                        "
+                    )
+                  ]
                 )
               ])
-            : _vm.getSLPChange_24H > 0
-            ? _c("small", { staticClass: "text-primary ml-2" }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(_vm.getSLPChange_24H) +
-                    " %\n                "
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-flex mb-2" }, [
+            _c("div", { staticClass: "d-flex align-items-center" }, [
+              _vm.getSLPChange("14d") > 0
+                ? _c("i", { staticClass: "fa fa-circle text-green f-s-8 mr-2" })
+                : _c("i", { staticClass: "fa fa-circle text-red f-s-8 mr-2" }),
+              _vm._v(
+                "\n                    14 Days Price Changes\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex align-items-center ml-auto" }, [
+              _c("div", { staticClass: "width-50 text-right pl-2 f-w-600" }, [
+                _vm.getSLPChange("14d") > 0
+                  ? _c("i", { staticClass: "fa fa-caret-up" })
+                  : _c("i", { staticClass: "fa fa-caret-down" }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    attrs: {
+                      "data-animation": "number",
+                      "data-value": _vm.getSLPChange("14d")
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.getSLPChange("14d")) +
+                        "\n                        "
+                    )
+                  ]
                 )
               ])
-            : _vm._e()
-        ]),
-        _vm._v(" "),
-        _vm._m(1)
-      ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "d-flex mb-2" }, [
+            _c("div", { staticClass: "d-flex align-items-center" }, [
+              _vm.getSLPChange("30d") > 0
+                ? _c("i", { staticClass: "fa fa-circle text-green f-s-8 mr-2" })
+                : _c("i", { staticClass: "fa fa-circle text-red f-s-8 mr-2" }),
+              _vm._v(
+                "\n                    30 Days Price Changes\n                "
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "d-flex align-items-center ml-auto" }, [
+              _c("div", { staticClass: "width-50 text-right pl-2 f-w-600" }, [
+                _vm.getSLPChange("30d") > 0
+                  ? _c("i", { staticClass: "fa fa-caret-up" })
+                  : _c("i", { staticClass: "fa fa-caret-down" }),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    attrs: {
+                      "data-animation": "number",
+                      "data-value": _vm.getSLPChange("30d")
+                    }
+                  },
+                  [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.getSLPChange("30d")) +
+                        "\n                        "
+                    )
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-auto" }, [
+      _c("div", { attrs: { id: "conversion-rate-sparkline" } })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4&":
+/*!*******************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4& ***!
+  \*******************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-12" },
+        [
+          _c("JSCharting", {
+            staticClass: "columnChart",
+            attrs: { options: _vm.chartOptions }
+          })
+        ],
+        1
+      )
     ])
   ])
 }
@@ -76730,19 +77507,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h5", [
-      _vm._v("Smooth Love Potion \n                "),
-      _c("span", { staticClass: "badge badge-inverse" }, [_vm._v("SLP")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "btn-group" }, [
-      _c("button", { staticClass: "btn btn-xs btn-info" }, [
-        _c("i", { staticClass: "fas fa-bell" }),
-        _vm._v(" Remind SLP Price")
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-2" }, [
+        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
       ])
     ])
   }
@@ -76774,12 +77541,12 @@ var render = function() {
         _c("div", { staticClass: "row row-space-10 m-b-20" }, [
           _c(
             "div",
-            { staticClass: "col-md-5" },
+            { staticClass: "col-md-4" },
             [_c("slp-update-component")],
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-7" }, [_c("stats-component")], 1)
+          _c("div", { staticClass: "col-md-8" }, [_c("stats-component")], 1)
         ])
       ])
     ]),
@@ -76793,6 +77560,23 @@ var render = function() {
             [_c("scholar-import-list-component")],
             1
           )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "section-container bg-white" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "card border-0 mb-3" }, [
+              _c(
+                "div",
+                { staticClass: "card-body" },
+                [_c("scholar-graph-component")],
+                1
+              )
+            ])
+          ])
         ])
       ])
     ])
@@ -76821,7 +77605,41 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-md-2" }, [
+        _c(
+          "div",
+          {
+            staticClass: "dataTables_length",
+            attrs: { id: "data-table-default_length" }
+          },
+          [
+            _c(
+              "label",
+              [
+                _vm._v("Date \n                    "),
+                _c("v-datepicker", {
+                  attrs: { range: "" },
+                  on: {
+                    change: function($event) {
+                      return _vm.updateTable()
+                    }
+                  },
+                  model: {
+                    value: _vm.filtersParam.date,
+                    callback: function($$v) {
+                      _vm.$set(_vm.filtersParam, "date", $$v)
+                    },
+                    expression: "filtersParam.date"
+                  }
+                })
+              ],
+              1
+            )
+          ]
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
       _c(
@@ -76853,6 +77671,7 @@ var render = function() {
                 "per-page": _vm.perPage,
                 "data-path": "data",
                 "sort-order": _vm.sortOrder,
+                "append-params": _vm.filtersParam,
                 "pagination-path": ""
               },
               on: {
@@ -76970,25 +77789,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-2" }, [
-        _c(
-          "div",
-          {
-            staticClass: "dataTables_length",
-            attrs: { id: "data-table-default_length" }
-          },
-          [_c("label", [_vm._v("Date \n                    ")])]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -77053,156 +77854,224 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c(
+      "div",
+      { staticClass: "card border-0 bg-dark text-white mb-3 overflow-hidden" },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-xl-8 col-lg-9" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "row text-truncate no-margin" }, [
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "d-flex mb-1" }, [
+                    _c("h2", { staticClass: "mb-0" }, [
+                      _c(
+                        "span",
+                        {
+                          attrs: {
+                            "data-animation": "number",
+                            "data-value": _vm.today_slp
+                          }
+                        },
+                        [_vm._v(_vm._s(_vm.today_slp))]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(2)
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "f-s-12 text-grey" }, [
+                    _vm._v("Unclaimed")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "f-s-18 f-w-600 p-b-1",
+                      attrs: {
+                        "data-animation": "number",
+                        "data-value": _vm.unclaimed
+                      }
+                    },
+                    [_vm._v(" " + _vm._s(_vm.unclaimed))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "f-s-12 text-grey" }, [
+                    _vm._v("Claimed")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "f-s-18 f-w-600 p-b-1",
+                      attrs: {
+                        "data-animation": "number",
+                        "data-value": _vm.claimed
+                      }
+                    },
+                    [_vm._v(" " + _vm._s(_vm.claimed))]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("hr", { staticClass: "bg-white-transparent-2" }),
+              _vm._v(" "),
+              _c("div", { staticClass: "row text-truncate" }, [
+                _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "f-s-12 text-grey" }, [
+                    _vm._v("Yesterday SLP")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "f-s-18 f-w-600 p-b-1",
+                      attrs: {
+                        "data-animation": "number",
+                        "data-value": _vm.yesterday_slp
+                      }
+                    },
+                    [_vm._v(" " + _vm._s(_vm.yesterday_slp))]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "f-s-12 text-grey" }, [
+                    _vm._v("Avg SLP Per Day")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "f-s-18 f-w-600 p-b-1" }, [
+                    _c(
+                      "span",
+                      {
+                        attrs: {
+                          "data-animation": "number",
+                          "data-value": _vm.average_per_day
+                        }
+                      },
+                      [_vm._v(" " + _vm._s(_vm.average_per_day) + " ")]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "f-s-12 text-grey" }, [
+                    _vm._v("MMR")
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      staticClass: "f-s-18 f-w-600 p-b-1",
+                      attrs: {
+                        "data-animation": "number",
+                        "data-value": _vm.mmr
+                      }
+                    },
+                    [_vm._v("  " + _vm._s(_vm.mmr) + " ")]
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-3" }, [
+                  _c("div", { staticClass: "f-s-12 text-grey" }, [
+                    _vm._v("Penalty")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "f-s-18 f-w-600 p-b-1" }, [
+                    _c(
+                      "span",
+                      {
+                        attrs: {
+                          "data-animation": "number",
+                          "data-value": _vm.penalty
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.penalty))]
+                    )
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(3)
+          ])
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-        _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "widget widget-stats bg-gradient-secondary m-b-10" },
-            [
-              _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-                _c("i", { staticClass: "fas fa-equals fa-fw" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stats-content" }, [
-                _c("div", { staticClass: "stats-title" }, [
-                  _vm._v("Yesterday SLP")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-number" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-desc" }, [
-                  _vm._v("Better than last week (54.9%)")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "widget widget-stats bg-gradient-blue m-b-10" },
-            [
-              _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-                _c("i", { staticClass: "fas fa-equals fa-fw" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stats-content" }, [
-                _c("div", { staticClass: "stats-title" }, [
-                  _vm._v("Today SLP")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-number" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-desc" }, [
-                  _vm._v("Better than last week (54.9%)")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "widget widget-stats bg-gradient-orange m-b-10" },
-            [
-              _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-                _c("i", { staticClass: "fab fa-bitcoin fa-fw" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stats-content" }, [
-                _c("div", { staticClass: "stats-title" }, [
-                  _vm._v("Unclaimed")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-number" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-desc" }, [
-                  _vm._v("Better than last week (54.9%)")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "widget widget-stats bg-gradient-teal m-b-10" },
-            [
-              _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-                _c("i", { staticClass: "fas fa-money-bill fa-fw" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stats-content" }, [
-                _c("div", { staticClass: "stats-title" }, [_vm._v("Claimed")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-number" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-desc" }, [
-                  _vm._v("Better than last week (54.9%)")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "widget widget-stats bg-gradient-red m-b-10" },
-            [
-              _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-                _c("i", { staticClass: "fas fa-equals fa-fw" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stats-content" }, [
-                _c("div", { staticClass: "stats-title" }, [_vm._v("Penalty")]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-number" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-desc" }, [
-                  _vm._v("Better than last week (54.9%)")
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
-          _c(
-            "div",
-            { staticClass: "widget widget-stats bg-gradient-lime m-b-10" },
-            [
-              _c("div", { staticClass: "stats-icon stats-icon-lg" }, [
-                _c("i", { staticClass: "fas fa-divide fa-fw" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "stats-content" }, [
-                _c("div", { staticClass: "stats-title" }, [
-                  _vm._v("Average Per Day SLP")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-number" }),
-                _vm._v(" "),
-                _c("div", { staticClass: "stats-desc" }, [
-                  _vm._v("Better than last week (54.9%)")
-                ])
-              ])
-            ]
-          )
-        ])
+    return _c("div", { staticClass: "mb-3 text-grey" }, [
+      _c("b", [_vm._v("Today SLP")]),
+      _vm._v(" "),
+      _c("span", { staticClass: "ml-2" }, [
+        _c("i", {
+          staticClass: "fa fa-info-circle",
+          attrs: {
+            "data-toggle": "popover",
+            "data-trigger": "hover",
+            "data-title": "Total sales",
+            "data-placement": "top",
+            "data-content":
+              "Net sales (gross sales minus discounts and returns) plus taxes and shipping. Includes orders from all sales channels."
+          }
+        })
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "ml-auto mt-n1 mb-n1" }, [
+      _c("div", { attrs: { id: "total-sales-sparkline" } })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-grey" }, [
+      _c("i", { staticClass: "fa fa-caret-up" }),
+      _vm._v(" "),
+      _c(
+        "span",
+        { attrs: { "data-animation": "number", "data-value": "33.21" } },
+        [_vm._v("33.21")]
+      ),
+      _vm._v("% compare to last week\n                            ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass:
+          "col-xl-4 col-lg-3 align-items-center d-flex justify-content-center"
+      },
+      [
+        _c("img", {
+          staticClass: "d-none d-lg-block",
+          attrs: { src: "assets/img/svg/img-1.svg", height: "150px" }
+        })
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -77259,304 +78128,48 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", [
       _c("div", { staticClass: "section-container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "container" }, [
-            _c("div", { staticClass: "vertical-box-row" }, [
-              _c("div", { staticClass: "vertical-box-cell" }, [
-                _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "slimScrollDiv",
-                      staticStyle: {
-                        position: "relative",
-                        overflow: "hidden",
-                        width: "auto",
-                        height: "100%"
-                      }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticStyle: {
-                            overflow: "hidden",
-                            width: "auto",
-                            height: "100%"
-                          },
-                          attrs: {
-                            "data-scrollbar": "true",
-                            "data-height": "100%",
-                            "data-init": "true"
-                          }
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "vertical-box-row" }, [
+            _c("div", { staticClass: "vertical-box-cell" }, [
+              _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
+                _c(
+                  "div",
+                  {
+                    staticClass: "slimScrollDiv inbox",
+                    staticStyle: {
+                      position: "relative",
+                      overflow: "hidden",
+                      width: "auto",
+                      height: "100%"
+                    }
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticStyle: {
+                          overflow: "hidden",
+                          width: "auto",
+                          height: "100%"
                         },
-                        [
-                          _c(
-                            "ul",
-                            {
-                              staticClass:
-                                "list-group list-group-lg no-radius list-email"
-                            },
-                            [
-                              _c(
-                                "li",
-                                { staticClass: "list-group-item unread" },
-                                [
-                                  _c("div", { staticClass: "email-checkbox" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "custom-control custom-checkbox"
-                                      },
-                                      [
-                                        _c("input", {
-                                          staticClass: "custom-control-input",
-                                          attrs: {
-                                            type: "checkbox",
-                                            "data-checked": "email-checkbox",
-                                            id: "emailCheckbox1"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("label", {
-                                          staticClass: "custom-control-label",
-                                          attrs: { for: "emailCheckbox1" }
-                                        })
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "email-user bg-blue",
-                                      attrs: { href: "email_detail.html" }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "text-white" },
-                                        [_vm._v("F")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "email-info" }, [
-                                    _c(
-                                      "a",
-                                      { attrs: { href: "email_detail.html" } },
-                                      [
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-sender" },
-                                          [_vm._v("Facebook Blueprint")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-title" },
-                                          [
-                                            _vm._v(
-                                              "Newly released courses, holiday marketing tips, how-to video, and more!"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-desc" },
-                                          [
-                                            _vm._v(
-                                              "Sed scelerisque dui lacus, quis pellentesque lorem tincidunt rhoncus. Nulla accumsan elit pharetra, lacinia turpis nec, varius erat."
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-time" },
-                                          [_vm._v("Today")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "li",
-                                { staticClass: "list-group-item unread" },
-                                [
-                                  _c("div", { staticClass: "email-checkbox" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "custom-control custom-checkbox"
-                                      },
-                                      [
-                                        _c("input", {
-                                          staticClass: "custom-control-input",
-                                          attrs: {
-                                            type: "checkbox",
-                                            "data-checked": "email-checkbox",
-                                            id: "emailCheckbox2"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("label", {
-                                          staticClass: "custom-control-label",
-                                          attrs: { for: "emailCheckbox2" }
-                                        })
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "email-user bg-indigo",
-                                      attrs: { href: "email_detail.html" }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "text-white" },
-                                        [_vm._v("C")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "email-info" }, [
-                                    _c(
-                                      "a",
-                                      { attrs: { href: "email_detail.html" } },
-                                      [
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-sender" },
-                                          [_vm._v("Color Admin")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-title" },
-                                          [
-                                            _vm._v(
-                                              "Color Admin dashboard v2 is ready for live"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-desc" },
-                                          [
-                                            _vm._v(
-                                              "Proin interdum aliquam urna, quis lobortis magna tincidunt ac. Integer sed pulvinar neque..."
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-time" },
-                                          [_vm._v("Today")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "li",
-                                { staticClass: "list-group-item unread" },
-                                [
-                                  _c("div", { staticClass: "email-checkbox" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "custom-control custom-checkbox"
-                                      },
-                                      [
-                                        _c("input", {
-                                          staticClass: "custom-control-input",
-                                          attrs: {
-                                            type: "checkbox",
-                                            "data-checked": "email-checkbox",
-                                            id: "emailCheckbox3"
-                                          }
-                                        }),
-                                        _vm._v(" "),
-                                        _c("label", {
-                                          staticClass: "custom-control-label",
-                                          attrs: { for: "emailCheckbox3" }
-                                        })
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "email-user bg-grey",
-                                      attrs: { href: "email_detail.html" }
-                                    },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "text-white" },
-                                        [_vm._v("W")]
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "email-info" }, [
-                                    _c(
-                                      "a",
-                                      { attrs: { href: "email_detail.html" } },
-                                      [
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-sender" },
-                                          [_vm._v("support@wrapbootstrap.com")]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-title" },
-                                          [
-                                            _vm._v(
-                                              "Bootstrap v4.0 is coming soon"
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-desc" },
-                                          [
-                                            _vm._v(
-                                              "Praesent id pulvinar orci. Donec ac metus non ligula faucibus venenatis. Suspendisse tortor est, placerat eu dui sed..."
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-time" },
-                                          [_vm._v("Today")]
-                                        )
-                                      ]
-                                    )
-                                  ])
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "list-group-item" }, [
+                        attrs: {
+                          "data-scrollbar": "true",
+                          "data-height": "100%",
+                          "data-init": "true"
+                        }
+                      },
+                      [
+                        _c(
+                          "ul",
+                          {
+                            staticClass:
+                              "list-group list-group-lg no-radius list-email"
+                          },
+                          [
+                            _c(
+                              "li",
+                              { staticClass: "list-group-item unread" },
+                              [
                                 _c("div", { staticClass: "email-checkbox" }, [
                                   _c(
                                     "div",
@@ -77570,13 +78183,13 @@ var staticRenderFns = [
                                         attrs: {
                                           type: "checkbox",
                                           "data-checked": "email-checkbox",
-                                          id: "emailCheckbox4"
+                                          id: "emailCheckbox1"
                                         }
                                       }),
                                       _vm._v(" "),
                                       _c("label", {
                                         staticClass: "custom-control-label",
-                                        attrs: { for: "emailCheckbox4" }
+                                        attrs: { for: "emailCheckbox1" }
                                       })
                                     ]
                                   )
@@ -77585,14 +78198,13 @@ var staticRenderFns = [
                                 _c(
                                   "a",
                                   {
-                                    staticClass: "email-user bg-grey",
+                                    staticClass: "email-user bg-blue",
                                     attrs: { href: "email_detail.html" }
                                   },
                                   [
-                                    _c("i", {
-                                      staticClass:
-                                        "fab fa-github-alt text-white"
-                                    })
+                                    _c("span", { staticClass: "text-white" }, [
+                                      _vm._v("F")
+                                    ])
                                   ]
                                 ),
                                 _vm._v(" "),
@@ -77604,13 +78216,17 @@ var staticRenderFns = [
                                       _c(
                                         "span",
                                         { staticClass: "email-sender" },
-                                        [_vm._v("Github")]
+                                        [_vm._v("Facebook Blueprint")]
                                       ),
                                       _vm._v(" "),
                                       _c(
                                         "span",
                                         { staticClass: "email-title" },
-                                        [_vm._v("Sidebar animation bugfix")]
+                                        [
+                                          _vm._v(
+                                            "Newly released courses, holiday marketing tips, how-to video, and more!"
+                                          )
+                                        ]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -77618,7 +78234,7 @@ var staticRenderFns = [
                                         { staticClass: "email-desc" },
                                         [
                                           _vm._v(
-                                            "Nam sit amet lacinia massa, sit amet blandit urna. Duis pharetra ex id ipsum posuere..."
+                                            "Sed scelerisque dui lacus, quis pellentesque lorem tincidunt rhoncus. Nulla accumsan elit pharetra, lacinia turpis nec, varius erat."
                                           )
                                         ]
                                       ),
@@ -77626,14 +78242,18 @@ var staticRenderFns = [
                                       _c(
                                         "span",
                                         { staticClass: "email-time" },
-                                        [_vm._v("2 days ago")]
+                                        [_vm._v("Today")]
                                       )
                                     ]
                                   )
                                 ])
-                              ]),
-                              _vm._v(" "),
-                              _c("li", { staticClass: "list-group-item" }, [
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              { staticClass: "list-group-item unread" },
+                              [
                                 _c("div", { staticClass: "email-checkbox" }, [
                                   _c(
                                     "div",
@@ -77647,13 +78267,97 @@ var staticRenderFns = [
                                         attrs: {
                                           type: "checkbox",
                                           "data-checked": "email-checkbox",
-                                          id: "emailCheckbox5"
+                                          id: "emailCheckbox2"
                                         }
                                       }),
                                       _vm._v(" "),
                                       _c("label", {
                                         staticClass: "custom-control-label",
-                                        attrs: { for: "emailCheckbox5" }
+                                        attrs: { for: "emailCheckbox2" }
+                                      })
+                                    ]
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "email-user bg-indigo",
+                                    attrs: { href: "email_detail.html" }
+                                  },
+                                  [
+                                    _c("span", { staticClass: "text-white" }, [
+                                      _vm._v("C")
+                                    ])
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "email-info" }, [
+                                  _c(
+                                    "a",
+                                    { attrs: { href: "email_detail.html" } },
+                                    [
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-sender" },
+                                        [_vm._v("Color Admin")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-title" },
+                                        [
+                                          _vm._v(
+                                            "Color Admin dashboard v2 is ready for live"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-desc" },
+                                        [
+                                          _vm._v(
+                                            "Proin interdum aliquam urna, quis lobortis magna tincidunt ac. Integer sed pulvinar neque..."
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        { staticClass: "email-time" },
+                                        [_vm._v("Today")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "li",
+                              { staticClass: "list-group-item unread" },
+                              [
+                                _c("div", { staticClass: "email-checkbox" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "custom-control custom-checkbox"
+                                    },
+                                    [
+                                      _c("input", {
+                                        staticClass: "custom-control-input",
+                                        attrs: {
+                                          type: "checkbox",
+                                          "data-checked": "email-checkbox",
+                                          id: "emailCheckbox3"
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c("label", {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "emailCheckbox3" }
                                       })
                                     ]
                                   )
@@ -77680,7 +78384,7 @@ var staticRenderFns = [
                                       _c(
                                         "span",
                                         { staticClass: "email-sender" },
-                                        [_vm._v("Wrapbootstrap")]
+                                        [_vm._v("support@wrapbootstrap.com")]
                                       ),
                                       _vm._v(" "),
                                       _c(
@@ -77688,7 +78392,7 @@ var staticRenderFns = [
                                         { staticClass: "email-title" },
                                         [
                                           _vm._v(
-                                            "Bootstrap Framework is awesome"
+                                            "Bootstrap v4.0 is coming soon"
                                           )
                                         ]
                                       ),
@@ -77698,7 +78402,7 @@ var staticRenderFns = [
                                         { staticClass: "email-desc" },
                                         [
                                           _vm._v(
-                                            "Etiam enim ipsum, malesuada in consectetur interdum, malesuada et lacus. Aenean faucibus turpis lorem..."
+                                            "Praesent id pulvinar orci. Donec ac metus non ligula faucibus venenatis. Suspendisse tortor est, placerat eu dui sed..."
                                           )
                                         ]
                                       ),
@@ -77706,19 +78410,155 @@ var staticRenderFns = [
                                       _c(
                                         "span",
                                         { staticClass: "email-time" },
-                                        [_vm._v("1 week ago")]
+                                        [_vm._v("Today")]
                                       )
                                     ]
                                   )
                                 ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "list-group-item" }, [
+                              _c("div", { staticClass: "email-checkbox" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-checkbox"
+                                  },
+                                  [
+                                    _c("input", {
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        "data-checked": "email-checkbox",
+                                        id: "emailCheckbox4"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("label", {
+                                      staticClass: "custom-control-label",
+                                      attrs: { for: "emailCheckbox4" }
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "email-user bg-grey",
+                                  attrs: { href: "email_detail.html" }
+                                },
+                                [
+                                  _c("i", {
+                                    staticClass: "fab fa-github-alt text-white"
+                                  })
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "email-info" }, [
+                                _c(
+                                  "a",
+                                  { attrs: { href: "email_detail.html" } },
+                                  [
+                                    _c(
+                                      "span",
+                                      { staticClass: "email-sender" },
+                                      [_vm._v("Github")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "email-title" }, [
+                                      _vm._v("Sidebar animation bugfix")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "email-desc" }, [
+                                      _vm._v(
+                                        "Nam sit amet lacinia massa, sit amet blandit urna. Duis pharetra ex id ipsum posuere..."
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "email-time" }, [
+                                      _vm._v("2 days ago")
+                                    ])
+                                  ]
+                                )
                               ])
-                            ]
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ])
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "list-group-item" }, [
+                              _c("div", { staticClass: "email-checkbox" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-checkbox"
+                                  },
+                                  [
+                                    _c("input", {
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "checkbox",
+                                        "data-checked": "email-checkbox",
+                                        id: "emailCheckbox5"
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("label", {
+                                      staticClass: "custom-control-label",
+                                      attrs: { for: "emailCheckbox5" }
+                                    })
+                                  ]
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "email-user bg-grey",
+                                  attrs: { href: "email_detail.html" }
+                                },
+                                [
+                                  _c("span", { staticClass: "text-white" }, [
+                                    _vm._v("W")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "email-info" }, [
+                                _c(
+                                  "a",
+                                  { attrs: { href: "email_detail.html" } },
+                                  [
+                                    _c(
+                                      "span",
+                                      { staticClass: "email-sender" },
+                                      [_vm._v("Wrapbootstrap")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "email-title" }, [
+                                      _vm._v("Bootstrap Framework is awesome")
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "email-desc" }, [
+                                      _vm._v(
+                                        "Etiam enim ipsum, malesuada in consectetur interdum, malesuada et lacus. Aenean faucibus turpis lorem..."
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("span", { staticClass: "email-time" }, [
+                                      _vm._v("1 week ago")
+                                    ])
+                                  ]
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
               ])
             ])
           ])
@@ -101329,15 +102169,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScholarAccountComponent_vue_vue_type_template_id_b9e855d6___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarAccountComponent.vue?vue&type=template&id=b9e855d6& */ "./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=template&id=b9e855d6&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ScholarAccountComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarAccountComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarAccountComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ScholarAccountComponent_vue_vue_type_template_id_b9e855d6___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ScholarAccountComponent_vue_vue_type_template_id_b9e855d6___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -101351,6 +102193,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAccountComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarAccountComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAccountComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -101436,6 +102292,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SLPUpdateComponent_vue_vue_type_template_id_cba4f2e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SLPUpdateComponent_vue_vue_type_template_id_cba4f2e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue":
+/*!******************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue ***!
+  \******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ScholarGraphComponent_vue_vue_type_template_id_35c0a2d4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4& */ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4&");
+/* harmony import */ var _ScholarGraphComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarGraphComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarGraphComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ScholarGraphComponent_vue_vue_type_template_id_35c0a2d4___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ScholarGraphComponent_vue_vue_type_template_id_35c0a2d4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarGraphComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarGraphComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarGraphComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4& ***!
+  \*************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarGraphComponent_vue_vue_type_template_id_35c0a2d4___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarGraphComponent_vue_vue_type_template_id_35c0a2d4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarGraphComponent_vue_vue_type_template_id_35c0a2d4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -101717,15 +102642,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _StatsComponent_vue_vue_type_template_id_67eb0daf___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./StatsComponent.vue?vue&type=template&id=67eb0daf& */ "./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=template&id=67eb0daf&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _StatsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./StatsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _StatsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _StatsComponent_vue_vue_type_template_id_67eb0daf___WEBPACK_IMPORTED_MODULE_0__["render"],
   _StatsComponent_vue_vue_type_template_id_67eb0daf___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -101739,6 +102666,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/scholar_pages/Home/StatsComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StatsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./StatsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/StatsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_StatsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

@@ -43,8 +43,10 @@ Auth::routes();
 //
 Route::middleware(['auth:scholars'])->group(function(){
     Route::get('scholars', [HomeController::class,'index'])->name('scholar.name');
-    Route::get('getScholarImport', 'GlobalController@getScholarImport');
-
+    Route::get('getScholarImport', [HomeController::class, 'getImport'])->name('scholar.getImport');
+    Route::get('getScholarReport', [HomeController::class, 'getScholarReport'])->name('scholar.getScholarReport');
+    Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
+    Route::post('updateRoninWallet', [HomeController::class, 'updateRoninWallet'])->name('scholar.updateRoninWallet');
 });
 
 Route::middleware(['auth:admins'])->group(function(){
@@ -91,6 +93,8 @@ Route::middleware(['auth:admins'])->group(function(){
 //put here route that was accessed by both admin and scholars
 
 Route::middleware(['auth:admins,scholars'])->group(function(){
+    Route::get('src/{file_name}', 'FileController@showFile');
+    
     Route::get('/','GlobalController@redirectMain');
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
 

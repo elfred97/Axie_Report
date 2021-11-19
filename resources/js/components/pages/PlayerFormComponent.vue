@@ -44,7 +44,7 @@
                 </form>
             </div>
             <div class="col-md-6">
-                <img :src="form.qr_code" alt="" class="img-fluid">
+                <img :src="'uploads/'+form.qr_code" alt="" class="img-fluid">
             </div>
         </div>
 
@@ -82,6 +82,7 @@ export default {
                 type              : 'Decent',
                 status            : 'Playing',
                 date_started      : '',
+                qr_code           : 'default.jpg',
             })
         }
     },
@@ -126,6 +127,7 @@ export default {
         uploadQRCode(){
             let formData = new FormData();
             formData.append('file', this.qr_code_file);
+            formData.append('id', this.form.ronin_address)
             formData.append('account_name', this.form.account_name)
 
             this.axios.post('/uploadQRCode',
@@ -138,9 +140,9 @@ export default {
             ).then((response) => {
                 this.qr_code_file = '';
                 this.$refs.qr_code_file.value = '';
-                console.log(response.data);
                 this.$noty.success("QR Code Uploaded");
-                this.updateTable();
+                this.$events.fire('update_players_table');
+                
             })
         },
         updateQR(){

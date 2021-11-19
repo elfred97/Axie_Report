@@ -48,8 +48,8 @@
                     <!-- END header-nav -->
                     <!-- BEGIN header-nav -->
                     <div class="header-nav">
-                        <ul class="nav pull-right">
-                            <li class="dropdown dropdown-hover">
+                        <ul class="nav pull-right" v-if="getGuardType == 'admins'">
+                            <li class="dropdown dropdown-hover" >
                                 <a href="#" class="header-cart" data-toggle="dropdown">
                                     <i class="fa fa-bell"></i>
                                     <span class="total" v-if="notificationData.length > 0">{{ notificationData.length }}</span>
@@ -97,6 +97,11 @@
                                     <div class="dropdown-divider" ></div>
                                     <a href="/logout" class="dropdown-item">Log Out</a>
                                 </div>
+                            </li>
+                        </ul>
+                        <ul class="nav pull-right" v-else>
+                            <li>
+                                <a href="/logout">Log Out</a>
                             </li>
                         </ul>
                     </div>

@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Type;
 use DB;
+use Auth;
 use File;
 use Storage;
 use Excel;
@@ -150,8 +151,15 @@ class PlayerController extends Controller
     }
 
     public function uploadQR(Request $request){
-        $path = 'assets/codes/'.$request->file->getClientOriginalName();
-        $save = Storage::put($path, file_get_contents($request->file));
+        $file           = $request->file;
+        $username       = explode(":",$request->ronin_address)[1];
+        $file_extension = $file->getClientOriginalExtension();
+        $file_name      = $username.'.'.$file_extension;
+        $path           = 'qr_codes/'.$file_name;
+        // $save = Storage::put($path, file_get_contents($request->file));
+
+        $save = Storage::disk('public')->put($path, file_get_contents($file));
+
         if($save)
             try {
                 $user = Player::UPDATEORCREATE(

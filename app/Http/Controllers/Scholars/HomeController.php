@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Scholars;
 
 use App\Http\Controllers\Controller;
 use DB;
+use Auth;
 use File;
 use Excel;
+use Carbon\Carbon;
 use App\Models\Player;
 use App\Models\Scholar;
 use Illuminate\Http\Request;
@@ -93,6 +95,88 @@ class HomeController extends Controller
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
+    public function getImport(Request $request){
+        $username = Auth::user()->username;
+        $date     = $request->date;
+        
+        $queryRequest = array_slice($request->all(), 3);
+        $type         = $request->type;
+        $where        = [];
+        $from = date('Y-m-d H:i:s');
+        $to   = Carbon::parse($request->date[1]);
+        // $whereBetween = [];
+        
+        $field     = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
+        $direction = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
+            
+        array_push($where, ['scholars.username', '=', $username]);
+
+        if ($type)
+            array_push($where, ['s.type_id', '=', $type]);
+
+        if ($date){
+            $from = Carbon::parse($request->date[0]);
+            $to   = Carbon::parse($request->date[1]);
+
+            return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+            ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
+            ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
+            ->WHERE($where)
+            ->whereBetween('report.created_at', [$from, $to])
+            ->PAGINATE(15);
+        }
+        
+        else{
+            return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+            ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
+            ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
+            ->WHERE($where)
+            ->PAGINATE(15);
+        }
+    }
+
+    public function getScholarReport(){
+        $username = Auth::user()->username;
+        return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+            ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
+            ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
+            ->WHERE('scholars.username', $username)
+            ->ORDERBY('scholars.id', 'desc')
+            ->GET();
+    }
+
+    public function getScholarInformation(){
+        $username = Auth::user()->username;
+
+        return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+            ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
+            ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
+            ->SELECT('scholars.*', 'players.*', 'type.name as type_name')
+            ->WHERE('scholars.username', $username)
+            ->FIRST();
+    }
+
+    public function updateRoninWallet(Request $request){
+        $username = Auth::user()->username;
+
+        try {
+            $scholar = Scholar::UPDATEORCREATE(
+                ['username' => $username],
+                [                    
+                    'ronin_wallet'       => $request->ronin_wallet,
+                ]
+            );            
+
+            if($scholar)
+                return response()->json(['message' => 'Ronin Wallet is saved'], 200);
             else
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }

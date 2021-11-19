@@ -3,11 +3,11 @@
         <div class="section-container">
             <div class="container">
                 <div class="row row-space-10 m-b-20">
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <!-- SLP Update -->
                         <slp-update-component></slp-update-component>
                     </div>
-                    <div class="col-md-7">
+                    <div class="col-md-8">
                         <!-- Stats -->
                         <stats-component></stats-component>
                     </div>
@@ -24,18 +24,34 @@
                 </div>
             </div>
         </div>
+        <!-- List of All Imports -->
+        <div class="section-container bg-white">
+            <div class="container">
+                <div class="row row-space-10 m-b-20">
+                    <div class="col-md-12">
+                        <div class="card border-0 mb-3">
+                            <div class="card-body">
+                                <scholar-graph-component></scholar-graph-component>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </template>
 <script>
-import SLPUpdateComponent from './SLPUpdateComponent.vue';
 import StatsComponent from './StatsComponent.vue';
+import SLPUpdateComponent from './SLPUpdateComponent.vue';
+import ScholarGraphComponent from './ScholarGraphComponent.vue';
 import ScholarPenaltyComponent from './ScholarPenaltyComponent.vue';
 import ScholarImportListComponent from './ScholarImportListComponent.vue';
 export default {
     components : {
         'stats-component'              : StatsComponent,
         'slp-update-component'         : SLPUpdateComponent,
+        'scholar-graph-component'      : ScholarGraphComponent,
         'scholar-penalty-component'    : ScholarPenaltyComponent,
         'scholar-import-list-component': ScholarImportListComponent,
     }

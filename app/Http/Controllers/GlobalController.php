@@ -265,8 +265,4 @@ class GlobalController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
-
-    public function getScholarImport(Request $request){
-        return "Hey";
-    }
 }

@@ -1,15 +1,15 @@
 <template>
     <div>
         <div class="section-container">
-            <div class="row">
-                <div class="container">
-                    <div class="vertical-box-row">
-                        <!-- begin vertical-box-cell -->
-                        <div class="vertical-box-cell">
-                            <!-- begin vertical-box-inner-cell -->
-                            <div class="vertical-box-inner-cell bg-white">
-                                <!-- begin scrollbar -->
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;"><div data-scrollbar="true" data-height="100%" data-init="true" style="overflow: hidden; width: auto; height: 100%;">
+            <div class="container">
+                <div class="vertical-box-row">
+                    <!-- begin vertical-box-cell -->
+                    <div class="vertical-box-cell">
+                        <!-- begin vertical-box-inner-cell -->
+                        <div class="vertical-box-inner-cell bg-white">
+                            <!-- begin scrollbar -->
+                            <div class="slimScrollDiv inbox" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+                                <div data-scrollbar="true" data-height="100%" data-init="true" style="overflow: hidden; width: auto; height: 100%;">
                                     <!-- begin list-email -->
                                     <ul class="list-group list-group-lg no-radius list-email">
                                         <li class="list-group-item unread">
@@ -111,13 +111,12 @@
                                     </ul>
                                     <!-- end list-email -->
                                 </div>
-                                </div>
-                                <!-- end scrollbar -->
                             </div>
-                            <!-- end vertical-box-inner-cell -->
+                            <!-- end scrollbar -->
                         </div>
-                        <!-- end vertical-box-cell -->
+                        <!-- end vertical-box-inner-cell -->
                     </div>
+                    <!-- end vertical-box-cell -->
                 </div>
             </div>
         </div>
