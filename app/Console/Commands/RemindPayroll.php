@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Mail;
 
 class RemindPayroll extends Command
@@ -53,14 +54,16 @@ class RemindPayroll extends Command
         $this->line('Sending to : ' . $scholar_emails );
 
         //temporary for testing cron job
-        $scholar_emails = ['mhardz07@gmail.com'];
-
-        if($scholar_emails) {
-            Mail::to($scholar_emails)->send(new \App\Mail\PayrollReminder(null));
-        }
-//        foreach ($scholars as $scholar) {
-//          Mail::to($scholar_emails)->send(new \App\Mail\PayrollReminder($scholar));
+//        $scholar_emails = ['mhardz07@gmail.com'];
+//        if($scholar_emails) {
+//            Mail::to($scholar_emails)->send(new \App\Mail\PayrollReminder(null));
 //        }
+
+        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com','first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com','first_name' => 'Elfred'])];
+
+        foreach ($scholars as $scholar) {
+          Mail::to($scholar)->send(new \App\Mail\PayrollReminder($scholar));
+        }
 
         $this->line('Payroll Reminder End: ' . Carbon::now()->format('Y-m-d H:i:s'));
         return 0;
