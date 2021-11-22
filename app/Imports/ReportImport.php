@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Models\Report;
 use App\Models\Player;
+use App\Models\Scholar;
 use App\Models\Notification;
 use App\Models\NotificationSettings;
 
@@ -59,7 +60,7 @@ class ReportImport implements ToCollection
                             $scholar_share = $gained_slp_today * 0.4;
                             $forty_percent = $scholar_share + $report->forty_percent;
                         }
-                        // Check Penalty                        
+                        // Check SLP Penalty                        
                         $penalty = $player->penalty;
                         if($gained_slp_today < $minimum_slp){
                             $penalty = $penalty + 1;
@@ -70,8 +71,9 @@ class ReportImport implements ToCollection
                             ]);
                         }
 
-                        // Check MMR
+                        // Check MMR Penalty
                         if($row[14] < $mmr){
+                            $penalty = $penalty + 1;
                             Notification::CREATE([
                                 'account_name' => $row[2],
                                 'category'     => 2,
@@ -79,6 +81,23 @@ class ReportImport implements ToCollection
                             ]);
                         }
 
+                        // Update Scholar Status
+                        if($penalty > 3)
+                        {
+                            Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+                            ->LEFTJOIN('players', 'players.id', '=', 'history.player_id')
+                            ->WHERE('players.account_name', '=', $row[2])
+                            ->UPDATE(
+                                [
+                                    'scholars.status' => 'Terminated'
+                                ]
+                            );
+                            Notification::CREATE([
+                                'account_name' => $row[2],
+                                'category'     => 3, // Scholar Terminated
+                                'status'       => 1,
+                            ]);
+                        }
                         // Update Player
                         Player::WHERE('account_name', $row[2])->update(
                             [
