@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use \App\Http\Controllers\Scholars\HomeController;
 use \App\Http\Controllers\NotificationSettingControler;
+use \App\Http\Controllers\ReminderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +88,10 @@ Route::middleware(['auth:admins'])->group(function(){
 
     Route::get('penalty-count/{type?}', 'PlayerController@getPenaltyCount');
     Route::get('getLowestMMR', 'PlayerController@getLowestMMR');
+
+    Route::resource('reminders', 'ReminderController');
+    Route::post('reminders/{reminder}',[ReminderController::class,'update']);
+    Route::get('reminders/{reminder}/destroy',[ReminderController::class,'destroy']);
 });
 
 
@@ -94,7 +99,7 @@ Route::middleware(['auth:admins'])->group(function(){
 
 Route::middleware(['auth:admins,scholars'])->group(function(){
     Route::get('src/{file_name}', 'FileController@showFile');
-    
+
     Route::get('/','GlobalController@redirectMain');
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
 
