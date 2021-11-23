@@ -23,6 +23,7 @@ class vueComponentsMiddleware
             'players',
             'scholarList',
             'notification',
+            'payroll_history',
             'settings',
             '403',
             null,

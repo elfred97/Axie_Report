@@ -29,6 +29,13 @@ export const routes = [
         }
     },
     { 
+        path: '/payroll_history', 
+        component: require('./components/pages/PayrollHistoryComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
+    { 
         path: '/settings', 
         component: require('./components/pages/AccountComponent.vue').default,
         meta : {

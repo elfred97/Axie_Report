@@ -5830,6 +5830,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -6612,27 +6615,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
 /* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
-/* harmony import */ var _ImportedFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ImportedFieldsDef.js */ "./resources/js/components/pages/ImportedFieldsDef.js");
+/* harmony import */ var _NotificationFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./NotificationFieldsDef.js */ "./resources/js/components/pages/NotificationFieldsDef.js");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -6714,7 +6699,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _ref;
 
     return _ref = {
-      fields: _ImportedFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+      fields: _NotificationFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       perPage: 15
     }, _defineProperty(_ref, "perPage", ''), _defineProperty(_ref, "css", _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"]), _defineProperty(_ref, "notificationData", {}), _defineProperty(_ref, "date", null), _defineProperty(_ref, "filtersParam", {
       date: ""
@@ -71453,6 +71438,20 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _vm.getGuardType == "admins"
+                        ? _c(
+                            "router-link",
+                            { attrs: { to: "/payroll_history" } },
+                            [_vm._v("Payroll History")]
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _vm.getGuardType == "admins"
                     ? _c(
                         "li",
@@ -72766,187 +72765,144 @@ var render = function() {
         attrs: { id: "notification" }
       },
       [
-        _c("div", { staticClass: "row no-margin mt-2" }, [
-          _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row no-margin mt-2" }, [
+            _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-12" }, [
+              _c(
+                "label",
+                [
+                  _vm._v("Date \n                            "),
+                  _c("v-datepicker", {
+                    attrs: { range: "" },
+                    on: {
+                      change: function($event) {
+                        return _vm.updateTable()
+                      }
+                    },
+                    model: {
+                      value: _vm.filtersParam.date,
+                      callback: function($$v) {
+                        _vm.$set(_vm.filtersParam, "date", $$v)
+                      },
+                      expression: "filtersParam.date"
+                    }
+                  })
+                ],
+                1
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row no-margin mt-1" }, [
             _c(
               "div",
-              { staticClass: "col-lg-3 col-md-3 col-sm-12" },
+              { staticClass: "col-lg-12 col-md-12 col-sm-12" },
               [
-                _c("v-datepicker", {
+                _c("loading", {
                   attrs: {
-                    valueType: "format",
-                    placeholder: "Select date",
-                    format: "MM/DD/YYYY"
+                    active: _vm.isLoading,
+                    "can-cancel": true,
+                    "on-cancel": _vm.onCancel,
+                    "is-full-page": _vm.fullPage
                   },
                   on: {
-                    change: function($event) {
-                      return _vm.updateTable()
+                    "update:active": function($event) {
+                      _vm.isLoading = $event
                     }
-                  },
-                  model: {
-                    value: _vm.filtersParam.date,
-                    callback: function($$v) {
-                      _vm.$set(_vm.filtersParam, "date", $$v)
-                    },
-                    expression: "filtersParam.date"
                   }
+                }),
+                _vm._v(" "),
+                _c(
+                  "vuetable",
+                  {
+                    ref: "vuetable",
+                    attrs: {
+                      "api-url": "/getNotification",
+                      fields: _vm.fields,
+                      css: _vm.css,
+                      "per-page": _vm.perPage,
+                      "append-params": _vm.filtersParam,
+                      "data-path": "data",
+                      "pagination-path": "",
+                      "sort-order": _vm.sortOrder,
+                      "detail-row-component": _vm.detailRow
+                    },
+                    on: {
+                      "vuetable:pagination-data": _vm.onPaginationData,
+                      "vuetable:row-clicked": _vm.onCellClicked,
+                      "vuetable:loading": _vm.onLoading,
+                      "vuetable:loaded": _vm.onLoaded
+                    },
+                    scopedSlots: _vm._u([
+                      {
+                        key: "actions",
+                        fn: function(props) {
+                          return _c("div", {}, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "ui small button",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.onActionClicked(
+                                      "edit-item",
+                                      props.rowData
+                                    )
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "edit icon" })]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "ui small button",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.onActionClicked(
+                                      "delete-item",
+                                      props.rowData
+                                    )
+                                  }
+                                }
+                              },
+                              [_c("i", { staticClass: "delete icon" })]
+                            )
+                          ])
+                        }
+                      }
+                    ])
+                  },
+                  [
+                    _vm._v(
+                      "\n                            >\n                        \n                            "
+                    )
+                  ]
+                )
+              ],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [_c("vuetable-pagination-info", { ref: "paginationInfo" })],
+              1
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "col-md-6 text-right" },
+              [
+                _c("vuetable-pagination", {
+                  ref: "pagination",
+                  attrs: { css: _vm.css.pagination },
+                  on: { "vuetable-pagination:change-page": _vm.onChangePage }
                 })
               ],
               1
             )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row no-margin mt-1" }, [
-          _c("div", { staticClass: "container inbox" }, [
-            _vm.notificationData.length > 0
-              ? _c(
-                  "div",
-                  {
-                    attrs: { "data-scrollbar": "true", "data-height": "100%" }
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "col-lg-12 col-md-12 col-sm-12" },
-                      [
-                        _c("loading", {
-                          attrs: {
-                            active: _vm.isLoading,
-                            "can-cancel": true,
-                            "on-cancel": _vm.onCancel,
-                            "is-full-page": _vm.fullPage
-                          },
-                          on: {
-                            "update:active": function($event) {
-                              _vm.isLoading = $event
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "vuetable",
-                          {
-                            ref: "vuetable",
-                            attrs: {
-                              "api-url": "/getNotification",
-                              fields: _vm.fields,
-                              css: _vm.css,
-                              "per-page": _vm.perPage,
-                              "append-params": _vm.filtersParam,
-                              "data-path": "data",
-                              "pagination-path": "",
-                              "sort-order": _vm.sortOrder,
-                              "detail-row-component": _vm.detailRow
-                            },
-                            on: {
-                              "vuetable:pagination-data": _vm.onPaginationData,
-                              "vuetable:row-clicked": _vm.onCellClicked,
-                              "vuetable:loading": _vm.onLoading,
-                              "vuetable:loaded": _vm.onLoaded
-                            },
-                            scopedSlots: _vm._u(
-                              [
-                                {
-                                  key: "actions",
-                                  fn: function(props) {
-                                    return _c("div", {}, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "ui small button",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.onActionClicked(
-                                                "edit-item",
-                                                props.rowData
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [_c("i", { staticClass: "edit icon" })]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "ui small button",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.onActionClicked(
-                                                "delete-item",
-                                                props.rowData
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "delete icon"
-                                          })
-                                        ]
-                                      )
-                                    ])
-                                  }
-                                }
-                              ],
-                              null,
-                              false,
-                              4077426866
-                            )
-                          },
-                          [
-                            _vm._v(
-                              "\n                            >\n                           \n                            "
-                            )
-                          ]
-                        )
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-6" },
-                      [
-                        _c("vuetable-pagination-info", {
-                          ref: "paginationInfo"
-                        })
-                      ],
-                      1
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "col-md-6 text-right" },
-                      [
-                        _c("vuetable-pagination", {
-                          ref: "pagination",
-                          attrs: { css: _vm.css.pagination },
-                          on: {
-                            "vuetable-pagination:change-page": _vm.onChangePage
-                          }
-                        })
-                      ],
-                      1
-                    )
-                  ]
-                )
-              : _vm.notificationData.length == 0 && _vm.date != null
-              ? _c("div", { staticClass: "text-center" }, [
-                  _c("i", { staticClass: "fas fa-search fa-2x" }),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "no-margin" }, [
-                    _vm._v("No data found. Try a different date")
-                  ])
-                ])
-              : _c("div", { staticClass: "text-center" }, [
-                  _c("i", { staticClass: "fas fa-search fa-2x" }),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "no-margin" }, [
-                    _vm._v("No data found.")
-                  ])
-                ])
           ])
         ])
       ]
@@ -74006,6 +73962,30 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -100876,6 +100856,54 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/NotificationFieldsDef.js":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/pages/NotificationFieldsDef.js ***!
+  \****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  name: "account_name",
+  title: 'Account Name'
+}, {
+  name: "player_name",
+  title: 'Scholar Name',
+  titleClass: 'center aligned',
+  dataClass: 'center aligned'
+}, {
+  name: "category",
+  title: 'Category',
+  titleClass: 'center aligned',
+  dataClass: 'center aligned',
+  formatter: function formatter(value) {
+    if (value == 1) return '<span>SLP per day penalty</span>';else if (value == 2) return '<span>MMR penalty</span>';else if (value == 3) return '<span>Scholar terminated</span>';
+  }
+}, {
+  name: "created_at",
+  title: 'Date',
+  sortField: 'created_at',
+  titleClass: 'center aligned',
+  dataClass: 'center aligned',
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+  }
+}, {
+  name: "status",
+  title: 'Status',
+  titleClass: 'center aligned',
+  dataClass: 'center aligned',
+  formatter: function formatter(value) {
+    if (value == 1) return '<span>Active</span>';else if (value == 2) return '<span>Inactive</span>';
+  }
+}]);
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/NotificationSettingsComponent.vue":
 /*!*************************************************************************!*\
   !*** ./resources/js/components/pages/NotificationSettingsComponent.vue ***!
@@ -101035,6 +101063,59 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OverviewComponent_vue_vue_type_template_id_fa72b644___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_OverviewComponent_vue_vue_type_template_id_fa72b644___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryComponent.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayrollHistoryComponent.vue?vue&type=template&id=7297f630& */ "./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
+  script,
+  _PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/PayrollHistoryComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollHistoryComponent.vue?vue&type=template&id=7297f630& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -102857,6 +102938,12 @@ var routes = [{
 }, {
   path: '/scholarList',
   component: __webpack_require__(/*! ./components/pages/ScholarListComponent.vue */ "./resources/js/components/pages/ScholarListComponent.vue")["default"],
+  meta: {
+    admins: true
+  }
+}, {
+  path: '/payroll_history',
+  component: __webpack_require__(/*! ./components/pages/PayrollHistoryComponent.vue */ "./resources/js/components/pages/PayrollHistoryComponent.vue")["default"],
   meta: {
     admins: true
   }

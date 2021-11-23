@@ -76,8 +76,11 @@ body{
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 .header-nav .navbar-collapse .router-link-active{
-    background-color: rgba(0, 0, 0, .2) !important;
+    /* background-color: rgba(0, 0, 0, .2) !important;
     color: #00acac !important;
+    font-weight: bold; */
+    color: white !important;
+    background-color: #00acac !important;
     font-weight: bold;
 }
 .header .header-nav .nav{

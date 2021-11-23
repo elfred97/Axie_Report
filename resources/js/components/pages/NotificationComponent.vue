@@ -3,25 +3,17 @@
 		<!-- BEGIN #notification -->
 		<div id="notification" class="section-container main-content-view bg-white">
 			<!--  -->
-			<div class="row no-margin mt-2">
-				<div class="container">
+            <div class="container">
+			    <div class="row no-margin mt-2">
 					<div class="col-lg-3 col-md-3 col-sm-12">
-						<v-datepicker 
-							v-model="filtersParam.date" 
-							valueType="format" 
-							placeholder="Select date" 
-							format="MM/DD/YYYY"
-							@change="updateTable()"
-							/>
+                        <label>Date 
+                            <v-datepicker v-model="filtersParam.date" range @change="updateTable()" class=""></v-datepicker>
+                        </label>
 					</div>
 				</div>
-			</div>
-			<div class="row no-margin mt-1">
-				<div class="container inbox">
-					<!-- begin scrollbar -->
-					<div data-scrollbar="true" data-height="100%" v-if="notificationData.length > 0">
-						<!-- begin list-email -->
-						<div class="col-lg-12 col-md-12 col-sm-12">
+			
+                <div class="row no-margin mt-1">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
                         <loading :active.sync="isLoading" 
                             :can-cancel="true" 
                             :on-cancel="onCancel"
@@ -41,7 +33,7 @@
                             @vuetable:loading="onLoading"
                             @vuetable:loaded="onLoaded">
                             >
-                           
+                        
                             <div slot="actions" slot-scope="props">
                                 <button 
                                     class="ui small button" 
@@ -57,7 +49,7 @@
                                 </button>
                             </div>
                         </vuetable>
-                        <!-- End of Vuetable -->
+                    <!-- End of Vuetable -->
                     </div>
                     <!-- Pagination Info -->
                     <div class="col-md-6">
@@ -71,19 +63,9 @@
                             :css="css.pagination"
                         ></vuetable-pagination>
                     </div><!-- End of Pagination Buttons -->
-						<!-- end list-email -->
-					</div>
-					<div class="text-center" v-else-if="notificationData.length == 0 && date != null">
-						<i class="fas fa-search fa-2x"></i>
-						<p class="no-margin">No data found. Try a different date</p>
-					</div>
-					<div class="text-center" v-else>
-						<i class="fas fa-search fa-2x"></i>
-						<p class="no-margin">No data found.</p>
-					</div>
-					<!-- end scrollbar -->
-				</div>
-			</div>
+                        <!-- end list-email -->
+                </div>
+            </div>
 		</div>
 		<!-- END #notification -->
 	</div>
@@ -91,7 +73,7 @@
 <script>
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
-import FieldsDef from "./ImportedFieldsDef.js";
+import FieldsDef from "./NotificationFieldsDef.js";
 export default {
 	mixins : [ TableMixins ],
 	data(){

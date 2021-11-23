@@ -35,6 +35,9 @@
                                     <router-link to="/players" v-if="getGuardType == 'admins'">Axie Accounts</router-link>
                                     <router-link to="/scholar_account" v-else>Account</router-link>
                                 </li>
+                                <li>
+                                    <router-link to="/payroll_history" v-if="getGuardType == 'admins'">Payroll History</router-link>
+                                </li>
                                 <li v-if="getGuardType == 'admins'">
                                     <router-link to="/scholarList">Scholars</router-link>
                                 </li>

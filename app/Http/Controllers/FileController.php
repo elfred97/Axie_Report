@@ -123,18 +123,22 @@ class FileController extends Controller
     public function getNotification(Request $request){
         if($request->date != NULL){
             $notification = DB::TABLE('notification as n')
-                ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'))
+            ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today')
                 ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+                ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
                 ->whereDate('n.created_at', Carbon::parse($request->date))
+                ->ORDERBY('n.created_at', 'desc')
                 ->PAGINATE(15);
         }else
             $notification = DB::TABLE('notification as n')
-                ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'))
+                ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
                 ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+                ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
+                ->ORDERBY('n.created_at', 'desc')
                 ->PAGINATE(15);
 
         return $notification;
