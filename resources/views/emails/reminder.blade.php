@@ -1,5 +1,5 @@
 Dear {{  $user->first_name ?? 'Scholar' }} <br><br>
 
-This is a reminder.
+{!! nl2br($reminder->description) !!}
 
 Note: this is a sample email for project development.

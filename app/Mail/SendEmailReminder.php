@@ -12,15 +12,16 @@ class SendEmailReminder extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $reminder;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $reminder)
     {
         $this->user = $user;
-        $this->subject = 'Reminder';
+        $this->reminder = $reminder;
     }
 
     /**

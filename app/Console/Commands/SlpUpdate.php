@@ -50,9 +50,9 @@ class SlpUpdate extends Command
             $q->where('type_id', '=', $type);
         })->get();
 
-        $scholar_emails = $scholars->pluck('email');
-
-        $this->line('Sending to : ' . $scholar_emails);
+//        $scholar_emails = $scholars->pluck('email');
+//
+//        $this->line('Sending to : ' . $scholar_emails);
 
         $response = Http::get('https://api.coingecko.com/api/v3/simple/price?ids=smooth-love-potion&vs_currencies=php');
         if ($response->failed()) {
