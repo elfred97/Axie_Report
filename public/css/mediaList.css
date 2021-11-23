@@ -1,0 +1,37 @@
+.media{
+    display:flex;
+    align-items:flex-start
+}
+.media-body{
+    flex:1
+}
+.media-list{
+    padding-left:0;
+    padding-right:0;
+    list-style:none
+}
+.media-list li{
+    border-top: 1px solid #d5dbe0;
+    padding: 15px 0;
+
+}
+.media-list.media-list-with-divider .media+.media{
+    border-top:1px solid #d5dbe0;
+    padding-top:15px
+}
+.media+.media{
+    margin-top:15px
+}
+.media .media-heading{
+    margin-top:0;
+    margin-bottom:5px
+}
+
+.nav.nav-tabs+.tab-content{
+    padding:15px;
+    background:#fff;
+    margin-bottom:20px;
+    -webkit-border-radius:0 0 4px 4px;
+    border-radius:0 0 4px 4px;
+    border: 1px solid #ccc;
+}

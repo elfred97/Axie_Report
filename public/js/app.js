@@ -7226,6 +7226,260 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      filtersParam: {
+        month: '',
+        year: '',
+        type: '',
+        search: ''
+      },
+      year: [2020, 2021],
+      month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    };
+  },
+  watch: {
+    'filter.type': function filterType(newVal) {
+      this.getGraph();
+    }
+  },
+  methods: {
+    updatePayroll: function updatePayroll() {}
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PlayerFormComponent.vue?vue&type=script&lang=js&":
 /*!************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/PlayerFormComponent.vue?vue&type=script&lang=js& ***!
@@ -73983,9 +74237,725 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "section-container main-content-view bg-white" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "tab-content",
+                attrs: { "data-sortable-id": "index-3" }
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass: "tab-pane fade active show",
+                    attrs: { id: "pending" }
+                  },
+                  [
+                    _c("div", { staticClass: "row no-margin" }, [
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dataTables_length",
+                            attrs: { id: "data-table-default_length" }
+                          },
+                          [
+                            _c("label", [
+                              _vm._v(
+                                "Year \n                                            "
+                              ),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.filtersParam.year,
+                                      expression: "filtersParam.year"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "custom-select custom-select-sm form-control form-control-sm",
+                                  attrs: {
+                                    name: "data-table-default_length",
+                                    "aria-controls": "data-table-default"
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.filtersParam,
+                                          "year",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.updatePayroll
+                                    ]
+                                  }
+                                },
+                                _vm._l(_vm.year, function(year) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: year } },
+                                    [_vm._v(_vm._s(year))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dataTables_length",
+                            attrs: { id: "data-table-default_length" }
+                          },
+                          [
+                            _c("label", [
+                              _vm._v(
+                                "Month \n                                            "
+                              ),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.filtersParam.month,
+                                      expression: "filtersParam.month"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "custom-select custom-select-sm form-control form-control-sm",
+                                  attrs: {
+                                    name: "data-table-default_length",
+                                    "aria-controls": "data-table-default"
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.filtersParam,
+                                          "month",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.updatePayroll
+                                    ]
+                                  }
+                                },
+                                _vm._l(_vm.month, function(month) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: month } },
+                                    [_vm._v(_vm._s(month))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-2" },
+                        [
+                          _c("type-component", {
+                            attrs: { type: _vm.filtersParam.type },
+                            on: {
+                              updateType: function($event) {
+                                _vm.filtersParam.type = $event
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3 offset-md-3" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dataTables_length",
+                            attrs: { id: "data-table-default_length" }
+                          },
+                          [
+                            _c("label", [
+                              _vm._v(
+                                "Search \n                                            "
+                              ),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.filtersParam.search,
+                                    expression: "filtersParam.search"
+                                  }
+                                ],
+                                staticClass:
+                                  "form-control form-control-sm custom-input custom-input-sm",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Search scholar name"
+                                },
+                                domProps: { value: _vm.filtersParam.search },
+                                on: {
+                                  change: _vm.updatePayroll,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.filtersParam,
+                                      "search",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "tab-pane fade", attrs: { id: "paid" } },
+                  [
+                    _c("div", { staticClass: "row no-margin" }, [
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dataTables_length",
+                            attrs: { id: "data-table-default_length" }
+                          },
+                          [
+                            _c("label", [
+                              _vm._v(
+                                "Year \n                                            "
+                              ),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.filtersParam.year,
+                                      expression: "filtersParam.year"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "custom-select custom-select-sm form-control form-control-sm",
+                                  attrs: {
+                                    name: "data-table-default_length",
+                                    "aria-controls": "data-table-default"
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.filtersParam,
+                                          "year",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.updatePayroll
+                                    ]
+                                  }
+                                },
+                                _vm._l(_vm.year, function(year) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: year } },
+                                    [_vm._v(_vm._s(year))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dataTables_length",
+                            attrs: { id: "data-table-default_length" }
+                          },
+                          [
+                            _c("label", [
+                              _vm._v(
+                                "Month \n                                            "
+                              ),
+                              _c(
+                                "select",
+                                {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.filtersParam.month,
+                                      expression: "filtersParam.month"
+                                    }
+                                  ],
+                                  staticClass:
+                                    "custom-select custom-select-sm form-control form-control-sm",
+                                  attrs: {
+                                    name: "data-table-default_length",
+                                    "aria-controls": "data-table-default"
+                                  },
+                                  on: {
+                                    change: [
+                                      function($event) {
+                                        var $$selectedVal = Array.prototype.filter
+                                          .call($event.target.options, function(
+                                            o
+                                          ) {
+                                            return o.selected
+                                          })
+                                          .map(function(o) {
+                                            var val =
+                                              "_value" in o ? o._value : o.value
+                                            return val
+                                          })
+                                        _vm.$set(
+                                          _vm.filtersParam,
+                                          "month",
+                                          $event.target.multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        )
+                                      },
+                                      _vm.updatePayroll
+                                    ]
+                                  }
+                                },
+                                _vm._l(_vm.month, function(month) {
+                                  return _c(
+                                    "option",
+                                    { domProps: { value: month } },
+                                    [_vm._v(_vm._s(month))]
+                                  )
+                                }),
+                                0
+                              )
+                            ])
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-2" },
+                        [
+                          _c("type-component", {
+                            attrs: { type: _vm.filtersParam.type },
+                            on: {
+                              updateType: function($event) {
+                                _vm.filtersParam.type = $event
+                              }
+                            }
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3 offset-md-3" }, [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "dataTables_length",
+                            attrs: { id: "data-table-default_length" }
+                          },
+                          [
+                            _c("label", [
+                              _vm._v(
+                                "Search \n                                            "
+                              ),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.filtersParam.search,
+                                    expression: "filtersParam.search"
+                                  }
+                                ],
+                                staticClass:
+                                  "form-control form-control-sm custom-input custom-input-sm",
+                                attrs: {
+                                  type: "text",
+                                  placeholder: "Search scholar name"
+                                },
+                                domProps: { value: _vm.filtersParam.search },
+                                on: {
+                                  change: _vm.updatePayroll,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.filtersParam,
+                                      "search",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              })
+                            ])
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(2)
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      {
+        staticClass: "nav nav-tabs nav-tabs-default",
+        attrs: { "data-sortable-id": "index-2" }
+      },
+      [
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link active",
+              attrs: { href: "#pending", "data-toggle": "tab" }
+            },
+            [
+              _c("i", { staticClass: "fa fa-file-invoice fa-lg m-r-5" }),
+              _vm._v(" "),
+              _c("span", { staticClass: "d-none d-md-inline" }, [
+                _vm._v("Pending Payroll")
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c(
+            "a",
+            {
+              staticClass: "nav-link",
+              attrs: { href: "#paid", "data-toggle": "tab" }
+            },
+            [
+              _c("i", {
+                staticClass: "fas fa-file-invoice-dollar fa-lg m-r-5"
+              }),
+              _vm._v(" "),
+              _c("span", { staticClass: "d-none d-md-inline" }, [
+                _vm._v("Paid Payroll")
+              ])
+            ]
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      { staticClass: "no-margin media-list media-list-with-divider mt-2" },
+      [
+        _c("li", [
+          _c("div", { staticClass: "row no-margin" }, [
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("h6", { staticClass: "no-margin" }, [
+                _vm._v("Scholar Name "),
+                _c("span", { staticClass: "pull-right" }, [
+                  _vm._v("(Account Name)")
+                ])
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("Ronin Address: ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
+                    _vm._v(" 8")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", [_vm._v("40%: ")]),
+                    _vm._v(" 4 ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "text-center" }, [
+                    _c("b", [_vm._v("Total: ")]),
+                    _vm._v(" 12")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" }, [
+              _c("button", { staticClass: "btn btn-xs btn-primary" }, [
+                _c("i", { staticClass: "fas fa-check" }),
+                _vm._v(" Set as Paid")
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("div", { staticClass: "row no-margin" }, [
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("h6", { staticClass: "no-margin" }, [
+                _vm._v("Scholar Name "),
+                _c("span", [_vm._v("(Account Name)")])
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "no-margin" }, [
+                _vm._v("Ronin Address: ")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
+                    _vm._v(" 8")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", [_vm._v("40%: ")]),
+                    _vm._v(" 4 ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "text-center" }, [
+                    _c("b", [_vm._v("Total: ")]),
+                    _vm._v(" 12")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" }, [
+              _c("button", { staticClass: "btn btn-xs btn-primary" }, [
+                _c("i", { staticClass: "fas fa-check" }),
+                _vm._v(" Set as Paid")
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "ul",
+      { staticClass: "no-margin media-list media-list-with-divider mt-2" },
+      [
+        _c("li", [
+          _c("div", { staticClass: "row no-margin" }, [
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("h6", { staticClass: "no-margin" }, [
+                _vm._v("Scholar Name "),
+                _c("span", [_vm._v("(Account Name)")])
+              ]),
+              _vm._v(" "),
+              _c("span", [_vm._v("Ronin Address: ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
+                    _vm._v(" 8")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", [_vm._v("40%: ")]),
+                    _vm._v(" 4 ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "text-center" }, [
+                    _c("b", [_vm._v("Total: ")]),
+                    _vm._v(" 12")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" }, [
+              _c("button", { staticClass: "btn btn-xs btn-default" }, [
+                _c("i", { staticClass: "fas fa-check" }),
+                _vm._v(" Cancel")
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", [
+          _c("div", { staticClass: "row no-margin" }, [
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("h6", { staticClass: "no-margin" }, [
+                _vm._v("Scholar Name "),
+                _c("span", [_vm._v("(Account Name)")])
+              ]),
+              _vm._v(" "),
+              _c("span", { staticClass: "no-margin" }, [
+                _vm._v("Ronin Address: ")
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-4" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
+                    _vm._v(" 8")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "no-margin text-center" }, [
+                    _c("b", [_vm._v("40%: ")]),
+                    _vm._v(" 4 ")
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-4" }, [
+                  _c("span", { staticClass: "text-center" }, [
+                    _c("b", [_vm._v("Total: ")]),
+                    _vm._v(" 12")
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-3" }, [
+              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-1" }, [
+              _c("button", { staticClass: "btn btn-xs btn-default" }, [
+                _c("i", { staticClass: "fas fa-check" }),
+                _vm._v(" Cancel")
+              ])
+            ])
+          ])
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -101078,15 +102048,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayrollHistoryComponent.vue?vue&type=template&id=7297f630& */ "./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=template&id=7297f630&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _PayrollHistoryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayrollHistoryComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PayrollHistoryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["render"],
   _PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -101100,6 +102072,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/pages/PayrollHistoryComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollHistoryComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
