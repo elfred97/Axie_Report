@@ -144,7 +144,7 @@ class FileController extends Controller
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
-                ->whereBetween('report.created_at', [$from, $to])
+                ->whereBetween('r.created_at', [$from, $to])
                 ->ORDERBY('n.created_at', 'desc')
                 ->PAGINATE(15);
         }

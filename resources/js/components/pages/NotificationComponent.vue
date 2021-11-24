@@ -27,7 +27,6 @@
                             data-path="data"
                             pagination-path=""
                             :sort-order="sortOrder"
-                            :detail-row-component="detailRow"
                             @vuetable:pagination-data="onPaginationData"
                             @vuetable:row-clicked="onCellClicked"
                             @vuetable:loading="onLoading"
