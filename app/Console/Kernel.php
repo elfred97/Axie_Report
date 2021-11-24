@@ -27,6 +27,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
         $schedule->command('slp-update')->dailyAt('08:00')->runInBackground()->withoutOverlapping();
         $schedule->command('remind-payroll')->lastDayOfMonth('08:00')->runInBackground()->withoutOverlapping();
+        $schedule->command('reminder:send')->everyMinute()->runInBackground()->withoutOverlapping(); //needs to check reminder schedule so need to run every minute
     }
 
     /**
