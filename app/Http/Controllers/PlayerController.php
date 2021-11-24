@@ -18,15 +18,17 @@ class PlayerController extends Controller
     public function getPlayers(Request $request){
         $where = [];
         if ($request->type)
-            array_push($where, ['type', '=', $request->type]);
+            array_push($where, ['type_id', '=', $request->type]);
         return Player::
             SELECT(
                 '*',
                 's.*',
-                DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name')
+                DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
+                't.name as type_name',
             )
             ->LEFTJOIN('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->WHERE($where)
             ->PAGINATE($request->per_page);
     }

@@ -6,11 +6,10 @@ export default [
     width: "1%",
   },
   {
-    name: "type",
+    name: "type_name",
     title: 'Type',
     titleClass: 'center aligned',
-    dataClass: 'center aligned',
-    
+    dataClass: 'center aligned uppercase',
   },
   {
     name: "ronin_address",

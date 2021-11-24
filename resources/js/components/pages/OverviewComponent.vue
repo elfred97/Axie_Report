@@ -311,7 +311,7 @@ export default {
             this.getPenalties(eventData);
             this.getLowestMMR(eventData);
         });
-        this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
+        // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
     }
 }
 </script>

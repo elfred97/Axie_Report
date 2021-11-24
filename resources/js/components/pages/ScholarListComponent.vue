@@ -28,14 +28,14 @@
                 <div class="col-lg-3 col-md-3 col-sm-12">
                     <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
+                <!-- <div class="col-lg-3 col-md-3 col-sm-12">
                     <div class="dataTables_length" id="data-table-default_length">
                         <label>Search 
-                            <input type="text" aria-controls="data-table-default" class="custom-input custom-input-sm form-control form-control-sm" v-model="filtersParam.term" @submit="updateTable">
+                            <input type="text" aria-controls="data-table-default" placeholder="Search Scholars" class="custom-input custom-input-sm form-control form-control-sm" v-model="filtersParam.term" @blur="updateTable">
                         </label>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
+                </div> -->
+                <div class="col-lg-4 offset-lg-3 offset-md-3 col-md-4 col-sm-12">
                     <div class="pull-right">
                         <input name="file" type="file" ref="file" @change="importScholar()" class="hide">
                         <button class="btn btn-primary btn-sm"  @click="addScholar"><i class="fa fa-plus"></i> Add New Scholar </button>

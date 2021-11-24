@@ -1,9 +1,14 @@
 export default [ 
     {
-      name: "facility_name",
-      title: 'Status',
-      titleClass: "text-center aligned",
-      dataClass: "text-center aligned",
+        name: 'detailRowIndicator',
+        title: '',
+        width: "1%",
+    },
+    {
+        name: "type_name",
+        title: 'type',
+        titleClass: "text-center aligned",
+        dataClass: "text-center aligned uppercase",
     },
     {
       name: "account_name",

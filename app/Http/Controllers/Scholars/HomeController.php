@@ -43,6 +43,16 @@ class HomeController extends Controller
     }
 
     public function getScholars(Request $request){
+        $queryRequest   = array_slice($request->all(), 3);
+        $type  = $request->type;
+        $where = [];
+
+        if ($type)
+            array_push($where, ['scholars.type_id', '=', $type]);
+
+        $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
+        $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
+
         return Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'players.id', '=', 'history.player_id')
             ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
@@ -52,6 +62,7 @@ class HomeController extends Controller
                 'players.account_name',
                 'type.name as type'
             )
+            ->where($where)
             ->PAGINATE($request->per_page);
     }
     public function save(Request $request){

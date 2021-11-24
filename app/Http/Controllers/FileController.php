@@ -29,7 +29,7 @@ class FileController extends Controller
         $where = [];
 
         if ($type)
-            array_push($where, ['p.type', '=', $type]);
+            array_push($where, ['s.type_id', '=', $type]);
 
         $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
@@ -38,11 +38,13 @@ class FileController extends Controller
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->SELECT(
                 'r.name as account_name',
                 's.type_id',
                 DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
-                'r.*'
+                'r.*',
+                't.name as type_name',
                 )
             ->where($where)
             ->orderBy('r.created_at', 'desc')
@@ -66,11 +68,13 @@ class FileController extends Controller
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->SELECT(
                 'r.name as account_name',
                 DB::RAW('concat(s.first_name," ",s.last_name) as player_name'),
                 'p.penalty',
-                'r.*'
+                'r.*',
+                't.name as type_name',
             )
             ->WHERE($where)
             // ->orderBy($sortType, $request->sortOrder)
@@ -121,7 +125,7 @@ class FileController extends Controller
     }
 
     public function getNotification(Request $request){
-        if($request->date != NULL){
+        if($request->date == 'today'){
             $notification = DB::TABLE('notification as n')
             ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today')
                 ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
@@ -130,16 +134,20 @@ class FileController extends Controller
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
                 ->whereDate('n.created_at', Carbon::parse($request->date))
                 ->ORDERBY('n.created_at', 'desc')
-                ->PAGINATE(15);
-        }else
+                ->GET();
+        }else{
+            $from = Carbon::parse($request->date[0]);
+            $to   = Carbon::parse($request->date[1]);
             $notification = DB::TABLE('notification as n')
                 ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
                 ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
+                ->whereBetween('report.created_at', [$from, $to])
                 ->ORDERBY('n.created_at', 'desc')
                 ->PAGINATE(15);
+        }
 
         return $notification;
     }
