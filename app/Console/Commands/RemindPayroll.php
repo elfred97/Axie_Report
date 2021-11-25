@@ -2,10 +2,13 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Payroll;
+use App\Models\Player;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 
 class RemindPayroll extends Command
@@ -45,13 +48,44 @@ class RemindPayroll extends Command
 
         $type = $this->argument('type');
 
-        $scholars = Scholar::when($type,function($q, $type){
-            $q->where('type_id','=', $type);
-        })->get();
+        //get scholar share on players table
+        //put it on payroll table, tx_id is a unique generated string
+        //make player.scholar_share = 0 after creating entry to payroll
 
-        $scholar_emails = $scholars->pluck('email');
+        $players = Player::all();
 
-        $this->line('Sending to : ' . $scholar_emails );
+        foreach ($players as $player) {
+            $total_slp = $player->scholar_share;
+
+            try {
+                DB::beginTransaction();
+                Payroll::create([
+                    'player_id' => $player->id,
+                    'scholar_id' => $player->scholar->id,
+                    'total_slp' => $total_slp,
+                    'txn_id' => $player->id . '-' . $player->scholar->id . '-' . uniqid() . time(),
+                    'status' => 0
+                ]);
+
+//                TODO - uncomment this
+//                $player->scholar_share = 0;
+//                $player->save();
+
+                DB::commit();
+            } catch (\Exception $e) {
+                $this->line('Error : ' . $e->getMessage());
+                DB::rollBack();
+            }
+        }
+
+
+//        $scholars = Scholar::when($type, function ($q, $type) {
+//            $q->where('type_id', '=', $type);
+//        })->get();
+//
+//        $scholar_emails = $scholars->pluck('email');
+//
+//        $this->line('Sending to : ' . $scholar_emails);
 
         //temporary for testing cron job
 //        $scholar_emails = ['mhardz07@gmail.com'];
@@ -59,10 +93,31 @@ class RemindPayroll extends Command
 //            Mail::to($scholar_emails)->send(new \App\Mail\PayrollReminder(null));
 //        }
 
-        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com','first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com','first_name' => 'Elfred'])];
+        /**
+        $payroll = Payroll::all();
+
+        foreach ($payroll as $payroll) {
+            try {
+                $scholar = $payroll->scholar;
+                Mail::to($scholar->email)->send(new \App\Mail\PayrollReminder($scholar, $payroll));
+                $this->line('Sending Payroll email to: ' . $scholar->email);
+            } catch (\Exception $e) {
+                $this->line('Error sending email to: ' . $scholar->email);
+                $this->line('Error : ' . $e->getMessage());
+            }
+        }
+         **/
+
+        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
+
 
         foreach ($scholars as $scholar) {
-          Mail::to($scholar)->send(new \App\Mail\PayrollReminder($scholar));
+            try {
+                Mail::to($scholar)->send(new \App\Mail\PayrollReminder($scholar, new Payroll(['total_slp' => 10])));
+            } catch (\Exception $e) {
+                $this->line('Error sending email to: ' . $scholar->email);
+                $this->line('Error : ' . $e->getMessage());
+            }
         }
 
         $this->line('Payroll Reminder End: ' . Carbon::now()->format('Y-m-d H:i:s'));
