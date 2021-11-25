@@ -13,14 +13,16 @@ class PayrollReminder extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
+    public $payroll;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($user)
+    public function __construct($user, $payroll)
     {
         $this->user = $user;
+        $this->payroll = $payroll;
         $this->subject = 'Payroll Reminder for ' . Carbon::now()->format('F Y');
     }
 
