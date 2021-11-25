@@ -7,6 +7,12 @@ export default [
         
     },
     {
+      name : "type_name",
+      title: 'Type',
+      titleClass: 'center aligned',
+      dataClass: 'center aligned uppercase bold',      
+    },
+    {
       name : "qr_code_field",
       title: 'QR Code',
       titleClass: 'center aligned',
