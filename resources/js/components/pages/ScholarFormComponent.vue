@@ -42,7 +42,7 @@
         <hr>
         <div class="row mt-2">
             <div class="col-md-4">
-                <type-component :type_id="form.type_id" @updateTypeID="form.type_id = $event"></type-component>
+                <type-component :type_id="form.type_id" @updateType="form.type_id = $event"></type-component>
             </div>
 
             <div class="col-md-4">                

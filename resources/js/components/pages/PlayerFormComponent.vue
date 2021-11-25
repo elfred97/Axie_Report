@@ -21,29 +21,17 @@
                 <input type="email" class="form-control" name="market_place_email" v-model="form.market_place_email">
                 <div v-if="form.errors.has('market_place_email')" v-html="form.errors.get('market_place_email')" class="text-danger text-bold"/>
             </div>
-        
+
             <div class="col-md-4">
-                <label for="">Date Started <span class="text-danger">*</span></label>
-                <input type="date" class="form-control" name="date_started" v-model="form.date_started">
-                <div v-if="form.errors.has('date_started')" v-html="form.errors.get('date_started')" class="text-danger text-bold"/>
+                <label for="">Email Password <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" name="email_password" v-model="form.email_password">
+                <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
             </div>
+        
         </div>
 
-        <div class="row mt-2">
-            <div class="col-md-6">
-                <label for="">Upload QR Code Image</label>
-                <form class="form-horizontal" @submit.prevent="uploadQRCode">
-                    <div class="input-group">
-                        <input name="qr_code" type="file" ref="qr_code_file" @change="updateQR" class="form-control no-margin no-padding" style="padding: 1px 3px !important">
-                        <div class="input-group-btn">
-                            <button class="btn btn-sm btn-primary" type="submit">
-                                Upload
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-6">
+        <div class="row mt-2">            
+            <div class="col-md-4">
                 <img :src="'uploads/'+form.qr_code" alt="" class="img-fluid">
             </div>
         </div>
@@ -79,11 +67,9 @@ export default {
                 scholar_email     : '',
                 market_place_email: '',
                 email_password    : '',
-                type              : 'Decent',
-                status            : 'Playing',
-                date_started      : '',
                 qr_code           : 'default.jpg',
-            })
+            }),
+            
         }
     },
     watch : {
@@ -95,10 +81,11 @@ export default {
     },
     methods:{
         submitForm(){
-            this.form.post('/saveScholar').then((response) => {
+            this.form.post('/savePlayer')
+            .then((response) => {
                 // this.$refs.calysta_loader.style.display = 'none';
                 this.$noty.success(response.data.message);
-                this.$events.fire('update_scholars_table');
+                this.$events.fire('update_players_table');
                 this.$root.$emit('isClose', true);
                 this.form.reset();
             })
@@ -124,34 +111,13 @@ export default {
                 date_started      : '',
             })
         },
-        uploadQRCode(){
-            let formData = new FormData();
-            formData.append('file', this.qr_code_file);
-            formData.append('id', this.form.ronin_address)
-            formData.append('account_name', this.form.account_name)
-
-            this.axios.post('/uploadQRCode',
-                formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            ).then((response) => {
-                this.qr_code_file = '';
-                this.$refs.qr_code_file.value = '';
-                this.$noty.success("QR Code Uploaded");
-                this.$events.fire('update_players_table');
-                
-            })
-        },
-        updateQR(){
-            this.qr_code_file = this.$refs.qr_code_file.files[0];
-        }
+        
+        
     },
     mounted(){
-        if(this.scholarData)
+        if(this.scholarData){
             this.form = new Form(this.scholarData);
+        }
         else{
             this.resetForm();
         }

@@ -83,6 +83,9 @@ class HomeController extends Controller
             return response()->json($validator->errors(), 422);
 
         try {
+
+            $player = Player::WHERE('account_name', $request->account_name)->FIRST();
+            $password = ($player->password) ? $player->password : NULL;
             $scholar = Scholar::UPDATEORCREATE(
                 ['id' => $request->id],
                 [
@@ -94,15 +97,18 @@ class HomeController extends Controller
                     'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
                     'type_id'      => $request->type_id,
                     'status'       => $request->status,
+                    'password'     => $password
                 ]
             );
-            $player = Player::WHERE('account_name', $request->account_name)->FIRST();
+
             $history = PlayerScholarHistory::UPDATEORCREATE(
-                ['scholar_id' => $request->id],
+                ['scholar_id' => $scholar->id],
                 [
-                    'player_id' => $player->id
+                    'player_id'  => $player->id,
+                    'scholar_id' => $scholar->id,
                 ]
             );
+            
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);

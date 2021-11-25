@@ -19,7 +19,7 @@ class vueComponentsMiddleware
 
         $vueComponents = [
             'home',
-            'import',
+            'game_logs',
             'players',
             'scholarList',
             'notification',

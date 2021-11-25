@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\report as ReportModel;
 use App\Models\Player;
 use App\Imports\PlayerImport;
+use Illuminate\Support\Facades\Validator;
 
 class PlayerController extends Controller
 {
@@ -35,40 +36,32 @@ class PlayerController extends Controller
     public function getAllPlayers(){
         return Player::GET();
     }
-    public function saveScholar(Request $request){
-        // dd($request->id);
+
+    public function savePlayer(Request $request){
         $validator = Validator::make(
-			$request->all(),
+            $request->all(),
 			[
-				'ronin_address'    => 'required',
-                'first_name'    => 'required',
-				'last_name'     => 'required',
-                'account_name' => 'required',
-				'scholar_email' => 'required|email',
-                'market_place_email'    => 'required|email',
-                'email_password'    => 'required',
-                'date_started'    => 'required',
-			]
-		);
-
-		if ($validator->fails())
-			return response()->json($validator->errors(), 422);
-
-		try {
+                'ronin_address'      => 'required',
+                'account_name'       => 'required',
+                'market_place_email' => 'required|email',
+                'email_password'     => 'required',
+                ]
+            );
+            
+        if ($validator->fails())
+            return response()->json($validator->errors(), 422);
+            
+        try {
             $scholar = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'ronin_address'      => $request->ronin_address,
-                    'account_name'       => $request->account_name,
-                    'first_name'         => $request->first_name,
-                    'middle_name'        => $request->middle_name,
-                    'last_name'          => $request->last_name,
+                    'account_name'       => $request->account_name,                    
                     'scholar_email'      => $request->scholar_email,
                     'market_place_email' => $request->market_place_email,
                     'email_password'     => $request->email_password,
-                    'date_started'       => $request->date_started,
-                    'type'               => $request->type,
-                    'status'             => $request->status,
+                    'qr_code'            => NULL,
+                    'qr_code_date'       => NULL,
                 ]
             );
             if($scholar)
@@ -77,9 +70,10 @@ class PlayerController extends Controller
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }
         catch (\Exception $e) {
-			return response()->json(['message' => $e->getMessage()], 500);
-		}
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
+    
     public function deleteScholar(Request $request){
         $id = isset($request->id) ? $request->id : NULL;
         $scholar = Player::WHERE('id', $id)->FIRST();
@@ -154,7 +148,7 @@ class PlayerController extends Controller
 
     public function uploadQR(Request $request){
         $file           = $request->file;
-        $username       = explode(":",$request->ronin_address)[1];
+        $username       = explode(":",$request->id)[1];
         $file_extension = $file->getClientOriginalExtension();
         $file_name      = $username.'.'.$file_extension;
         $path           = 'qr_codes/'.$file_name;

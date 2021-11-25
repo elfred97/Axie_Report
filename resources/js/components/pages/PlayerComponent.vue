@@ -5,6 +5,9 @@
             <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Axie Account' : 'Update Axie Account Information'">
                 <player-form-component v-bind:scholarData="selected_player" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></player-form-component>
             </dialog-component>
+            <dialog-component v-bind:isOpen="uploadQRopenDialog" v-on:isClose="uploadQRopenDialog = false" modalWidth="30%" dialogTitle="Upload QR Code">
+                <upload-qr-component v-bind:scholarData="selected_player" v-on:closeModal="uploadQRopenDialog = false"></upload-qr-component>
+            </dialog-component>
             <!-- BEGIN container -->
             <!-- <div class="container"> -->
             <!-- BEGIN row -->
@@ -88,6 +91,8 @@
                             <div class="btn-group">
                                 <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit</button>
                                 <button class="btn btn-white btn-xs text-danger" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> Delete</button>
+
+                                <button class="btn btn-white btn-xs text-primary" @click="uploadQR(props.rowData)"><i class="fa fa-trash"></i>Upload QR</button>
                             </div>
                         </div>
                     </vuetable>
@@ -115,6 +120,7 @@
 </template>
 <script lang="ts">
 import PlayerFormComponent from './PlayerFormComponent.vue';
+import uploadQRCodeComponent from './uploadQRCodeComponent.vue';
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
 import FieldsDef from "./PlayerFieldsDef.js";
@@ -139,10 +145,11 @@ export default {
             filtersParam    : {
                 type : ""
             },
-            openDialog: false,
-            actionType      : 'new',
-            isLoading       : false,
-            fullPage        : true,
+            openDialog        : false,
+            uploadQRopenDialog: false,
+            actionType        : 'new',
+            isLoading         : false,
+            fullPage          : true,
         }
     },
     watch : {
@@ -152,13 +159,18 @@ export default {
         }
     },
     components:{
-        'player-form-component' : PlayerFormComponent
+        'player-form-component' : PlayerFormComponent,
+        'upload-qr-component' : uploadQRCodeComponent,
     },
     methods:{
         addPlayer(){
             this.openDialog = true;
             this.actionType = 'new';
             this.selected_player = {}
+        },
+        uploadQR(data){
+            this.uploadQRopenDialog = true;
+            this.selected_player = data;
         },
         editScholar(data){
             this.selected_player = data;

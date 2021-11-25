@@ -71,12 +71,12 @@ export default [
     //   titleClass: 'center aligned',
     //   dataClass: 'center aligned',
     // },
-    // {
-    //   name : "email_password",
-    //   title: 'Password',
-    //   titleClass: 'center aligned',
-    //   dataClass: 'center aligned',
-    // },
+    {
+      name : "email_password",
+      title: 'Password',
+      titleClass: 'center aligned',
+      dataClass: 'center aligned',
+    },
     {
       name : "player_status",
       title: 'Status',

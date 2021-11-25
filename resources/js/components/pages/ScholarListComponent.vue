@@ -69,7 +69,7 @@
                             <div class="btn-group">
                                 <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit </button>
                                 <button class="btn btn-white btn-xs text-danger" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> Delete </button>
-                                <button class="btn btn-white btn-xs text-primary" @click="changeScholarPassword(props.rowData.id)"><i class="fa fa-lock"></i> Change Password </button>
+                                <!-- <button class="btn btn-white btn-xs text-primary" @click="changeScholarPassword(props.rowData.id)"><i class="fa fa-lock"></i> Change Password </button> -->
                             </div>
                         </div>
                     </vuetable>

@@ -8,7 +8,7 @@ export const routes = [
         }
     },
     { 
-        path: '/import', 
+        path: '/game_logs', 
         component: require('./components/pages/ImportComponent.vue').default,
         meta : {
             admins : true,

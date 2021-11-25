@@ -29,21 +29,21 @@
                                     <router-link to="/scholars" v-else>Home</router-link>
                                 </li>                                
                                 <li v-if="getGuardType == 'admins'">
-                                    <router-link to="/import">Import</router-link>
+                                    <router-link to="/game_logs">Game Logs</router-link>
                                 </li>                                
                                 <li>
                                     <router-link to="/players" v-if="getGuardType == 'admins'">Axie Accounts</router-link>
                                     <router-link to="/scholar_account" v-else>Account</router-link>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <router-link to="/payroll_history" v-if="getGuardType == 'admins'">Payroll History</router-link>
-                                </li>
+                                    <router-link to="/scholar_payroll" v-else>Payroll History</router-link>
+                                </li> -->
                                 <li v-if="getGuardType == 'admins'">
                                     <router-link to="/scholarList">Scholars</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>
-                                    <router-link to="/scholar_payroll" v-else>Payroll History</router-link>
+                                    <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>                                    
                                 </li>
                             </ul>
                         </div>
