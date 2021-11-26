@@ -201,4 +201,21 @@ class HomeController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
+
+    public function delete(Request $request){
+        $id = isset($request->id) ? $request->id : NULL;
+        $scholar = Scholar::WHERE('id', $id)->FIRST();
+
+        if(empty($scholar))
+            return response()->json(['message' => 'Invalid Reference Key'], 422);
+        try{
+            if ($scholar->DELETE())
+				return response()->json(['message' => 'Scholar Removed'], 200);
+			else
+				return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
 }

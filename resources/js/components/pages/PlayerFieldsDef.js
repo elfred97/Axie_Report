@@ -72,7 +72,7 @@ export default [
     //   dataClass: 'center aligned',
     // },
     {
-      name : "email_password",
+      name : "password",
       title: 'Password',
       titleClass: 'center aligned',
       dataClass: 'center aligned',

@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use App\Models\report as ReportModel;
 use App\Models\Player;
 use App\Imports\PlayerImport;
+use App\Models\PlayerScholarHistory;
 use Illuminate\Support\Facades\Validator;
 
 class PlayerController extends Controller
@@ -22,8 +23,7 @@ class PlayerController extends Controller
             array_push($where, ['type_id', '=', $request->type]);
         return Player::
             SELECT(
-                '*',
-                's.*',
+                'players.*',
                 DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
                 't.name as type_name',
             )
@@ -73,15 +73,20 @@ class PlayerController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
-    
-    public function deleteScholar(Request $request){
+    public function deletePlayer(Request $request){
         $id = isset($request->id) ? $request->id : NULL;
-        $scholar = Player::WHERE('id', $id)->FIRST();
+        $player = Player::WHERE('id', $id)->FIRST();
 
-        if(empty($scholar))
+        // $history = PlayerScholarHistory::UPDATE(['player_id' => NULL, 'scholar_id' => NULL]);
+
+        $history = PlayerScholarHistory::WHERE('player_id', $id)->FIRST();
+        if(!empty($history))
+            $history->DELETE();
+        
+        if(empty($player))
             return response()->json(['message' => 'Invalid Reference Key'], 422);
         try{
-            if ($scholar->DELETE())
+            if ($player->DELETE())
 				return response()->json(['message' => 'Scholar Removed'], 200);
 			else
 				return response()->json(['message' => 'There was a problem processing your request'], 500);
@@ -90,6 +95,7 @@ class PlayerController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
+    
     public function import(Request $request){
         Excel::import(new PlayerImport, $request->file);
         return "File Uploaded";

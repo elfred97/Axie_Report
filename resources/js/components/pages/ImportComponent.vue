@@ -163,8 +163,7 @@ export default {
     },
     watch : {
         'filtersParam.type' : function(newVal){
-            if(newVal)
-                this.updateTable();
+            this.updateTable();
         }
     },
     methods:{

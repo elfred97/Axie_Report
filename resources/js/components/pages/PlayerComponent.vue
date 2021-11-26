@@ -89,8 +89,8 @@
                         </div>
                         <div slot="action" slot-scope="props">
                             <div class="btn-group">
-                                <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit</button>
-                                <button class="btn btn-white btn-xs text-danger" @click="deleteScholar(props.rowData.id)"><i class="fa fa-trash"></i> Delete</button>
+                                <button class="btn btn-white btn-xs" @click="editPlayer(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit</button>
+                                <button class="btn btn-white btn-xs text-danger" @click="deletePlayer(props.rowData.id)"><i class="fa fa-trash"></i> Delete</button>
 
                                 <button class="btn btn-white btn-xs text-primary" @click="uploadQR(props.rowData)"><i class="fa fa-trash"></i>Upload QR</button>
                             </div>
@@ -154,8 +154,7 @@ export default {
     },
     watch : {
         'filtersParam.type' : function(newVal){
-            if(newVal)
-                this.updateTable();
+            this.updateTable();
         }
     },
     components:{
@@ -172,16 +171,16 @@ export default {
             this.uploadQRopenDialog = true;
             this.selected_player = data;
         },
-        editScholar(data){
+        editPlayer(data){
             this.selected_player = data;
             this.openDialog = true;
             this.actionType = 'update';
         },
-        deleteScholar(id){
+        deletePlayer(id){
             this.$alertify.confirmWithTitle("Delete", "Are you sure to delete this scholar?", 
             ()=> {
                 // Axios Request
-                this.axios.post('deleteScholar', {
+                this.axios.post('deletePlayer', {
                     id : id,
                 })
                 .then((response) => {

@@ -69,10 +69,11 @@ Route::middleware(['auth:admins'])->group(function(){
 
     Route::get('/getPlayers', 'PlayerController@getPlayers');
     Route::get('/getAllPlayers', 'PlayerController@getAllPlayers');
-    Route::post('/deleteScholar', 'PlayerController@deleteScholar');
+    Route::post('/deleteScholar', [HomeController::class,'delete'])->name('scholar.delete');
     Route::post('/importPlayer', 'PlayerController@import');
 
     Route::post('/savePlayer', 'PlayerController@savePlayer');
+    Route::post('/deletePlayer', 'PlayerController@deletePlayer');
 
     Route::post('/importScholar', [HomeController::class,'import'])->name('scholar.import');
     Route::get('/getScholars', [HomeController::class,'getScholars'])->name('scholar.getScholars');
