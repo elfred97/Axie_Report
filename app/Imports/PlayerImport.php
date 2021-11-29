@@ -26,9 +26,9 @@ class PlayerImport implements ToCollection
                     'ronin_address'      => $row[1],
                     'market_place_email' => $row[2],
                     'password'           => $row[3],
-                    'penalty'            => 0,
-                    'scholar_share'      => 0,
-                    'manager_share'      => 0,
+                    'penalty'            => $row[4],
+                    'scholar_share'      => $row[5],
+                    'manager_share'      => $row[6],
                 ]);
             }
             $counter++;
