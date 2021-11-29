@@ -9022,6 +9022,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -9038,15 +9040,20 @@ __webpack_require__.r(__webpack_exports__);
         xAxis_crosshair_enabled: true,
         yAxis_formatString: '',
         series: [{
-          name: 'October',
-          points: [[new Date(2021, 10, 1), 160], [new Date(2021, 10, 2), 400], [new Date(2021, 10, 3), 300], [new Date(2021, 10, 4), 600], [new Date(2021, 10, 5), 800], [new Date(2021, 10, 6), 800], [new Date(2021, 10, 7), 800], [new Date(2021, 10, 8), 780], [new Date(2021, 10, 9), 500], [new Date(2021, 10, 10), 300]]
+          name: 'SLP',
+          points: []
         }]
-      }
+      },
+      selected_date: ''
     };
   },
   methods: {
     getGraph: function getGraph() {
-      this.axios.get('/getScholarGraph').then(function (response) {})["catch"](function (error) {
+      this.axios.get('/getScholarGraph', {
+        params: {
+          date: this.selected_date
+        }
+      }).then(function (response) {})["catch"](function (error) {
         console.log(error.response.data);
       });
     }
@@ -9075,10 +9082,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScholarGraphComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScholarGraphComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue");
 /* harmony import */ var _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScholarPenaltyComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue");
 /* harmony import */ var _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ScholarImportListComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue");
-//
-//
-//
-//
 //
 //
 //
@@ -78508,7 +78511,32 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-2" }, [
+        _c(
+          "label",
+          [
+            _vm._v("Date \n                "),
+            _c("v-datepicker", {
+              attrs: { range: "" },
+              on: {
+                change: function($event) {
+                  return _vm.getGraph()
+                }
+              },
+              model: {
+                value: _vm.selected_date,
+                callback: function($$v) {
+                  _vm.selected_date = $$v
+                },
+                expression: "selected_date"
+              }
+            })
+          ],
+          1
+        )
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
@@ -78525,18 +78553,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-2" }, [
-        _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -78590,16 +78607,12 @@ var render = function() {
     _c("div", { staticClass: "section-container bg-white" }, [
       _c("div", { staticClass: "container" }, [
         _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _c("div", { staticClass: "card border-0 mb-3" }, [
-              _c(
-                "div",
-                { staticClass: "card-body" },
-                [_c("scholar-graph-component")],
-                1
-              )
-            ])
-          ])
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [_c("scholar-graph-component")],
+            1
+          )
         ])
       ])
     ])

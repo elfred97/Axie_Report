@@ -8,6 +8,7 @@ use Auth;
 use File;
 use Excel;
 use Carbon\Carbon;
+use App\Models\Report;
 use App\Models\Player;
 use App\Models\Scholar;
 use Illuminate\Http\Request;
@@ -125,19 +126,16 @@ class HomeController extends Controller
         $date     = $request->date;
         
         $queryRequest = array_slice($request->all(), 3);
-        $type         = $request->type;
         $where        = [];
-        $from = date('Y-m-d H:i:s');
-        $to   = Carbon::parse($request->date[1]);
+
+        $from = Carbon::parse('01-01-2020');
+        $to   = Carbon::now();
         // $whereBetween = [];
         
         $field     = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
             
         array_push($where, ['scholars.username', '=', $username]);
-
-        if ($type)
-            array_push($where, ['s.type_id', '=', $type]);
 
         if ($date){
             $from = Carbon::parse($request->date[0]);
@@ -200,6 +198,23 @@ class HomeController extends Controller
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
+    }
+
+    public function getScholarGraph(Request $request){
+        $username =  Auth::user()->username;
+        if(isset($request->date)){
+            $from = Carbon::parse($request->date[0]);
+            $to   = Carbon::parse($request->date[1]);
+            return Report::LEFTJOIN('players', 'report.name', 'players.account_name')
+            ->WHERE('players.account_name', $username)
+            ->whereBetween('r.created_at', [$from, $to])
+            ->GET();
+        }
+        else{
+            return Report::LEFTJOIN('players', 'report.name', 'players.account_name')
+            ->WHERE('players.account_name', $username)
+            ->GET();
+        }
     }
 
     public function delete(Request $request){

@@ -29,11 +29,7 @@
             <div class="container">
                 <div class="row row-space-10 m-b-20">
                     <div class="col-md-12">
-                        <div class="card border-0 mb-3">
-                            <div class="card-body">
-                                <scholar-graph-component></scholar-graph-component>
-                            </div>
-                        </div>
+                        <scholar-graph-component></scholar-graph-component>
                     </div>
                 </div>
             </div>
