@@ -5873,6 +5873,12 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error.response.data);
         });
       }
+    },
+    gotoNotification: function gotoNotification() {
+      var routeData = this.$router.resolve({
+        name: 'notification'
+      });
+      window.open(routeData.href, '_blank');
     }
   },
   created: function created() {
@@ -71862,7 +71868,10 @@ var render = function() {
                                   return _c("li", [
                                     _c(
                                       "div",
-                                      { staticClass: "cart-item-info" },
+                                      {
+                                        staticClass: "cart-item-info",
+                                        on: { click: _vm.gotoNotification }
+                                      },
                                       [
                                         _c(
                                           "small",
