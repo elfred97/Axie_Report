@@ -78,7 +78,7 @@ export default [
       dataClass: 'center aligned',
     },
     {
-      name : "player_status",
+      name : "status",
       title: 'Status',
       titleClass: 'center aligned',
       dataClass: 'center aligned uppercase',      

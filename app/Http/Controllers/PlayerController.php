@@ -27,6 +27,7 @@ class PlayerController extends Controller
                 'players.*',
                 DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
                 't.name as type_name',
+                's.status'
             )
             ->LEFTJOIN('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')

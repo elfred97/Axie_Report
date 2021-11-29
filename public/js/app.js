@@ -9047,13 +9047,25 @@ __webpack_require__.r(__webpack_exports__);
       selected_date: ''
     };
   },
+  watch: {
+    'selected_date': function selected_date(newVal) {
+      this.getGraph();
+    }
+  },
   methods: {
     getGraph: function getGraph() {
+      var _this = this;
+
       this.axios.get('/getScholarGraph', {
         params: {
           date: this.selected_date
         }
-      }).then(function (response) {})["catch"](function (error) {
+      }).then(function (response) {
+        _this.chartOptions.series[0].points = [];
+        response.data.forEach(function (element) {
+          _this.chartOptions.series[0].points.push([moment(element.created_at).format('YYYY, MM, D'), element.gained_slp_today]);
+        });
+      })["catch"](function (error) {
         console.log(error.response.data);
       });
     }
@@ -78519,11 +78531,6 @@ var render = function() {
             _vm._v("Date \n                "),
             _c("v-datepicker", {
               attrs: { range: "" },
-              on: {
-                change: function($event) {
-                  return _vm.getGraph()
-                }
-              },
               model: {
                 value: _vm.selected_date,
                 callback: function($$v) {
@@ -102412,7 +102419,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   titleClass: 'center aligned',
   dataClass: 'center aligned'
 }, {
-  name: "player_status",
+  name: "status",
   title: 'Status',
   titleClass: 'center aligned',
   dataClass: 'center aligned uppercase'

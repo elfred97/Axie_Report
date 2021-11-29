@@ -129,8 +129,8 @@ class ReportImport implements ToCollection
                     'forty_percent'    => $forty_percent,
                     'manager_share'    => $row[10],
                     'scholar_share'    => $row[11],
-                    'manager_slp'      => $row[12],
-                    'scholar_slp'      => $row[13],
+                    'manager_slp'      => is_string($row[12]) ? 0 : $row[12],
+                    'scholar_slp'      => is_string($row[13]) ? 0 : $row[13],
                     'mmr'              => $row[14],
                     'rank'             => $row[15],
                 ]);

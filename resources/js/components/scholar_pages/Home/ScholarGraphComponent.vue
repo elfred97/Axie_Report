@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-2">
                 <label>Date 
-                    <v-datepicker v-model="selected_date" range @change="getGraph()" class=""></v-datepicker>
+                    <v-datepicker v-model="selected_date" range class=""></v-datepicker>
                 </label>
             </div>
         </div>
@@ -43,6 +43,11 @@ export default {
             selected_date : '',
         }
     },
+    watch : {
+        'selected_date' : function(newVal){
+            this.getGraph();
+        }
+    },
     methods : {
         getGraph(){
             this.axios.get('/getScholarGraph', {
@@ -51,7 +56,15 @@ export default {
                 }
             })
             .then((response) => {
-
+                this.chartOptions.series[0].points = [];
+                response.data.forEach(element => {
+                    this.chartOptions.series[0].points.push(
+                        [
+                            moment(element.created_at).format('YYYY, MM, D'), 
+                           element.gained_slp_today
+                        ]
+                    )
+                });
             })
             .catch((error) => {
                 console.log(error.response.data)

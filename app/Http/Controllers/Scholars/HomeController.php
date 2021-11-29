@@ -146,6 +146,7 @@ class HomeController extends Controller
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
             ->WHERE($where)
             ->whereBetween('report.created_at', [$from, $to])
+            ->ORDERBY('report.batch', 'desc')
             ->PAGINATE(15);
         }
         
@@ -154,6 +155,7 @@ class HomeController extends Controller
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
             ->WHERE($where)
+            ->ORDERBY('report.batch', 'desc')
             ->PAGINATE(15);
         }
     }
@@ -203,16 +205,26 @@ class HomeController extends Controller
     public function getScholarGraph(Request $request){
         $username =  Auth::user()->username;
         if(isset($request->date)){
-            $from = Carbon::parse($request->date[0]);
-            $to   = Carbon::parse($request->date[1]);
-            return Report::LEFTJOIN('players', 'report.name', 'players.account_name')
-            ->WHERE('players.account_name', $username)
-            ->whereBetween('r.created_at', [$from, $to])
+            $from = Carbon::parse(strtotime($request->date[0]));
+            $to   = Carbon::parse(strtotime($request->date[1]));
+            return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
+            ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
+            ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+            ->SELECT(
+                'report.*'                
+            )
+            ->WHERE('scholars.username', $username)
+            ->whereBetween('report.created_at', [$from, $to])
             ->GET();
         }
         else{
-            return Report::LEFTJOIN('players', 'report.name', 'players.account_name')
-            ->WHERE('players.account_name', $username)
+            return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
+            ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
+            ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+            ->SELECT(
+                'report.*'                
+            )
+            ->WHERE('scholars.username', $username)
             ->GET();
         }
     }
