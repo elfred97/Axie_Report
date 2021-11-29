@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 use App\Models\report as ReportModel;
 use App\Models\Player;
 use App\Imports\PlayerImport;
+use App\Models\PlayerScholarHistory;
+use App\Models\Scholar;
 use Illuminate\Support\Facades\Validator;
 
 class PlayerController extends Controller
@@ -22,10 +24,10 @@ class PlayerController extends Controller
             array_push($where, ['type_id', '=', $request->type]);
         return Player::
             SELECT(
-                '*',
-                's.*',
+                'players.*',
                 DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
                 't.name as type_name',
+                's.status'
             )
             ->LEFTJOIN('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
@@ -52,20 +54,27 @@ class PlayerController extends Controller
             return response()->json($validator->errors(), 422);
             
         try {
-            $scholar = Player::UPDATEORCREATE(
+            $player = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'ronin_address'      => $request->ronin_address,
                     'account_name'       => $request->account_name,                    
                     'scholar_email'      => $request->scholar_email,
                     'market_place_email' => $request->market_place_email,
-                    'email_password'     => $request->email_password,
+                    'password'           => $request->email_password,
                     'qr_code'            => NULL,
                     'qr_code_date'       => NULL,
                 ]
             );
-            if($scholar)
-                return response()->json(['message' => 'Scholar Informations is saved'], 200);
+            $history = PlayerScholarHistory::WHERE('player_id', $request->id)->FIRST();
+            if($history)
+                $scholar = Scholar::UPDATEORCREATE(
+                    ['id' => $history->scholar_id],
+                    ['password'     => bcrypt($request->email_password)]
+                );
+
+            if($player)
+                return response()->json(['message' => 'Player Informations is saved'], 200);
             else
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }
@@ -73,15 +82,20 @@ class PlayerController extends Controller
             return response()->json(['message' => $e->getMessage()], 500);
         }
     }
-    
-    public function deleteScholar(Request $request){
+    public function deletePlayer(Request $request){
         $id = isset($request->id) ? $request->id : NULL;
-        $scholar = Player::WHERE('id', $id)->FIRST();
+        $player = Player::WHERE('id', $id)->FIRST();
 
-        if(empty($scholar))
+        // $history = PlayerScholarHistory::UPDATE(['player_id' => NULL, 'scholar_id' => NULL]);
+
+        $history = PlayerScholarHistory::WHERE('player_id', $id)->FIRST();
+        if(!empty($history))
+            $history->DELETE();
+        
+        if(empty($player))
             return response()->json(['message' => 'Invalid Reference Key'], 422);
         try{
-            if ($scholar->DELETE())
+            if ($player->DELETE())
 				return response()->json(['message' => 'Scholar Removed'], 200);
 			else
 				return response()->json(['message' => 'There was a problem processing your request'], 500);
@@ -90,6 +104,7 @@ class PlayerController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
+    
     public function import(Request $request){
         Excel::import(new PlayerImport, $request->file);
         return "File Uploaded";

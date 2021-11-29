@@ -79,7 +79,6 @@ export default {
 		return {
 			fields     : FieldsDef,
 			perPage    : 15,
-			perPage: '',
 			css        : TableStyle,
 			notificationData : {},
 			date : null,
@@ -88,6 +87,12 @@ export default {
             },
             isLoading : false,
             fullPage  : true, 
+            sortOrder  : [
+                {
+                    field    : "account_name",   // Choose the Defualt Sorted Data by name
+                    direction: "desc"    // Sorting Direction
+                }
+            ],
 		}
 	},
 	methods: {

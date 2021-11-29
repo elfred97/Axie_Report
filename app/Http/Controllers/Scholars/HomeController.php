@@ -8,6 +8,7 @@ use Auth;
 use File;
 use Excel;
 use Carbon\Carbon;
+use App\Models\Report;
 use App\Models\Player;
 use App\Models\Scholar;
 use Illuminate\Http\Request;
@@ -97,7 +98,7 @@ class HomeController extends Controller
                     'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
                     'type_id'      => $request->type_id,
                     'status'       => $request->status,
-                    'password'     => $password
+                    'password'     => bcrypt($password)
                 ]
             );
 
@@ -125,19 +126,16 @@ class HomeController extends Controller
         $date     = $request->date;
         
         $queryRequest = array_slice($request->all(), 3);
-        $type         = $request->type;
         $where        = [];
-        $from = date('Y-m-d H:i:s');
-        $to   = Carbon::parse($request->date[1]);
+
+        $from = Carbon::parse('01-01-2020');
+        $to   = Carbon::now();
         // $whereBetween = [];
         
         $field     = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
             
         array_push($where, ['scholars.username', '=', $username]);
-
-        if ($type)
-            array_push($where, ['s.type_id', '=', $type]);
 
         if ($date){
             $from = Carbon::parse($request->date[0]);
@@ -148,6 +146,7 @@ class HomeController extends Controller
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
             ->WHERE($where)
             ->whereBetween('report.created_at', [$from, $to])
+            ->ORDERBY('report.batch', 'desc')
             ->PAGINATE(15);
         }
         
@@ -156,6 +155,7 @@ class HomeController extends Controller
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
             ->WHERE($where)
+            ->ORDERBY('report.batch', 'desc')
             ->PAGINATE(15);
         }
     }
@@ -196,6 +196,50 @@ class HomeController extends Controller
                 return response()->json(['message' => 'Ronin Wallet is saved'], 200);
             else
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
+    public function getScholarGraph(Request $request){
+        $username =  Auth::user()->username;
+        if(isset($request->date)){
+            $from = Carbon::parse(strtotime($request->date[0]));
+            $to   = Carbon::parse(strtotime($request->date[1]));
+            return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
+            ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
+            ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+            ->SELECT(
+                'report.*'                
+            )
+            ->WHERE('scholars.username', $username)
+            ->whereBetween('report.created_at', [$from, $to])
+            ->GET();
+        }
+        else{
+            return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
+            ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
+            ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+            ->SELECT(
+                'report.*'                
+            )
+            ->WHERE('scholars.username', $username)
+            ->GET();
+        }
+    }
+
+    public function delete(Request $request){
+        $id = isset($request->id) ? $request->id : NULL;
+        $scholar = Scholar::WHERE('id', $id)->FIRST();
+
+        if(empty($scholar))
+            return response()->json(['message' => 'Invalid Reference Key'], 422);
+        try{
+            if ($scholar->DELETE())
+				return response()->json(['message' => 'Scholar Removed'], 200);
+			else
+				return response()->json(['message' => 'There was a problem processing your request'], 500);
         }
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);

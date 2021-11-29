@@ -2,7 +2,9 @@
     <div>
         <div class="row">
             <div class="col-md-2">
-                <input type="text" class="form-control">
+                <label>Date 
+                    <v-datepicker v-model="selected_date" range class=""></v-datepicker>
+                </label>
             </div>
         </div>
         <div class="row">
@@ -31,29 +33,38 @@ export default {
                 yAxis_formatString: '',
                 series: [
                 {
-                    name: 'October',
+                    name: 'SLP',
                     points: [
-                        [new Date(2021, 10, 1), 160],
-                        [new Date(2021, 10, 2), 400],
-                        [new Date(2021, 10, 3), 300],
-                        [new Date(2021, 10, 4), 600],
-                        [new Date(2021, 10, 5), 800],
-                        [new Date(2021, 10, 6), 800],
-                        [new Date(2021, 10, 7), 800],
-                        [new Date(2021, 10, 8), 780],
-                        [new Date(2021, 10, 9), 500],
-                        [new Date(2021, 10, 10), 300],                        
+                                             
                     ]
                 },
                 ]
-            }
+            },
+            selected_date : '',
+        }
+    },
+    watch : {
+        'selected_date' : function(newVal){
+            this.getGraph();
         }
     },
     methods : {
         getGraph(){
-            this.axios.get('/getScholarGraph')
+            this.axios.get('/getScholarGraph', {
+                params: {
+                    date : this.selected_date
+                }
+            })
             .then((response) => {
-
+                this.chartOptions.series[0].points = [];
+                response.data.forEach(element => {
+                    this.chartOptions.series[0].points.push(
+                        [
+                            moment(element.created_at).format('YYYY, MM, D'), 
+                           element.gained_slp_today
+                        ]
+                    )
+                });
             })
             .catch((error) => {
                 console.log(error.response.data)
