@@ -24,7 +24,7 @@
 
             <div class="col-md-4">
                 <label for="">Email Password <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" name="email_password" v-model="form.email_password">
+                <input type="password" class="form-control" name="email_password" v-model="form.email_password">
                 <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
             </div>
         

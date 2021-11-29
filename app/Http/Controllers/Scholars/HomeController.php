@@ -97,7 +97,7 @@ class HomeController extends Controller
                     'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
                     'type_id'      => $request->type_id,
                     'status'       => $request->status,
-                    'password'     => $password
+                    'password'     => bcrypt($password)
                 ]
             );
 

@@ -59,7 +59,7 @@ class PlayerController extends Controller
                     'account_name'       => $request->account_name,                    
                     'scholar_email'      => $request->scholar_email,
                     'market_place_email' => $request->market_place_email,
-                    'email_password'     => $request->email_password,
+                    'password'           => $request->email_password,
                     'qr_code'            => NULL,
                     'qr_code_date'       => NULL,
                 ]
