@@ -37,8 +37,7 @@ class Player extends Model
     public function latestHistory()
     {
         $latest = $this->histories()->latest()->first();
-        if(!$latest) {
-            return new PlayerScholarHistory();
-        }
+
+        return $latest ?? new PlayerScholarHistory();
     }
 }
