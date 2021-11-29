@@ -61,9 +61,9 @@ class RemindPayroll extends Command
                 DB::beginTransaction();
                 Payroll::create([
                     'player_id' => $player->id,
-                    'scholar_id' => $player->scholar->id,
+                    'scholar_id' => $player->latestHistory()->scholar_id,
                     'total_slp' => $total_slp,
-                    'txn_id' => $player->id . '-' . $player->scholar->id . '-' . uniqid() . time(),
+                    'txn_id' => $player->id . '-' . $player->latestHistory()->scholar_id . '-' . uniqid() . time(),
                     'status' => 0
                 ]);
 
