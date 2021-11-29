@@ -28,4 +28,16 @@ class Player extends Model
     {
         return $this->hasMany(Report::class,'ronin_address','ronin_address');
     }
+
+    public function histories()
+    {
+        return $this->hasMany(PlayerScholarHistory::class);
+    }
+
+    public function latestHistory()
+    {
+        $latest = $this->histories()->latest()->first();
+
+        return $latest ?? new PlayerScholarHistory();
+    }
 }
