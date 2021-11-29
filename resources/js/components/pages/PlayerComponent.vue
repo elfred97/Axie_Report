@@ -233,6 +233,10 @@ export default {
         this.$root.$on('isClose', (data) => {
             this.openDialog = false;
         });
+        this.$root.$on('QRCodeisClose', (data) => {
+            this.uploadQRopenDialog = false;
+        });
+        
     }
 }
 </script>

@@ -13,6 +13,7 @@ use App\Models\report as ReportModel;
 use App\Models\Player;
 use App\Imports\PlayerImport;
 use App\Models\PlayerScholarHistory;
+use App\Models\Scholar;
 use Illuminate\Support\Facades\Validator;
 
 class PlayerController extends Controller
@@ -52,7 +53,7 @@ class PlayerController extends Controller
             return response()->json($validator->errors(), 422);
             
         try {
-            $scholar = Player::UPDATEORCREATE(
+            $player = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
                     'ronin_address'      => $request->ronin_address,
@@ -64,8 +65,15 @@ class PlayerController extends Controller
                     'qr_code_date'       => NULL,
                 ]
             );
-            if($scholar)
-                return response()->json(['message' => 'Scholar Informations is saved'], 200);
+            $history = PlayerScholarHistory::WHERE('player_id', $request->id)->FIRST();
+            if($history)
+                $scholar = Scholar::UPDATEORCREATE(
+                    ['id' => $history->scholar_id],
+                    ['password'     => bcrypt($request->email_password)]
+                );
+
+            if($player)
+                return response()->json(['message' => 'Player Informations is saved'], 200);
             else
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }

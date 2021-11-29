@@ -62,7 +62,7 @@ export default {
                 
                 this.$noty.success("QR Code Uploaded");
                 this.$events.fire('update_players_table');
-                this.$root.$emit('isClose', true);
+                this.$root.$emit('QRCodeisClose', true);
                 this.form.reset();
                 
             })

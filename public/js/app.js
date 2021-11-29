@@ -8681,7 +8681,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this.$events.fire('update_players_table');
 
-        _this.$root.$emit('isClose', true);
+        _this.$root.$emit('QRCodeisClose', true);
 
         _this.form.reset();
       });
@@ -71005,6 +71005,10 @@ __webpack_require__.r(__webpack_exports__);
         this.$root.$on('isClose', (data) => {
             this.openDialog = false;
         });
+        this.$root.$on('QRCodeisClose', (data) => {
+            this.uploadQRopenDialog = false;
+        });
+        
     }
 });
 
