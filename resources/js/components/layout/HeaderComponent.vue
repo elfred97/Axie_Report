@@ -66,7 +66,7 @@
                                     <div class="cart-body scroll-h h-15">
                                         <ul class="cart-item" v-if="notificationData.length > 0">
                                             <li v-for="notification in notificationData" >
-                                                <div class="cart-item-info">
+                                                <div class="cart-item-info" @click="gotoNotification">
                                                     <small class="pull-right">{{notification.created_at | formatDate}}</small>
                                                     <h4><b>{{ notification.player_name }}</b> <span class="pull-right">{{ notification.account_name }}</span></h4>
                                                     <p class="price">{{ notification.gained_slp_today }} SLP</p>
@@ -160,6 +160,10 @@ export default {
                     console.log(error.response.data)
                 })
             }
+        },
+        gotoNotification(){
+            let routeData = this.$router.resolve({name: 'notification'}); 
+            window.open(routeData.href, '_blank');
         }
     },
     created(){
