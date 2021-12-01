@@ -88,7 +88,8 @@
         <hr>
         <div class="row mt-2">
             <div class="col-md-4">
-                <label for="">Update Password</label>
+                <label for="" v-if="scholarData.id != null">Update Password</label>
+                <label for="" v-else>New Password</label>
                 <input type="password" name="password" id="password" class="form-control" v-model="form.email_password" placeholder="Input new password to reset">
                 <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
                 <small>Input new password to change password</small>

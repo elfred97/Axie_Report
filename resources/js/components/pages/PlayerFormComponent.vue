@@ -23,7 +23,8 @@
             </div>
 
             <div class="col-md-4">
-                <label for="">Update Email Password</label>
+                <label for="" v-if="scholarData.id">Update Email Password</label>
+                <label for="" v-else>New Password</label>
                 <input type="password" class="form-control" name="email_password" v-model="form.email_password">
                 <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
             </div>

@@ -7554,6 +7554,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -7635,6 +7636,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -75654,7 +75656,11 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Update Email Password")]),
+        _vm.scholarData.id
+          ? _c("label", { attrs: { for: "" } }, [
+              _vm._v("Update Email Password")
+            ])
+          : _c("label", { attrs: { for: "" } }, [_vm._v("New Password")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -76300,7 +76306,9 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
       _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Update Password")]),
+        _vm.scholarData.id != null
+          ? _c("label", { attrs: { for: "" } }, [_vm._v("Update Password")])
+          : _c("label", { attrs: { for: "" } }, [_vm._v("New Password")]),
         _vm._v(" "),
         _c("input", {
           directives: [
