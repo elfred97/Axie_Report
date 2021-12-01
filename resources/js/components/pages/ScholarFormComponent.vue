@@ -80,7 +80,21 @@
                             >
                         </multi-select>
             </div>
+            <div class="col-md-4" v-if="form.ronin_wallet">
+                <label for="">Ronin Wallet</label>
+                <p class="no-margin text-content">{{ form.ronin_wallet }}</p>
+            </div>
         </div>
+        <hr>
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <label for="">Update Password</label>
+                <input type="password" name="password" id="password" class="form-control" v-model="form.email_password" placeholder="Input new password to reset">
+                <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
+                <small>Input new password to change password</small>
+            </div>
+        </div>
+        <hr>
         <div class="row mt-2">
             <div class="col-md-12">
                 <p><i>Note: The default share of scholar is 30% for the first 30 days. After 30 days the scholar's share will be updated to 40%.</i></p>
@@ -115,6 +129,7 @@ export default {
                 type_id           : '',
                 status            : 'Playing',
                 date_started      : '',
+                email_password    : '',
             }),
             options           : [],
             selected          : {}
@@ -148,17 +163,18 @@ export default {
         },
         resetForm(){
             this.form = new Form({
-                id          : NULL,
-                first_name  : '',
-                middle_name : '',
-                last_name   : '',
-                username    : '',
-                account_name: '',
-                email       : '',
-                password    : '',
-                type_id     : '',
-                status      : 'Active',
-                date_started: '',
+                id            : NULL,
+                first_name    : '',
+                middle_name   : '',
+                last_name     : '',
+                username      : '',
+                account_name  : '',
+                email         : '',
+                password      : '',
+                type_id       : '',
+                status        : 'Active',
+                date_started  : '',
+                email_password: '',
             })
         },
         searchPlayer(query){

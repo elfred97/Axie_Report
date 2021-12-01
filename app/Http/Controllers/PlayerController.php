@@ -40,38 +40,45 @@ class PlayerController extends Controller
     }
 
     public function savePlayer(Request $request){
+        // dd($request->all());
         $validator = Validator::make(
             $request->all(),
 			[
                 'ronin_address'      => 'required',
                 'account_name'       => 'required',
                 'market_place_email' => 'required|email',
-                'email_password'     => 'required',
-                ]
-            );
-            
+            ]
+        );
+        $where = [
+            'ronin_address'      => $request->ronin_address,
+            'account_name'       => $request->account_name,
+            'scholar_email'      => $request->scholar_email,
+            'market_place_email' => $request->market_place_email,
+            'password'           => $request->email_password,
+        ];
         if ($validator->fails())
             return response()->json($validator->errors(), 422);
             
         try {
+            if(isset($request->id)){
+                $find_player = Player::WHERE('id', $request->id)->FIRST();
+                if($request->ronin_address != $find_player->ronin_address){
+                    $username       = explode(":",$request->ronin_address)[1];
+                    $file_extension = explode(".",$find_player->qr_code)[1];
+                    $file_name      = $username.'.'.$file_extension;
+                    $path           = 'qr_codes/'.$file_name;
+                    Storage::disk('public')->move($find_player->qr_code, $path);
+
+                    $where = (array)$where;
+                    $where['qr_code'] = $path;
+                    $where['qr_code_date'] = Carbon::now();
+                }
+            }
+            
             $player = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
-                [
-                    'ronin_address'      => $request->ronin_address,
-                    'account_name'       => $request->account_name,                    
-                    'scholar_email'      => $request->scholar_email,
-                    'market_place_email' => $request->market_place_email,
-                    'password'           => $request->email_password,
-                    'qr_code'            => NULL,
-                    'qr_code_date'       => NULL,
-                ]
+                $where
             );
-            $history = PlayerScholarHistory::WHERE('player_id', $request->id)->FIRST();
-            if($history)
-                $scholar = Scholar::UPDATEORCREATE(
-                    ['id' => $history->scholar_id],
-                    ['password'     => bcrypt($request->email_password)]
-                );
 
             if($player)
                 return response()->json(['message' => 'Player Informations is saved'], 200);
@@ -96,7 +103,7 @@ class PlayerController extends Controller
             return response()->json(['message' => 'Invalid Reference Key'], 422);
         try{
             if ($player->DELETE())
-				return response()->json(['message' => 'Scholar Removed'], 200);
+				return response()->json(['message' => 'Axie Account Removed'], 200);
 			else
 				return response()->json(['message' => 'There was a problem processing your request'], 500);
         }

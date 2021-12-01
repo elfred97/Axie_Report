@@ -29,7 +29,7 @@ export default [
     },
     {
       name      : "ronin_wallet",
-      title     : 'Ronin WAllet',      
+      title     : 'Ronin Wallet',      
     },
     {
       name      : "status",

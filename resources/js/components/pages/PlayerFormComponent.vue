@@ -23,7 +23,7 @@
             </div>
 
             <div class="col-md-4">
-                <label for="">Email Password <span class="text-danger">*</span></label>
+                <label for="">Update Email Password</label>
                 <input type="password" class="form-control" name="email_password" v-model="form.email_password">
                 <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
             </div>
@@ -31,7 +31,7 @@
         </div>
 
         <div class="row mt-2">            
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <img :src="'uploads/'+form.qr_code" alt="" class="img-fluid">
             </div>
         </div>

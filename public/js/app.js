@@ -7633,6 +7633,22 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7737,7 +7753,7 @@ __webpack_require__.r(__webpack_exports__);
   props: ['scholarData'],
   data: function data() {
     return {
-      form: new Form({
+      form: new Form(_defineProperty({
         ronin_address: '',
         first_name: '',
         middle_name: '',
@@ -7749,7 +7765,7 @@ __webpack_require__.r(__webpack_exports__);
         type_id: '',
         status: 'Playing',
         date_started: ''
-      }),
+      }, "email_password", '')),
       options: [],
       selected: {}
     };
@@ -7795,7 +7811,8 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         type_id: '',
         status: 'Active',
-        date_started: ''
+        date_started: '',
+        email_password: ''
       });
     },
     searchPlayer: function searchPlayer(query) {
@@ -75637,7 +75654,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(3),
+        _c("label", { attrs: { for: "" } }, [_vm._v("Update Email Password")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -75673,7 +75690,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-4" }, [
+      _c("div", { staticClass: "col-md-3" }, [
         _c("img", {
           staticClass: "img-fluid",
           attrs: { src: "uploads/" + _vm.form.qr_code, alt: "" }
@@ -75681,7 +75698,7 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(4),
+    _vm._m(3),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
@@ -75727,15 +75744,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
       _vm._v("Marketplace Email "),
-      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { attrs: { for: "" } }, [
-      _vm._v("Email Password "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -76275,8 +76283,66 @@ var render = function() {
           })
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _vm.form.ronin_wallet
+        ? _c("div", { staticClass: "col-md-4" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Ronin Wallet")]),
+            _vm._v(" "),
+            _c("p", { staticClass: "no-margin text-content" }, [
+              _vm._v(_vm._s(_vm.form.ronin_wallet))
+            ])
+          ])
+        : _vm._e()
     ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row mt-2" }, [
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Update Password")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.email_password,
+              expression: "form.email_password"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "password",
+            name: "password",
+            id: "password",
+            placeholder: "Input new password to reset"
+          },
+          domProps: { value: _vm.form.email_password },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "email_password", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.form.errors.has("email_password")
+          ? _c("div", {
+              staticClass: "text-danger text-bold",
+              domProps: {
+                innerHTML: _vm._s(_vm.form.errors.get("email_password"))
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c("small", [_vm._v("Input new password to change password")])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("hr"),
     _vm._v(" "),
     _vm._m(5),
     _vm._v(" "),
@@ -78938,9 +79004,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _vm._m(1)
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(2)
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-3" }, [
@@ -79059,7 +79123,7 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3)
+            _vm._m(2)
           ])
         ])
       ]
@@ -79095,21 +79159,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "ml-auto mt-n1 mb-n1" }, [
       _c("div", { attrs: { id: "total-sales-sparkline" } })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-grey" }, [
-      _c("i", { staticClass: "fa fa-caret-up" }),
-      _vm._v(" "),
-      _c(
-        "span",
-        { attrs: { "data-animation": "number", "data-value": "33.21" } },
-        [_vm._v("33.21")]
-      ),
-      _vm._v("% compare to last week\n                            ")
     ])
   },
   function() {
@@ -102742,7 +102791,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   dataClass: 'center aligned'
 }, {
   name: "ronin_wallet",
-  title: 'Ronin WAllet'
+  title: 'Ronin Wallet'
 }, {
   name: "status",
   title: 'Status',

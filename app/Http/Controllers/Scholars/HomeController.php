@@ -84,32 +84,37 @@ class HomeController extends Controller
             return response()->json($validator->errors(), 422);
 
         try {
+            $where = [
+                'username'     => $request->username,
+                'first_name'   => $request->first_name,
+                'middle_name'  => $request->middle_name,
+                'last_name'    => $request->last_name,
+                'email'        => $request->email,
+                'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
+                'type_id'      => $request->type_id,
+                'status'       => $request->status,
+            ];
 
-            $player = Player::WHERE('account_name', $request->account_name)->FIRST();
-            $password = ($player->password) ? $player->password : NULL;
+            if($request->account_name)
+                $player = Player::WHERE('account_name', $request->account_name)->FIRST();
+            
+            if($request->email_password){
+                $where = (array)$where;
+                $where['password'] = bcrypt($request->email_password);
+            }
+            
             $scholar = Scholar::UPDATEORCREATE(
                 ['id' => $request->id],
-                [
-                    'username'     => $request->username,
-                    'first_name'   => $request->first_name,
-                    'middle_name'  => $request->middle_name,
-                    'last_name'    => $request->last_name,
-                    'email'        => $request->email,
-                    'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
-                    'type_id'      => $request->type_id,
-                    'status'       => $request->status,
-                    'password'     => bcrypt($password)
-                ]
+                $where
             );
 
             $history = PlayerScholarHistory::UPDATEORCREATE(
                 ['scholar_id' => $scholar->id],
                 [
-                    'player_id'  => $player->id,
+                    'player_id'  => (!empty($player)) ? $player->id : NULL,
                     'scholar_id' => $scholar->id,
                 ]
             );
-            
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);
@@ -236,6 +241,12 @@ class HomeController extends Controller
         if(empty($scholar))
             return response()->json(['message' => 'Invalid Reference Key'], 422);
         try{
+            $history = PlayerScholarHistory::WHERE('scholar_id', $id)->FIRST();
+
+            if(!empty($history))
+                $history->DELETE();
+
+
             if ($scholar->DELETE())
 				return response()->json(['message' => 'Scholar Removed'], 200);
 			else

@@ -24,9 +24,9 @@
                                 </div>
                                 <!-- end total-sales -->
                                 <!-- begin percentage -->
-                                <div class="text-grey">
+                                <!-- <div class="text-grey">
                                     <i class="fa fa-caret-up"></i> <span data-animation="number" data-value="33.21">33.21</span>% compare to last week
-                                </div>
+                                </div> -->
                                 <!-- end percentage -->
                             </div>
                             <div class="col-3">
