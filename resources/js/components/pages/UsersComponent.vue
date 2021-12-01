@@ -97,7 +97,7 @@ export default {
                 })
                 .then((response) => {
                     this.getUsers();
-                    this.$noty.success(response.data.msg);
+                    this.$noty.success(response.data.message);
                 })
                 .catch((error) => {
                     this.$noty.error("Something went wrong please try again later.")               

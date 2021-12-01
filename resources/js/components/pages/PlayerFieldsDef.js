@@ -73,7 +73,7 @@ export default [
     // },
     {
       name : "password",
-      title: 'Password',
+      title: 'Market Place Password',
       titleClass: 'center aligned',
       dataClass: 'center aligned',
     },

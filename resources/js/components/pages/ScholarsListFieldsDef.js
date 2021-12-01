@@ -28,6 +28,10 @@ export default [
       dataClass : 'center aligned',
     },
     {
+      name      : "ronin_wallet",
+      title     : 'Ronin WAllet',      
+    },
+    {
       name      : "status",
       title     : 'Status',
       titleClass: 'center aligned',

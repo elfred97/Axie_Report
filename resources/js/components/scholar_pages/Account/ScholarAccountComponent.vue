@@ -15,6 +15,7 @@
 
                                     <p class="mb-2 mt-2">Scan QR Code</p>
                                     <img :src='"/uploads/"+userData.qr_code' alt="" class="img-fluid">
+                                    <p class="text-center mt-2">QR Code is valid for 7 days</p>
                                 </div>
                             </div>
                             <!-- END account-sidebar -->
@@ -77,7 +78,7 @@
                                                                 <button class="btn btn-primary btn-xs" @click="updateRoninWallet"><i class="fas fa-check"></i> Save</button>
                                                             </div>
                                                         </div>                                                        
-                                                        <p v-else>{{ userData.ronin_wallet }}</p>
+                                                        <p v-else class="text-content">{{ userData.ronin_wallet }}</p>
                                                     </div>
                                                 </div>
                                             </div>

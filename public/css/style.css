@@ -114,6 +114,9 @@ body{
 .text-white{
     color: white !important;
 }
+.text-content{
+    word-break: break-all !important;
+}
 /* .btn-xs{
     padding: .125rem .50rem;
     font-size: 12px;
