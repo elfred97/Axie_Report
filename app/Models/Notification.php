@@ -13,6 +13,7 @@ class Notification extends Model
 		'id',
 		'account_name',
         'category',
+		'reminder_id',
         'status',
 	];
 }

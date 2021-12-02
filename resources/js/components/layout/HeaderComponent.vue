@@ -96,8 +96,16 @@
                                     <span class="total" v-else>0</span>
                                     <span class="arrow top"></span>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-cart p-0">
-                                    
+                                <div class="dropdown-menu media-list  dropdown-menu-cart p-0">
+                                    <a href="javascript:;" class="dropdown-item media">
+                                        <div class="media-left">
+                                            <i class="fa fa-bug media-object bg-silver-darker"></i>
+                                        </div>
+                                        <div class="media-body">
+                                            <h6 class="media-heading">Server Error Reports <i class="fa fa-exclamation-circle text-danger"></i></h6>
+                                            <div class="text-muted f-s-10">3 minutes ago</div>
+                                        </div>
+                                    </a>
                                 </div>
                             </li>
                             <li class="dropdown dropdown-hover">
@@ -113,11 +121,11 @@
                                 </div>
                             </li>
                         </ul>
-                        <ul class="nav pull-right" v-else>
+                        <!-- <ul class="nav pull-right">
                             <li>
                                 <a href="/logout">Log Out</a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </div>
                     <!-- END header-nav -->
                 </div>
@@ -175,11 +183,25 @@ export default {
         gotoNotification(){
             let routeData = this.$router.resolve({name: 'notification'}); 
             window.open(routeData.href, '_blank');
+        },
+        getAnnouncement(){
+            let account_type = this.$store.state.global_guard_type;
+
+            console.log(account_type);
+
+            this.axios.get('notifications/'+account_type)
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch( error => {
+                console.log(error.response.data);
+            })
         }
     },
     created(){
         this.getNotification();
         this.getAccountInfo();
+        this.getAnnouncement();
         this.$events.on('update_notification', (data) => {
             this.getNotification();
         });        

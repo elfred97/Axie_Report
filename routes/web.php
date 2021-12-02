@@ -49,6 +49,8 @@ Route::middleware(['auth:scholars'])->group(function(){
     Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
     Route::post('updateRoninWallet', [HomeController::class, 'updateRoninWallet'])->name('scholar.updateRoninWallet');
     Route::get('getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');
+    Route::get('notifications/{{account_type}}', [NotificationController::class, 'index']);
+
 });
 
 Route::middleware(['auth:admins'])->group(function(){
@@ -98,6 +100,8 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::post('updateReminder/{reminder}',[ReminderController::class,'update']);
     Route::get('reminders/{reminder}/destroy',[ReminderController::class,'destroy']);
     Route::get('getReminder',[ReminderController::class,'index']);
+
+    
 });
 
 

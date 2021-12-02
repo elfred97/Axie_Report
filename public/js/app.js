@@ -5844,6 +5844,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5890,6 +5898,15 @@ __webpack_require__.r(__webpack_exports__);
         name: 'notification'
       });
       window.open(routeData.href, '_blank');
+    },
+    getAnnouncement: function getAnnouncement() {
+      var account_type = this.$store.state.global_guard_type;
+      console.log(account_type);
+      this.axios.get('notifications/' + account_type).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
     }
   },
   created: function created() {
@@ -5897,6 +5914,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.getNotification();
     this.getAccountInfo();
+    this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
       _this3.getNotification();
     });
@@ -71974,8 +71992,408 @@ render._withStripped = true
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
-var render = function () {}
-var staticRenderFns = []
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "header", attrs: { id: "header" } }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "header-container" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._m(1),
+          _vm._v(" "),
+          _c("div", { staticClass: "header-nav" }, [
+            _c(
+              "div",
+              {
+                staticClass: " collapse navbar-collapse",
+                attrs: { id: "navbar-collapse" }
+              },
+              [
+                _c("ul", { staticClass: "nav" }, [
+                  _c(
+                    "li",
+                    [
+                      _vm.getGuardType == "admins"
+                        ? _c("router-link", { attrs: { to: "/home" } }, [
+                            _vm._v("Home")
+                          ])
+                        : _c("router-link", { attrs: { to: "/scholars" } }, [
+                            _vm._v("Home")
+                          ])
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.getGuardType == "admins"
+                    ? _c(
+                        "li",
+                        [
+                          _c("router-link", { attrs: { to: "/game_logs" } }, [
+                            _vm._v("Game Logs")
+                          ])
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _vm.getGuardType == "admins"
+                        ? _c("router-link", { attrs: { to: "/players" } }, [
+                            _vm._v("Axie Accounts")
+                          ])
+                        : _c(
+                            "router-link",
+                            { attrs: { to: "/scholar_account" } },
+                            [_vm._v("Account")]
+                          )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm.getGuardType == "admins"
+                    ? _c(
+                        "li",
+                        [
+                          _c("router-link", { attrs: { to: "/scholarList" } }, [
+                            _vm._v("Scholars")
+                          ])
+                        ],
+                        1
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _vm.getGuardType == "admins"
+                        ? _c(
+                            "router-link",
+                            { attrs: { to: "/notification" } },
+                            [_vm._v("Notification")]
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "header-nav" }, [
+            _c("ul", { staticClass: "nav pull-right" }, [
+              _vm.getGuardType == "admins"
+                ? _c("li", { staticClass: "dropdown dropdown-hover" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "header-cart",
+                        attrs: { href: "#", "data-toggle": "dropdown" }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-bell" }),
+                        _vm._v(" "),
+                        _vm.notificationData.length > 0
+                          ? _c("span", { staticClass: "total" }, [
+                              _vm._v(_vm._s(_vm.notificationData.length))
+                            ])
+                          : _c("span", { staticClass: "total" }, [_vm._v("0")]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "arrow top" })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "dropdown-menu dropdown-menu-cart p-0" },
+                      [
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "cart-body scroll-h h-15" }, [
+                          _vm.notificationData.length > 0
+                            ? _c(
+                                "ul",
+                                { staticClass: "cart-item" },
+                                _vm._l(_vm.notificationData, function(
+                                  notification
+                                ) {
+                                  return _c("li", [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass: "cart-item-info",
+                                        on: { click: _vm.gotoNotification }
+                                      },
+                                      [
+                                        _c(
+                                          "small",
+                                          { staticClass: "pull-right" },
+                                          [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("formatDate")(
+                                                  notification.created_at
+                                                )
+                                              )
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c("h4", [
+                                          _c("b", [
+                                            _vm._v(
+                                              _vm._s(notification.player_name)
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "span",
+                                            { staticClass: "pull-right" },
+                                            [
+                                              _vm._v(
+                                                _vm._s(
+                                                  notification.account_name
+                                                )
+                                              )
+                                            ]
+                                          )
+                                        ]),
+                                        _vm._v(" "),
+                                        _c("p", { staticClass: "price" }, [
+                                          _vm._v(
+                                            _vm._s(
+                                              notification.gained_slp_today
+                                            ) + " SLP"
+                                          )
+                                        ])
+                                      ]
+                                    )
+                                  ])
+                                }),
+                                0
+                              )
+                            : _c(
+                                "p",
+                                { staticClass: "text-center no-margin" },
+                                [
+                                  _vm._v(
+                                    " No Notification\n                                    "
+                                  )
+                                ]
+                              )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "card-footer" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c(
+                              "div",
+                              { staticClass: "col-lg-12" },
+                              [
+                                _c(
+                                  "center",
+                                  [
+                                    _vm.getGuardType == "admins"
+                                      ? _c(
+                                          "router-link",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-default",
+                                            attrs: { to: "/notification" }
+                                          },
+                                          [_vm._v("View All")]
+                                        )
+                                      : _c(
+                                          "router-link",
+                                          {
+                                            staticClass:
+                                              "btn btn-sm btn-default",
+                                            attrs: {
+                                              to: "/scholar_notification"
+                                            }
+                                          },
+                                          [_vm._v("View All")]
+                                        )
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            )
+                          ])
+                        ])
+                      ]
+                    )
+                  ])
+                : _c("li", { staticClass: "dropdown dropdown-hover" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "header-cart",
+                        attrs: { href: "#", "data-toggle": "dropdown" }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-bell" }),
+                        _vm._v(" "),
+                        _vm.notificationData.length > 0
+                          ? _c("span", { staticClass: "total" }, [
+                              _vm._v(_vm._s(_vm.notificationData.length))
+                            ])
+                          : _c("span", { staticClass: "total" }, [_vm._v("0")]),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "arrow top" })
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(3)
+                  ]),
+              _vm._v(" "),
+              _c("li", { staticClass: "dropdown dropdown-hover" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "dropdown-toggle",
+                    attrs: { href: "#", "data-toggle": "dropdown" }
+                  },
+                  [
+                    _c("span", { staticClass: "d-none d-md-inline" }, [
+                      _vm._v(
+                        _vm._s(_vm.accountData.first_name) +
+                          " " +
+                          _vm._s(_vm.accountData.last_name)
+                      )
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "dropdown-menu dropdown-menu-right" },
+                  [
+                    _vm.getGuardType == "admins"
+                      ? _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: "/settings" }
+                          },
+                          [_vm._v("Settings")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "dropdown-divider" }),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "dropdown-item",
+                        attrs: { href: "/logout" }
+                      },
+                      [_vm._v("Log Out")]
+                    )
+                  ],
+                  1
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "navbar-toggle collapsed",
+        attrs: {
+          type: "button",
+          "data-toggle": "collapse",
+          "data-target": "#navbar-collapse"
+        }
+      },
+      [
+        _c("span", { staticClass: "icon-bar" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "icon-bar" }),
+        _vm._v(" "),
+        _c("span", { staticClass: "icon-bar" })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "header-logo" }, [
+      _c("span", { staticClass: "brand-logo" }, [
+        _c("img", { attrs: { src: "/img/pet-logo.png", alt: "" } })
+      ]),
+      _vm._v(" "),
+      _c("span", { staticClass: "brand-text" }, [
+        _c("span", { staticClass: "text-primary" }, [
+          _vm._v("Axie Tracking Report")
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "cart-header" }, [
+      _c("h4", { staticClass: "cart-title text-center" }, [
+        _vm._v("Not meeting 75 SLP ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "dropdown-menu media-list  dropdown-menu-cart p-0" },
+      [
+        _c(
+          "a",
+          {
+            staticClass: "dropdown-item media",
+            attrs: { href: "javascript:;" }
+          },
+          [
+            _c("div", { staticClass: "media-left" }, [
+              _c("i", {
+                staticClass: "fa fa-bug media-object bg-silver-darker"
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "media-body" }, [
+              _c("h6", { staticClass: "media-heading" }, [
+                _vm._v("Server Error Reports "),
+                _c("i", { staticClass: "fa fa-exclamation-circle text-danger" })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "text-muted f-s-10" }, [
+                _vm._v("3 minutes ago")
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  }
+]
+render._withStripped = true
 
 
 

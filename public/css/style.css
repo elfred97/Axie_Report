@@ -457,6 +457,84 @@ select.form-control{
     width: 210px !important;
     margin-left: 1rem;
 }
+.media-list{
+    padding-left:0;
+    padding-right:0;
+    list-style:none
+}
+.media-list.media-list-with-divider .media+.media{
+    border-top:1px solid #d5dbe0;
+    padding-top:15px
+}
+.dropdown-menu.media-list{
+    max-width:360px;
+    padding:0
+}
+.dropdown-menu.media-list .media{
+    border-top:1px solid #e4e7ea;
+    border-bottom:1px solid #e4e7ea;
+    margin-top:0;
+    margin-bottom:-1px
+}
+.dropdown-menu.media-list .media .media-object{
+    height:30px;
+    width:30px;
+    line-height:30px;
+    font-size:18px;
+    color:#fff;
+    text-align:center;
+    -webkit-border-radius:6px;
+    border-radius:6px
+}
+.dropdown-menu.media-list .media .media-object-icon{
+    position:absolute;
+    margin-left:30px;
+    border:2px solid #fff;
+    background:#fff;
+    margin-top:-11px;
+    display:block;
+    width:22px;
+    height:22px;
+    text-align:center;
+    font-size:18px;
+    line-height:18px;
+    -webkit-border-radius:40px;
+    border-radius:40px
+}
+.dropdown-menu.media-list .media .media-left{
+    padding-right:12px
+}
+.dropdown-menu.media-list .media .media-right{
+    padding-left:12px
+}
+.dropdown-menu.media-list .media .media-heading{
+    color:#2d353c;
+    margin-bottom:0;
+    font-size:12.5px;
+    line-height:18px
+}
+.dropdown-menu.media-list .media p{
+    text-overflow:ellipsis;
+    overflow:hidden;
+    margin-bottom:5px;
+    line-height:14px;
+    max-width:270px;
+    color:#4e5c68;
+    font-size:11px
+}
+.dropdown-menu.media-list .dropdown-header{
+    font-weight:700;
+    color:#2d353c;
+    font-size:10px;
+    background:#f2f3f4;
+    padding:10px 15px
+}
+.dropdown-menu.media-list .dropdown-item{
+    padding:10px 15px
+}
+.dropdown-menu.media-list .dropdown-footer{
+    padding:10px 15px
+}
 /* Margin and Padding */
 .m-0{
     margin:0!important
