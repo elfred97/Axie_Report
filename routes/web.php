@@ -96,6 +96,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::resource('reminders', 'ReminderController');
     Route::post('reminders/{reminder}',[ReminderController::class,'update']);
     Route::get('reminders/{reminder}/destroy',[ReminderController::class,'destroy']);
+    Route::get('getReminder',[ReminderController::class,'index']);
 });
 
 

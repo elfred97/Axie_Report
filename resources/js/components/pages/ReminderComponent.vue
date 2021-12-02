@@ -11,59 +11,123 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-12">
-                        <!-- begin widget-table -->
-                        <div class="table-responsive">
-                            <!-- begin widget-table -->
-                            <table class="table table-bordered widget-table widget-table-rounded" data-id="widget">
-                                <thead>
-                                    <tr>
-                                        <th>Description</th>
-                                        <th class="text-center">Date</th>                                        
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <h6 class="widget-table-title">Payroll reminder</h6>
-                                            <p class="widget-table-desc m-b-15 mb-0">To all scholars, your payroll will be delayed today</p>
-                                        </td>
-                                        <td class="text-nowrap text-center">
-                                            <b class="text-inverse" data-id="widget-elm" 
-                                                data-light-class="text-inverse" 
-                                                data-dark-class="text-white">09/24/2021</b>
-                                        </td>                                        
-                                        <td class="text-center">
-                                            <button class="btn btn-default btn-xs">
-                                                <i class="fas fa-pencil-alt"></i>
-                                                Edit</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h6 class="widget-table-title">Inspire 2</h6>
-                                            <p class="widget-table-desc m-b-15 mb-0">Cinematic aerial performance for filmmakers.</p>
-                                        </td>
-                                        <td class="text-nowrap text-center">
-                                            <b class="text-inverse" data-id="widget-elm" 
-                                                data-light-class="text-inverse" 
-                                                data-dark-class="text-white">09/24/2021</b>
-                                        </td>                                       
-                                        <td class="text-center">
-                                            <button class="btn btn-default btn-xs">
-                                                <i class="fas fa-pencil-alt"></i>
-                                                Edit</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- end widget-table -->
-                        </div>
-                        <!-- end table-responsive -->
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <loading :active.sync="isLoading" 
+                            :can-cancel="true" 
+                            :on-cancel="onCancel"
+                            :is-full-page="fullPage"></loading>
+                        <vuetable ref="vuetable"
+                            :api-mode="false"
+                            :fields="fields"
+                            :per-page="perPage"
+                            :data-manager="dataManager"
+                            pagination-path="pagination"
+                            @vuetable:pagination-data="onPaginationData"
+                            >
+                            <div slot="actions" slot-scope="props">
+                                <button 
+                                    class="ui small button" 
+                                    @click="onActionClicked('view-item', props.rowData)"
+                                >
+                                    <i class="zoom icon"></i>
+                                </button>
+                                <button 
+                                    class="ui small button" 
+                                    @click="onActionClicked('edit-item', props.rowData)"
+                                >
+                                    <i class="edit icon"></i>
+                                </button>
+                                <button 
+                                    class="ui small button" 
+                                    @click="onActionClicked('delete-item', props.rowData)"
+                                >
+                                    <i class="delete icon"></i>
+                                </button>
+                            </div>
+                        </vuetable>
+                        <!-- End of Vuetable -->
                     </div>
+                    <!-- Pagination Info -->
+                    <div class="col-md-6">
+                        <vuetable-pagination-info ref="paginationInfo"
+                        ></vuetable-pagination-info>
+                    </div><!-- End of Pagination Info -->
+                    <!-- Pagination Buttons -->
+                    <div class="col-md-6 text-right">
+                        <vuetable-pagination ref="pagination"
+                            @vuetable-pagination:change-page="onChangePage"
+                            :css="css.pagination"
+                        ></vuetable-pagination>
+                    </div><!-- End of Pagination Buttons -->
                 </div>
             </div>
         </div>
     </div>
 </template>
+<script>
+import {TableMixins} from './TableMixins';
+import { TableStyle } from './TableStyle.js';
+import FieldsDef from "./reminderFieldsDef.js";
+export default {
+    mixins : [TableMixins],
+    data () {
+        return {
+            fields    : FieldsDef,
+            perPage   : 15,
+            data      : [],
+            isLoading: false,
+            fullPage  : true,
+            css       : TableStyle,
+        }
+    },
+    watch: {
+        data(newVal, oldVal) {
+        this.$refs.vuetable.refresh();
+        }
+    },
+    methods: {
+        
+        getReminder(){
+            this.axios.get("getReminder")
+            .then(response => {
+                this.data = response.data.reminders.data;
+            })
+            .catch(error => {
+                console.log(error)
+            });
+        },
+        
+        dataManager(sortOrder, pagination) {
+            if (this.data.length < 1) return;
+
+            let local = this.data;
+
+            // sortOrder can be empty, so we have to check for that as well
+            if (sortOrder.length > 0) {
+                console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
+                local = _.orderBy(
+                local,
+                sortOrder[0].sortField,
+                sortOrder[0].direction
+                );
+            }
+
+            pagination = this.$refs.vuetable.makePagination(
+                local.length,
+                this.perPage
+            );
+            console.log('pagination:', pagination)
+            let from = pagination.from - 1;
+            let to = from + this.perPage;
+
+            return {
+                pagination: pagination,
+                data: _.slice(local, from, to)
+            };
+        },
+    },
+    mounted(){
+        this.getReminder();
+    }
+}
+</script>

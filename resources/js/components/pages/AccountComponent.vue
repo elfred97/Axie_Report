@@ -19,7 +19,7 @@
                         <!-- End Notification Settings -->
 
                         <!-- Begin Notification Settings -->
-                        <!-- <reminder-component></reminder-component> -->
+                        <reminder-component></reminder-component>
                         <!-- End Notification Settings -->
                     </div>
                     <div class="col-md-5">

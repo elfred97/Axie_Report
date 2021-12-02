@@ -2,11 +2,7 @@
     <div>
         <div class="row">
             <div class="col-md-4">
-                <label for="">Type</label>
-                <select name="" id="" class="form-control" v-model="form.type">
-                    <option value="">Payroll</option>
-                    <option value="">Custom</option>
-                </select>
+                <type-component :type="form.type" @updateType="form.type = $event"></type-component>
             </div>
         </div>
         <div class="row">

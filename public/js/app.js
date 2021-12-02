@@ -7625,6 +7625,140 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ReminderComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/ReminderComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
+/* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
+/* harmony import */ var _reminderFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./reminderFieldsDef.js */ "./resources/js/components/pages/reminderFieldsDef.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_TableMixins__WEBPACK_IMPORTED_MODULE_0__["TableMixins"]],
+  data: function data() {
+    return {
+      fields: _reminderFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+      perPage: 15,
+      data: [],
+      isLoading: false,
+      fullPage: true,
+      css: _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"]
+    };
+  },
+  watch: {
+    data: function data(newVal, oldVal) {
+      this.$refs.vuetable.refresh();
+    }
+  },
+  methods: {
+    getReminder: function getReminder() {
+      var _this = this;
+
+      this.axios.get("getReminder").then(function (response) {
+        _this.data = response.data.reminders.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    dataManager: function dataManager(sortOrder, pagination) {
+      if (this.data.length < 1) return;
+      var local = this.data; // sortOrder can be empty, so we have to check for that as well
+
+      if (sortOrder.length > 0) {
+        console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
+        local = _.orderBy(local, sortOrder[0].sortField, sortOrder[0].direction);
+      }
+
+      pagination = this.$refs.vuetable.makePagination(local.length, this.perPage);
+      console.log('pagination:', pagination);
+      var from = pagination.from - 1;
+      var to = from + this.perPage;
+      return {
+        pagination: pagination,
+        data: _.slice(local, from, to)
+      };
+    }
+  },
+  mounted: function mounted() {
+    this.getReminder();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ScholarFormComponent.vue?vue&type=script&lang=js&":
 /*!*************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/ScholarFormComponent.vue?vue&type=script&lang=js& ***!
@@ -8335,10 +8469,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
 //
 //
 //
@@ -72251,7 +72381,9 @@ var render = function() {
                 [
                   _c("account-information"),
                   _vm._v(" "),
-                  _c("notification-settings")
+                  _c("notification-settings"),
+                  _vm._v(" "),
+                  _c("reminder-component")
                 ],
                 1
               ),
@@ -75821,126 +75953,122 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(0)
-    ])
-  ])
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "panel-body" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-12" }, [
-          _c("div", { staticClass: "table-responsive" }, [
-            _c(
-              "table",
-              {
-                staticClass:
-                  "table table-bordered widget-table widget-table-rounded",
-                attrs: { "data-id": "widget" }
-              },
-              [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", [_vm._v("Description")]),
-                    _vm._v(" "),
-                    _c("th", { staticClass: "text-center" }, [_vm._v("Date")]),
-                    _vm._v(" "),
-                    _c("th")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", [
-                      _c("h6", { staticClass: "widget-table-title" }, [
-                        _vm._v("Payroll reminder")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "p",
-                        { staticClass: "widget-table-desc m-b-15 mb-0" },
-                        [
-                          _vm._v(
-                            "To all scholars, your payroll will be delayed today"
-                          )
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-nowrap text-center" }, [
-                      _c(
-                        "b",
-                        {
-                          staticClass: "text-inverse",
-                          attrs: {
-                            "data-id": "widget-elm",
-                            "data-light-class": "text-inverse",
-                            "data-dark-class": "text-white"
-                          }
-                        },
-                        [_vm._v("09/24/2021")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c("button", { staticClass: "btn btn-default btn-xs" }, [
-                        _c("i", { staticClass: "fas fa-pencil-alt" }),
-                        _vm._v(
-                          "\n                                            Edit"
+      _c("div", { staticClass: "panel-body" }, [
+        _c("div", { staticClass: "row" }, [
+          _c(
+            "div",
+            { staticClass: "col-lg-12 col-md-12 col-sm-12" },
+            [
+              _c("loading", {
+                attrs: {
+                  active: _vm.isLoading,
+                  "can-cancel": true,
+                  "on-cancel": _vm.onCancel,
+                  "is-full-page": _vm.fullPage
+                },
+                on: {
+                  "update:active": function($event) {
+                    _vm.isLoading = $event
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c("vuetable", {
+                ref: "vuetable",
+                attrs: {
+                  "api-mode": false,
+                  fields: _vm.fields,
+                  "per-page": _vm.perPage,
+                  "data-manager": _vm.dataManager,
+                  "pagination-path": "pagination"
+                },
+                on: { "vuetable:pagination-data": _vm.onPaginationData },
+                scopedSlots: _vm._u([
+                  {
+                    key: "actions",
+                    fn: function(props) {
+                      return _c("div", {}, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "ui small button",
+                            on: {
+                              click: function($event) {
+                                return _vm.onActionClicked(
+                                  "view-item",
+                                  props.rowData
+                                )
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "zoom icon" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "ui small button",
+                            on: {
+                              click: function($event) {
+                                return _vm.onActionClicked(
+                                  "edit-item",
+                                  props.rowData
+                                )
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "edit icon" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "ui small button",
+                            on: {
+                              click: function($event) {
+                                return _vm.onActionClicked(
+                                  "delete-item",
+                                  props.rowData
+                                )
+                              }
+                            }
+                          },
+                          [_c("i", { staticClass: "delete icon" })]
                         )
                       ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [
-                      _c("h6", { staticClass: "widget-table-title" }, [
-                        _vm._v("Inspire 2")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "p",
-                        { staticClass: "widget-table-desc m-b-15 mb-0" },
-                        [_vm._v("Cinematic aerial performance for filmmakers.")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-nowrap text-center" }, [
-                      _c(
-                        "b",
-                        {
-                          staticClass: "text-inverse",
-                          attrs: {
-                            "data-id": "widget-elm",
-                            "data-light-class": "text-inverse",
-                            "data-dark-class": "text-white"
-                          }
-                        },
-                        [_vm._v("09/24/2021")]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-center" }, [
-                      _c("button", { staticClass: "btn btn-default btn-xs" }, [
-                        _c("i", { staticClass: "fas fa-pencil-alt" }),
-                        _vm._v(
-                          "\n                                            Edit"
-                        )
-                      ])
-                    ])
-                  ])
+                    }
+                  }
                 ])
-              ]
-            )
-          ])
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-6" },
+            [_c("vuetable-pagination-info", { ref: "paginationInfo" })],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-md-6 text-right" },
+            [
+              _c("vuetable-pagination", {
+                ref: "pagination",
+                attrs: { css: _vm.css.pagination },
+                on: { "vuetable-pagination:change-page": _vm.onChangePage }
+              })
+            ],
+            1
+          )
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -77345,47 +77473,21 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
-        _vm._v(" "),
-        _c(
-          "select",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.form.type,
-                expression: "form.type"
-              }
-            ],
-            staticClass: "form-control",
-            attrs: { name: "", id: "" },
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [
+          _c("type-component", {
+            attrs: { type: _vm.form.type },
             on: {
-              change: function($event) {
-                var $$selectedVal = Array.prototype.filter
-                  .call($event.target.options, function(o) {
-                    return o.selected
-                  })
-                  .map(function(o) {
-                    var val = "_value" in o ? o._value : o.value
-                    return val
-                  })
-                _vm.$set(
-                  _vm.form,
-                  "type",
-                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                )
+              updateType: function($event) {
+                _vm.form.type = $event
               }
             }
-          },
-          [
-            _c("option", { attrs: { value: "" } }, [_vm._v("Payroll")]),
-            _vm._v(" "),
-            _c("option", { attrs: { value: "" } }, [_vm._v("Custom")])
-          ]
-        )
-      ])
+          })
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -102582,15 +102684,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ReminderComponent.vue?vue&type=template&id=74872e85& */ "./resources/js/components/pages/ReminderComponent.vue?vue&type=template&id=74872e85&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ReminderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ReminderComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/ReminderComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ReminderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ReminderComponent_vue_vue_type_template_id_74872e85___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -102604,6 +102708,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/pages/ReminderComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/ReminderComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/pages/ReminderComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReminderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ReminderComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ReminderComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ReminderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
@@ -103329,6 +103447,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_newUserFormComponent_vue_vue_type_template_id_0b419844___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/reminderFieldsDef.js":
+/*!************************************************************!*\
+  !*** ./resources/js/components/pages/reminderFieldsDef.js ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  name: "description",
+  title: 'Description',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned uppercase"
+}, {
+  name: "type_id",
+  title: 'Type',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned uppercase"
+}, {
+  name: "date",
+  title: 'Date',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned",
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+  }
+}]);
 
 /***/ }),
 
