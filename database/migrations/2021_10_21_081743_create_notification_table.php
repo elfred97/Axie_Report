@@ -19,6 +19,7 @@ class CreateNotificationTable extends Migration
                 $table->text('account_name')->nullable();
                 $table->tinyInteger('category')->nullable()->default(NULL);
                 $table->tinyInteger('status')->nullable()->default(NULL);           
+                $table->integer('reminder_id')->nullable()->default(NULL)->references('id')->on('reminders');
                 $table->timestamps();
             });
         }

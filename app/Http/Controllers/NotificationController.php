@@ -9,7 +9,7 @@ class NotificationController extends Controller
 {
     //
     public function index($account_type){
-        if($account_type == 'scholar')
-            return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')->get();
+        if($account_type == 'scholars')
+            return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')->WHERE('notification.category', 3)->get();
     }
 }
