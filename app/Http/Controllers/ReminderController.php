@@ -14,7 +14,9 @@ class ReminderController extends Controller
      */
     public function index()
     {
-        $reminders = Reminder::paginate(15);
+        $reminders = Reminder::LEFTJOIN('type', 'reminders.type_id', '=', 'type.id')
+                ->SELECT('reminders.*', 'type.name as type_name')
+                ->paginate(15);
 
         return $this->buildJson(compact('reminders'));
     }

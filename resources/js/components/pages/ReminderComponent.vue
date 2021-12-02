@@ -2,10 +2,10 @@
     <div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h4 class="panel-title">Reminder</h4>
+                <h4 class="panel-title">Announcement</h4>
                 <div class="panel-heading-btn">
-                    <button class="btn btn-xs btn-success" @click="$root.$emit('showDialog', true, 'add-reminder-form', 'New Reminder', '30%')">
-                        <i class="fas fa-plus"></i> New Reminder
+                    <button class="btn btn-xs btn-success" @click="$root.$emit('showDialog', true, 'add-reminder-form', 'New Announcement', '40%')">
+                        <i class="fas fa-plus"></i> New Announcement
                     </button>
                 </div>
             </div>
@@ -26,22 +26,18 @@
                             >
                             <div slot="actions" slot-scope="props">
                                 <button 
-                                    class="ui small button" 
-                                    @click="onActionClicked('view-item', props.rowData)"
+                                    class="btn btn-xs btn-default" 
+                                    @click="$root.$emit('showDialog', true, 'add-reminder-form', 'Update Announcement', '40%', props.rowData)"
                                 >
-                                    <i class="zoom icon"></i>
+                                <i class="fas fa-pencil-alt"></i>
+                                    Edit
                                 </button>
                                 <button 
-                                    class="ui small button" 
-                                    @click="onActionClicked('edit-item', props.rowData)"
+                                    class="btn btn-xs btn-default text-danger" 
+                                    @click="deleteReminder(props.rowData)"
                                 >
-                                    <i class="edit icon"></i>
-                                </button>
-                                <button 
-                                    class="ui small button" 
-                                    @click="onActionClicked('delete-item', props.rowData)"
-                                >
-                                    <i class="delete icon"></i>
+                                <i class="fas fa-trash"></i>
+                                    Delete
                                 </button>
                             </div>
                         </vuetable>
@@ -116,7 +112,7 @@ export default {
                 local.length,
                 this.perPage
             );
-            console.log('pagination:', pagination)
+            // console.log('pagination:', pagination)
             let from = pagination.from - 1;
             let to = from + this.perPage;
 
@@ -125,9 +121,29 @@ export default {
                 data: _.slice(local, from, to)
             };
         },
+        deleteReminder(data){
+            this.$alertify.confirmWithTitle("Delete", "Are you sure to delete this announcement?", 
+            ()=> {
+                // Axios Request
+                this.axios.get('reminders/'+data.id+'/destroy')
+                .then((response) => {
+                    this.getReminder();
+                    this.$noty.success('Announcement Deleted');
+                })
+                .catch((error) => {
+                    console.log(error);
+                    this.$noty.error("Something went wrong please try again later.")
+                });
+                // End of Request
+            },() =>this.$noty.error("Cancel: Item not removed")
+            )
+        }
     },
     mounted(){
         this.getReminder();
+        this.$events.on('update_reminders_table', (data) => {
+            this.getReminder();
+        });
     }
 }
 </script>

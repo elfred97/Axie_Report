@@ -7699,10 +7699,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -7742,18 +7738,42 @@ __webpack_require__.r(__webpack_exports__);
         local = _.orderBy(local, sortOrder[0].sortField, sortOrder[0].direction);
       }
 
-      pagination = this.$refs.vuetable.makePagination(local.length, this.perPage);
-      console.log('pagination:', pagination);
+      pagination = this.$refs.vuetable.makePagination(local.length, this.perPage); // console.log('pagination:', pagination)
+
       var from = pagination.from - 1;
       var to = from + this.perPage;
       return {
         pagination: pagination,
         data: _.slice(local, from, to)
       };
+    },
+    deleteReminder: function deleteReminder(data) {
+      var _this2 = this;
+
+      this.$alertify.confirmWithTitle("Delete", "Are you sure to delete this announcement?", function () {
+        // Axios Request
+        _this2.axios.get('reminders/' + data.id + '/destroy').then(function (response) {
+          _this2.getReminder();
+
+          _this2.$noty.success('Announcement Deleted');
+        })["catch"](function (error) {
+          console.log(error);
+
+          _this2.$noty.error("Something went wrong please try again later.");
+        }); // End of Request
+
+      }, function () {
+        return _this2.$noty.error("Cancel: Item not removed");
+      });
     }
   },
   mounted: function mounted() {
+    var _this3 = this;
+
     this.getReminder();
+    this.$events.on('update_reminders_table', function (data) {
+      _this3.getReminder();
+    });
   }
 });
 
@@ -8497,36 +8517,94 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['reminder'],
   data: function data() {
     return {
       form: new Form({
-        type: null,
-        subject: null,
-        message: null
-      })
+        id: 0,
+        type_id: null,
+        title: null,
+        description: null,
+        reminder_time: null,
+        recurrence: 0,
+        status: 0
+      }),
+      recurrences: ['Never', 'Monthly', 'Weekly', 'Daily']
     };
+  },
+  watch: {
+    reminder: {
+      handler: function handler(newVal) {
+        this.form.reminder_time = moment(newVal.reminder_time).format('YYYY-MM-DD HH:mm:ss');
+      }
+    }
   },
   methods: {
     saveReminder: function saveReminder() {
       var _this = this;
 
-      this.form.post('/updateUser').then(function (response) {
-        if (_this.usersListInfo) _this.$noty.success('Update User Info');else _this.$noty.success('New User Added');
-
-        _this.$events.fire('update_users');
-
+      var url = '';
+      if (this.reminder) url = 'updateReminder/' + this.form.id;else url = 'newReminder';
+      this.form.post(url).then(function (response) {
         _this.$root.$emit('isClose', true);
+
+        _this.$noty.success("Reminder Saved");
+
+        _this.$events.fire('update_reminders_table');
       })["catch"](function (error) {
         // this.form.errors = error.response.data.errors;
         console.log(error);
+      });
+    },
+    resetForm: function resetForm() {
+      this.form = new Form({
+        id: 0,
+        type_id: null,
+        title: null,
+        description: null,
+        reminder_time: null,
+        recurrence: 0,
+        status: 0
       });
     }
   },
   mounted: function mounted() {
     if (this.reminder) {
+      this.reminder.reminder_time = moment(this.reminder.reminder_time).format('YYYY-MM-DD HH:mm:ss');
       this.form = new Form(this.reminder);
+    } else {
+      this.resetForm();
     }
   }
 });
@@ -75926,7 +76004,7 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "panel panel-default" }, [
       _c("div", { staticClass: "panel-heading" }, [
-        _c("h4", { staticClass: "panel-title" }, [_vm._v("Reminder")]),
+        _c("h4", { staticClass: "panel-title" }, [_vm._v("Announcement")]),
         _vm._v(" "),
         _c("div", { staticClass: "panel-heading-btn" }, [
           _c(
@@ -75939,15 +76017,15 @@ var render = function() {
                     "showDialog",
                     true,
                     "add-reminder-form",
-                    "New Reminder",
-                    "30%"
+                    "New Announcement",
+                    "40%"
                   )
                 }
               }
             },
             [
               _c("i", { staticClass: "fas fa-plus" }),
-              _vm._v(" New Reminder\n                ")
+              _vm._v(" New Announcement\n                ")
             ]
           )
         ])
@@ -75991,49 +76069,44 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "ui small button",
+                            staticClass: "btn btn-xs btn-default",
                             on: {
                               click: function($event) {
-                                return _vm.onActionClicked(
-                                  "view-item",
+                                return _vm.$root.$emit(
+                                  "showDialog",
+                                  true,
+                                  "add-reminder-form",
+                                  "Update Announcement",
+                                  "40%",
                                   props.rowData
                                 )
                               }
                             }
                           },
-                          [_c("i", { staticClass: "zoom icon" })]
+                          [
+                            _c("i", { staticClass: "fas fa-pencil-alt" }),
+                            _vm._v(
+                              "\n                                Edit\n                            "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
                           "button",
                           {
-                            staticClass: "ui small button",
+                            staticClass: "btn btn-xs btn-default text-danger",
                             on: {
                               click: function($event) {
-                                return _vm.onActionClicked(
-                                  "edit-item",
-                                  props.rowData
-                                )
+                                return _vm.deleteReminder(props.rowData)
                               }
                             }
                           },
-                          [_c("i", { staticClass: "edit icon" })]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "ui small button",
-                            on: {
-                              click: function($event) {
-                                return _vm.onActionClicked(
-                                  "delete-item",
-                                  props.rowData
-                                )
-                              }
-                            }
-                          },
-                          [_c("i", { staticClass: "delete icon" })]
+                          [
+                            _c("i", { staticClass: "fas fa-trash" }),
+                            _vm._v(
+                              "\n                                Delete\n                            "
+                            )
+                          ]
                         )
                       ])
                     }
@@ -77472,16 +77545,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row mt-2" }, [
       _c(
         "div",
         { staticClass: "col-md-4" },
         [
           _c("type-component", {
-            attrs: { type: _vm.form.type },
+            attrs: { type: _vm.form.type_id },
             on: {
               updateType: function($event) {
-                _vm.form.type = $event
+                _vm.form.type_id = $event
               }
             }
           })
@@ -77499,19 +77572,19 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.subject,
-              expression: "form.subject"
+              value: _vm.form.title,
+              expression: "form.title"
             }
           ],
           staticClass: "form-control",
           attrs: { type: "text", placeholder: "Subject" },
-          domProps: { value: _vm.form.subject },
+          domProps: { value: _vm.form.title },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.form, "subject", $event.target.value)
+              _vm.$set(_vm.form, "title", $event.target.value)
             }
           }
         })
@@ -77527,8 +77600,8 @@ var render = function() {
             {
               name: "model",
               rawName: "v-model",
-              value: _vm.form.message,
-              expression: "form.message"
+              value: _vm.form.description,
+              expression: "form.description"
             }
           ],
           staticClass: "form-control",
@@ -77539,16 +77612,137 @@ var render = function() {
             rows: "4",
             placeholder: "Message Here"
           },
-          domProps: { value: _vm.form.message },
+          domProps: { value: _vm.form.description },
           on: {
             input: function($event) {
               if ($event.target.composing) {
                 return
               }
-              _vm.$set(_vm.form, "message", $event.target.value)
+              _vm.$set(_vm.form, "description", $event.target.value)
             }
           }
         })
+      ])
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [
+          _c("label", { attrs: { for: "" } }, [_vm._v("Date and Time")]),
+          _vm._v(" "),
+          _c("v-datepicker", {
+            attrs: {
+              type: "datetime",
+              valueType: "format",
+              format: "YYYY-MM-DD HH:mm:ss"
+            },
+            model: {
+              value: _vm.form.reminder_time,
+              callback: function($$v) {
+                _vm.$set(_vm.form, "reminder_time", $$v)
+              },
+              expression: "form.reminder_time"
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Repeat")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.recurrence,
+                expression: "form.recurrence"
+              }
+            ],
+            staticClass:
+              "custom-select custom-select-sm form-control form-control-sm",
+            attrs: {
+              name: "data-table-default_length",
+              "aria-controls": "data-table-default"
+            },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.form,
+                  "recurrence",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          _vm._l(_vm.recurrences, function(recurrence, index) {
+            return _c("option", { domProps: { value: index } }, [
+              _vm._v(_vm._s(recurrence))
+            ])
+          }),
+          0
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Repeat")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.status,
+                expression: "form.status"
+              }
+            ],
+            staticClass:
+              "custom-select custom-select-sm form-control form-control-sm",
+            attrs: {
+              name: "data-table-default_length",
+              "aria-controls": "data-table-default"
+            },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.form,
+                  "status",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "0" } }, [_vm._v("Active")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "1" } }, [_vm._v("Inactive")])
+          ]
+        )
       ])
     ]),
     _vm._v(" "),
@@ -102229,7 +102423,7 @@ var NotificationSettingsMixins = {
       var _this = this;
 
       this.axios.get('getNotificationSettings').then(function (response) {
-        _this.options = response.data.notification_settings.options;
+        if (response.data.notification_settings) _this.options = response.data.notification_settings.options;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -103460,23 +103654,45 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ([{
-  name: "description",
-  title: 'Description',
-  titleClass: "text-center aligned",
-  dataClass: "text-center aligned uppercase"
+  name: "title",
+  title: 'Title'
 }, {
-  name: "type_id",
+  name: "description",
+  title: 'Description'
+}, {
+  name: "reminder_time",
+  title: 'Date & Time',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned uppercase",
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY hh:mm:ss A') + '</span>';
+  }
+}, {
+  name: "recurrence",
+  title: 'Repeat',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned",
+  formatter: function formatter(value) {
+    if (value == 0) return 'Never';else if (value == 1) return 'Monthly';else if (value == 2) return 'Weekly';else if (value == 3) return 'Daily';
+  }
+}, {
+  name: "type_name",
   title: 'Type',
   titleClass: "text-center aligned",
   dataClass: "text-center aligned uppercase"
 }, {
-  name: "date",
-  title: 'Date',
+  name: "status",
+  title: 'Status',
   titleClass: "text-center aligned",
   dataClass: "text-center aligned",
   formatter: function formatter(value) {
-    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+    if (value == 0) return 'Active';else if (value == 1) return 'Inactive';
   }
+}, {
+  name: "actions",
+  title: "Action",
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
 }]);
 
 /***/ }),

@@ -94,7 +94,8 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('getLowestMMR', 'PlayerController@getLowestMMR');
 
     Route::resource('reminders', 'ReminderController');
-    Route::post('reminders/{reminder}',[ReminderController::class,'update']);
+    Route::post('newReminder',[ReminderController::class,'store']);
+    Route::post('updateReminder/{reminder}',[ReminderController::class,'update']);
     Route::get('reminders/{reminder}/destroy',[ReminderController::class,'destroy']);
     Route::get('getReminder',[ReminderController::class,'index']);
 });
