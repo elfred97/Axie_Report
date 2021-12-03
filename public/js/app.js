@@ -5828,40 +5828,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       notificationData: {},
-      accountData: {}
+      accountData: {},
+      announcementsData: {}
     };
   },
   computed: {
     getGuardType: function getGuardType() {
       return this.$store.state.global_guard_type;
+    },
+    getTotalNotificationCount: function getTotalNotificationCount() {
+      var notificationCount = Object.keys(this.notificationData).length;
+      var announcementCount = Object.keys(this.announcementsData).length;
+      ;
+      return notificationCount + announcementCount;
     }
   },
   methods: {
@@ -5900,23 +5883,25 @@ __webpack_require__.r(__webpack_exports__);
       window.open(routeData.href, '_blank');
     },
     getAnnouncement: function getAnnouncement() {
+      var _this3 = this;
+
       var account_type = this.$store.state.global_guard_type;
-      console.log(account_type);
       this.axios.get('notifications/' + account_type).then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
+        _this3.announcementsData = response.data;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     this.getNotification();
     this.getAccountInfo();
     this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
-      _this3.getNotification();
+      _this4.getNotification();
     });
   }
 });
@@ -72087,9 +72072,9 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "header-nav" }, [
             _c("ul", { staticClass: "nav pull-right" }, [
-              _vm.getGuardType == "admins"
-                ? _c("li", { staticClass: "dropdown dropdown-hover" }, [
-                    _c(
+              _c("li", { staticClass: "dropdown dropdown-hover" }, [
+                _vm.getTotalNotificationCount > 0
+                  ? _c(
                       "a",
                       {
                         staticClass: "header-cart",
@@ -72098,159 +72083,123 @@ var render = function() {
                       [
                         _c("i", { staticClass: "fa fa-bell" }),
                         _vm._v(" "),
-                        _vm.notificationData.length > 0
-                          ? _c("span", { staticClass: "total" }, [
-                              _vm._v(_vm._s(_vm.notificationData.length))
-                            ])
-                          : _c("span", { staticClass: "total" }, [_vm._v("0")]),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "arrow top" })
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "dropdown-menu dropdown-menu-cart p-0" },
-                      [
-                        _vm._m(2),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "cart-body scroll-h h-15" }, [
-                          _vm.notificationData.length > 0
-                            ? _c(
-                                "ul",
-                                { staticClass: "cart-item" },
-                                _vm._l(_vm.notificationData, function(
-                                  notification
-                                ) {
-                                  return _c("li", [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass: "cart-item-info",
-                                        on: { click: _vm.gotoNotification }
-                                      },
-                                      [
-                                        _c(
-                                          "small",
-                                          { staticClass: "pull-right" },
-                                          [
-                                            _vm._v(
-                                              _vm._s(
-                                                _vm._f("formatDate")(
-                                                  notification.created_at
-                                                )
-                                              )
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c("h4", [
-                                          _c("b", [
-                                            _vm._v(
-                                              _vm._s(notification.player_name)
-                                            )
-                                          ]),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            { staticClass: "pull-right" },
-                                            [
-                                              _vm._v(
-                                                _vm._s(
-                                                  notification.account_name
-                                                )
-                                              )
-                                            ]
-                                          )
-                                        ]),
-                                        _vm._v(" "),
-                                        _c("p", { staticClass: "price" }, [
-                                          _vm._v(
-                                            _vm._s(
-                                              notification.gained_slp_today
-                                            ) + " SLP"
-                                          )
-                                        ])
-                                      ]
-                                    )
-                                  ])
-                                }),
-                                0
-                              )
-                            : _c(
-                                "p",
-                                { staticClass: "text-center no-margin" },
-                                [
-                                  _vm._v(
-                                    " No Notification\n                                    "
-                                  )
-                                ]
-                              )
+                        _c("span", { staticClass: "total" }, [
+                          _vm._v(_vm._s(_vm.getTotalNotificationCount))
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "card-footer" }, [
-                          _c("div", { staticClass: "row" }, [
-                            _c(
-                              "div",
-                              { staticClass: "col-lg-12" },
-                              [
-                                _c(
-                                  "center",
-                                  [
-                                    _vm.getGuardType == "admins"
-                                      ? _c(
-                                          "router-link",
-                                          {
-                                            staticClass:
-                                              "btn btn-sm btn-default",
-                                            attrs: { to: "/notification" }
-                                          },
-                                          [_vm._v("View All")]
-                                        )
-                                      : _c(
-                                          "router-link",
-                                          {
-                                            staticClass:
-                                              "btn btn-sm btn-default",
-                                            attrs: {
-                                              to: "/scholar_notification"
-                                            }
-                                          },
-                                          [_vm._v("View All")]
-                                        )
-                                  ],
-                                  1
-                                )
-                              ],
-                              1
-                            )
-                          ])
-                        ])
-                      ]
-                    )
-                  ])
-                : _c("li", { staticClass: "dropdown dropdown-hover" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "header-cart",
-                        attrs: { href: "#", "data-toggle": "dropdown" }
-                      },
-                      [
-                        _c("i", { staticClass: "fa fa-bell" }),
-                        _vm._v(" "),
-                        _vm.notificationData.length > 0
-                          ? _c("span", { staticClass: "total" }, [
-                              _vm._v(_vm._s(_vm.notificationData.length))
-                            ])
-                          : _c("span", { staticClass: "total" }, [_vm._v("0")]),
-                        _vm._v(" "),
                         _c("span", { staticClass: "arrow top" })
                       ]
-                    ),
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "dropdown-menu media-list dropdown-menu-cart p-0"
+                  },
+                  [
+                    _vm.getGuardType == "admins"
+                      ? _c(
+                          "div",
+                          [
+                            _c("div", { staticClass: "dropdown-header" }, [
+                              _vm._v("Not meeting SLP quota")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.notificationData, function(
+                              notification
+                            ) {
+                              return _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item media",
+                                  attrs: { href: "javascript:;" }
+                                },
+                                [
+                                  _vm._m(2, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "media-body" }, [
+                                    _c(
+                                      "div",
+                                      { staticClass: "text-muted f-s-10" },
+                                      [_vm._v("3 minutes ago")]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("h6", { staticClass: "media-heading" }, [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(notification.player_name) +
+                                          " "
+                                      ),
+                                      _c(
+                                        "span",
+                                        { staticClass: "pull-right" },
+                                        [
+                                          _vm._v(
+                                            _vm._s(notification.account_name)
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            notification.gained_slp_today
+                                          ) +
+                                          " SLP "
+                                      )
+                                    ])
+                                  ])
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(3)
-                  ]),
+                    _vm._l(_vm.announcementsData, function(announcement) {
+                      return _c(
+                        "a",
+                        {
+                          staticClass: "dropdown-item media",
+                          attrs: { href: "javascript:;" }
+                        },
+                        [
+                          _vm._m(3, true),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "media-body" }, [
+                            _c(
+                              "div",
+                              { staticClass: "text-muted f-s-10 pull-right" },
+                              [
+                                _vm._v(
+                                  " " +
+                                    _vm._s(
+                                      _vm._f("formatDateTime")(
+                                        announcement.reminder_time
+                                      )
+                                    )
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c("h6", { staticClass: "media-heading" }, [
+                              _vm._v(_vm._s(announcement.title))
+                            ]),
+                            _vm._v(" "),
+                            _c("p", [_vm._v(_vm._s(announcement.description))])
+                          ])
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ]),
               _vm._v(" "),
               _c("li", { staticClass: "dropdown dropdown-hover" }, [
                 _c(
@@ -72350,47 +72299,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "cart-header" }, [
-      _c("h4", { staticClass: "cart-title text-center" }, [
-        _vm._v("Not meeting 75 SLP ")
-      ])
+    return _c("div", { staticClass: "media-left" }, [
+      _c("i", {
+        staticClass: "fa fa-exclamation-triangle media-object bg-silver-darker"
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "dropdown-menu media-list  dropdown-menu-cart p-0" },
-      [
-        _c(
-          "a",
-          {
-            staticClass: "dropdown-item media",
-            attrs: { href: "javascript:;" }
-          },
-          [
-            _c("div", { staticClass: "media-left" }, [
-              _c("i", {
-                staticClass: "fa fa-bug media-object bg-silver-darker"
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "media-body" }, [
-              _c("h6", { staticClass: "media-heading" }, [
-                _vm._v("Server Error Reports "),
-                _c("i", { staticClass: "fa fa-exclamation-circle text-danger" })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "text-muted f-s-10" }, [
-                _vm._v("3 minutes ago")
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "media-left" }, [
+      _c("i", { staticClass: "fa fa-bullhorn media-object bg-silver-darker" })
+    ])
   }
 ]
 render._withStripped = true
@@ -101318,6 +101239,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_modaltor__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDate', function (date) {
   if (!date) return '';
   return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('L');
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDateTime', function (date) {
+  if (!date) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('YYYY-MM-DD	hh:mm');
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('dialog-component', __webpack_require__(/*! ./components/layout/DialogComponent.vue */ "./resources/js/components/layout/DialogComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('type-component', __webpack_require__(/*! ./components/layout/TypeComponent.vue */ "./resources/js/components/layout/TypeComponent.vue")["default"]);

@@ -1,15 +1,32 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Notification;
-
+use App\Models\Player;
+use App\Models\Scholar;
+use App\Models\PlayerScholarHistory;
 class NotificationController extends Controller
 {
     //
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index($account_type){
-        if($account_type == 'scholars')
-            return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')->WHERE('notification.category', 3)->get();
+        if($account_type == 'scholars'){
+            $username = Auth::user()->username;
+            $player = Player::LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
+                    ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+                    ->WHERE('scholars.username', $username)
+                    ->FIRST();
+            return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')
+                ->WHERE([['notification.category', 3], ['reminders.type_id', $player->type_id]])
+                ->get();
+        }
+        else if($account_type == 'admins'){
+            
+        }
     }
 }

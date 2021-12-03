@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\Scholars\HomeController;
 use \App\Http\Controllers\NotificationSettingControler;
 use \App\Http\Controllers\ReminderController;
+use \App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,9 +49,7 @@ Route::middleware(['auth:scholars'])->group(function(){
     Route::get('getScholarReport', [HomeController::class, 'getScholarReport'])->name('scholar.getScholarReport');
     Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
     Route::post('updateRoninWallet', [HomeController::class, 'updateRoninWallet'])->name('scholar.updateRoninWallet');
-    Route::get('getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');
-    Route::get('notifications/{{account_type}}', [NotificationController::class, 'index']);
-
+    Route::get('/getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');    
 });
 
 Route::middleware(['auth:admins'])->group(function(){
@@ -109,6 +108,7 @@ Route::middleware(['auth:admins'])->group(function(){
 
 Route::middleware(['auth:admins,scholars'])->group(function(){
     Route::get('src/{file_name}', 'FileController@showFile');
+    Route::get('/notifications/{account_type}', [NotificationController::class,'index'])->name('index');
 
     Route::get('/','GlobalController@redirectMain');
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');

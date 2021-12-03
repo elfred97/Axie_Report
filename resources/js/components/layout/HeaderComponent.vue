@@ -52,58 +52,34 @@
                     <!-- BEGIN header-nav -->
                     <div class="header-nav">
                         <ul class="nav pull-right" >
-                            <li class="dropdown dropdown-hover" v-if="getGuardType == 'admins'">
-                                <a href="#" class="header-cart" data-toggle="dropdown">
+                            <li class="dropdown dropdown-hover">
+                                <a href="#" class="header-cart" data-toggle="dropdown" v-if="getTotalNotificationCount > 0">
                                     <i class="fa fa-bell"></i>
-                                    <span class="total" v-if="notificationData.length > 0">{{ notificationData.length }}</span>
-                                    <span class="total" v-else>0</span>
+                                    <span class="total">{{ getTotalNotificationCount }}</span>
                                     <span class="arrow top"></span>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-cart p-0">
-                                    <div class="cart-header">
-                                        <h4 class="cart-title text-center">Not meeting 75 SLP </h4>
-                                    </div>
-                                    <div class="cart-body scroll-h h-15">
-                                        <ul class="cart-item" v-if="notificationData.length > 0">
-                                            <li v-for="notification in notificationData" >
-                                                <div class="cart-item-info" @click="gotoNotification">
-                                                    <small class="pull-right">{{notification.created_at | formatDate}}</small>
-                                                    <h4><b>{{ notification.player_name }}</b> <span class="pull-right">{{ notification.account_name }}</span></h4>
-                                                    <p class="price">{{ notification.gained_slp_today }} SLP</p>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                        <p class="text-center no-margin" v-else> No Notification
-                                        </p>
-                                    </div>
-                                    <div class="card-footer">
-                                        <div class="row">
-                                            <div class="col-lg-12">
-                                                <center>
-                                                    <router-link to="/notification" class="btn btn-sm btn-default" v-if="getGuardType == 'admins'">View All</router-link>
-                                                    <router-link to="/scholar_notification" class="btn btn-sm btn-default" v-else>View All</router-link>
-                                                    <!-- <button class="btn btn-sm btn-default">View All</button> -->
-                                                </center>
+                                <div class="dropdown-menu media-list dropdown-menu-cart p-0">
+                                    <div v-if="getGuardType == 'admins'">
+                                        <div class="dropdown-header">Not meeting SLP quota</div>
+                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData">
+                                            <div class="media-left">
+                                                <i class="fa fa-exclamation-triangle media-object bg-silver-darker"></i>
                                             </div>
-                                        </div>
+                                            <div class="media-body">
+                                                <div class="text-muted f-s-10">3 minutes ago</div>
+                                                <h6 class="media-heading"> {{ notification.player_name }} <span class="pull-right">{{ notification.account_name }}</span></h6>
+                                                <p> {{ notification.gained_slp_today }} SLP </p>
+                                            </div>
+                                        </a>
                                     </div>
-                                </div>
-                            </li>
-                            <li class="dropdown dropdown-hover" v-else>
-                                <a href="#" class="header-cart" data-toggle="dropdown">
-                                    <i class="fa fa-bell"></i>
-                                    <span class="total" v-if="notificationData.length > 0">{{ notificationData.length }}</span>
-                                    <span class="total" v-else>0</span>
-                                    <span class="arrow top"></span>
-                                </a>
-                                <div class="dropdown-menu media-list  dropdown-menu-cart p-0">
-                                    <a href="javascript:;" class="dropdown-item media">
+                                    <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData">
                                         <div class="media-left">
-                                            <i class="fa fa-bug media-object bg-silver-darker"></i>
+                                            <i class="fa fa-bullhorn media-object bg-silver-darker"></i>
                                         </div>
                                         <div class="media-body">
-                                            <h6 class="media-heading">Server Error Reports <i class="fa fa-exclamation-circle text-danger"></i></h6>
-                                            <div class="text-muted f-s-10">3 minutes ago</div>
+                                            <div class="text-muted f-s-10 pull-right"> {{ announcement.reminder_time | formatDateTime }}</div>
+                                            <h6 class="media-heading">{{ announcement.title }}</h6>
+                                            <p>{{ announcement.description }}</p>
                                         </div>
                                     </a>
                                 </div>
@@ -139,13 +115,20 @@
 export default {
     data(){
         return {
-            notificationData: {},
-            accountData     : {},
+            notificationData : {},
+            accountData      : {},
+            announcementsData: {},
         }
     },
     computed : {
         getGuardType(){
             return this.$store.state.global_guard_type;
+        },
+        getTotalNotificationCount(){
+            let notificationCount = Object.keys(this.notificationData).length;
+            let announcementCount = Object.keys(this.announcementsData).length;;
+
+            return notificationCount + announcementCount;
         }
     },
     methods: {
@@ -186,12 +169,10 @@ export default {
         },
         getAnnouncement(){
             let account_type = this.$store.state.global_guard_type;
-
-            console.log(account_type);
-
             this.axios.get('notifications/'+account_type)
             .then(response => {
-                console.log(response.data);
+                // console.log(response.data);
+                this.announcementsData = response.data;
             })
             .catch( error => {
                 console.log(error.response.data);
