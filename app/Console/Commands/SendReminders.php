@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Notification;
 use App\Models\Reminder;
 use App\Models\Scholar;
 use Illuminate\Console\Command;
@@ -54,7 +55,7 @@ class SendReminders extends Command
 //        $current_date = Carbon::now();
         $current_date = Carbon::parse('2021-11-23 00:00');
 
-        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
+//        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
 
         if ($scholars) {
             foreach ($reminders as $reminder) {
@@ -75,6 +76,10 @@ class SendReminders extends Command
                 ) {
                     $this->info('Sending Reminder with id : ' . $reminder->id);
 
+                    Notification::create([
+                        'reminder_id' => $reminder->id,
+                        'category' => 3
+                    ]);
                     foreach ($scholars as $scholar) {
                         Mail::to($scholar->email)->send(new \App\Mail\SendEmailReminder($scholar, $reminder));
                     }

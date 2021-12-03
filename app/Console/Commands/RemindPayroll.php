@@ -93,10 +93,10 @@ class RemindPayroll extends Command
 //            Mail::to($scholar_emails)->send(new \App\Mail\PayrollReminder(null));
 //        }
 
-        /**
-        $payroll = Payroll::all();
 
-        foreach ($payroll as $payroll) {
+        $payrolls = Payroll::all();
+
+        foreach ($payrolls as $payroll) {
             try {
                 $scholar = $payroll->scholar;
                 Mail::to($scholar->email)->send(new \App\Mail\PayrollReminder($scholar, $payroll));
@@ -106,19 +106,19 @@ class RemindPayroll extends Command
                 $this->line('Error : ' . $e->getMessage());
             }
         }
-         **/
-
-        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
-
-
-        foreach ($scholars as $scholar) {
-            try {
-                Mail::to($scholar)->send(new \App\Mail\PayrollReminder($scholar, new Payroll(['total_slp' => 10])));
-            } catch (\Exception $e) {
-                $this->line('Error sending email to: ' . $scholar->email);
-                $this->line('Error : ' . $e->getMessage());
-            }
-        }
+//         **/
+//
+//        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
+//
+//
+//        foreach ($scholars as $scholar) {
+//            try {
+//                Mail::to($scholar)->send(new \App\Mail\PayrollReminder($scholar, new Payroll(['total_slp' => 10])));
+//            } catch (\Exception $e) {
+//                $this->line('Error sending email to: ' . $scholar->email);
+//                $this->line('Error : ' . $e->getMessage());
+//            }
+//        }
 
         $this->line('Payroll Reminder End: ' . Carbon::now()->format('Y-m-d H:i:s'));
         return 0;

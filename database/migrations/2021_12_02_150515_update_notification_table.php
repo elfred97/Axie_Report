@@ -14,6 +14,11 @@ class UpdateNotificationTable extends Migration
     public function up()
     {
         if (Schema::hasTable('notification')) {
+            if (!Schema::hasColumn('notification', 'category')) {
+                Schema::table('notification', function(Blueprint $table){
+                    $table->tinyInteger('category')->nullable()->default(NULL)->after('account_name');
+                });
+            }
             if (!Schema::hasColumn('notification', 'reminder_id')) {
                 Schema::table('notification', function(Blueprint $table){
                     $table->integer('reminder_id')->nullable()->default(NULL)->after('category')->references('id')->on('reminders');
