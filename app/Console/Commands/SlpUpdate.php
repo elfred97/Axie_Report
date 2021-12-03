@@ -93,7 +93,7 @@ class SlpUpdate extends Command
             $this->line('Will send email notif');
 
             //testing only for now
-            $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
+//            $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
 
             if ($scholars) {
                 foreach ($scholars as $scholar) {
