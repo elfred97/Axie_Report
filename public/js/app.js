@@ -7259,6 +7259,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
+/* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
+/* harmony import */ var _PayrollHistoryFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PayrollHistoryFieldsDef.js */ "./resources/js/components/pages/PayrollHistoryFieldsDef.js");
 //
 //
 //
@@ -7458,30 +7461,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+ // import FieldsDef from "./ImportedFieldsDef.js";
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_TableMixins__WEBPACK_IMPORTED_MODULE_0__["TableMixins"]],
   data: function data() {
     return {
+      fields: _PayrollHistoryFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
+      perPage: 15,
+      data: [],
+      css: _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"],
+      fullPage: true,
+      isLoading: false,
+      sortOrder: [{
+        field: 'total_slp',
+        // Choose the Defualt Sorted Data by name
+        direction: 'desc'
+      }, {
+        field: 'ronin_address',
+        // Choose the Defualt Sorted Data by name
+        direction: 'desc'
+      }, {
+        field: 'account_name',
+        // Choose the Defualt Sorted Data by name
+        direction: 'desc'
+      }],
       filtersParam: {
         month: '',
         year: '',
@@ -7489,7 +7495,8 @@ __webpack_require__.r(__webpack_exports__);
         search: ''
       },
       year: [2020, 2021],
-      month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+      month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      payrollData: {}
     };
   },
   watch: {
@@ -7498,7 +7505,16 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    updatePayroll: function updatePayroll() {}
+    updatePendingPayroll: function updatePendingPayroll() {
+      var _this = this;
+
+      Vue.nextTick(function () {
+        return _this.$refs.pending_payroll.refresh();
+      });
+    },
+    onChangePagePending: function onChangePagePending(page) {
+      this.$refs.pending_payroll.changePage(page);
+    }
   }
 });
 
@@ -72040,6 +72056,24 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
+                  _c(
+                    "li",
+                    [
+                      _vm.getGuardType == "admins"
+                        ? _c(
+                            "router-link",
+                            { attrs: { to: "/payroll_history" } },
+                            [_vm._v("Payroll History")]
+                          )
+                        : _c(
+                            "router-link",
+                            { attrs: { to: "/scholar_payroll" } },
+                            [_vm._v("Payroll History")]
+                          )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _vm.getGuardType == "admins"
                     ? _c(
                         "li",
@@ -74627,7 +74661,9 @@ var render = function() {
                                             : $$selectedVal[0]
                                         )
                                       },
-                                      _vm.updatePayroll
+                                      function($event) {
+                                        return _vm.updatePendingPayroll()
+                                      }
                                     ]
                                   }
                                 },
@@ -74696,7 +74732,9 @@ var render = function() {
                                             : $$selectedVal[0]
                                         )
                                       },
-                                      _vm.updatePayroll
+                                      function($event) {
+                                        return _vm.updatePendingPayroll()
+                                      }
                                     ]
                                   }
                                 },
@@ -74759,7 +74797,9 @@ var render = function() {
                                 },
                                 domProps: { value: _vm.filtersParam.search },
                                 on: {
-                                  change: _vm.updatePayroll,
+                                  change: function($event) {
+                                    return _vm.updatePendingPayroll()
+                                  },
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
@@ -74778,7 +74818,162 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _c("div", { staticClass: "row mt-2" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-12 col-md-12 col-sm-12" },
+                        [
+                          _c("loading", {
+                            attrs: {
+                              active: _vm.isLoading,
+                              "can-cancel": true,
+                              "on-cancel": _vm.onCancel,
+                              "is-full-page": _vm.fullPage
+                            },
+                            on: {
+                              "update:active": function($event) {
+                                _vm.isLoading = $event
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "vuetable",
+                            {
+                              ref: "pending_payroll",
+                              attrs: {
+                                "api-url": "/getPayrollHistory/pending",
+                                fields: _vm.fields,
+                                css: _vm.css,
+                                "per-page": _vm.perPage,
+                                "append-params": _vm.filtersParam,
+                                "data-path": "data",
+                                "pagination-path": "",
+                                "sort-order": _vm.sortOrder
+                              },
+                              on: {
+                                "vuetable:pagination-data":
+                                  _vm.onPaginationData,
+                                "vuetable:row-clicked": _vm.onCellClicked,
+                                "vuetable:loading": _vm.onLoading,
+                                "vuetable:loaded": _vm.onLoaded
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "mmr_field",
+                                  fn: function(props) {
+                                    return [
+                                      _c("div", [
+                                        props.rowData.mmr < _vm.lowest_mmr
+                                          ? _c(
+                                              "span",
+                                              { staticClass: "text-danger" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(props.rowData.mmr) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                          : _c(
+                                              "span",
+                                              { staticClass: "text-default" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(props.rowData.mmr) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                      ])
+                                    ]
+                                  }
+                                },
+                                {
+                                  key: "detailRowIndicator",
+                                  fn: function(props) {
+                                    return [
+                                      _c("div", [
+                                        _vm.$refs.vuetable.isVisibleDetailRow(
+                                          props.rowData.id
+                                        )
+                                          ? _c("i", {
+                                              staticClass: "fas fa-minus-circle"
+                                            })
+                                          : _c("i", {
+                                              staticClass: "fas fa-plus-circle"
+                                            })
+                                      ])
+                                    ]
+                                  }
+                                },
+                                {
+                                  key: "actions",
+                                  fn: function(props) {
+                                    return _c("div", {}, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-xs btn-primary",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.updatePayroll(
+                                                "pending",
+                                                props.rowData
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                                Set as Paid\n                                            "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  }
+                                }
+                              ])
+                            },
+                            [
+                              _vm._v(
+                                "\n                                        >\n                                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6" },
+                        [
+                          _c("vuetable-pagination-info", {
+                            ref: "paginationInfo"
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6 text-right" },
+                        [
+                          _c("vuetable-pagination", {
+                            ref: "pagination",
+                            attrs: { css: _vm.css.pagination },
+                            on: {
+                              "vuetable-pagination:change-page":
+                                _vm.onChangePagePending
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
                   ]
                 ),
                 _vm._v(" "),
@@ -74838,7 +75033,9 @@ var render = function() {
                                             : $$selectedVal[0]
                                         )
                                       },
-                                      _vm.updatePayroll
+                                      function($event) {
+                                        return _vm.updatePendingPayroll()
+                                      }
                                     ]
                                   }
                                 },
@@ -74907,7 +75104,9 @@ var render = function() {
                                             : $$selectedVal[0]
                                         )
                                       },
-                                      _vm.updatePayroll
+                                      function($event) {
+                                        return _vm.updatePendingPayroll()
+                                      }
                                     ]
                                   }
                                 },
@@ -74970,7 +75169,7 @@ var render = function() {
                                 },
                                 domProps: { value: _vm.filtersParam.search },
                                 on: {
-                                  change: _vm.updatePayroll,
+                                  change: _vm.updatePendingPayroll,
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
@@ -74989,7 +75188,19 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _vm._m(2)
+                    _c(
+                      "ul",
+                      {
+                        staticClass:
+                          "no-margin media-list media-list-with-divider mt-2"
+                      },
+                      _vm._l(_vm.payrollData, function(payroll) {
+                        return payroll.status == 1
+                          ? _c("li", [_vm._m(1, true)])
+                          : _vm._e()
+                      }),
+                      0
+                    )
                   ]
                 )
               ]
@@ -75054,223 +75265,52 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "no-margin media-list media-list-with-divider mt-2" },
-      [
-        _c("li", [
-          _c("div", { staticClass: "row no-margin" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("h6", { staticClass: "no-margin" }, [
-                _vm._v("Scholar Name "),
-                _c("span", { staticClass: "pull-right" }, [
-                  _vm._v("(Account Name)")
-                ])
-              ]),
-              _vm._v(" "),
-              _c("span", [_vm._v("Ronin Address: ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
-                    _vm._v(" 8")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", [_vm._v("40%: ")]),
-                    _vm._v(" 4 ")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "text-center" }, [
-                    _c("b", [_vm._v("Total: ")]),
-                    _vm._v(" 12")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-1" }, [
-              _c("button", { staticClass: "btn btn-xs btn-primary" }, [
-                _c("i", { staticClass: "fas fa-check" }),
-                _vm._v(" Set as Paid")
-              ])
-            ])
-          ])
+    return _c("div", { staticClass: "row no-margin" }, [
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("h6", { staticClass: "no-margin" }, [
+          _vm._v("Scholar Name "),
+          _c("span", [_vm._v("(Account Name)")])
         ]),
         _vm._v(" "),
-        _c("li", [
-          _c("div", { staticClass: "row no-margin" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("h6", { staticClass: "no-margin" }, [
-                _vm._v("Scholar Name "),
-                _c("span", [_vm._v("(Account Name)")])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "no-margin" }, [
-                _vm._v("Ronin Address: ")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
-                    _vm._v(" 8")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", [_vm._v("40%: ")]),
-                    _vm._v(" 4 ")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "text-center" }, [
-                    _c("b", [_vm._v("Total: ")]),
-                    _vm._v(" 12")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-1" }, [
-              _c("button", { staticClass: "btn btn-xs btn-primary" }, [
-                _c("i", { staticClass: "fas fa-check" }),
-                _vm._v(" Set as Paid")
-              ])
+        _c("span", [_vm._v("Ronin Address: ")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-4" }, [
+            _c("span", { staticClass: "no-margin text-center" }, [
+              _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
+              _vm._v(" 8")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4" }, [
+            _c("span", { staticClass: "no-margin text-center" }, [
+              _c("b", [_vm._v("40%: ")]),
+              _vm._v(" 4 ")
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4" }, [
+            _c("span", { staticClass: "text-center" }, [
+              _c("b", [_vm._v("Total: ")]),
+              _vm._v(" 12")
             ])
           ])
         ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "ul",
-      { staticClass: "no-margin media-list media-list-with-divider mt-2" },
-      [
-        _c("li", [
-          _c("div", { staticClass: "row no-margin" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("h6", { staticClass: "no-margin" }, [
-                _vm._v("Scholar Name "),
-                _c("span", [_vm._v("(Account Name)")])
-              ]),
-              _vm._v(" "),
-              _c("span", [_vm._v("Ronin Address: ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
-                    _vm._v(" 8")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", [_vm._v("40%: ")]),
-                    _vm._v(" 4 ")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "text-center" }, [
-                    _c("b", [_vm._v("Total: ")]),
-                    _vm._v(" 12")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-1" }, [
-              _c("button", { staticClass: "btn btn-xs btn-default" }, [
-                _c("i", { staticClass: "fas fa-check" }),
-                _vm._v(" Cancel")
-              ])
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("li", [
-          _c("div", { staticClass: "row no-margin" }, [
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("h6", { staticClass: "no-margin" }, [
-                _vm._v("Scholar Name "),
-                _c("span", [_vm._v("(Account Name)")])
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "no-margin" }, [
-                _vm._v("Ronin Address: ")
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-4" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
-                    _vm._v(" 8")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "no-margin text-center" }, [
-                    _c("b", [_vm._v("40%: ")]),
-                    _vm._v(" 4 ")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-4" }, [
-                  _c("span", { staticClass: "text-center" }, [
-                    _c("b", [_vm._v("Total: ")]),
-                    _vm._v(" 12")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-3" }, [
-              _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-1" }, [
-              _c("button", { staticClass: "btn btn-xs btn-default" }, [
-                _c("i", { staticClass: "fas fa-check" }),
-                _vm._v(" Cancel")
-              ])
-            ])
-          ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-1" }, [
+        _c("button", { staticClass: "btn btn-xs btn-default" }, [
+          _c("i", { staticClass: "fas fa-check" }),
+          _vm._v(" Cancel")
         ])
-      ]
-    )
+      ])
+    ])
   }
 ]
 render._withStripped = true
@@ -102571,6 +102611,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryComponent_vue_vue_type_template_id_7297f630___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryFieldsDef.js":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryFieldsDef.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ([{
+  name: "player_name",
+  title: 'Scholar Name',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned uppercase"
+}, {
+  name: "account_name",
+  title: 'Account Name'
+}, {
+  name: "ronin_address",
+  title: 'Ronin Address'
+}, {
+  name: "total_slp",
+  title: 'Total SLP',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "txn_id",
+  title: 'TXN ID',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "created_at",
+  title: 'Date',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned",
+  formatter: function formatter(value) {
+    return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
+  }
+}, {
+  name: "actions",
+  title: "Actions",
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}]);
 
 /***/ }),
 

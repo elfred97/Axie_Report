@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Type;
+use App\Models\Payroll;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Hash;
@@ -264,5 +265,20 @@ class GlobalController extends Controller
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
+    }
+
+    public function getPayrollHistory($status, Request $request){
+        $status = ($status == 'pending') ? 0 : 1;
+        return Payroll::LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
+        ->LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
+        ->SELECT(
+            'payrolls.*',
+            DB::RAW('concat(scholars.first_name," ",scholars.last_name) as player_name'),
+            'players.account_name',
+            'players.ronin_address',
+        )
+        ->WHERE('payrolls.status', $status)
+        ->ORDERBY('payrolls.created_at', 'desc')
+        ->paginate($request->per_page);
     }
 }

@@ -100,7 +100,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('reminders/{reminder}/destroy',[ReminderController::class,'destroy']);
     Route::get('getReminder',[ReminderController::class,'index']);
 
-    
+    Route::get('getPayrollHistory/{status}', 'GlobalController@getPayrollHistory');
 });
 
 
