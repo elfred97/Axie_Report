@@ -17,7 +17,7 @@ class SendReminders extends Command
      *
      * @var string
      */
-    protected $signature = 'reminders:check-and-send {type?} : Type Id of scholars';
+    protected $signature = 'reminders:check-and-send';
 
     /**
      * The console command description.
@@ -43,13 +43,8 @@ class SendReminders extends Command
      */
     public function handle()
     {
-        $this->line('SLP Update Start: ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s'));
+        $this->line('Send Reminder Start: ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s'));
 
-        $type = $this->argument('type');
-
-        $scholars = Scholar::when($type, function ($q, $type) {
-            $q->where('type_id', '=', $type);
-        })->get();
 
         $reminders = Reminder::all();
 //        $current_date = Carbon::now();
@@ -57,16 +52,15 @@ class SendReminders extends Command
 
 //        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
 
-        if ($scholars) {
             foreach ($reminders as $reminder) {
                 $reminder_time = \Carbon\Carbon::parse($reminder->reminder_time);
                 $recurrence = $reminder->recurrence;
 
-                $this->info('Type : ' . $recurrence);
-                $this->info('once : ' . ($recurrence == Reminder::RECURRENCE_ONCE && $reminder_time->format('Y-m-d H:i') ==$current_date->format('Y-m-d H:i') ? 'true' : 'false'));
-                $this->info('daily : ' . ($recurrence == Reminder::RECURRENCE_DAILY && $reminder_time->format('H:i') ==$current_date->format('H:i')? 'true' : 'false'));
-                $this->info('weekly : ' . ($recurrence == Reminder::RECURRENCE_WEEKLY && $reminder_time->format('l H:i') ==$current_date->format('l H:i')? 'true' : 'false'));
-                $this->info('monthly : ' . ($recurrence == Reminder::RECURRENCE_MONTHLY && $reminder_time->format('d H:i') ==$current_date->format('d H:i')? 'true' : 'false'));
+//                $this->info('Type : ' . $recurrence);
+//                $this->info('once : ' . ($recurrence == Reminder::RECURRENCE_ONCE && $reminder_time->format('Y-m-d H:i') ==$current_date->format('Y-m-d H:i') ? 'true' : 'false'));
+//                $this->info('daily : ' . ($recurrence == Reminder::RECURRENCE_DAILY && $reminder_time->format('H:i') ==$current_date->format('H:i')? 'true' : 'false'));
+//                $this->info('weekly : ' . ($recurrence == Reminder::RECURRENCE_WEEKLY && $reminder_time->format('l H:i') ==$current_date->format('l H:i')? 'true' : 'false'));
+//                $this->info('monthly : ' . ($recurrence == Reminder::RECURRENCE_MONTHLY && $reminder_time->format('d H:i') ==$current_date->format('d H:i')? 'true' : 'false'));
 
                 if (
                     ($recurrence == Reminder::RECURRENCE_ONCE && $reminder_time->format('Y-m-d H:i') == $current_date->format('Y-m-d H:i'))
@@ -74,7 +68,12 @@ class SendReminders extends Command
                     || ($recurrence == Reminder::RECURRENCE_WEEKLY && $reminder_time->format('l H:i') == $current_date->format('l H:i'))
                     || ($recurrence == Reminder::RECURRENCE_MONTHLY && $reminder_time->format('d H:i') == $current_date->format('d H:i'))
                 ) {
-                    $this->info('Sending Reminder with id : ' . $reminder->id);
+//                    $this->info('Sending Reminder with id : ' . $reminder->id);
+
+                    $type = $reminder->type_id;
+                    $scholars = Scholar::when($type, function ($q, $type) {
+                        $q->where('type_id', '=', $type);
+                    })->get();
 
                     Notification::create([
                         'reminder_id' => $reminder->id,
@@ -82,6 +81,7 @@ class SendReminders extends Command
                     ]);
                     foreach ($scholars as $scholar) {
                         Mail::to($scholar->email)->send(new \App\Mail\SendEmailReminder($scholar, $reminder));
+                        $this->info('Sending Reminder with id : ' . $reminder->id . ' to ' . $scholar->email);
                     }
                 }
 
@@ -89,9 +89,7 @@ class SendReminders extends Command
 
             }
 
-        }
-
-
+        $this->line('Send Reminder End: ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s'));
         return 0;
     }
 }
