@@ -92,8 +92,6 @@
                 <p class="no-margin text-content">{{ form.ronin_wallet }}</p>
             </div>
         </div>
-        <hr>
-        <hr>
         <div class="row mt-2">
             <div class="col-md-12">
                 <p><i>Note: The default share of scholar is 30% for the first 30 days. After 30 days the scholar's share will be updated to 40%.</i></p>

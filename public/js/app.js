@@ -6707,6 +6707,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -6738,7 +6743,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('/getNotification', {
         params: {
-          date: this.date != null ? moment(this.date).format('YYYY-MM-DD') : null
+          date: this.filtersParam.date != null ? moment(this.filtersParam.date).format('L') : null
         }
       }).then(function (response) {
         _this.notificationData = response.data;
@@ -7820,8 +7825,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -73380,7 +73383,12 @@ var render = function() {
                 [
                   _vm._v("Date \n                            "),
                   _c("v-datepicker", {
-                    attrs: { range: "" },
+                    attrs: {
+                      valueType: "format",
+                      type: "date",
+                      format: "YYYY-MM-DD",
+                      range: ""
+                    },
                     on: {
                       change: function($event) {
                         return _vm.updateTable()
@@ -76594,10 +76602,6 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
     _vm._m(5),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -77610,7 +77614,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Subject")]),
+        _c("label", { attrs: { for: "" } }, [_vm._v("Title")]),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -77622,7 +77626,7 @@ var render = function() {
             }
           ],
           staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Subject" },
+          attrs: { type: "text", placeholder: "Title" },
           domProps: { value: _vm.form.title },
           on: {
             input: function($event) {
@@ -77638,7 +77642,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Message")]),
+        _c("label", { attrs: { for: "" } }, [_vm._v("Description")]),
         _vm._v(" "),
         _c("textarea", {
           directives: [
@@ -77655,7 +77659,7 @@ var render = function() {
             id: "",
             cols: "20",
             rows: "4",
-            placeholder: "Message Here"
+            placeholder: "Description Here"
           },
           domProps: { value: _vm.form.description },
           on: {
@@ -77745,7 +77749,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [
-        _c("label", { attrs: { for: "" } }, [_vm._v("Repeat")]),
+        _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
         _vm._v(" "),
         _c(
           "select",
@@ -102648,6 +102652,11 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   name: "txn_id",
   title: 'TXN ID',
+  titleClass: "text-center aligned",
+  dataClass: "text-center aligned"
+}, {
+  name: "type_name",
+  title: 'Type',
   titleClass: "text-center aligned",
   dataClass: "text-center aligned"
 }, {

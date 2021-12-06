@@ -287,11 +287,13 @@ class GlobalController extends Controller
         
         return Payroll::LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
         ->LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
+        ->LEFTJOIN('type', 'scholars.type_id', '=', 'type.id')
         ->SELECT(
             'payrolls.*',
             DB::RAW('concat(scholars.first_name," ",scholars.last_name) as player_name'),
             'players.account_name',
             'players.ronin_address',
+            'type.name as type_name'
         )
         ->WHERE($where)
         ->ORDERBY('payrolls.created_at', 'desc')

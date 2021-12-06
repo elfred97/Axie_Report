@@ -7,7 +7,12 @@
 			    <div class="row no-margin mt-2">
 					<div class="col-lg-3 col-md-3 col-sm-12">
                         <label>Date 
-                            <v-datepicker v-model="filtersParam.date" range @change="updateTable()" class=""></v-datepicker>
+                            <v-datepicker 
+                                v-model="filtersParam.date" 
+                                valueType="format" 
+                                type="date"
+                                format="YYYY-MM-DD" range 
+                                @change="updateTable()"></v-datepicker>
                         </label>
 					</div>
 				</div>
@@ -100,7 +105,7 @@ export default {
             this.axios.get('/getNotification',
 			{
 				params : {
-					date : (this.date != null) ? moment(this.date).format('YYYY-MM-DD') : null
+					date : (this.filtersParam.date != null) ? moment(this.filtersParam.date).format('L') : null
 				}
 			})
             .then((response) => {

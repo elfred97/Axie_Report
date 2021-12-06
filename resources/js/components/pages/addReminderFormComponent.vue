@@ -7,14 +7,14 @@
         </div>
         <div class="row">
             <div class="col-md-12">
-                <label for="">Subject</label>
-                <input type="text" class="form-control" placeholder="Subject" v-model="form.title">
+                <label for="">Title</label>
+                <input type="text" class="form-control" placeholder="Title" v-model="form.title">
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
-                <label for="">Message</label>
-                <textarea name="" id="" cols="20" rows="4" class="form-control" v-model="form.description" placeholder="Message Here"></textarea>
+                <label for="">Description</label>
+                <textarea name="" id="" cols="20" rows="4" class="form-control" v-model="form.description" placeholder="Description Here"></textarea>
             </div>
         </div>
         <hr>
@@ -35,7 +35,7 @@
                 </select> 
             </div>
             <div class="col-md-4">
-                <label for="">Repeat</label>
+                <label for="">Status</label>
                 <select 
                     name="data-table-default_length" 
                     aria-controls="data-table-default" 

@@ -26,6 +26,12 @@ export default [
         dataClass: "text-center aligned",
     },
     {
+        name: "type_name",
+        title: 'Type',
+        titleClass: "text-center aligned",
+        dataClass: "text-center aligned",
+    },
+    {
         name: "created_at",
         title: 'Date',
         titleClass: "text-center aligned",
