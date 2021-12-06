@@ -37,7 +37,7 @@
                                                     @change="updatePendingPayroll()"
                                                     v-model="filtersParam.month"
                                                     >
-                                                        <option :value="month" v-for="month in month">{{ month}}</option>
+                                                        <option :value="index + 1" v-for="(month, index) in month">{{ month}}</option>
                                                 </select> 
                                             </label>
                                         </div>
@@ -238,8 +238,8 @@ export default {
         }
     },
     watch : {
-        'filter.type': function(newVal){
-            this.getGraph();
+        'filtersParam.type': function(newVal){
+            this.updatePendingPayroll();
         }
     },
     methods: {

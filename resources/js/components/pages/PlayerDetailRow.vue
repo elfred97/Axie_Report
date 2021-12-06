@@ -2,11 +2,14 @@
     <div>
         <div class = "field">
             <div class = "row">
-                <div class = "col-md-6">
+                <div class = "col-md-4">
                     <p class="no-margin"><b>Date Started: </b> {{ rowData.date_started | formatDate }}</p>
                 </div>
-                <div class = "col-md-6">
+                <div class = "col-md-4">
                     <p class="no-margin"><b>Market Place Email: </b> {{ rowData.market_place_email }}</p>
+                </div>
+                <div class = "col-md-4">
+                    <p class="no-margin"><b>Market Place Password: </b> {{ rowData.password }}</p>
                 </div>
             </div>
         </div>

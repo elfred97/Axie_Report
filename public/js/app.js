@@ -7500,8 +7500,8 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   watch: {
-    'filter.type': function filterType(newVal) {
-      this.getGraph();
+    'filtersParam.type': function filtersParamType(newVal) {
+      this.updatePendingPayroll();
     }
   },
   methods: {
@@ -7820,8 +7820,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -71319,6 +71317,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: {
         rowData: {
@@ -74738,10 +74739,10 @@ var render = function() {
                                     ]
                                   }
                                 },
-                                _vm._l(_vm.month, function(month) {
+                                _vm._l(_vm.month, function(month, index) {
                                   return _c(
                                     "option",
-                                    { domProps: { value: month } },
+                                    { domProps: { value: index + 1 } },
                                     [_vm._v(_vm._s(month))]
                                   )
                                 }),
@@ -75750,17 +75751,24 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "field" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "col-md-4" }, [
           _c("p", { staticClass: "no-margin" }, [
             _c("b", [_vm._v("Date Started: ")]),
             _vm._v(" " + _vm._s(_vm._f("formatDate")(_vm.rowData.date_started)))
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "col-md-4" }, [
           _c("p", { staticClass: "no-margin" }, [
             _c("b", [_vm._v("Market Place Email: ")]),
             _vm._v(" " + _vm._s(_vm.rowData.market_place_email))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-4" }, [
+          _c("p", { staticClass: "no-margin" }, [
+            _c("b", [_vm._v("Market Place Password: ")]),
+            _vm._v(" " + _vm._s(_vm.rowData.password))
           ])
         ])
       ])
@@ -76235,6 +76243,50 @@ var render = function() {
               domProps: { innerHTML: _vm._s(_vm.form.errors.get("username")) }
             })
           : _vm._e()
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _vm.scholarData.id != null
+          ? _c("label", { attrs: { for: "" } }, [_vm._v("Update Password")])
+          : _c("label", { attrs: { for: "" } }, [_vm._v("New Password")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.email_password,
+              expression: "form.email_password"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "password",
+            name: "password",
+            id: "password",
+            placeholder: "Input new password to reset"
+          },
+          domProps: { value: _vm.form.email_password },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "email_password", $event.target.value)
+            }
+          }
+        }),
+        _vm._v(" "),
+        _vm.form.errors.has("email_password")
+          ? _c("div", {
+              staticClass: "text-danger text-bold",
+              domProps: {
+                innerHTML: _vm._s(_vm.form.errors.get("email_password"))
+              }
+            })
+          : _vm._e(),
+        _vm._v(" "),
+        _c("small", [_vm._v("Input new password to change password")])
       ])
     ]),
     _vm._v(" "),
@@ -76543,52 +76595,6 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("hr"),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-4" }, [
-        _vm.scholarData.id != null
-          ? _c("label", { attrs: { for: "" } }, [_vm._v("Update Password")])
-          : _c("label", { attrs: { for: "" } }, [_vm._v("New Password")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.form.email_password,
-              expression: "form.email_password"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "password",
-            name: "password",
-            id: "password",
-            placeholder: "Input new password to reset"
-          },
-          domProps: { value: _vm.form.email_password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.form, "email_password", $event.target.value)
-            }
-          }
-        }),
-        _vm._v(" "),
-        _vm.form.errors.has("email_password")
-          ? _c("div", {
-              staticClass: "text-danger text-bold",
-              domProps: {
-                innerHTML: _vm._s(_vm.form.errors.get("email_password"))
-              }
-            })
-          : _vm._e(),
-        _vm._v(" "),
-        _c("small", [_vm._v("Input new password to change password")])
-      ])
-    ]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
@@ -102870,12 +102876,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 //   titleClass: 'center aligned',
 //   dataClass: 'center aligned',
 // },
+// {
+//   name : "password",
+//   title: 'Market Place Password',
+//   titleClass: 'center aligned',
+//   dataClass: 'center aligned',
+// },
 {
-  name: "password",
-  title: 'Market Place Password',
-  titleClass: 'center aligned',
-  dataClass: 'center aligned'
-}, {
   name: "status",
   title: 'Status',
   titleClass: 'center aligned',

@@ -269,6 +269,22 @@ class GlobalController extends Controller
 
     public function getPayrollHistory($status, Request $request){
         $status = ($status == 'pending') ? 0 : 1;
+        $year  = $request->year;
+        $month = $request->month;
+        $type  = $request->type;
+        $where = [];
+
+        array_push($where, ['payrolls.status', '=', $status]);
+
+        if ($year)
+            array_push($where, [DB::raw('YEAR(payrolls.created_at)'), '=', $year]);
+
+        if ($month)
+            array_push($where, [DB::raw('MONTH(payrolls.created_at)'), '=', $month]);
+
+        if ($type)
+            array_push($where, ['scholars.type_id', '=', $type]);
+        
         return Payroll::LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
         ->LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
         ->SELECT(
@@ -277,7 +293,7 @@ class GlobalController extends Controller
             'players.account_name',
             'players.ronin_address',
         )
-        ->WHERE('payrolls.status', $status)
+        ->WHERE($where)
         ->ORDERBY('payrolls.created_at', 'desc')
         ->paginate($request->per_page);
     }

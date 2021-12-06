@@ -64,6 +64,7 @@ class HomeController extends Controller
                 'type.name as type'
             )
             ->where($where)
+            ->ORDERBY('scholars.id', 'desc')
             ->PAGINATE($request->per_page);
     }
     public function save(Request $request){

@@ -33,6 +33,7 @@ class PlayerController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->WHERE($where)
+            ->ORDERBY('players.id', 'desc')
             ->PAGINATE($request->per_page);
     }
     public function getAllPlayers(){

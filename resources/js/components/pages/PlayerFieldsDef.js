@@ -71,12 +71,12 @@ export default [
     //   titleClass: 'center aligned',
     //   dataClass: 'center aligned',
     // },
-    {
-      name : "password",
-      title: 'Market Place Password',
-      titleClass: 'center aligned',
-      dataClass: 'center aligned',
-    },
+    // {
+    //   name : "password",
+    //   title: 'Market Place Password',
+    //   titleClass: 'center aligned',
+    //   dataClass: 'center aligned',
+    // },
     {
       name : "status",
       title: 'Status',
