@@ -252,13 +252,6 @@ class HomeController extends Controller
             if(!empty($payroll))
                 $payroll->DELETE();
 
-            $scholar = Scholar::UPDATEORCREATE(
-                ['username' => $username],
-                [                    
-                    'ronin_wallet'       => $request->ronin_wallet,
-                ]
-            );    
-
             if ($scholar->DELETE())
 				return response()->json(['message' => 'Scholar Removed'], 200);
 			else
