@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\report as ReportModel;
 use App\Models\Player;
+use App\Models\Payroll;
 use App\Imports\PlayerImport;
 use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
@@ -99,6 +100,11 @@ class PlayerController extends Controller
         $history = PlayerScholarHistory::WHERE('player_id', $id)->FIRST();
         if(!empty($history))
             $history->DELETE();
+
+        $payroll = Payroll::where('player_id', $id)->FIRST();
+
+        if(!empty($payroll))
+            $payroll->DELETE();
         
         if(empty($player))
             return response()->json(['message' => 'Invalid Reference Key'], 422);
