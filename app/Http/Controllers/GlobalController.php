@@ -141,7 +141,7 @@ class GlobalController extends Controller
     public function deleteUser(Request $request){
         try {
             $user = User::UPDATEORCREATE(
-                [ 'username' => $request->username ],
+                [ 'id' => $request->id ],
                 [
                     'status'      => 3,
                 ]
@@ -298,5 +298,18 @@ class GlobalController extends Controller
         ->WHERE($where)
         ->ORDERBY('payrolls.created_at', 'desc')
         ->paginate($request->per_page);
+    }
+
+    public function getScholarPayrollHistory(Request $request){
+        $username = Auth::user()->username;
+        return Payroll::LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
+                ->LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
+                ->SELECT(
+                    'payrolls.*',
+                    'players.account_name as account_name'
+                )
+                ->WHERE('scholars.username', $username)
+                ->ORDERBY('payrolls.id', 'desc')
+                ->GET();
     }
 }

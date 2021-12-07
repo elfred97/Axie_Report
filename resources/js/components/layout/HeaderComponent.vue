@@ -61,7 +61,7 @@
                                 <div class="dropdown-menu media-list dropdown-menu-cart p-0">
                                     <div v-if="getGuardType == 'admins'">
                                         <div class="dropdown-header">Not meeting SLP quota</div>
-                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData">
+                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification">
                                             <div class="media-left">
                                                 <i class="fa fa-exclamation-triangle media-object bg-silver-darker"></i>
                                             </div>
@@ -72,7 +72,7 @@
                                             </div>
                                         </a>
                                     </div>
-                                    <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData">
+                                    <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData" @click="gotoNotification">
                                         <div class="media-left">
                                             <i class="fa fa-bullhorn media-object bg-silver-darker"></i>
                                         </div>
@@ -164,8 +164,14 @@ export default {
             }
         },
         gotoNotification(){
-            let routeData = this.$router.resolve({name: 'notification'}); 
-            window.open(routeData.href, '_blank');
+            let url = '';
+            if(this.$store.state.global_guard_type == 'admins'){
+                url = '/notification';
+            }
+            else{
+                url = '/scholar_notification'
+            }
+            window.open(url, '_self'); 
         },
         getAnnouncement(){
             let account_type = this.$store.state.global_guard_type;
@@ -177,7 +183,7 @@ export default {
             .catch( error => {
                 console.log(error.response.data);
             })
-        }
+        },
     },
     created(){
         this.getNotification();

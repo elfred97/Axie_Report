@@ -41,7 +41,7 @@
                                         <button class="btn btn-xs btn-default" @click="$root.$emit('showDialog', true, 'newUser-form', 'Update Users Info', '50%', user)">
                                             <i class="fas fa-pencil-alt"></i>
                                             Edit</button>
-                                        <button class="btn btn-xs btn-default text-danger" @click="deleteUser(user.username)">
+                                        <button class="btn btn-xs btn-default text-danger" @click="deleteUser(user.id)">
                                             <i class="fas fa-trash"></i>
                                             Delete</button>
                                     </div>
@@ -89,11 +89,11 @@ export default {
                 console.log(error.response.data)
             })
         },
-        deleteUser(username){
+        deleteUser(id){
             this.$alertify.confirmWithTitle("Delete", "Are you sure to delete this user?", 
             ()=> {
                 this.axios.post('/deleteUser', {
-                    username : username
+                    id : id
                 })
                 .then((response) => {
                     this.getUsers();

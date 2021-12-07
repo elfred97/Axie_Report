@@ -49,7 +49,8 @@ Route::middleware(['auth:scholars'])->group(function(){
     Route::get('getScholarReport', [HomeController::class, 'getScholarReport'])->name('scholar.getScholarReport');
     Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
     Route::post('updateRoninWallet', [HomeController::class, 'updateRoninWallet'])->name('scholar.updateRoninWallet');
-    Route::get('/getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');
+    Route::get('getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');
+    Route::get('getScholarPayrollHistory', 'GlobalController@getScholarPayrollHistory');
 });
 
 Route::middleware(['auth:admins'])->group(function(){
