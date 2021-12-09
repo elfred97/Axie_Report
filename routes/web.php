@@ -102,6 +102,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('getReminder',[ReminderController::class,'index']);
 
     Route::get('getPayrollHistory/{status}', 'GlobalController@getPayrollHistory');
+    Route::post('updatePayrollHistory', 'GlobalController@updatePayrollHistory');
 });
 
 
