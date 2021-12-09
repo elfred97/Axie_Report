@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use App\Models\Report;
 use App\Models\Player;
 use App\Models\Scholar;
+use App\Models\Payroll;
 use Illuminate\Http\Request;
 use App\Imports\ScholarImport;
 use App\Models\PlayerScholarHistory;
@@ -243,10 +244,13 @@ class HomeController extends Controller
             return response()->json(['message' => 'Invalid Reference Key'], 422);
         try{
             $history = PlayerScholarHistory::WHERE('scholar_id', $id)->FIRST();
+            $payroll = Payroll::WHERE('scholar_id', $id)->FIRST();
 
             if(!empty($history))
                 $history->DELETE();
 
+            if(!empty($payroll))
+                $payroll->DELETE();
 
             if ($scholar->DELETE())
 				return response()->json(['message' => 'Scholar Removed'], 200);

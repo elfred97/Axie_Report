@@ -24,9 +24,9 @@ class CreatePayroll extends Migration
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
             $table->foreign('scholar_id')->nullable()
-                ->references('id')->on('scholars');
+                ->references('id')->on('scholars')->onDelete('cascade');
             $table->foreign('player_id')->nullable()
-                ->references('id')->on('players');
+                ->references('id')->on('players')->onDelete('cascade');
         });
     }
 

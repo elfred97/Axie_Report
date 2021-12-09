@@ -5877,10 +5877,15 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     gotoNotification: function gotoNotification() {
-      var routeData = this.$router.resolve({
-        name: 'notification'
-      });
-      window.open(routeData.href, '_blank');
+      var url = '';
+
+      if (this.$store.state.global_guard_type == 'admins') {
+        url = '/notification';
+      } else {
+        url = '/scholar_notification';
+      }
+
+      window.open(url, '_self');
     },
     getAnnouncement: function getAnnouncement() {
       var _this3 = this;
@@ -8481,12 +8486,12 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response.data);
       });
     },
-    deleteUser: function deleteUser(username) {
+    deleteUser: function deleteUser(id) {
       var _this2 = this;
 
       this.$alertify.confirmWithTitle("Delete", "Are you sure to delete this user?", function () {
         _this2.axios.post('/deleteUser', {
-          username: username
+          id: id
         }).then(function (response) {
           _this2.getUsers();
 
@@ -9670,6 +9675,94 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      announcementsData: {}
+    };
+  },
+  methods: {
+    getNotification: function getNotification() {
+      var _this = this;
+
+      var account_type = this.$store.state.global_guard_type;
+      this.axios.get('notifications/' + account_type).then(function (response) {
+        // console.log(response.data);
+        _this.announcementsData = response.data;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getNotification();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Payroll/ScholarPayrollComponent.vue?vue&type=script&lang=js& ***!
@@ -9733,80 +9826,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
-    return {};
+    return {
+      payrolls: {}
+    };
+  },
+  methods: {
+    getPayrollHistory: function getPayrollHistory() {
+      var _this = this;
+
+      this.axios.get('getScholarPayrollHistory').then(function (response) {
+        _this.payrolls = response.data;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getPayrollHistory();
   }
 });
 
@@ -72152,7 +72188,8 @@ var render = function() {
                                 "a",
                                 {
                                   staticClass: "dropdown-item media",
-                                  attrs: { href: "javascript:;" }
+                                  attrs: { href: "javascript:;" },
+                                  on: { click: _vm.gotoNotification }
                                 },
                                 [
                                   _vm._m(2, true),
@@ -72204,7 +72241,8 @@ var render = function() {
                         "a",
                         {
                           staticClass: "dropdown-item media",
-                          attrs: { href: "javascript:;" }
+                          attrs: { href: "javascript:;" },
+                          on: { click: _vm.gotoNotification }
                         },
                         [
                           _vm._m(3, true),
@@ -77548,7 +77586,7 @@ var render = function() {
                           staticClass: "btn btn-xs btn-default text-danger",
                           on: {
                             click: function($event) {
-                              return _vm.deleteUser(user.username)
+                              return _vm.deleteUser(user.id)
                             }
                           }
                         },
@@ -79554,9 +79592,144 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div")
+  return _c("div", [
+    _c("div", { staticClass: "section-container" }, [
+      _c("div", { staticClass: "row no-margin" }, [
+        _c("div", { staticClass: "col-md-10 offset-md-1" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("h3", [_vm._v("Announcement")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "vertical-box-row" }, [
+              _c("div", { staticClass: "vertical-box-cell" }, [
+                _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "slimScrollDiv inbox",
+                      staticStyle: {
+                        position: "relative",
+                        overflow: "hidden",
+                        width: "auto",
+                        height: "100%"
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            overflow: "hidden",
+                            width: "auto",
+                            height: "100%"
+                          },
+                          attrs: {
+                            "data-scrollbar": "true",
+                            "data-height": "100%",
+                            "data-init": "true"
+                          }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "list-group list-group-lg no-radius list-email"
+                            },
+                            _vm._l(_vm.announcementsData, function(
+                              announcement
+                            ) {
+                              return _c(
+                                "li",
+                                { staticClass: "list-group-item unread" },
+                                [
+                                  _vm._m(0, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "email-info" }, [
+                                    _c(
+                                      "a",
+                                      { attrs: { href: "email_detail.html" } },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-title" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(announcement.title) +
+                                                "\n                                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-desc" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(
+                                                  announcement.description
+                                                ) +
+                                                "\n                                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-time" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(
+                                                  _vm._f("formatDate")(
+                                                    announcement.created_at
+                                                  )
+                                                ) +
+                                                "\n                                                        "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  ])
+                                ]
+                              )
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "email-user bg-blue",
+        attrs: { href: "email_detail.html" }
+      },
+      [
+        _c("span", { staticClass: "text-white" }, [
+          _c("i", { staticClass: "fas fa-bullhorn" })
+        ])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -79578,454 +79751,147 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("div", { staticClass: "section-container" }, [
-        _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "vertical-box-row" }, [
-            _c("div", { staticClass: "vertical-box-cell" }, [
-              _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "slimScrollDiv inbox",
-                    staticStyle: {
-                      position: "relative",
-                      overflow: "hidden",
-                      width: "auto",
-                      height: "100%"
-                    }
-                  },
-                  [
-                    _c(
-                      "div",
-                      {
-                        staticStyle: {
-                          overflow: "hidden",
-                          width: "auto",
-                          height: "100%"
-                        },
-                        attrs: {
-                          "data-scrollbar": "true",
-                          "data-height": "100%",
-                          "data-init": "true"
-                        }
-                      },
-                      [
-                        _c(
-                          "ul",
-                          {
-                            staticClass:
-                              "list-group list-group-lg no-radius list-email"
+  return _c("div", [
+    _c("div", { staticClass: "section-container" }, [
+      _c("div", { staticClass: "row no-margin" }, [
+        _c("div", { staticClass: "col-md-10 offset-md-1" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("h3", [_vm._v("Payroll History")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "vertical-box-row" }, [
+              _c("div", { staticClass: "vertical-box-cell" }, [
+                _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "slimScrollDiv inbox",
+                      staticStyle: {
+                        position: "relative",
+                        overflow: "hidden",
+                        width: "auto",
+                        height: "100%"
+                      }
+                    },
+                    [
+                      _c(
+                        "div",
+                        {
+                          staticStyle: {
+                            overflow: "hidden",
+                            width: "auto",
+                            height: "100%"
                           },
-                          [
-                            _c(
-                              "li",
-                              { staticClass: "list-group-item unread" },
-                              [
-                                _c("div", { staticClass: "email-checkbox" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "custom-control custom-checkbox"
-                                    },
-                                    [
-                                      _c("input", {
-                                        staticClass: "custom-control-input",
-                                        attrs: {
-                                          type: "checkbox",
-                                          "data-checked": "email-checkbox",
-                                          id: "emailCheckbox1"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("label", {
-                                        staticClass: "custom-control-label",
-                                        attrs: { for: "emailCheckbox1" }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "email-user bg-blue",
-                                    attrs: { href: "email_detail.html" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "text-white" }, [
-                                      _vm._v("F")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "email-info" }, [
-                                  _c(
-                                    "a",
-                                    { attrs: { href: "email_detail.html" } },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-sender" },
-                                        [_vm._v("Facebook Blueprint")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-title" },
-                                        [
-                                          _vm._v(
-                                            "Newly released courses, holiday marketing tips, how-to video, and more!"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-desc" },
-                                        [
-                                          _vm._v(
-                                            "Sed scelerisque dui lacus, quis pellentesque lorem tincidunt rhoncus. Nulla accumsan elit pharetra, lacinia turpis nec, varius erat."
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-time" },
-                                        [_vm._v("Today")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "li",
-                              { staticClass: "list-group-item unread" },
-                              [
-                                _c("div", { staticClass: "email-checkbox" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "custom-control custom-checkbox"
-                                    },
-                                    [
-                                      _c("input", {
-                                        staticClass: "custom-control-input",
-                                        attrs: {
-                                          type: "checkbox",
-                                          "data-checked": "email-checkbox",
-                                          id: "emailCheckbox2"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("label", {
-                                        staticClass: "custom-control-label",
-                                        attrs: { for: "emailCheckbox2" }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "email-user bg-indigo",
-                                    attrs: { href: "email_detail.html" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "text-white" }, [
-                                      _vm._v("C")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "email-info" }, [
-                                  _c(
-                                    "a",
-                                    { attrs: { href: "email_detail.html" } },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-sender" },
-                                        [_vm._v("Color Admin")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-title" },
-                                        [
-                                          _vm._v(
-                                            "Color Admin dashboard v2 is ready for live"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-desc" },
-                                        [
-                                          _vm._v(
-                                            "Proin interdum aliquam urna, quis lobortis magna tincidunt ac. Integer sed pulvinar neque..."
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-time" },
-                                        [_vm._v("Today")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "li",
-                              { staticClass: "list-group-item unread" },
-                              [
-                                _c("div", { staticClass: "email-checkbox" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "custom-control custom-checkbox"
-                                    },
-                                    [
-                                      _c("input", {
-                                        staticClass: "custom-control-input",
-                                        attrs: {
-                                          type: "checkbox",
-                                          "data-checked": "email-checkbox",
-                                          id: "emailCheckbox3"
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c("label", {
-                                        staticClass: "custom-control-label",
-                                        attrs: { for: "emailCheckbox3" }
-                                      })
-                                    ]
-                                  )
-                                ]),
-                                _vm._v(" "),
-                                _c(
-                                  "a",
-                                  {
-                                    staticClass: "email-user bg-grey",
-                                    attrs: { href: "email_detail.html" }
-                                  },
-                                  [
-                                    _c("span", { staticClass: "text-white" }, [
-                                      _vm._v("W")
-                                    ])
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "email-info" }, [
-                                  _c(
-                                    "a",
-                                    { attrs: { href: "email_detail.html" } },
-                                    [
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-sender" },
-                                        [_vm._v("support@wrapbootstrap.com")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-title" },
-                                        [
-                                          _vm._v(
-                                            "Bootstrap v4.0 is coming soon"
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-desc" },
-                                        [
-                                          _vm._v(
-                                            "Praesent id pulvinar orci. Donec ac metus non ligula faucibus venenatis. Suspendisse tortor est, placerat eu dui sed..."
-                                          )
-                                        ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c(
-                                        "span",
-                                        { staticClass: "email-time" },
-                                        [_vm._v("Today")]
-                                      )
-                                    ]
-                                  )
-                                ])
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("div", { staticClass: "email-checkbox" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "custom-control custom-checkbox"
-                                  },
-                                  [
-                                    _c("input", {
-                                      staticClass: "custom-control-input",
-                                      attrs: {
-                                        type: "checkbox",
-                                        "data-checked": "email-checkbox",
-                                        id: "emailCheckbox4"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("label", {
-                                      staticClass: "custom-control-label",
-                                      attrs: { for: "emailCheckbox4" }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "email-user bg-grey",
-                                  attrs: { href: "email_detail.html" }
-                                },
+                          attrs: {
+                            "data-scrollbar": "true",
+                            "data-height": "100%",
+                            "data-init": "true"
+                          }
+                        },
+                        [
+                          _c(
+                            "ul",
+                            {
+                              staticClass:
+                                "list-group list-group-lg no-radius list-email"
+                            },
+                            _vm._l(_vm.payrolls, function(payroll) {
+                              return _c(
+                                "li",
+                                { staticClass: "list-group-item unread" },
                                 [
-                                  _c("i", {
-                                    staticClass: "fab fa-github-alt text-white"
-                                  })
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "email-info" }, [
-                                _c(
-                                  "a",
-                                  { attrs: { href: "email_detail.html" } },
-                                  [
+                                  _c("div", { staticClass: "email-info" }, [
                                     _c(
-                                      "span",
-                                      { staticClass: "email-sender" },
-                                      [_vm._v("Github")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "email-title" }, [
-                                      _vm._v("Sidebar animation bugfix")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "email-desc" }, [
-                                      _vm._v(
-                                        "Nam sit amet lacinia massa, sit amet blandit urna. Duis pharetra ex id ipsum posuere..."
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "email-time" }, [
-                                      _vm._v("2 days ago")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _c("li", { staticClass: "list-group-item" }, [
-                              _c("div", { staticClass: "email-checkbox" }, [
-                                _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "custom-control custom-checkbox"
-                                  },
-                                  [
-                                    _c("input", {
-                                      staticClass: "custom-control-input",
-                                      attrs: {
-                                        type: "checkbox",
-                                        "data-checked": "email-checkbox",
-                                        id: "emailCheckbox5"
-                                      }
-                                    }),
-                                    _vm._v(" "),
-                                    _c("label", {
-                                      staticClass: "custom-control-label",
-                                      attrs: { for: "emailCheckbox5" }
-                                    })
-                                  ]
-                                )
-                              ]),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "email-user bg-grey",
-                                  attrs: { href: "email_detail.html" }
-                                },
-                                [
-                                  _c("span", { staticClass: "text-white" }, [
-                                    _vm._v("W")
+                                      "a",
+                                      { attrs: { href: "email_detail.html" } },
+                                      [
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-sender" },
+                                          [_vm._v(_vm._s(payroll.account_name))]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-title" },
+                                          [
+                                            _c("b", [_vm._v("TX ID:")]),
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(payroll.txn_id) +
+                                                "\n                                                        "
+                                            )
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-desc" },
+                                          [
+                                            _c("div", { staticClass: "row" }, [
+                                              _c(
+                                                "div",
+                                                { staticClass: "col-md-6" },
+                                                [
+                                                  _c("b", [
+                                                    _vm._v("Total SLP: ")
+                                                  ]),
+                                                  _vm._v(
+                                                    _vm._s(payroll.total_slp)
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "div",
+                                                { staticClass: "col-md-6" },
+                                                [
+                                                  _c("b", [_vm._v("Status: ")]),
+                                                  _vm._v(
+                                                    _vm._s(payroll.total_slp)
+                                                  )
+                                                ]
+                                              )
+                                            ])
+                                          ]
+                                        ),
+                                        _vm._v(" "),
+                                        _c(
+                                          "span",
+                                          { staticClass: "email-time" },
+                                          [
+                                            _vm._v(
+                                              "\n                                                            " +
+                                                _vm._s(
+                                                  _vm._f("formatDate")(
+                                                    payroll.created_at
+                                                  )
+                                                ) +
+                                                "\n                                                        "
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
                                   ])
                                 ]
-                              ),
-                              _vm._v(" "),
-                              _c("div", { staticClass: "email-info" }, [
-                                _c(
-                                  "a",
-                                  { attrs: { href: "email_detail.html" } },
-                                  [
-                                    _c(
-                                      "span",
-                                      { staticClass: "email-sender" },
-                                      [_vm._v("Wrapbootstrap")]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "email-title" }, [
-                                      _vm._v("Bootstrap Framework is awesome")
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "email-desc" }, [
-                                      _vm._v(
-                                        "Etiam enim ipsum, malesuada in consectetur interdum, malesuada et lacus. Aenean faucibus turpis lorem..."
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("span", { staticClass: "email-time" }, [
-                                      _vm._v("1 week ago")
-                                    ])
-                                  ]
-                                )
-                              ])
-                            ])
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
+                              )
+                            }),
+                            0
+                          )
+                        ]
+                      )
+                    ]
+                  )
+                ])
               ])
             ])
           ])
         ])
       ])
     ])
-  }
-]
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -104493,15 +104359,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScholarNotificationComponent_vue_vue_type_template_id_10c36951___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarNotificationComponent.vue?vue&type=template&id=10c36951& */ "./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=template&id=10c36951&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ScholarNotificationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarNotificationComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarNotificationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ScholarNotificationComponent_vue_vue_type_template_id_10c36951___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ScholarNotificationComponent_vue_vue_type_template_id_10c36951___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -104515,6 +104383,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarNotificationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarNotificationComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarNotificationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
