@@ -7471,6 +7471,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  // import FieldsDef from "./ImportedFieldsDef.js";
 
@@ -7504,6 +7521,12 @@ __webpack_require__.r(__webpack_exports__);
         type: '',
         search: ''
       },
+      filtersParam_paid: {
+        month: '',
+        year: '',
+        type: '',
+        search: ''
+      },
       year: [2020, 2021],
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       payrollData: {}
@@ -7515,15 +7538,35 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    updatePendingPayroll: function updatePendingPayroll() {
+    updatePayroll: function updatePayroll(status, data) {
       var _this = this;
 
+      this.axios.post('updatePayrollHistory', {
+        id: data.id,
+        status: status
+      }).then(function (response) {
+        _this.updatePendingPayroll();
+      });
+    },
+    updatePendingPayroll: function updatePendingPayroll() {
+      var _this2 = this;
+
       Vue.nextTick(function () {
-        return _this.$refs.pending_payroll.refresh();
+        return _this2.$refs.pending_payroll.refresh();
       });
     },
     onChangePagePending: function onChangePagePending(page) {
       this.$refs.pending_payroll.changePage(page);
+    },
+    updatePaidPayroll: function updatePaidPayroll() {
+      var _this3 = this;
+
+      Vue.nextTick(function () {
+        return _this3.$refs.paid_payroll.refresh();
+      });
+    },
+    onChangePagePaid: function onChangePagePaid(page) {
+      this.$refs.paid_payroll.changePage(page);
     }
   }
 });
@@ -74967,7 +75010,7 @@ var render = function() {
                                           on: {
                                             click: function($event) {
                                               return _vm.updatePayroll(
-                                                "pending",
+                                                1,
                                                 props.rowData
                                               )
                                             }
@@ -75048,8 +75091,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.filtersParam.year,
-                                      expression: "filtersParam.year"
+                                      value: _vm.filtersParam_paid.year,
+                                      expression: "filtersParam_paid.year"
                                     }
                                   ],
                                   staticClass:
@@ -75073,7 +75116,7 @@ var render = function() {
                                             return val
                                           })
                                         _vm.$set(
-                                          _vm.filtersParam,
+                                          _vm.filtersParam_paid,
                                           "year",
                                           $event.target.multiple
                                             ? $$selectedVal
@@ -75081,7 +75124,7 @@ var render = function() {
                                         )
                                       },
                                       function($event) {
-                                        return _vm.updatePendingPayroll()
+                                        return _vm.updatePaidPayroll()
                                       }
                                     ]
                                   }
@@ -75119,8 +75162,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.filtersParam.month,
-                                      expression: "filtersParam.month"
+                                      value: _vm.filtersParam_paid.month,
+                                      expression: "filtersParam_paid.month"
                                     }
                                   ],
                                   staticClass:
@@ -75144,7 +75187,7 @@ var render = function() {
                                             return val
                                           })
                                         _vm.$set(
-                                          _vm.filtersParam,
+                                          _vm.filtersParam_paid,
                                           "month",
                                           $event.target.multiple
                                             ? $$selectedVal
@@ -75152,7 +75195,7 @@ var render = function() {
                                         )
                                       },
                                       function($event) {
-                                        return _vm.updatePendingPayroll()
+                                        return _vm.updatePaidPayroll()
                                       }
                                     ]
                                   }
@@ -75176,10 +75219,10 @@ var render = function() {
                         { staticClass: "col-md-2" },
                         [
                           _c("type-component", {
-                            attrs: { type: _vm.filtersParam.type },
+                            attrs: { type: _vm.filtersParam_paid.type },
                             on: {
                               updateType: function($event) {
-                                _vm.filtersParam.type = $event
+                                _vm.filtersParam_paid.type = $event
                               }
                             }
                           })
@@ -75204,8 +75247,8 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.filtersParam.search,
-                                    expression: "filtersParam.search"
+                                    value: _vm.filtersParam_paid.search,
+                                    expression: "filtersParam_paid.search"
                                   }
                                 ],
                                 staticClass:
@@ -75214,15 +75257,17 @@ var render = function() {
                                   type: "text",
                                   placeholder: "Search scholar name"
                                 },
-                                domProps: { value: _vm.filtersParam.search },
+                                domProps: {
+                                  value: _vm.filtersParam_paid.search
+                                },
                                 on: {
-                                  change: _vm.updatePendingPayroll,
+                                  change: _vm.updatePaidPayroll,
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
                                     _vm.$set(
-                                      _vm.filtersParam,
+                                      _vm.filtersParam_paid,
                                       "search",
                                       $event.target.value
                                     )
@@ -75235,19 +75280,118 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
-                    _c(
-                      "ul",
-                      {
-                        staticClass:
-                          "no-margin media-list media-list-with-divider mt-2"
-                      },
-                      _vm._l(_vm.payrollData, function(payroll) {
-                        return payroll.status == 1
-                          ? _c("li", [_vm._m(1, true)])
-                          : _vm._e()
-                      }),
-                      0
-                    )
+                    _c("div", { staticClass: "row mt-2" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-lg-12 col-md-12 col-sm-12" },
+                        [
+                          _c("loading", {
+                            attrs: {
+                              active: _vm.isLoading,
+                              "can-cancel": true,
+                              "on-cancel": _vm.onCancel,
+                              "is-full-page": _vm.fullPage
+                            },
+                            on: {
+                              "update:active": function($event) {
+                                _vm.isLoading = $event
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "vuetable",
+                            {
+                              ref: "paid_payroll",
+                              attrs: {
+                                "api-url": "/getPayrollHistory/paid",
+                                fields: _vm.fields,
+                                css: _vm.css,
+                                "per-page": _vm.perPage,
+                                "append-params": _vm.filtersParam_paid,
+                                "data-path": "data",
+                                "pagination-path": "",
+                                "sort-order": _vm.sortOrder
+                              },
+                              on: {
+                                "vuetable:pagination-data":
+                                  _vm.onPaginationData,
+                                "vuetable:row-clicked": _vm.onCellClicked,
+                                "vuetable:loading": _vm.onLoading,
+                                "vuetable:loaded": _vm.onLoaded
+                              },
+                              scopedSlots: _vm._u([
+                                {
+                                  key: "mmr_field",
+                                  fn: function(props) {
+                                    return [
+                                      _c("div", [
+                                        props.rowData.mmr < _vm.lowest_mmr
+                                          ? _c(
+                                              "span",
+                                              { staticClass: "text-danger" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(props.rowData.mmr) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                          : _c(
+                                              "span",
+                                              { staticClass: "text-default" },
+                                              [
+                                                _vm._v(
+                                                  "\n                                                    " +
+                                                    _vm._s(props.rowData.mmr) +
+                                                    "\n                                                "
+                                                )
+                                              ]
+                                            )
+                                      ])
+                                    ]
+                                  }
+                                }
+                              ])
+                            },
+                            [
+                              _vm._v(
+                                "\n                                        >\n                                        "
+                              )
+                            ]
+                          )
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6" },
+                        [
+                          _c("vuetable-pagination-info", {
+                            ref: "paginationInfo"
+                          })
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6 text-right" },
+                        [
+                          _c("vuetable-pagination", {
+                            ref: "pagination",
+                            attrs: { css: _vm.css.pagination },
+                            on: {
+                              "vuetable-pagination:change-page":
+                                _vm.onChangePagePaid
+                            }
+                          })
+                        ],
+                        1
+                      )
+                    ])
                   ]
                 )
               ]
@@ -75307,57 +75451,6 @@ var staticRenderFns = [
         ])
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row no-margin" }, [
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("h6", { staticClass: "no-margin" }, [
-          _vm._v("Scholar Name "),
-          _c("span", [_vm._v("(Account Name)")])
-        ]),
-        _vm._v(" "),
-        _c("span", [_vm._v("Ronin Address: ")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-4" }, [
-            _c("span", { staticClass: "no-margin text-center" }, [
-              _c("b", { attrs: { for: "" } }, [_vm._v("30%: ")]),
-              _vm._v(" 8")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4" }, [
-            _c("span", { staticClass: "no-margin text-center" }, [
-              _c("b", [_vm._v("40%: ")]),
-              _vm._v(" 4 ")
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-4" }, [
-            _c("span", { staticClass: "text-center" }, [
-              _c("b", [_vm._v("Total: ")]),
-              _vm._v(" 12")
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("p", { staticClass: "no-margin" }, [_vm._v("TX ID: ")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-1" }, [
-        _c("button", { staticClass: "btn btn-xs btn-default" }, [
-          _c("i", { staticClass: "fas fa-check" }),
-          _vm._v(" Cancel")
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true

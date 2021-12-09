@@ -301,7 +301,7 @@ class GlobalController extends Controller
     }
 
     public function getScholarPayrollHistory(Request $request){
-        $username = Auth::user()->username;
+        $username = Auth::user()->username;        
         return Payroll::LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
                 ->LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
                 ->SELECT(
@@ -311,5 +311,23 @@ class GlobalController extends Controller
                 ->WHERE('scholars.username', $username)
                 ->ORDERBY('payrolls.id', 'desc')
                 ->GET();
+    }
+
+    public function updatePayrollHistory(Request $request){
+        try{
+            $payroll = Payroll::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'status'      => $request->status,
+                ]
+            );
+            if($payroll)
+                return response()->json(['message' => 'Payroll paid'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
     }
 }
