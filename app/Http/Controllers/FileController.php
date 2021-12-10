@@ -125,14 +125,18 @@ class FileController extends Controller
     }
 
     public function getNotification(Request $request){
+        $latest_id_per_account = DB::table('report as r')
+            ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
+
         if($request->date == 'today'){
             $notification = DB::TABLE('notification as n')
-            ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
-                ->LEFTJOIN('players as p', 'n.account_name', '=', 'p.account_name')
-                ->LEFTJOIN('player_scholar_histories as psh', 'psh.player_id', '=', 'p.id' )
-                ->LEFTJOIN('scholars as s', 'psh.scholar_id', '=',  's.id')
-                ->LEFTJOIN('report as r', 'n.account_name', '=', 'r.name')
-                ->whereDate('n.created_at', Carbon::now())
+            ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today')
+                ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
+                ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
+                ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+                ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
+                ->whereDate('n.created_at', Carbon::parse($request->date))
+                ->whereIn('r.id', $latest_id_per_account)
                 ->ORDERBY('n.created_at', 'desc')
                 ->GET();
         }else{
@@ -150,6 +154,7 @@ class FileController extends Controller
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
                 ->whereBetween('r.created_at', [$from, $to])
+                ->whereIn('r.id', $latest_id_per_account)
                 ->ORDERBY('n.created_at', 'desc')
                 ->PAGINATE(15);
         }
