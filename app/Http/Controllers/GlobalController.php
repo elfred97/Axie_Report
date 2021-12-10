@@ -312,13 +312,13 @@ class GlobalController extends Controller
                 ->ORDERBY('payrolls.id', 'desc')
                 ->GET();
     }
-
     public function updatePayrollHistory(Request $request){
         try{
             $payroll = Payroll::UPDATEORCREATE(
-                [ 'id' => $request->id ],
+                ['id' => $request->id],
                 [
-                    'status'      => $request->status,
+                    'txn_id' => $request->txn_id,
+                    'status' => $request->status
                 ]
             );
             if($payroll)
@@ -327,7 +327,7 @@ class GlobalController extends Controller
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }
         catch (\Exception $e) {
-			return response()->json(['message' => $e->getMessage()], 500);
-		}
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }

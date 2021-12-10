@@ -5833,6 +5833,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -7287,8 +7288,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
 /* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
 /* harmony import */ var _PayrollHistoryFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./PayrollHistoryFieldsDef.js */ "./resources/js/components/pages/PayrollHistoryFieldsDef.js");
-//
-//
+/* harmony import */ var _PayrollHistoryFormComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PayrollHistoryFormComponent.vue */ "./resources/js/components/pages/PayrollHistoryFormComponent.vue");
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -7507,10 +7509,13 @@ __webpack_require__.r(__webpack_exports__);
  // import FieldsDef from "./ImportedFieldsDef.js";
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   mixins: [_TableMixins__WEBPACK_IMPORTED_MODULE_0__["TableMixins"]],
   data: function data() {
-    return {
+    var _ref;
+
+    return _ref = {
       fields: _PayrollHistoryFieldsDef_js__WEBPACK_IMPORTED_MODULE_2__["default"],
       perPage: 15,
       data: [],
@@ -7544,49 +7549,145 @@ __webpack_require__.r(__webpack_exports__);
       },
       year: [2020, 2021],
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-      payrollData: {}
-    };
+      payrollData: {},
+      openDialog: false
+    }, _defineProperty(_ref, "isLoading", false), _defineProperty(_ref, "fullPage", true), _defineProperty(_ref, "selected_payroll", {}), _ref;
   },
   watch: {
     'filtersParam.type': function filtersParamType(newVal) {
       this.updatePendingPayroll();
     }
   },
+  components: {
+    'payroll-history-form-component': _PayrollHistoryFormComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+  },
   methods: {
-    updatePayroll: function updatePayroll(status, data) {
+    // updatePayroll(status,  data){
+    //     this.axios.post('updatePayrollHistory', {
+    //         id : data.id,
+    //         status : status
+    //     })
+    //     .then( response => {
+    //         this.$noty.success(response.data.message);
+    //         this.updatePendingPayroll();
+    //         this.updatePaidPayroll();
+    //     })
+    // },
+    updatePendingPayroll: function updatePendingPayroll() {
       var _this = this;
 
-      this.axios.post('updatePayrollHistory', {
-        id: data.id,
-        status: status
-      }).then(function (response) {
-        _this.$noty.success(response.data.message);
-
-        _this.updatePendingPayroll();
-
-        _this.updatePaidPayroll();
+      Vue.nextTick(function () {
+        return _this.$refs.pending_payroll.refresh();
       });
     },
-    updatePendingPayroll: function updatePendingPayroll() {
-      var _this2 = this;
-
-      Vue.nextTick(function () {
-        return _this2.$refs.pending_payroll.refresh();
-      });
+    onPaginationDataPending: function onPaginationDataPending(paginationData) {
+      this.$refs.pendingpagination.setPaginationData(paginationData);
+      this.$refs.pendingpaginationInfo.setPaginationData(paginationData);
+    },
+    onPaginationDataPaid: function onPaginationDataPaid(paginationData) {
+      this.$refs.paidpagination.setPaginationData(paginationData);
+      this.$refs.paidpaginationInfo.setPaginationData(paginationData);
     },
     onChangePagePending: function onChangePagePending(page) {
       this.$refs.pending_payroll.changePage(page);
     },
     updatePaidPayroll: function updatePaidPayroll() {
-      var _this3 = this;
+      var _this2 = this;
 
       Vue.nextTick(function () {
-        return _this3.$refs.paid_payroll.refresh();
+        return _this2.$refs.paid_payroll.refresh();
       });
     },
     onChangePagePaid: function onChangePagePaid(page) {
       this.$refs.paid_payroll.changePage(page);
+    },
+    editPayroll: function editPayroll(data) {
+      this.selected_payroll = data;
+      this.openDialog = true;
     }
+  },
+  mounted: function mounted() {
+    var _this3 = this;
+
+    this.$events.on('update_payroll_history_table', function (data) {
+      _this3.updatePendingPayroll();
+
+      _this3.updatePaidPayroll();
+    });
+    this.$root.$on('isClose', function (data) {
+      _this3.openDialog = false;
+    });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['payrollData'],
+  data: function data() {
+    return {
+      form: new Form()
+    };
+  },
+  watch: {
+    'payrollData': function payrollData(newVal) {
+      if (newVal) {
+        this.form = new Form(newVal);
+      }
+    }
+  },
+  methods: {
+    saveForm: function saveForm() {
+      var _this = this;
+
+      this.form.post('updatePayrollHistory').then(function (response) {
+        _this.$noty.success(response.data.message);
+
+        _this.$events.fire('update_payroll_history_table');
+
+        _this.$root.$emit('isClose', true);
+
+        _this.form.reset();
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    if (this.payrollData) this.form = new Form(this.payrollData);
   }
 });
 
@@ -72405,15 +72506,27 @@ var render = function() {
                                       )
                                     ]),
                                     _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            notification.gained_slp_today
-                                          ) +
-                                          " SLP "
-                                      )
-                                    ])
+                                    notification.category == 1
+                                      ? _c("p", [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                notification.gained_slp_today
+                                              ) +
+                                              " SLP "
+                                          )
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    notification.category == 2
+                                      ? _c("p", [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(notification.mmr) +
+                                              " MMR "
+                                          )
+                                        ])
+                                      : _vm._e()
                                   ])
                                 ]
                               )
@@ -72582,7 +72695,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "media-left" }, [
       _c("i", {
-        staticClass: "fa fa-exclamation-triangle media-object bg-silver-darker"
+        staticClass: "fa fa-exclamation-triangle media-object text-warning"
       })
     ])
   },
@@ -74840,631 +74953,707 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "section-container main-content-view bg-white" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-12" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "tab-content",
-                attrs: { "data-sortable-id": "index-3" }
-              },
-              [
-                _c(
-                  "div",
-                  {
-                    staticClass: "tab-pane fade active show",
-                    attrs: { id: "pending" }
-                  },
-                  [
-                    _c("div", { staticClass: "row no-margin" }, [
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dataTables_length",
-                            attrs: { id: "data-table-default_length" }
-                          },
-                          [
-                            _c("label", [
-                              _vm._v(
-                                "Year \n                                            "
-                              ),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filtersParam.year,
-                                      expression: "filtersParam.year"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "custom-select custom-select-sm form-control form-control-sm",
-                                  attrs: {
-                                    name: "data-table-default_length",
-                                    "aria-controls": "data-table-default"
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.filtersParam,
-                                          "year",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      },
-                                      function($event) {
-                                        return _vm.updatePendingPayroll()
-                                      }
-                                    ]
-                                  }
-                                },
-                                _vm._l(_vm.year, function(year) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: year } },
-                                    [_vm._v(_vm._s(year))]
-                                  )
-                                }),
-                                0
-                              )
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dataTables_length",
-                            attrs: { id: "data-table-default_length" }
-                          },
-                          [
-                            _c("label", [
-                              _vm._v(
-                                "Month \n                                            "
-                              ),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filtersParam.month,
-                                      expression: "filtersParam.month"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "custom-select custom-select-sm form-control form-control-sm",
-                                  attrs: {
-                                    name: "data-table-default_length",
-                                    "aria-controls": "data-table-default"
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.filtersParam,
-                                          "month",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
-                                      },
-                                      function($event) {
-                                        return _vm.updatePendingPayroll()
-                                      }
-                                    ]
-                                  }
-                                },
-                                _vm._l(_vm.month, function(month, index) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: index + 1 } },
-                                    [_vm._v(_vm._s(month))]
-                                  )
-                                }),
-                                0
-                              )
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-2" },
-                        [
-                          _c("type-component", {
-                            attrs: { type: _vm.filtersParam.type },
-                            on: {
-                              updateType: function($event) {
-                                _vm.filtersParam.type = $event
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row mt-2" }, [
-                      _c(
-                        "div",
-                        { staticClass: "col-lg-12 col-md-12 col-sm-12" },
-                        [
-                          _c("loading", {
-                            attrs: {
-                              active: _vm.isLoading,
-                              "can-cancel": true,
-                              "on-cancel": _vm.onCancel,
-                              "is-full-page": _vm.fullPage
-                            },
-                            on: {
-                              "update:active": function($event) {
-                                _vm.isLoading = $event
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c(
-                            "vuetable",
-                            {
-                              ref: "pending_payroll",
-                              attrs: {
-                                "api-url": "/getPayrollHistory/pending",
-                                fields: _vm.fields,
-                                css: _vm.css,
-                                "per-page": _vm.perPage,
-                                "append-params": _vm.filtersParam,
-                                "data-path": "data",
-                                "pagination-path": "",
-                                "sort-order": _vm.sortOrder
-                              },
-                              on: {
-                                "vuetable:pagination-data":
-                                  _vm.onPaginationData,
-                                "vuetable:row-clicked": _vm.onCellClicked,
-                                "vuetable:loading": _vm.onLoading,
-                                "vuetable:loaded": _vm.onLoaded
-                              },
-                              scopedSlots: _vm._u([
-                                {
-                                  key: "mmr_field",
-                                  fn: function(props) {
-                                    return [
-                                      _c("div", [
-                                        props.rowData.mmr < _vm.lowest_mmr
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "text-danger" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(props.rowData.mmr) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          : _c(
-                                              "span",
-                                              { staticClass: "text-default" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(props.rowData.mmr) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                      ])
-                                    ]
-                                  }
-                                },
-                                {
-                                  key: "detailRowIndicator",
-                                  fn: function(props) {
-                                    return [
-                                      _c("div", [
-                                        _vm.$refs.vuetable.isVisibleDetailRow(
-                                          props.rowData.id
-                                        )
-                                          ? _c("i", {
-                                              staticClass: "fas fa-minus-circle"
-                                            })
-                                          : _c("i", {
-                                              staticClass: "fas fa-plus-circle"
-                                            })
-                                      ])
-                                    ]
-                                  }
-                                },
-                                {
-                                  key: "actions",
-                                  fn: function(props) {
-                                    return _c("div", {}, [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-xs btn-primary",
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.updatePayroll(
-                                                1,
-                                                props.rowData
-                                              )
-                                            }
-                                          }
-                                        },
-                                        [
-                                          _vm._v(
-                                            "\n                                                Set as Paid\n                                            "
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  }
-                                }
-                              ])
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        >\n                                        "
-                              )
-                            ]
-                          )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-6" },
-                        [
-                          _c("vuetable-pagination-info", {
-                            ref: "paginationInfo"
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-6 text-right" },
-                        [
-                          _c("vuetable-pagination", {
-                            ref: "pagination",
-                            attrs: { css: _vm.css.pagination },
-                            on: {
-                              "vuetable-pagination:change-page":
-                                _vm.onChangePagePending
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ])
-                  ]
-                ),
+  return _c(
+    "div",
+    [
+      _c(
+        "dialog-component",
+        {
+          attrs: {
+            isOpen: _vm.openDialog,
+            modalWidth: "30%",
+            dialogTitle: "Update Payroll History Information"
+          },
+          on: {
+            isClose: function($event) {
+              _vm.openDialog = false
+            }
+          }
+        },
+        [
+          _c("payroll-history-form-component", {
+            attrs: { payrollData: _vm.selected_payroll },
+            on: {
+              closeModal: function($event) {
+                _vm.openDialog = false
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "section-container main-content-view bg-white" },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _vm._m(0),
                 _vm._v(" "),
                 _c(
                   "div",
-                  { staticClass: "tab-pane fade", attrs: { id: "paid" } },
+                  {
+                    staticClass: "tab-content",
+                    attrs: { "data-sortable-id": "index-3" }
+                  },
                   [
-                    _c("div", { staticClass: "row no-margin" }, [
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dataTables_length",
-                            attrs: { id: "data-table-default_length" }
-                          },
-                          [
-                            _c("label", [
-                              _vm._v(
-                                "Year \n                                            "
-                              ),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "tab-pane fade active show",
+                        attrs: { id: "pending" }
+                      },
+                      [
+                        _c("div", { staticClass: "row no-margin" }, [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dataTables_length",
+                                attrs: { id: "data-table-default_length" }
+                              },
+                              [
+                                _c("label", [
+                                  _vm._v(
+                                    "Year \n                                            "
+                                  ),
+                                  _c(
+                                    "select",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filtersParam_paid.year,
-                                      expression: "filtersParam_paid.year"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "custom-select custom-select-sm form-control form-control-sm",
-                                  attrs: {
-                                    name: "data-table-default_length",
-                                    "aria-controls": "data-table-default"
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.filtersParam_paid,
-                                          "year",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.filtersParam.year,
+                                          expression: "filtersParam.year"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "custom-select custom-select-sm form-control form-control-sm",
+                                      attrs: {
+                                        name: "data-table-default_length",
+                                        "aria-controls": "data-table-default"
                                       },
-                                      function($event) {
-                                        return _vm.updatePaidPayroll()
+                                      on: {
+                                        change: [
+                                          function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.filtersParam,
+                                              "year",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          function($event) {
+                                            return _vm.updatePendingPayroll()
+                                          }
+                                        ]
                                       }
-                                    ]
-                                  }
-                                },
-                                _vm._l(_vm.year, function(year) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: year } },
-                                    [_vm._v(_vm._s(year))]
+                                    },
+                                    _vm._l(_vm.year, function(year) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: year } },
+                                        [_vm._v(_vm._s(year))]
+                                      )
+                                    }),
+                                    0
                                   )
-                                }),
-                                0
-                              )
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-2" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dataTables_length",
-                            attrs: { id: "data-table-default_length" }
-                          },
-                          [
-                            _c("label", [
-                              _vm._v(
-                                "Month \n                                            "
-                              ),
-                              _c(
-                                "select",
-                                {
-                                  directives: [
+                                ])
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dataTables_length",
+                                attrs: { id: "data-table-default_length" }
+                              },
+                              [
+                                _c("label", [
+                                  _vm._v(
+                                    "Month \n                                            "
+                                  ),
+                                  _c(
+                                    "select",
                                     {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.filtersParam_paid.month,
-                                      expression: "filtersParam_paid.month"
-                                    }
-                                  ],
-                                  staticClass:
-                                    "custom-select custom-select-sm form-control form-control-sm",
-                                  attrs: {
-                                    name: "data-table-default_length",
-                                    "aria-controls": "data-table-default"
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$selectedVal = Array.prototype.filter
-                                          .call($event.target.options, function(
-                                            o
-                                          ) {
-                                            return o.selected
-                                          })
-                                          .map(function(o) {
-                                            var val =
-                                              "_value" in o ? o._value : o.value
-                                            return val
-                                          })
-                                        _vm.$set(
-                                          _vm.filtersParam_paid,
-                                          "month",
-                                          $event.target.multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        )
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.filtersParam.month,
+                                          expression: "filtersParam.month"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "custom-select custom-select-sm form-control form-control-sm",
+                                      attrs: {
+                                        name: "data-table-default_length",
+                                        "aria-controls": "data-table-default"
                                       },
-                                      function($event) {
-                                        return _vm.updatePaidPayroll()
+                                      on: {
+                                        change: [
+                                          function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.filtersParam,
+                                              "month",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          function($event) {
+                                            return _vm.updatePendingPayroll()
+                                          }
+                                        ]
                                       }
-                                    ]
-                                  }
-                                },
-                                _vm._l(_vm.month, function(month) {
-                                  return _c(
-                                    "option",
-                                    { domProps: { value: month } },
-                                    [_vm._v(_vm._s(month))]
+                                    },
+                                    _vm._l(_vm.month, function(month, index) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: index + 1 } },
+                                        [_vm._v(_vm._s(month))]
+                                      )
+                                    }),
+                                    0
                                   )
-                                }),
-                                0
-                              )
-                            ])
-                          ]
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-2" },
-                        [
-                          _c("type-component", {
-                            attrs: { type: _vm.filtersParam_paid.type },
-                            on: {
-                              updateType: function($event) {
-                                _vm.filtersParam_paid.type = $event
-                              }
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row mt-2" }, [
-                      _c(
-                        "div",
-                        { staticClass: "col-lg-12 col-md-12 col-sm-12" },
-                        [
-                          _c("loading", {
-                            attrs: {
-                              active: _vm.isLoading,
-                              "can-cancel": true,
-                              "on-cancel": _vm.onCancel,
-                              "is-full-page": _vm.fullPage
-                            },
-                            on: {
-                              "update:active": function($event) {
-                                _vm.isLoading = $event
-                              }
-                            }
-                          }),
+                                ])
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
                           _c(
-                            "vuetable",
-                            {
-                              ref: "paid_payroll",
-                              attrs: {
-                                "api-url": "/getPayrollHistory/paid",
-                                fields: _vm.fields,
-                                css: _vm.css,
-                                "per-page": _vm.perPage,
-                                "append-params": _vm.filtersParam_paid,
-                                "data-path": "data",
-                                "pagination-path": "",
-                                "sort-order": _vm.sortOrder
-                              },
-                              on: {
-                                "vuetable:pagination-data":
-                                  _vm.onPaginationData,
-                                "vuetable:row-clicked": _vm.onCellClicked,
-                                "vuetable:loading": _vm.onLoading,
-                                "vuetable:loaded": _vm.onLoaded
-                              },
-                              scopedSlots: _vm._u([
-                                {
-                                  key: "mmr_field",
-                                  fn: function(props) {
-                                    return [
-                                      _c("div", [
-                                        props.rowData.mmr < _vm.lowest_mmr
-                                          ? _c(
-                                              "span",
-                                              { staticClass: "text-danger" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(props.rowData.mmr) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          : _c(
-                                              "span",
-                                              { staticClass: "text-default" },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(props.rowData.mmr) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                      ])
-                                    ]
+                            "div",
+                            { staticClass: "col-md-2" },
+                            [
+                              _c("type-component", {
+                                attrs: { type: _vm.filtersParam.type },
+                                on: {
+                                  updateType: function($event) {
+                                    _vm.filtersParam.type = $event
                                   }
                                 }
-                              ])
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        >\n                                        "
-                              )
-                            ]
+                              })
+                            ],
+                            1
                           )
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-6" },
-                        [
-                          _c("vuetable-pagination-info", {
-                            ref: "paginationInfo"
-                          })
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "col-md-6 text-right" },
-                        [
-                          _c("vuetable-pagination", {
-                            ref: "pagination",
-                            attrs: { css: _vm.css.pagination },
-                            on: {
-                              "vuetable-pagination:change-page":
-                                _vm.onChangePagePaid
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mt-2" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-lg-12 col-md-12 col-sm-12" },
+                            [
+                              _c("loading", {
+                                attrs: {
+                                  active: _vm.isLoading,
+                                  "can-cancel": true,
+                                  "on-cancel": _vm.onCancel,
+                                  "is-full-page": _vm.fullPage
+                                },
+                                on: {
+                                  "update:active": function($event) {
+                                    _vm.isLoading = $event
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "vuetable",
+                                {
+                                  ref: "pending_payroll",
+                                  attrs: {
+                                    "api-url": "/getPayrollHistory/pending",
+                                    fields: _vm.fields,
+                                    css: _vm.css,
+                                    "per-page": _vm.perPage,
+                                    "append-params": _vm.filtersParam,
+                                    "data-path": "data",
+                                    "pagination-path": "",
+                                    "sort-order": _vm.sortOrder
+                                  },
+                                  on: {
+                                    "vuetable:pagination-data":
+                                      _vm.onPaginationDataPending,
+                                    "vuetable:loading": _vm.onLoading,
+                                    "vuetable:loaded": _vm.onLoaded
+                                  },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "mmr_field",
+                                      fn: function(props) {
+                                        return [
+                                          _c("div", [
+                                            props.rowData.mmr < _vm.lowest_mmr
+                                              ? _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "text-danger"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                    " +
+                                                        _vm._s(
+                                                          props.rowData.mmr
+                                                        ) +
+                                                        "\n                                                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "text-default"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                    " +
+                                                        _vm._s(
+                                                          props.rowData.mmr
+                                                        ) +
+                                                        "\n                                                "
+                                                    )
+                                                  ]
+                                                )
+                                          ])
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      key: "actions",
+                                      fn: function(props) {
+                                        return _c("div", {}, [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-xs btn-default",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.editPayroll(
+                                                    props.rowData
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-pencil-alt"
+                                              }),
+                                              _vm._v(
+                                                " Edit\n                                            "
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      }
+                                    }
+                                  ])
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        >\n                                        \n                                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6" },
+                            [
+                              _c("vuetable-pagination-info", {
+                                ref: "pendingpaginationInfo"
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6 text-right" },
+                            [
+                              _c("vuetable-pagination", {
+                                ref: "pendingpagination",
+                                attrs: { css: _vm.css.pagination },
+                                on: {
+                                  "vuetable-pagination:change-page":
+                                    _vm.onChangePagePending
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "tab-pane fade", attrs: { id: "paid" } },
+                      [
+                        _c("div", { staticClass: "row no-margin" }, [
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dataTables_length",
+                                attrs: { id: "data-table-default_length" }
+                              },
+                              [
+                                _c("label", [
+                                  _vm._v(
+                                    "Year \n                                            "
+                                  ),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.filtersParam_paid.year,
+                                          expression: "filtersParam_paid.year"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "custom-select custom-select-sm form-control form-control-sm",
+                                      attrs: {
+                                        name: "data-table-default_length",
+                                        "aria-controls": "data-table-default"
+                                      },
+                                      on: {
+                                        change: [
+                                          function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.filtersParam_paid,
+                                              "year",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          function($event) {
+                                            return _vm.updatePaidPayroll()
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    _vm._l(_vm.year, function(year) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: year } },
+                                        [_vm._v(_vm._s(year))]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ])
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dataTables_length",
+                                attrs: { id: "data-table-default_length" }
+                              },
+                              [
+                                _c("label", [
+                                  _vm._v(
+                                    "Month \n                                            "
+                                  ),
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.filtersParam_paid.month,
+                                          expression: "filtersParam_paid.month"
+                                        }
+                                      ],
+                                      staticClass:
+                                        "custom-select custom-select-sm form-control form-control-sm",
+                                      attrs: {
+                                        name: "data-table-default_length",
+                                        "aria-controls": "data-table-default"
+                                      },
+                                      on: {
+                                        change: [
+                                          function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.$set(
+                                              _vm.filtersParam_paid,
+                                              "month",
+                                              $event.target.multiple
+                                                ? $$selectedVal
+                                                : $$selectedVal[0]
+                                            )
+                                          },
+                                          function($event) {
+                                            return _vm.updatePaidPayroll()
+                                          }
+                                        ]
+                                      }
+                                    },
+                                    _vm._l(_vm.month, function(month) {
+                                      return _c(
+                                        "option",
+                                        { domProps: { value: month } },
+                                        [_vm._v(_vm._s(month))]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ])
+                              ]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-md-2" },
+                            [
+                              _c("type-component", {
+                                attrs: { type: _vm.filtersParam_paid.type },
+                                on: {
+                                  updateType: function($event) {
+                                    _vm.filtersParam_paid.type = $event
+                                  }
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row mt-2" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-lg-12 col-md-12 col-sm-12" },
+                            [
+                              _c("loading", {
+                                attrs: {
+                                  active: _vm.isLoading,
+                                  "can-cancel": true,
+                                  "on-cancel": _vm.onCancel,
+                                  "is-full-page": _vm.fullPage
+                                },
+                                on: {
+                                  "update:active": function($event) {
+                                    _vm.isLoading = $event
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "vuetable",
+                                {
+                                  ref: "paid_payroll",
+                                  attrs: {
+                                    "api-url": "/getPayrollHistory/paid",
+                                    fields: _vm.fields,
+                                    css: _vm.css,
+                                    "per-page": _vm.perPage,
+                                    "append-params": _vm.filtersParam_paid,
+                                    "data-path": "data",
+                                    "pagination-path": "",
+                                    "sort-order": _vm.sortOrder
+                                  },
+                                  on: {
+                                    "vuetable:pagination-data":
+                                      _vm.onPaginationDataPaid,
+                                    "vuetable:row-clicked": _vm.onCellClicked,
+                                    "vuetable:loading": _vm.onLoading,
+                                    "vuetable:loaded": _vm.onLoaded
+                                  },
+                                  scopedSlots: _vm._u([
+                                    {
+                                      key: "mmr_field",
+                                      fn: function(props) {
+                                        return [
+                                          _c("div", [
+                                            props.rowData.mmr < _vm.lowest_mmr
+                                              ? _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "text-danger"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                    " +
+                                                        _vm._s(
+                                                          props.rowData.mmr
+                                                        ) +
+                                                        "\n                                                "
+                                                    )
+                                                  ]
+                                                )
+                                              : _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "text-default"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                    " +
+                                                        _vm._s(
+                                                          props.rowData.mmr
+                                                        ) +
+                                                        "\n                                                "
+                                                    )
+                                                  ]
+                                                )
+                                          ])
+                                        ]
+                                      }
+                                    },
+                                    {
+                                      key: "actions",
+                                      fn: function(props) {
+                                        return _c("div", {}, [
+                                          _c(
+                                            "button",
+                                            {
+                                              staticClass:
+                                                "btn btn-xs btn-default",
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.editPayroll(
+                                                    props.rowData
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("i", {
+                                                staticClass: "fas fa-pencil-alt"
+                                              }),
+                                              _vm._v(
+                                                " Edit\n                                            "
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      }
+                                    }
+                                  ])
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        >\n                                        "
+                                  )
+                                ]
+                              )
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6" },
+                            [
+                              _c("vuetable-pagination-info", {
+                                ref: "paidpaginationInfo"
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-md-6 text-right" },
+                            [
+                              _c("vuetable-pagination", {
+                                ref: "paidpagination",
+                                attrs: { css: _vm.css.pagination },
+                                on: {
+                                  "vuetable-pagination:change-page":
+                                    _vm.onChangePagePaid
+                                }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      ]
+                    )
                   ]
                 )
-              ]
-            )
+              ])
+            ])
           ])
-        ])
-      ])
-    ])
-  ])
+        ]
+      )
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -75517,6 +75706,119 @@ var staticRenderFns = [
     )
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8&":
+/*!************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8& ***!
+  \************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("TXN ID")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.form.txn_id,
+              expression: "form.txn_id"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: { type: "text", placeholder: "Input Transaction Hash here" },
+          domProps: { value: _vm.form.txn_id },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.form, "txn_id", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4 mt-2" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.form.status,
+                expression: "form.status"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { name: "", id: "" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.form,
+                  "status",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { value: "0" } }, [_vm._v("Pending")]),
+            _vm._v(" "),
+            _c("option", { attrs: { value: "1" } }, [_vm._v("Paid")])
+          ]
+        )
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-12 mt-2" }, [
+        _c("div", { staticClass: "pull-right" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-xs btn-primary",
+              on: {
+                click: function($event) {
+                  return _vm.saveForm()
+                }
+              }
+            },
+            [_c("i", { staticClass: "fas fa-check" }), _vm._v(" Save")]
+          )
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -102985,6 +103287,75 @@ __webpack_require__.r(__webpack_exports__);
   titleClass: "text-center aligned",
   dataClass: "text-center aligned"
 }]);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryFormComponent.vue":
+/*!***********************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryFormComponent.vue ***!
+  \***********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _PayrollHistoryFormComponent_vue_vue_type_template_id_85e635f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8& */ "./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8&");
+/* harmony import */ var _PayrollHistoryFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./PayrollHistoryFormComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _PayrollHistoryFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _PayrollHistoryFormComponent_vue_vue_type_template_id_85e635f8___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _PayrollHistoryFormComponent_vue_vue_type_template_id_85e635f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/PayrollHistoryFormComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollHistoryFormComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryFormComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8&":
+/*!******************************************************************************************************!*\
+  !*** ./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8& ***!
+  \******************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryFormComponent_vue_vue_type_template_id_85e635f8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/PayrollHistoryFormComponent.vue?vue&type=template&id=85e635f8&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryFormComponent_vue_vue_type_template_id_85e635f8___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_PayrollHistoryFormComponent_vue_vue_type_template_id_85e635f8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

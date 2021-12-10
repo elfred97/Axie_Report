@@ -65,12 +65,13 @@
                                         <div class="dropdown-header">Penalty</div>
                                         <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification">
                                             <div class="media-left">
-                                                <i class="fa fa-exclamation-triangle media-object bg-silver-darker"></i>
+                                                <i class="fa fa-exclamation-triangle media-object text-warning"></i>
                                             </div>
                                             <div class="media-body">
                                                 <div class="text-muted f-s-10 pull-right">{{ notification.created_at | formatDate }}</div>
                                                 <h6 class="media-heading"> {{ notification.player_name }} ({{ notification.account_name }})</h6>
-                                                <p> {{ notification.gained_slp_today }} SLP </p>
+                                                <p v-if="notification.category == 1"> {{ notification.gained_slp_today }} SLP </p>
+                                                <p v-if="notification.category == 2"> {{ notification.mmr }} MMR </p>
                                             </div>
                                         </a>
                                     </div>

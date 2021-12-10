@@ -1,5 +1,8 @@
 <template>
     <div>
+        <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="30%" :dialogTitle="'Update Payroll History Information'">
+            <payroll-history-form-component v-bind:payrollData="selected_payroll" v-on:closeModal="openDialog = false"></payroll-history-form-component>
+        </dialog-component>
         <div class="section-container main-content-view bg-white">
             <div class="container">
                 <div class="row">
@@ -68,11 +71,11 @@
                                             data-path="data"
                                             pagination-path=""
                                             :sort-order="sortOrder"
-                                            @vuetable:pagination-data="onPaginationData"
-                                            @vuetable:row-clicked="onCellClicked"
+                                            @vuetable:pagination-data="onPaginationDataPending"
                                             @vuetable:loading="onLoading"
                                             @vuetable:loaded="onLoaded">
                                             >
+                                            
                                             <template slot="mmr_field" slot-scope="props">
                                                 <div>
                                                     <span class="text-danger" v-if="props.rowData.mmr < lowest_mmr">
@@ -83,19 +86,9 @@
                                                     </span>
                                                 </div>
                                             </template>
-                                            <template slot="detailRowIndicator" slot-scope="props">
-                                                <div>
-                                                    <i v-if="$refs.vuetable.isVisibleDetailRow(props.rowData.id)"
-                                                        class="fas fa-minus-circle"></i>
-                                                    <i v-else class="fas fa-plus-circle"></i>
-                                                </div>
-                                            </template>
                                             <div slot="actions" slot-scope="props">
-                                                <button 
-                                                    class="btn btn-xs btn-primary" 
-                                                    @click="updatePayroll(1, props.rowData)"
-                                                >
-                                                    Set as Paid
+                                                <button class="btn btn-xs btn-default" @click="editPayroll(props.rowData)">
+                                                    <i class="fas fa-pencil-alt"></i> Edit
                                                 </button>
                                             </div>
                                         </vuetable>
@@ -103,12 +96,12 @@
                                     </div>
                                     <!-- Pagination Info -->
                                     <div class="col-md-6">
-                                        <vuetable-pagination-info ref="paginationInfo"
+                                        <vuetable-pagination-info ref="pendingpaginationInfo"
                                         ></vuetable-pagination-info>
                                     </div><!-- End of Pagination Info -->
                                     <!-- Pagination Buttons -->
                                     <div class="col-md-6 text-right">
-                                        <vuetable-pagination ref="pagination"
+                                        <vuetable-pagination ref="pendingpagination"
                                             @vuetable-pagination:change-page="onChangePagePending"
                                             :css="css.pagination"
                                         ></vuetable-pagination>
@@ -174,7 +167,7 @@
                                             data-path="data"
                                             pagination-path=""
                                             :sort-order="sortOrder"
-                                            @vuetable:pagination-data="onPaginationData"
+                                            @vuetable:pagination-data="onPaginationDataPaid"
                                             @vuetable:row-clicked="onCellClicked"
                                             @vuetable:loading="onLoading"
                                             @vuetable:loaded="onLoaded">
@@ -189,17 +182,22 @@
                                                     </span>
                                                 </div>
                                             </template>
+                                            <div slot="actions" slot-scope="props">
+                                                <button class="btn btn-xs btn-default" @click="editPayroll(props.rowData)">
+                                                    <i class="fas fa-pencil-alt"></i> Edit
+                                                </button>
+                                            </div>
                                         </vuetable>
                                         <!-- End of Vuetable -->
                                     </div>
                                     <!-- Pagination Info -->
                                     <div class="col-md-6">
-                                        <vuetable-pagination-info ref="paginationInfo"
+                                        <vuetable-pagination-info ref="paidpaginationInfo"
                                         ></vuetable-pagination-info>
                                     </div><!-- End of Pagination Info -->
                                     <!-- Pagination Buttons -->
                                     <div class="col-md-6 text-right">
-                                        <vuetable-pagination ref="pagination"
+                                        <vuetable-pagination ref="paidpagination"
                                             @vuetable-pagination:change-page="onChangePagePaid"
                                             :css="css.pagination"
                                         ></vuetable-pagination>
@@ -219,15 +217,16 @@ import {TableMixins} from './TableMixins';
 import { TableStyle } from './TableStyle.js';
 // import FieldsDef from "./ImportedFieldsDef.js";
 import FieldsDef from "./PayrollHistoryFieldsDef.js";
+import PayrollHistoryFormComponent from './PayrollHistoryFormComponent.vue';
 export default {
     mixins : [TableMixins],
     data(){
         return {
-            fields    : FieldsDef,
-            perPage   : 15,
-            data      : [],
-            css       : TableStyle,
-            fullPage  : true,
+            fields   : FieldsDef,
+            perPage  : 15,
+            data     : [],
+            css      : TableStyle,
+            fullPage : true,
             isLoading: false,
             sortOrder: [
                 {
@@ -258,6 +257,10 @@ export default {
             year       : [ 2020 , 2021 ],
             month      : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
             payrollData: {},
+            openDialog : false,
+            isLoading  : false,
+            fullPage   : true,
+            selected_payroll : {}
         }
     },
     watch : {
@@ -265,20 +268,31 @@ export default {
             this.updatePendingPayroll();
         }
     },
+    components: {
+        'payroll-history-form-component' : PayrollHistoryFormComponent
+    },
     methods: {
-        updatePayroll(status,  data){
-            this.axios.post('updatePayrollHistory', {
-                id : data.id,
-                status : status
-            })
-            .then( response => {
-                this.$noty.success(response.data.message);
-                this.updatePendingPayroll();
-                this.updatePaidPayroll();
-            })
-        },
+        // updatePayroll(status,  data){
+        //     this.axios.post('updatePayrollHistory', {
+        //         id : data.id,
+        //         status : status
+        //     })
+        //     .then( response => {
+        //         this.$noty.success(response.data.message);
+        //         this.updatePendingPayroll();
+        //         this.updatePaidPayroll();
+        //     })
+        // },
         updatePendingPayroll(){
             Vue.nextTick( () => this.$refs.pending_payroll.refresh())
+        },
+        onPaginationDataPending(paginationData) {
+            this.$refs.pendingpagination.setPaginationData(paginationData);
+            this.$refs.pendingpaginationInfo.setPaginationData(paginationData);
+        },
+        onPaginationDataPaid(paginationData) {
+            this.$refs.paidpagination.setPaginationData(paginationData);
+            this.$refs.paidpaginationInfo.setPaginationData(paginationData);
         },
         onChangePagePending(page) {
             this.$refs.pending_payroll.changePage(page);
@@ -289,7 +303,19 @@ export default {
         onChangePagePaid(page) {
             this.$refs.paid_payroll.changePage(page);
         },
+        editPayroll(data){
+            this.selected_payroll = data;
+            this.openDialog =  true;
+        }
     },
-
+    mounted(){
+        this.$events.on('update_payroll_history_table', (data) => {
+            this.updatePendingPayroll();
+            this.updatePaidPayroll();
+        });
+        this.$root.$on('isClose', (data) => {
+            this.openDialog = false;
+        });
+    }
 }
 </script>

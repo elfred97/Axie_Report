@@ -63,7 +63,8 @@ class RemindPayroll extends Command
                     'player_id' => $player->id,
                     'scholar_id' => $player->latestHistory()->scholar_id,
                     'total_slp' => $total_slp,
-                    'txn_id' => $player->id . '-' . $player->latestHistory()->scholar_id . '-' . uniqid() . time(),
+                    'txn_id' => NULL,
+                    // 'txn_id' => $player->id . '-' . $player->latestHistory()->scholar_id . '-' . uniqid() . time(),
                     'status' => 0
                 ]);
 

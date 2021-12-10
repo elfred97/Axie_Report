@@ -130,7 +130,7 @@ class FileController extends Controller
 
         if($request->date == 'today'){
             $notification = DB::TABLE('notification as n')
-            ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today')
+            ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
                 ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
