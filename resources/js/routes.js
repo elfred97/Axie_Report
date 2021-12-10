@@ -78,4 +78,11 @@ export const routes = [
             admins : false,
         }
     },
+    { 
+        path: '/scholar_announcement', 
+        component: require('./components/scholar_pages/Announcement/AnnouncementComponent.vue').default,
+        meta : {
+            admins : false,
+        }
+    },
 ]

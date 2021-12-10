@@ -33,6 +33,7 @@ class vueComponentsMiddleware
             'scholar_account',
             'scholar_payroll',
             'scholar_notification',
+            'scholar_announcement',
         ];
 
         if (!in_array($route, $vueComponents))

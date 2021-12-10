@@ -12,10 +12,15 @@
                                 </div>
                                 <div class="account-sidebar-content text-center">
                                     <h4>{{ userData.account_name }}</h4>
-
-                                    <p class="mb-2 mt-2">Scan QR Code</p>
-                                    <img :src='"/uploads/"+userData.qr_code' alt="" class="img-fluid">
-                                    <p class="text-center mt-2">QR Code is valid for 7 days</p>
+                                    <div v-if="userData.qr_code">
+                                        <p class="mb-2 mt-2">Scan QR Code</p>
+                                        <img :src='"/uploads/"+userData.qr_code' alt="" class="img-fluid">
+                                        <p class="text-center mt-2">QR Code is valid for 7 days</p>
+                                    </div>
+                                    <div v-else class="no_qr_code">
+                                        <img src="img/no_qr.jpg" alt="" class="img-fluid">
+                                        <p class="text-center">No QR Code uploaded</p>
+                                    </div>
                                 </div>
                             </div>
                             <!-- END account-sidebar -->

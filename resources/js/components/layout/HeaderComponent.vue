@@ -39,11 +39,13 @@
                                     <router-link to="/payroll_history" v-if="getGuardType == 'admins'">Payroll History</router-link>
                                     <router-link to="/scholar_payroll" v-else>Payroll History</router-link>
                                 </li>
-                                <li v-if="getGuardType == 'admins'">
-                                    <router-link to="/scholarList">Scholars</router-link>
+                                <li>
+                                    <router-link to="/scholarList" v-if="getGuardType == 'admins'">Scholars</router-link>
+                                    <router-link to="/scholar_announcement" v-else>Announcement</router-link>
                                 </li>
                                 <li>
-                                    <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>                                    
+                                    <router-link to="/notification" v-if="getGuardType == 'admins'">Notification</router-link>
+                                    <router-link to="/scholar_notification" v-else>Notification</router-link>
                                 </li>
                             </ul>
                         </div>
@@ -59,29 +61,32 @@
                                     <span class="arrow top"></span>
                                 </a>
                                 <div class="dropdown-menu media-list dropdown-menu-cart p-0">
-                                    <div v-if="getGuardType == 'admins'">
-                                        <div class="dropdown-header">Not meeting SLP quota</div>
+                                    <div v-if="notificationData.length > 0">
+                                        <div class="dropdown-header">Penalty</div>
                                         <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification">
                                             <div class="media-left">
                                                 <i class="fa fa-exclamation-triangle media-object bg-silver-darker"></i>
                                             </div>
                                             <div class="media-body">
-                                                <div class="text-muted f-s-10">3 minutes ago</div>
-                                                <h6 class="media-heading"> {{ notification.player_name }} <span class="pull-right">{{ notification.account_name }}</span></h6>
+                                                <div class="text-muted f-s-10 pull-right">{{ notification.created_at | formatDate }}</div>
+                                                <h6 class="media-heading"> {{ notification.player_name }} ({{ notification.account_name }})</h6>
                                                 <p> {{ notification.gained_slp_today }} SLP </p>
                                             </div>
                                         </a>
                                     </div>
-                                    <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData" @click="gotoNotification">
-                                        <div class="media-left">
-                                            <i class="fa fa-bullhorn media-object bg-silver-darker"></i>
-                                        </div>
-                                        <div class="media-body">
-                                            <div class="text-muted f-s-10 pull-right"> {{ announcement.reminder_time | formatDateTime }}</div>
-                                            <h6 class="media-heading">{{ announcement.title }}</h6>
-                                            <p>{{ announcement.description }}</p>
-                                        </div>
-                                    </a>
+                                    <div v-if="announcementsData.length > 0">
+                                        <div class="dropdown-header">Announcement</div>
+                                        <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData" @click="gotoAnnouncement">
+                                            <div class="media-left">
+                                                <i class="fa fa-bullhorn media-object bg-silver-darker"></i>
+                                            </div>
+                                            <div class="media-body">
+                                                <div class="text-muted f-s-10 pull-right"> {{ announcement.reminder_time | formatDateTime }}</div>
+                                                <h6 class="media-heading">{{ announcement.title }}</h6>
+                                                <p>{{ announcement.description }}</p>
+                                            </div>
+                                        </a>
+                                    </div>
                                 </div>
                             </li>
                             <li class="dropdown dropdown-hover">
@@ -148,7 +153,14 @@ export default {
                 })
             }
             else{
-
+                this.axios.get('getScholarNotification/')
+                .then(response => {
+                    // console.log(response.data);
+                    this.notificationData = response.data;
+                })
+                .catch( error => {
+                    console.log(error.response.data);
+                })
             }
         },
         getAccountInfo(){
@@ -172,6 +184,9 @@ export default {
                 url = '/scholar_notification'
             }
             window.open(url, '_self'); 
+        },
+        gotoAnnouncement(){
+            window.open('/scholar_announcement', '_self'); 
         },
         getAnnouncement(){
             let account_type = this.$store.state.global_guard_type;

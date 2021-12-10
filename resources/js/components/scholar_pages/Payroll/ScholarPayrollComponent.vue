@@ -5,7 +5,7 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="container">
                         <h3>Payroll History</h3>
-                        <div class="vertical-box-row">
+                        <div class="vertical-box-row" v-if="payrolls.length > 0">
                             <!-- begin vertical-box-cell -->
                             <div class="vertical-box-cell">
                                 <!-- begin vertical-box-inner-cell -->
@@ -43,6 +43,10 @@
                                 <!-- end vertical-box-inner-cell -->
                             </div>
                             <!-- end vertical-box-cell -->
+                        </div>
+                        <div v-else class="no_result_found">
+                            <img src="/img/no_result_found.png" alt="">
+                            <p>No result found.</p>
                         </div>
                     </div>
                 </div>

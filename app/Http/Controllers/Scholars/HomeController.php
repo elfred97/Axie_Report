@@ -10,6 +10,7 @@ use Excel;
 use Carbon\Carbon;
 use App\Models\Report;
 use App\Models\Player;
+use App\Models\Notification;
 use App\Models\Scholar;
 use App\Models\Payroll;
 use Illuminate\Http\Request;
@@ -260,5 +261,20 @@ class HomeController extends Controller
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
+    }
+
+    public function getScholarNotification(Request $request){
+        $username = Auth::user()->username;
+        return Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
+            ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
+            ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
+            ->SELECT(
+                'notification.*',
+                DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
+                'players.*'
+            )
+        ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3]])
+        ->GET();
+
     }
 }

@@ -5828,6 +5828,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5862,7 +5867,14 @@ __webpack_require__.r(__webpack_exports__);
           // this.clearAll();
           console.log(error.response.data);
         });
-      } else {}
+      } else {
+        this.axios.get('getScholarNotification/').then(function (response) {
+          // console.log(response.data);
+          _this.notificationData = response.data;
+        })["catch"](function (error) {
+          console.log(error.response.data);
+        });
+      }
     },
     getAccountInfo: function getAccountInfo() {
       var _this2 = this;
@@ -5886,6 +5898,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       window.open(url, '_self');
+    },
+    gotoAnnouncement: function gotoAnnouncement() {
+      window.open('/scholar_announcement', '_self');
     },
     getAnnouncement: function getAnnouncement() {
       var _this3 = this;
@@ -7545,7 +7560,11 @@ __webpack_require__.r(__webpack_exports__);
         id: data.id,
         status: status
       }).then(function (response) {
+        _this.$noty.success(response.data.message);
+
         _this.updatePendingPayroll();
+
+        _this.updatePaidPayroll();
       });
     },
     updatePendingPayroll: function updatePendingPayroll() {
@@ -7984,6 +8003,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -8028,7 +8048,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.form.reset();
       })["catch"](function (error) {
         if (error.response.status == 422) {
-          _this.$noty.error('Recheck Form inputs');
+          error.response.forEach(function (element) {
+            _this.$noty.error('Recheck Form inputs');
+          });
         } else {
           _this.$noty.error("Something went wrong please try again later.");
         }
@@ -9131,6 +9153,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -9165,6 +9192,98 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getScholarInformation();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      announcementsData: {}
+    };
+  },
+  methods: {
+    getAnnouncement: function getAnnouncement() {
+      var _this = this;
+
+      var account_type = this.$store.state.global_guard_type;
+      this.axios.get('notifications/' + account_type).then(function (response) {
+        // console.log(response.data);
+        _this.announcementsData = response.data;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getAnnouncement();
   }
 });
 
@@ -9780,10 +9899,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      announcementsData: {}
+      notificationsData: {}
     };
   },
   methods: {
@@ -9791,9 +9919,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var account_type = this.$store.state.global_guard_type;
-      this.axios.get('notifications/' + account_type).then(function (response) {
+      this.axios.get('getScholarNotification/').then(function (response) {
         // console.log(response.data);
-        _this.announcementsData = response.data;
+        _this.notificationsData = response.data;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -9815,6 +9943,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -72157,17 +72289,21 @@ var render = function() {
                     1
                   ),
                   _vm._v(" "),
-                  _vm.getGuardType == "admins"
-                    ? _c(
-                        "li",
-                        [
-                          _c("router-link", { attrs: { to: "/scholarList" } }, [
+                  _c(
+                    "li",
+                    [
+                      _vm.getGuardType == "admins"
+                        ? _c("router-link", { attrs: { to: "/scholarList" } }, [
                             _vm._v("Scholars")
                           ])
-                        ],
-                        1
-                      )
-                    : _vm._e(),
+                        : _c(
+                            "router-link",
+                            { attrs: { to: "/scholar_announcement" } },
+                            [_vm._v("Announcement")]
+                          )
+                    ],
+                    1
+                  ),
                   _vm._v(" "),
                   _c(
                     "li",
@@ -72178,7 +72314,11 @@ var render = function() {
                             { attrs: { to: "/notification" } },
                             [_vm._v("Notification")]
                           )
-                        : _vm._e()
+                        : _c(
+                            "router-link",
+                            { attrs: { to: "/scholar_notification" } },
+                            [_vm._v("Notification")]
+                          )
                     ],
                     1
                   )
@@ -72216,12 +72356,12 @@ var render = function() {
                       "dropdown-menu media-list dropdown-menu-cart p-0"
                   },
                   [
-                    _vm.getGuardType == "admins"
+                    _vm.notificationData.length > 0
                       ? _c(
                           "div",
                           [
                             _c("div", { staticClass: "dropdown-header" }, [
-                              _vm._v("Not meeting SLP quota")
+                              _vm._v("Penalty")
                             ]),
                             _vm._v(" "),
                             _vm._l(_vm.notificationData, function(
@@ -72240,24 +72380,28 @@ var render = function() {
                                   _c("div", { staticClass: "media-body" }, [
                                     _c(
                                       "div",
-                                      { staticClass: "text-muted f-s-10" },
-                                      [_vm._v("3 minutes ago")]
+                                      {
+                                        staticClass:
+                                          "text-muted f-s-10 pull-right"
+                                      },
+                                      [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm._f("formatDate")(
+                                              notification.created_at
+                                            )
+                                          )
+                                        )
+                                      ]
                                     ),
                                     _vm._v(" "),
                                     _c("h6", { staticClass: "media-heading" }, [
                                       _vm._v(
                                         " " +
                                           _vm._s(notification.player_name) +
-                                          " "
-                                      ),
-                                      _c(
-                                        "span",
-                                        { staticClass: "pull-right" },
-                                        [
-                                          _vm._v(
-                                            _vm._s(notification.account_name)
-                                          )
-                                        ]
+                                          " (" +
+                                          _vm._s(notification.account_name) +
+                                          ")"
                                       )
                                     ]),
                                     _vm._v(" "),
@@ -72279,44 +72423,62 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm._l(_vm.announcementsData, function(announcement) {
-                      return _c(
-                        "a",
-                        {
-                          staticClass: "dropdown-item media",
-                          attrs: { href: "javascript:;" },
-                          on: { click: _vm.gotoNotification }
-                        },
-                        [
-                          _vm._m(3, true),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "media-body" }, [
-                            _c(
-                              "div",
-                              { staticClass: "text-muted f-s-10 pull-right" },
-                              [
-                                _vm._v(
-                                  " " +
-                                    _vm._s(
-                                      _vm._f("formatDateTime")(
-                                        announcement.reminder_time
-                                      )
-                                    )
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("h6", { staticClass: "media-heading" }, [
-                              _vm._v(_vm._s(announcement.title))
+                    _vm.announcementsData.length > 0
+                      ? _c(
+                          "div",
+                          [
+                            _c("div", { staticClass: "dropdown-header" }, [
+                              _vm._v("Announcement")
                             ]),
                             _vm._v(" "),
-                            _c("p", [_vm._v(_vm._s(announcement.description))])
-                          ])
-                        ]
-                      )
-                    })
-                  ],
-                  2
+                            _vm._l(_vm.announcementsData, function(
+                              announcement
+                            ) {
+                              return _c(
+                                "a",
+                                {
+                                  staticClass: "dropdown-item media",
+                                  attrs: { href: "javascript:;" },
+                                  on: { click: _vm.gotoAnnouncement }
+                                },
+                                [
+                                  _vm._m(3, true),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "media-body" }, [
+                                    _c(
+                                      "div",
+                                      {
+                                        staticClass:
+                                          "text-muted f-s-10 pull-right"
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              _vm._f("formatDateTime")(
+                                                announcement.reminder_time
+                                              )
+                                            )
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("h6", { staticClass: "media-heading" }, [
+                                      _vm._v(_vm._s(announcement.title))
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(_vm._s(announcement.description))
+                                    ])
+                                  ])
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ]
                 )
               ]),
               _vm._v(" "),
@@ -74856,56 +75018,7 @@ var render = function() {
                           })
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3 offset-md-3" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dataTables_length",
-                            attrs: { id: "data-table-default_length" }
-                          },
-                          [
-                            _c("label", [
-                              _vm._v(
-                                "Search \n                                            "
-                              ),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.filtersParam.search,
-                                    expression: "filtersParam.search"
-                                  }
-                                ],
-                                staticClass:
-                                  "form-control form-control-sm custom-input custom-input-sm",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Search scholar name"
-                                },
-                                domProps: { value: _vm.filtersParam.search },
-                                on: {
-                                  change: function($event) {
-                                    return _vm.updatePendingPayroll()
-                                  },
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.filtersParam,
-                                      "search",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ])
-                          ]
-                        )
-                      ])
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row mt-2" }, [
@@ -75228,56 +75341,7 @@ var render = function() {
                           })
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3 offset-md-3" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "dataTables_length",
-                            attrs: { id: "data-table-default_length" }
-                          },
-                          [
-                            _c("label", [
-                              _vm._v(
-                                "Search \n                                            "
-                              ),
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.filtersParam_paid.search,
-                                    expression: "filtersParam_paid.search"
-                                  }
-                                ],
-                                staticClass:
-                                  "form-control form-control-sm custom-input custom-input-sm",
-                                attrs: {
-                                  type: "text",
-                                  placeholder: "Search scholar name"
-                                },
-                                domProps: {
-                                  value: _vm.filtersParam_paid.search
-                                },
-                                on: {
-                                  change: _vm.updatePaidPayroll,
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.filtersParam_paid,
-                                      "search",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            ])
-                          ]
-                        )
-                      ])
+                      )
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row mt-2" }, [
@@ -75969,7 +76033,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("ronin_address")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: {
                 innerHTML: _vm._s(_vm.form.errors.get("ronin_address"))
               }
@@ -76006,7 +76070,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("account_name")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: {
                 innerHTML: _vm._s(_vm.form.errors.get("account_name"))
               }
@@ -76043,7 +76107,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("market_place_email")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: {
                 innerHTML: _vm._s(_vm.form.errors.get("market_place_email"))
               }
@@ -76082,7 +76146,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("email_password")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: {
                 innerHTML: _vm._s(_vm.form.errors.get("email_password"))
               }
@@ -76378,7 +76442,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("username")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: { innerHTML: _vm._s(_vm.form.errors.get("username")) }
             })
           : _vm._e()
@@ -76418,7 +76482,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("email_password")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: {
                 innerHTML: _vm._s(_vm.form.errors.get("email_password"))
               }
@@ -76459,7 +76523,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("first_name")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: { innerHTML: _vm._s(_vm.form.errors.get("first_name")) }
             })
           : _vm._e()
@@ -76518,7 +76582,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("last_name")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: { innerHTML: _vm._s(_vm.form.errors.get("last_name")) }
             })
           : _vm._e()
@@ -76553,7 +76617,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("email")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: { innerHTML: _vm._s(_vm.form.errors.get("email")) }
             })
           : _vm._e()
@@ -76586,7 +76650,7 @@ var render = function() {
         _vm._v(" "),
         _vm.form.errors.has("date_started")
           ? _c("div", {
-              staticClass: "text-danger text-bold",
+              staticClass: "text-danger",
               domProps: {
                 innerHTML: _vm._s(_vm.form.errors.get("date_started"))
               }
@@ -76609,7 +76673,14 @@ var render = function() {
                 _vm.form.type_id = $event
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.form.errors.has("type_id")
+            ? _c("div", {
+                staticClass: "text-danger",
+                domProps: { innerHTML: _vm._s(_vm.form.errors.get("type_id")) }
+              })
+            : _vm._e()
         ],
         1
       ),
@@ -78611,21 +78682,34 @@ var render = function() {
                   [
                     _c("h4", [_vm._v(_vm._s(_vm.userData.account_name))]),
                     _vm._v(" "),
-                    _c("p", { staticClass: "mb-2 mt-2" }, [
-                      _vm._v("Scan QR Code")
-                    ]),
-                    _vm._v(" "),
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: {
-                        src: "/uploads/" + _vm.userData.qr_code,
-                        alt: ""
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "text-center mt-2" }, [
-                      _vm._v("QR Code is valid for 7 days")
-                    ])
+                    _vm.userData.qr_code
+                      ? _c("div", [
+                          _c("p", { staticClass: "mb-2 mt-2" }, [
+                            _vm._v("Scan QR Code")
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "img-fluid",
+                            attrs: {
+                              src: "/uploads/" + _vm.userData.qr_code,
+                              alt: ""
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-center mt-2" }, [
+                            _vm._v("QR Code is valid for 7 days")
+                          ])
+                        ])
+                      : _c("div", { staticClass: "no_qr_code" }, [
+                          _c("img", {
+                            staticClass: "img-fluid",
+                            attrs: { src: "img/no_qr.jpg", alt: "" }
+                          }),
+                          _vm._v(" "),
+                          _c("p", { staticClass: "text-center" }, [
+                            _vm._v("No QR Code uploaded")
+                          ])
+                        ])
                   ]
                 )
               ]),
@@ -78837,6 +78921,189 @@ var staticRenderFns = [
     return _c("div", { staticClass: "account-sidebar-cover" }, [
       _c("img", { attrs: { src: "assets/img/cover/cover-1.jpg", alt: "" } })
     ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=template&id=4e63fd5d&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=template&id=4e63fd5d& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "section-container" }, [
+      _c("div", { staticClass: "row no-margin" }, [
+        _c("div", { staticClass: "col-md-10 offset-md-1" }, [
+          _c("div", { staticClass: "container" }, [
+            _c("h3", [_vm._v("Announcement")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "vertical-box-row" }, [
+              _vm.announcementsData.length > 0
+                ? _c("div", { staticClass: "vertical-box-cell" }, [
+                    _c(
+                      "div",
+                      { staticClass: "vertical-box-inner-cell bg-white" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "slimScrollDiv inbox",
+                            staticStyle: {
+                              position: "relative",
+                              overflow: "hidden",
+                              width: "auto",
+                              height: "100%"
+                            }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  overflow: "hidden",
+                                  width: "auto",
+                                  height: "100%"
+                                },
+                                attrs: {
+                                  "data-scrollbar": "true",
+                                  "data-height": "100%",
+                                  "data-init": "true"
+                                }
+                              },
+                              [
+                                _c(
+                                  "ul",
+                                  {
+                                    staticClass:
+                                      "list-group list-group-lg no-radius list-email"
+                                  },
+                                  _vm._l(_vm.announcementsData, function(
+                                    announcement
+                                  ) {
+                                    return _c(
+                                      "li",
+                                      { staticClass: "list-group-item unread" },
+                                      [
+                                        _vm._m(0, true),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "email-info" },
+                                          [
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href: "email_detail.html"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "email-title"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                " +
+                                                        _vm._s(
+                                                          announcement.title
+                                                        ) +
+                                                        "\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "email-desc" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                " +
+                                                        _vm._s(
+                                                          announcement.description
+                                                        ) +
+                                                        "\n                                                            "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "email-time" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                                " +
+                                                        _vm._s(
+                                                          _vm._f("formatDate")(
+                                                            announcement.created_at
+                                                          )
+                                                        ) +
+                                                        "\n                                                            "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
+                                      ]
+                                    )
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                : _c("div", { staticClass: "no_result_found" }, [
+                    _c("img", {
+                      attrs: { src: "/img/no_result_found.png", alt: "" }
+                    }),
+                    _vm._v(" "),
+                    _c("p", [_vm._v("No result found.")])
+                  ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        staticClass: "email-user bg-blue",
+        attrs: { href: "email_detail.html" }
+      },
+      [
+        _c("span", { staticClass: "text-white" }, [
+          _c("i", { staticClass: "fas fa-bullhorn" })
+        ])
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -79690,112 +79957,150 @@ var render = function() {
       _c("div", { staticClass: "row no-margin" }, [
         _c("div", { staticClass: "col-md-10 offset-md-1" }, [
           _c("div", { staticClass: "container" }, [
-            _c("h3", [_vm._v("Announcement")]),
+            _c("h3", [_vm._v("Notification")]),
             _vm._v(" "),
             _c("div", { staticClass: "vertical-box-row" }, [
               _c("div", { staticClass: "vertical-box-cell" }, [
-                _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "slimScrollDiv inbox",
-                      staticStyle: {
-                        position: "relative",
-                        overflow: "hidden",
-                        width: "auto",
-                        height: "100%"
-                      }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticStyle: {
-                            overflow: "hidden",
-                            width: "auto",
-                            height: "100%"
+                _vm.notificationsData.length > 0
+                  ? _c(
+                      "div",
+                      { staticClass: "vertical-box-inner-cell bg-white" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "slimScrollDiv inbox",
+                            staticStyle: {
+                              position: "relative",
+                              overflow: "hidden",
+                              width: "auto",
+                              height: "100%"
+                            }
                           },
-                          attrs: {
-                            "data-scrollbar": "true",
-                            "data-height": "100%",
-                            "data-init": "true"
-                          }
-                        },
-                        [
-                          _c(
-                            "ul",
-                            {
-                              staticClass:
-                                "list-group list-group-lg no-radius list-email"
-                            },
-                            _vm._l(_vm.announcementsData, function(
-                              announcement
-                            ) {
-                              return _c(
-                                "li",
-                                { staticClass: "list-group-item unread" },
-                                [
-                                  _vm._m(0, true),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "email-info" }, [
-                                    _c(
-                                      "a",
-                                      { attrs: { href: "email_detail.html" } },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  overflow: "hidden",
+                                  width: "auto",
+                                  height: "100%"
+                                },
+                                attrs: {
+                                  "data-scrollbar": "true",
+                                  "data-height": "100%",
+                                  "data-init": "true"
+                                }
+                              },
+                              [
+                                _c(
+                                  "ul",
+                                  {
+                                    staticClass:
+                                      "list-group list-group-lg no-radius list-email"
+                                  },
+                                  _vm._l(_vm.notificationsData, function(
+                                    notification
+                                  ) {
+                                    return _c(
+                                      "li",
+                                      { staticClass: "list-group-item unread" },
                                       [
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-title" },
-                                          [
-                                            _vm._v(
-                                              "\n                                                            " +
-                                                _vm._s(announcement.title) +
-                                                "\n                                                        "
-                                            )
-                                          ]
-                                        ),
+                                        _vm._m(0, true),
                                         _vm._v(" "),
                                         _c(
-                                          "span",
-                                          { staticClass: "email-desc" },
+                                          "div",
+                                          { staticClass: "email-info" },
                                           [
-                                            _vm._v(
-                                              "\n                                                            " +
-                                                _vm._s(
-                                                  announcement.description
-                                                ) +
-                                                "\n                                                        "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-time" },
-                                          [
-                                            _vm._v(
-                                              "\n                                                            " +
-                                                _vm._s(
-                                                  _vm._f("formatDate")(
-                                                    announcement.created_at
-                                                  )
-                                                ) +
-                                                "\n                                                        "
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href: "email_detail.html"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "email-title"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            " +
+                                                        _vm._s(
+                                                          notification.account_name
+                                                        ) +
+                                                        "\n                                                        "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "email-desc" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            Penalty: \n                                                            " +
+                                                        _vm._s(
+                                                          notification.penalty
+                                                        ) +
+                                                        " - \n                                                            \n                                                            "
+                                                    ),
+                                                    notification.category == 1
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "Minimum SLP not met"
+                                                          )
+                                                        ])
+                                                      : notification.category ==
+                                                        2
+                                                      ? _c("span", [
+                                                          _vm._v(
+                                                            "Minimum MMR not met"
+                                                          )
+                                                        ])
+                                                      : _vm._e()
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "email-time" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            " +
+                                                        _vm._s(
+                                                          _vm._f("formatDate")(
+                                                            notification.created_at
+                                                          )
+                                                        ) +
+                                                        "\n                                                        "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
                                           ]
                                         )
                                       ]
                                     )
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    ]
-                  )
-                ])
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  : _c("div", { staticClass: "no_result_found" }, [
+                      _c("img", {
+                        attrs: { src: "/img/no_result_found.png", alt: "" }
+                      }),
+                      _vm._v(" "),
+                      _c("p", [_vm._v("No result found.")])
+                    ])
               ])
             ])
           ])
@@ -79851,133 +80156,181 @@ var render = function() {
           _c("div", { staticClass: "container" }, [
             _c("h3", [_vm._v("Payroll History")]),
             _vm._v(" "),
-            _c("div", { staticClass: "vertical-box-row" }, [
-              _c("div", { staticClass: "vertical-box-cell" }, [
-                _c("div", { staticClass: "vertical-box-inner-cell bg-white" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "slimScrollDiv inbox",
-                      staticStyle: {
-                        position: "relative",
-                        overflow: "hidden",
-                        width: "auto",
-                        height: "100%"
-                      }
-                    },
-                    [
-                      _c(
-                        "div",
-                        {
-                          staticStyle: {
-                            overflow: "hidden",
-                            width: "auto",
-                            height: "100%"
+            _vm.payrolls.length > 0
+              ? _c("div", { staticClass: "vertical-box-row" }, [
+                  _c("div", { staticClass: "vertical-box-cell" }, [
+                    _c(
+                      "div",
+                      { staticClass: "vertical-box-inner-cell bg-white" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "slimScrollDiv inbox",
+                            staticStyle: {
+                              position: "relative",
+                              overflow: "hidden",
+                              width: "auto",
+                              height: "100%"
+                            }
                           },
-                          attrs: {
-                            "data-scrollbar": "true",
-                            "data-height": "100%",
-                            "data-init": "true"
-                          }
-                        },
-                        [
-                          _c(
-                            "ul",
-                            {
-                              staticClass:
-                                "list-group list-group-lg no-radius list-email"
-                            },
-                            _vm._l(_vm.payrolls, function(payroll) {
-                              return _c(
-                                "li",
-                                { staticClass: "list-group-item unread" },
-                                [
-                                  _c("div", { staticClass: "email-info" }, [
-                                    _c(
-                                      "a",
-                                      { attrs: { href: "email_detail.html" } },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticStyle: {
+                                  overflow: "hidden",
+                                  width: "auto",
+                                  height: "100%"
+                                },
+                                attrs: {
+                                  "data-scrollbar": "true",
+                                  "data-height": "100%",
+                                  "data-init": "true"
+                                }
+                              },
+                              [
+                                _c(
+                                  "ul",
+                                  {
+                                    staticClass:
+                                      "list-group list-group-lg no-radius list-email"
+                                  },
+                                  _vm._l(_vm.payrolls, function(payroll) {
+                                    return _c(
+                                      "li",
+                                      { staticClass: "list-group-item unread" },
                                       [
                                         _c(
-                                          "span",
-                                          { staticClass: "email-sender" },
-                                          [_vm._v(_vm._s(payroll.account_name))]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-title" },
+                                          "div",
+                                          { staticClass: "email-info" },
                                           [
-                                            _c("b", [_vm._v("TX ID:")]),
-                                            _vm._v(
-                                              " " +
-                                                _vm._s(payroll.txn_id) +
-                                                "\n                                                        "
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-desc" },
-                                          [
-                                            _c("div", { staticClass: "row" }, [
-                                              _c(
-                                                "div",
-                                                { staticClass: "col-md-6" },
-                                                [
-                                                  _c("b", [
-                                                    _vm._v("Total SLP: ")
-                                                  ]),
-                                                  _vm._v(
-                                                    _vm._s(payroll.total_slp)
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "div",
-                                                { staticClass: "col-md-6" },
-                                                [
-                                                  _c("b", [_vm._v("Status: ")]),
-                                                  _vm._v(
-                                                    _vm._s(payroll.total_slp)
-                                                  )
-                                                ]
-                                              )
-                                            ])
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "span",
-                                          { staticClass: "email-time" },
-                                          [
-                                            _vm._v(
-                                              "\n                                                            " +
-                                                _vm._s(
-                                                  _vm._f("formatDate")(
-                                                    payroll.created_at
-                                                  )
-                                                ) +
-                                                "\n                                                        "
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href: "email_detail.html"
+                                                }
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "email-sender"
+                                                  },
+                                                  [
+                                                    _vm._v(
+                                                      _vm._s(
+                                                        payroll.account_name
+                                                      )
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    staticClass: "email-title"
+                                                  },
+                                                  [
+                                                    _c("b", [_vm._v("TX ID:")]),
+                                                    _vm._v(
+                                                      " " +
+                                                        _vm._s(payroll.txn_id) +
+                                                        "\n                                                        "
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "email-desc" },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      { staticClass: "row" },
+                                                      [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-md-6"
+                                                          },
+                                                          [
+                                                            _c("b", [
+                                                              _vm._v(
+                                                                "Total SLP: "
+                                                              )
+                                                            ]),
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                payroll.total_slp
+                                                              )
+                                                            )
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "col-md-6"
+                                                          },
+                                                          [
+                                                            _c("b", [
+                                                              _vm._v("Status: ")
+                                                            ]),
+                                                            _vm._v(
+                                                              _vm._s(
+                                                                payroll.total_slp
+                                                              )
+                                                            )
+                                                          ]
+                                                        )
+                                                      ]
+                                                    )
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "span",
+                                                  { staticClass: "email-time" },
+                                                  [
+                                                    _vm._v(
+                                                      "\n                                                            " +
+                                                        _vm._s(
+                                                          _vm._f("formatDate")(
+                                                            payroll.created_at
+                                                          )
+                                                        ) +
+                                                        "\n                                                        "
+                                                    )
+                                                  ]
+                                                )
+                                              ]
                                             )
                                           ]
                                         )
                                       ]
                                     )
-                                  ])
-                                ]
-                              )
-                            }),
-                            0
-                          )
-                        ]
-                      )
-                    ]
-                  )
+                                  }),
+                                  0
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
                 ])
-              ])
-            ])
+              : _c("div", { staticClass: "no_result_found" }, [
+                  _c("img", {
+                    attrs: { src: "/img/no_result_found.png", alt: "" }
+                  }),
+                  _vm._v(" "),
+                  _c("p", [_vm._v("No result found.")])
+                ])
           ])
         ])
       ])
@@ -103969,6 +104322,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue":
+/*!**************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue ***!
+  \**************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AnnouncementComponent_vue_vue_type_template_id_4e63fd5d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AnnouncementComponent.vue?vue&type=template&id=4e63fd5d& */ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=template&id=4e63fd5d&");
+/* harmony import */ var _AnnouncementComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AnnouncementComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AnnouncementComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AnnouncementComponent_vue_vue_type_template_id_4e63fd5d___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AnnouncementComponent_vue_vue_type_template_id_4e63fd5d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnnouncementComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AnnouncementComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AnnouncementComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=template&id=4e63fd5d&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=template&id=4e63fd5d& ***!
+  \*********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnnouncementComponent_vue_vue_type_template_id_4e63fd5d___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./AnnouncementComponent.vue?vue&type=template&id=4e63fd5d& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue?vue&type=template&id=4e63fd5d&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnnouncementComponent_vue_vue_type_template_id_4e63fd5d___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AnnouncementComponent_vue_vue_type_template_id_4e63fd5d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue":
 /*!***************************************************************************!*\
   !*** ./resources/js/components/scholar_pages/Home/SLPUpdateComponent.vue ***!
@@ -104656,6 +105078,12 @@ var routes = [{
 }, {
   path: '/scholar_notification',
   component: __webpack_require__(/*! ./components/scholar_pages/Notification/ScholarNotificationComponent.vue */ "./resources/js/components/scholar_pages/Notification/ScholarNotificationComponent.vue")["default"],
+  meta: {
+    admins: false
+  }
+}, {
+  path: '/scholar_announcement',
+  component: __webpack_require__(/*! ./components/scholar_pages/Announcement/AnnouncementComponent.vue */ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue")["default"],
   meta: {
     admins: false
   }

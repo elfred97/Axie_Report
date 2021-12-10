@@ -45,13 +45,13 @@
                                     <div class="col-md-2">
                                         <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                                     </div>
-                                    <div class="col-md-3 offset-md-3">
+                                    <!-- <div class="col-md-3 offset-md-3">
                                         <div class="dataTables_length" id="data-table-default_length">
                                             <label>Search 
                                                 <input type="text" class="form-control form-control-sm custom-input custom-input-sm" placeholder="Search scholar name" @change="updatePendingPayroll()" v-model="filtersParam.search">
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -151,13 +151,13 @@
                                     <div class="col-md-2">
                                         <type-component :type="filtersParam_paid.type" @updateType="filtersParam_paid.type = $event"></type-component>
                                     </div>
-                                    <div class="col-md-3 offset-md-3">
+                                    <!-- <div class="col-md-3 offset-md-3">
                                         <div class="dataTables_length" id="data-table-default_length">
                                             <label>Search 
                                                 <input type="text" class="form-control form-control-sm custom-input custom-input-sm" placeholder="Search scholar name" @change="updatePaidPayroll" v-model="filtersParam_paid.search">
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="row mt-2">
                                     <div class="col-lg-12 col-md-12 col-sm-12">
@@ -272,7 +272,9 @@ export default {
                 status : status
             })
             .then( response => {
+                this.$noty.success(response.data.message);
                 this.updatePendingPayroll();
+                this.updatePaidPayroll();
             })
         },
         updatePendingPayroll(){

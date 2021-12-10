@@ -4,13 +4,13 @@
             <div class="col-md-4">
                 <label for="">Username <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="account_name" v-model="form.username">
-                <div v-if="form.errors.has('username')" v-html="form.errors.get('username')" class="text-danger text-bold"/>
+                <div v-if="form.errors.has('username')" v-html="form.errors.get('username')" class="text-danger"/>
             </div>
             <div class="col-md-4">
                 <label for="" v-if="scholarData.id != null">Update Password</label>
                 <label for="" v-else>New Password</label>
                 <input type="password" name="password" id="password" class="form-control" v-model="form.email_password" placeholder="Input new password to reset">
-                <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger text-bold"/>
+                <div v-if="form.errors.has('email_password')" v-html="form.errors.get('email_password')" class="text-danger"/>
                 <small>Input new password to change password</small>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="col-md-4">
                 <label for="">First Name <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="first_name" v-model="form.first_name">
-                <div v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" class="text-danger text-bold"/>
+                <div v-if="form.errors.has('first_name')" v-html="form.errors.get('first_name')" class="text-danger"/>
             </div>
 
             <div class="col-md-4">
@@ -30,26 +30,27 @@
             <div class="col-md-4">
                 <label for="">Last Name <span class="text-danger">*</span></label>
                 <input type="text" class="form-control" name="last_name" v-model="form.last_name">
-                <div v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" class="text-danger text-bold"/>
+                <div v-if="form.errors.has('last_name')" v-html="form.errors.get('last_name')" class="text-danger"/>
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="">Email <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" name="scholar_email" v-model="form.email">
-                <div v-if="form.errors.has('email')" v-html="form.errors.get('email')" class="text-danger text-bold"/>
+                <div v-if="form.errors.has('email')" v-html="form.errors.get('email')" class="text-danger"/>
             </div>            
 
             <div class="col-md-4">
                 <label for="">Date Started <span class="text-danger">*</span></label>
                 <input type="date" class="form-control" name="date_started" v-model="form.date_started">
-                <div v-if="form.errors.has('date_started')" v-html="form.errors.get('date_started')" class="text-danger text-bold"/>
+                <div v-if="form.errors.has('date_started')" v-html="form.errors.get('date_started')" class="text-danger"/>
             </div>
         </div>
         <hr>
         <div class="row mt-2">
             <div class="col-md-4">
                 <type-component :type_id="form.type_id" @updateType="form.type_id = $event"></type-component>
+                <div v-if="form.errors.has('type_id')" v-html="form.errors.get('type_id')" class="text-danger"/>
             </div>
 
             <div class="col-md-4">                
@@ -151,7 +152,10 @@ export default {
             })
             .catch((error) => {
                 if(error.response.status == 422){
-                    this.$noty.error('Recheck Form inputs');
+                    error.response.forEach(element => {
+                        this.$noty.error('Recheck Form inputs');
+                        
+                    });
                 }
                 else{
                     this.$noty.error("Something went wrong please try again later.")
