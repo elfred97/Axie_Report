@@ -47,7 +47,7 @@ Route::middleware(['auth:scholars'])->group(function(){
     Route::get('scholars', [HomeController::class,'index'])->name('scholar.name');
     Route::get('getScholarImport', [HomeController::class, 'getImport'])->name('scholar.getImport');
     Route::get('getScholarReport', [HomeController::class, 'getScholarReport'])->name('scholar.getScholarReport');
-    Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
+    // Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
     Route::post('updateRoninWallet', [HomeController::class, 'updateRoninWallet'])->name('scholar.updateRoninWallet');
     Route::get('getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');
     Route::get('getScholarPayrollHistory', 'GlobalController@getScholarPayrollHistory');
@@ -67,7 +67,6 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('/getImportedReport', 'FileController@getImportedReport');
     Route::get('/getTotalReportbyDate', 'FileController@getTotalReportbyDate');
 
-    Route::get('/getAccountInfo', 'GlobalController@getAccountInfo');
     Route::get('/getNotification', 'FileController@getNotification');
     Route::post('/updateAccountInfo', 'GlobalController@updateAccountInfo');
 
@@ -113,6 +112,8 @@ Route::middleware(['auth:admins'])->group(function(){
 Route::middleware(['auth:admins,scholars'])->group(function(){
     Route::get('src/{file_name}', 'FileController@showFile');
     Route::get('/notifications/{account_type}', [NotificationController::class,'index'])->name('index');
+
+    Route::get('/getAccountInfo/{type}', 'GlobalController@getAccountInfo');
 
     Route::get('/','GlobalController@redirectMain');
     Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');

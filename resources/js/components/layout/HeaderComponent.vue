@@ -96,9 +96,11 @@
                                     <span class="d-none d-md-inline">{{ accountData.first_name }} {{ accountData.last_name }}</span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
-                                    <!-- <span href="javascript:;" class="dropdown-item">Settings</span> -->
-                                    <router-link to="/settings" v-if="getGuardType == 'admins'" class="dropdown-item">Settings</router-link>
-                                    <div class="dropdown-divider" ></div>
+                                    <div v-if="getGuardType == 'admins'">
+                                        <!-- <span href="javascript:;" class="dropdown-item">Settings</span> -->
+                                        <router-link to="/settings" class="dropdown-item">Settings</router-link>
+                                        <div class="dropdown-divider" ></div>
+                                    </div>
                                     <a href="/logout" class="dropdown-item">Log Out</a>
                                 </div>
                             </li>
@@ -165,8 +167,8 @@ export default {
             }
         },
         getAccountInfo(){
-            if(this.$store.state.global_guard_type == 'admins'){
-                this.axios.get('/getAccountInfo')
+            // if(this.$store.state.global_guard_type == 'admins'){
+                this.axios.get('/getAccountInfo/'+this.$store.state.global_guard_type)
                 .then((response) => {
                     this.accountData = response.data;
                 })
@@ -174,7 +176,7 @@ export default {
                     // this.clearAll();
                     console.log(error.response.data)
                 })
-            }
+            // }
         },
         gotoNotification(){
             let url = '';

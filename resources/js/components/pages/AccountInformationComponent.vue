@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         getAccountInfo(){
-            this.axios.get('/getAccountInfo')
+            this.axios.get('/getAccountInfo/admins')
             .then((response) => {
                 this.accountData = response.data;
             })

@@ -178,16 +178,16 @@ class HomeController extends Controller
             ->GET();
     }
 
-    public function getScholarInformation(){
-        $username = Auth::user()->username;
+    // public function getScholarInformation(){
+    //     $username = Auth::user()->username;
 
-        return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
-            ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
-            ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
-            ->SELECT('scholars.*', 'players.*', 'type.name as type_name')
-            ->WHERE('scholars.username', $username)
-            ->FIRST();
-    }
+    //     return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+    //         ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
+    //         ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
+    //         ->SELECT('scholars.*', 'players.*', 'type.name as type_name')
+    //         ->WHERE('scholars.username', $username)
+    //         ->FIRST();
+    // }
 
     public function updateRoninWallet(Request $request){
         $username = Auth::user()->username;

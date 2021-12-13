@@ -111,8 +111,8 @@ export default {
         }
     },
     methods : {
-        getScholarInformation(){
-            this.axios.get("getScholarInformation")
+        getAccountInformation(){
+            this.axios.get("getAccountInfo/scholars")
             .then((response) => {
                 console.log(response.data);
                 this.userData = response.data;
@@ -135,7 +135,7 @@ export default {
         },
     },
     created(){
-        this.getScholarInformation();
+        this.getAccountInformation();
     }
 }
 </script>

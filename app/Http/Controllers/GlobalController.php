@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Type;
 use App\Models\Payroll;
+use App\Models\Scholar;
 use Illuminate\Support\Facades\Validator;
 
 use Illuminate\Support\Facades\Hash;
@@ -73,8 +74,19 @@ class GlobalController extends Controller
         return view('login');
     }
 
-    public function getAccountInfo(){
-        return User::WHERE('username', Auth::user()->username)->FIRST();
+    public function getAccountInfo($type){
+        if($type == 'admins')
+            return User::WHERE('username', Auth::user()->username)->FIRST();
+        else if($type == 'scholars'){
+            $username = Auth::user()->username;
+
+            return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+                ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
+                ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
+                ->SELECT('scholars.*', 'players.*', 'type.name as type_name')
+                ->WHERE('scholars.username', $username)
+                ->FIRST();
+        }
     }
 
     public function getUsers(){

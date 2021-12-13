@@ -5834,6 +5834,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5880,14 +5882,13 @@ __webpack_require__.r(__webpack_exports__);
     getAccountInfo: function getAccountInfo() {
       var _this2 = this;
 
-      if (this.$store.state.global_guard_type == 'admins') {
-        this.axios.get('/getAccountInfo').then(function (response) {
-          _this2.accountData = response.data;
-        })["catch"](function (error) {
-          // this.clearAll();
-          console.log(error.response.data);
-        });
-      }
+      // if(this.$store.state.global_guard_type == 'admins'){
+      this.axios.get('/getAccountInfo/' + this.$store.state.global_guard_type).then(function (response) {
+        _this2.accountData = response.data;
+      })["catch"](function (error) {
+        // this.clearAll();
+        console.log(error.response.data);
+      }); // }
     },
     gotoNotification: function gotoNotification() {
       var url = '';
@@ -6193,7 +6194,7 @@ __webpack_require__.r(__webpack_exports__);
     getAccountInfo: function getAccountInfo() {
       var _this = this;
 
-      this.axios.get('/getAccountInfo').then(function (response) {
+      this.axios.get('/getAccountInfo/admins').then(function (response) {
         _this.accountData = response.data;
       })["catch"](function (error) {
         // this.clearAll();
@@ -9267,10 +9268,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    getScholarInformation: function getScholarInformation() {
+    getAccountInformation: function getAccountInformation() {
       var _this = this;
 
-      this.axios.get("getScholarInformation").then(function (response) {
+      this.axios.get("getAccountInfo/scholars").then(function (response) {
         console.log(response.data);
         _this.userData = response.data;
       })["catch"](function (error) {
@@ -9292,7 +9293,7 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    this.getScholarInformation();
+    this.getAccountInformation();
   }
 });
 
@@ -72619,16 +72620,22 @@ var render = function() {
                   [
                     _vm.getGuardType == "admins"
                       ? _c(
-                          "router-link",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { to: "/settings" }
-                          },
-                          [_vm._v("Settings")]
+                          "div",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "dropdown-item",
+                                attrs: { to: "/settings" }
+                              },
+                              [_vm._v("Settings")]
+                            ),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "dropdown-divider" })
+                          ],
+                          1
                         )
                       : _vm._e(),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "dropdown-divider" }),
                     _vm._v(" "),
                     _c(
                       "a",
@@ -72638,8 +72645,7 @@ var render = function() {
                       },
                       [_vm._v("Log Out")]
                     )
-                  ],
-                  1
+                  ]
                 )
               ])
             ])

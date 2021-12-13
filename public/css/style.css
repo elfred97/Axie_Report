@@ -276,7 +276,9 @@ label{
     padding-top: 10px;
     font-size: 14px;
 }
-
+.no_qr_code img{
+    opacity: .4;
+}
 @media (max-width:767.98px){
     .inbox .list-email>li.list-group-item .email-info>a{
         display:block
