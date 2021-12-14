@@ -17,11 +17,13 @@ class PayrollImport implements ToCollection,WithHeadingRow
     */
     public function collection(Collection $rows)
     {
+        $txnID = Helper::IDGenerator(new Payroll,'TRANS');
+        
         foreach ($rows as $row)
         {
             $player = Player::WHERE('account_name', $row['account_name'])->first();
             $scholar = Scholar::WHERE('username', $row['username'])->first();
-            $txnID = Helper::IDGenerator(new Payroll,'TRANS');
+
             Payroll::create([
                 'scholar_id'       => $scholar->id,
                 'player_id'      => $player->id,
