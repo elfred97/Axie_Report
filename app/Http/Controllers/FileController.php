@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\PayrollImport;
 use DB;
 use Auth;
 use File;
@@ -20,7 +21,8 @@ class FileController extends Controller
 {
 
     public function importPayroll(Request $request){
-        dd($request->all());
+        Excel::import(new PayrollImport, $request->file);
+        return "File Uploaded";
     }
     public function import(Request $request){
         Excel::import(new ReportImport, $request->file);
