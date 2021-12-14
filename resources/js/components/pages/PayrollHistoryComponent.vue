@@ -7,6 +7,12 @@
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="pull-right">
+                            <input name="file" type="file" ref="file" @change="importPayroll()" class="hide">
+                            <button class="btn btn-primary btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Payroll</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         <!-- begin tabs -->
                         <ul class="nav nav-tabs nav-tabs-default" data-sortable-id="index-2">
                             <li class="nav-item"><a href="#pending" data-toggle="tab" class="nav-link active"><i class="fa fa-file-invoice fa-lg m-r-5"></i> <span class="d-none d-md-inline">Pending Payroll</span></a></li>
@@ -260,7 +266,8 @@ export default {
             openDialog : false,
             isLoading  : false,
             fullPage   : true,
-            selected_payroll : {}
+            selected_payroll : {},
+            import_file : "",
         }
     },
     watch : {
@@ -306,6 +313,38 @@ export default {
         editPayroll(data){
             this.selected_payroll = data;
             this.openDialog =  true;
+        },
+        importPayroll() {
+            this.import_file = this.$refs.file.files[0];
+
+            this.$alertify.confirmWithTitle("Import CSV File", "Confirm to upload file"+"</br>"+this.import_file.name, 
+            ()=>
+                this.uploadFile()
+            ,() =>
+                this.$alertify.error("Cancel")
+            )
+            // console.log(this.import_file);
+        },
+        uploadFile(){
+            let formData = new FormData();
+            formData.append('file', this.import_file);
+
+            this.axios.post('/importPayroll',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then((response) => {
+                // console.log(response.data);
+                this.import_file = '';
+                this.$refs.file.value = '';
+                this.$noty.success("File Imported");
+                this.updatePendingPayroll();
+                this.updatePaidPayroll();
+            })
+
         }
     },
     mounted(){

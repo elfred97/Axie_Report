@@ -85,4 +85,11 @@ export const routes = [
             admins : false,
         }
     },
+    { 
+        path: '/api_sample', 
+        component: require('./components/pages/APISampleComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
 ]

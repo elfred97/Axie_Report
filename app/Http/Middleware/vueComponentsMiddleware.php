@@ -27,6 +27,7 @@ class vueComponentsMiddleware
             'settings',
             '403',
             null,
+            'api_sample',
             
             'scholars',
             // 'scholar_home',

@@ -18,6 +18,10 @@ use App\Models\importModel as ImportModel;
 
 class FileController extends Controller
 {
+
+    public function importPayroll(Request $request){
+        dd($request->all());
+    }
     public function import(Request $request){
         Excel::import(new ReportImport, $request->file);
         return "File Uploaded";

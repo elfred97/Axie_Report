@@ -5836,6 +5836,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5994,6 +5995,106 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getType();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/APISampleComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/APISampleComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      axies: {}
+    };
+  },
+  methods: {
+    getAxieList: function getAxieList() {
+      var _this = this;
+
+      var ronin_address = '0xc992bc7b3a60c2c2c12b3242af73e97c5610d17c';
+      this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
+        params: {
+          "operationName": "GetAxieBriefList",
+          "variables": {
+            "from": 0,
+            "size": 100,
+            "sort": "IdDesc",
+            "auctionType": "All",
+            "owner": ronin_address,
+            "criteria": {
+              "region": null,
+              "parts": null,
+              "bodyShapes": null,
+              "classes": null,
+              "stages": null,
+              "numMystic": null,
+              "pureness": null,
+              "title": null,
+              "breedable": null,
+              "breedCount": null,
+              "hp": [],
+              "skill": [],
+              "speed": [],
+              "morale": []
+            }
+          },
+          "query": "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n birthDate\n breedCount\n  image\n  genes\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"
+        }
+      }).then(function (response) {
+        // console.log(response.data);
+        _this.axies = response.data.data.axies.results;
+
+        _this.getSampleAxieDetails(_this.axies[0].id);
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    getSampleAxieDetails: function getSampleAxieDetails(axieID) {
+      this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
+        params: {
+          "operationName": "GetAxieDetail",
+          "variables": {
+            "axieId": axieID
+          },
+          "query": "query GetAxieDetail($axieId: ID!) {\n  axie(axieId: $axieId) {\n    ...AxieDetail\n    __typename\n  }\n}\n\nfragment AxieDetail on Axie {\n  id\n  image\n  class\n  chain\n  name\n  genes\n  owner\n  birthDate\n  bodyShape\n  class\n  sireId\n  sireClass\n  matronId\n  matronClass\n  stage\n  title\n  breedCount\n  level\n  figure {\n    atlas\n    model\n    image\n    __typename\n  }\n  parts {\n    ...AxiePart\n    __typename\n  }\n  stats {\n    ...AxieStats\n    __typename\n  }\n  auction {\n    ...AxieAuction\n    __typename\n  }\n  ownerProfile {\n    name\n    __typename\n  }\n  battleInfo {\n    ...AxieBattleInfo\n    __typename\n  }\n  children {\n    id\n    name\n    class\n    image\n    title\n    stage\n    __typename\n  }\n  __typename\n}\n\nfragment AxieBattleInfo on AxieBattleInfo {\n  banned\n  banUntil\n  level\n  __typename\n}\n\nfragment AxiePart on AxiePart {\n  id\n  name\n  class\n  type\n  specialGenes\n  stage\n  abilities {\n    ...AxieCardAbility\n    __typename\n  }\n  __typename\n}\n\nfragment AxieCardAbility on AxieCardAbility {\n  id\n  name\n  attack\n  defense\n  energy\n  description\n  backgroundUrl\n  effectIconUrl\n  __typename\n}\n\nfragment AxieStats on AxieStats {\n  hp\n  speed\n  skill\n  morale\n  __typename\n}\n\nfragment AxieAuction on Auction {\n  startingPrice\n  endingPrice\n  startingTimestamp\n  endingTimestamp\n  duration\n  timeLeft\n  currentPrice\n  currentPriceUSD\n  suggestedPrice\n  seller\n  listingIndex\n  state\n  __typename\n}\n"
+        }
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    getActivityLog: function getActivityLog() {
+      this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
+        params: {
+          "operationName": "GetActivityLog",
+          "variables": {
+            "from": 0,
+            "size": 6
+          },
+          "query": "query GetActivityLog($from: Int, $size: Int) {\n  profile {\n    activities(from: $from, size: $size) {\n      ...Activity\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment Activity on Activity {\n  activityId\n  accountId\n  action\n  timestamp\n  seen\n  data {\n    ... on ListAxie {\n      ...ListAxie\n      __typename\n    }\n    ... on UnlistAxie {\n      ...UnlistAxie\n      __typename\n    }\n    ... on BuyAxie {\n      ...BuyAxie\n      __typename\n    }\n    ... on GiftAxie {\n      ...GiftAxie\n      __typename\n    }\n    ... on MakeAxieOffer {\n      ...MakeAxieOffer\n      __typename\n    }\n    ... on CancelAxieOffer {\n      ...CancelAxieOffer\n      __typename\n    }\n    ... on SyncExp {\n      ...SyncExp\n      __typename\n    }\n    ... on MorphToPetite {\n      ...MorphToPetite\n      __typename\n    }\n    ... on MorphToAdult {\n      ...MorphToAdult\n      __typename\n    }\n    ... on BreedAxies {\n      ...BreedAxies\n      __typename\n    }\n    ... on BuyLand {\n      ...BuyLand\n      __typename\n    }\n    ... on ListLand {\n      ...ListLand\n      __typename\n    }\n    ... on UnlistLand {\n      ...UnlistLand\n      __typename\n    }\n    ... on GiftLand {\n      ...GiftLand\n      __typename\n    }\n    ... on MakeLandOffer {\n      ...MakeLandOffer\n      __typename\n    }\n    ... on CancelLandOffer {\n      ...CancelLandOffer\n      __typename\n    }\n    ... on BuyItem {\n      ...BuyItem\n      __typename\n    }\n    ... on ListItem {\n      ...ListItem\n      __typename\n    }\n    ... on UnlistItem {\n      ...UnlistItem\n      __typename\n    }\n    ... on GiftItem {\n      ...GiftItem\n      __typename\n    }\n    ... on MakeItemOffer {\n      ...MakeItemOffer\n      __typename\n    }\n    ... on CancelItemOffer {\n      ...CancelItemOffer\n      __typename\n    }\n    ... on ListBundle {\n      ...ListBundle\n      __typename\n    }\n    ... on UnlistBundle {\n      ...UnlistBundle\n      __typename\n    }\n    ... on BuyBundle {\n      ...BuyBundle\n      __typename\n    }\n    ... on MakeBundleOffer {\n      ...MakeBundleOffer\n      __typename\n    }\n    ... on CancelBundleOffer {\n      ...CancelBundleOffer\n      __typename\n    }\n    ... on AddLoomBalance {\n      ...AddLoomBalance\n      __typename\n    }\n    ... on WithdrawFromLoom {\n      ...WithdrawFromLoom\n      __typename\n    }\n    ... on AddFundBalance {\n      ...AddFundBalance\n      __typename\n    }\n    ... on WithdrawFromFund {\n      ...WithdrawFromFund\n      __typename\n    }\n    ... on TopupRoninWeth {\n      ...TopupRoninWeth\n      __typename\n    }\n    ... on WithdrawRoninWeth {\n      ...WithdrawRoninWeth\n      __typename\n    }\n    __typename\n  }\n  __typename\n}\n\nfragment ListAxie on ListAxie {\n  axieId\n  priceFrom\n  priceTo\n  duration\n  txHash\n  __typename\n}\n\nfragment UnlistAxie on UnlistAxie {\n  axieId\n  txHash\n  __typename\n}\n\nfragment BuyAxie on BuyAxie {\n  axieId\n  price\n  owner\n  txHash\n  __typename\n}\n\nfragment GiftAxie on GiftAxie {\n  axieId\n  destination\n  txHash\n  __typename\n}\n\nfragment MakeAxieOffer on MakeAxieOffer {\n  axieId\n  price\n  txHash\n  __typename\n}\n\nfragment CancelAxieOffer on CancelAxieOffer {\n  axieId\n  txHash\n  __typename\n}\n\nfragment SyncExp on SyncExp {\n  axieId\n  exp\n  txHash\n  __typename\n}\n\nfragment MorphToPetite on MorphToPetite {\n  axieId\n  txHash\n  __typename\n}\n\nfragment MorphToAdult on MorphToAdult {\n  axieId\n  txHash\n  __typename\n}\n\nfragment BreedAxies on BreedAxies {\n  sireId\n  matronId\n  lovePotionAmount\n  txHash\n  __typename\n}\n\nfragment BuyLand on BuyLand {\n  row\n  col\n  price\n  owner\n  txHash\n  __typename\n}\n\nfragment ListLand on ListLand {\n  row\n  col\n  priceFrom\n  priceTo\n  duration\n  txHash\n  __typename\n}\n\nfragment UnlistLand on UnlistLand {\n  row\n  col\n  txHash\n  __typename\n}\n\nfragment GiftLand on GiftLand {\n  row\n  col\n  destination\n  txHash\n  __typename\n}\n\nfragment MakeLandOffer on MakeLandOffer {\n  row\n  col\n  price\n  txHash\n  __typename\n}\n\nfragment CancelLandOffer on CancelLandOffer {\n  row\n  col\n  txHash\n  __typename\n}\n\nfragment BuyItem on BuyItem {\n  tokenId\n  itemAlias\n  price\n  owner\n  txHash\n  __typename\n}\n\nfragment ListItem on ListItem {\n  tokenId\n  itemAlias\n  priceFrom\n  priceTo\n  duration\n  txHash\n  __typename\n}\n\nfragment UnlistItem on UnlistItem {\n  tokenId\n  itemAlias\n  txHash\n  __typename\n}\n\nfragment GiftItem on GiftItem {\n  tokenId\n  itemAlias\n  destination\n  txHash\n  __typename\n}\n\nfragment MakeItemOffer on MakeItemOffer {\n  tokenId\n  itemAlias\n  price\n  txHash\n  __typename\n}\n\nfragment CancelItemOffer on CancelItemOffer {\n  tokenId\n  itemAlias\n  txHash\n  __typename\n}\n\nfragment BuyBundle on BuyBundle {\n  listingIndex\n  price\n  owner\n  txHash\n  __typename\n}\n\nfragment ListBundle on ListBundle {\n  numberOfItems\n  priceFrom\n  priceTo\n  duration\n  txHash\n  __typename\n}\n\nfragment UnlistBundle on UnlistBundle {\n  listingIndex\n  txHash\n  __typename\n}\n\nfragment MakeBundleOffer on MakeBundleOffer {\n  listingIndex\n  price\n  txHash\n  __typename\n}\n\nfragment CancelBundleOffer on CancelBundleOffer {\n  listingIndex\n  txHash\n  __typename\n}\n\nfragment AddLoomBalance on AddLoomBalance {\n  amount\n  senderAddress\n  receiverAddress\n  txHash\n  __typename\n}\n\nfragment WithdrawFromLoom on WithdrawFromLoom {\n  amount\n  senderAddress\n  receiverAddress\n  txHash\n  __typename\n}\n\nfragment AddFundBalance on AddFundBalance {\n  amount\n  senderAddress\n  txHash\n  __typename\n}\n\nfragment WithdrawFromFund on WithdrawFromFund {\n  amount\n  receiverAddress\n  txHash\n  __typename\n}\n\nfragment WithdrawRoninWeth on WithdrawRoninWeth {\n  amount\n  receiverAddress\n  txHash\n  receiverAddress\n  __typename\n}\n\nfragment TopupRoninWeth on TopupRoninWeth {\n  amount\n  receiverAddress\n  txHash\n  receiverAddress\n  __typename\n}\n"
+        }
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {});
+    }
+  },
+  mounted: function mounted() {
+    this.getAxieList(); // this.getSampleAxieDetails();
+    // this.getActivityLog();
   }
 });
 
@@ -7271,7 +7372,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       _this5.getPenalties(eventData);
 
       _this5.getLowestMMR(eventData);
-    }); // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
+    });
+    this.getSampleAxieDetails();
+    this.getAxieList(); // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
   }
 });
 
@@ -7292,6 +7395,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _PayrollHistoryFormComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./PayrollHistoryFormComponent.vue */ "./resources/js/components/pages/PayrollHistoryFormComponent.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -7552,7 +7661,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       payrollData: {},
       openDialog: false
-    }, _defineProperty(_ref, "isLoading", false), _defineProperty(_ref, "fullPage", true), _defineProperty(_ref, "selected_payroll", {}), _ref;
+    }, _defineProperty(_ref, "isLoading", false), _defineProperty(_ref, "fullPage", true), _defineProperty(_ref, "selected_payroll", {}), _defineProperty(_ref, "import_file", ""), _ref;
   },
   watch: {
     'filtersParam.type': function filtersParamType(newVal) {
@@ -7605,18 +7714,49 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     editPayroll: function editPayroll(data) {
       this.selected_payroll = data;
       this.openDialog = true;
+    },
+    importPayroll: function importPayroll() {
+      var _this3 = this;
+
+      this.import_file = this.$refs.file.files[0];
+      this.$alertify.confirmWithTitle("Import CSV File", "Confirm to upload file" + "</br>" + this.import_file.name, function () {
+        return _this3.uploadFile();
+      }, function () {
+        return _this3.$alertify.error("Cancel");
+      }); // console.log(this.import_file);
+    },
+    uploadFile: function uploadFile() {
+      var _this4 = this;
+
+      var formData = new FormData();
+      formData.append('file', this.import_file);
+      this.axios.post('/importPayroll', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
+        // console.log(response.data);
+        _this4.import_file = '';
+        _this4.$refs.file.value = '';
+
+        _this4.$noty.success("File Imported");
+
+        _this4.updatePendingPayroll();
+
+        _this4.updatePaidPayroll();
+      });
     }
   },
   mounted: function mounted() {
-    var _this3 = this;
+    var _this5 = this;
 
     this.$events.on('update_payroll_history_table', function (data) {
-      _this3.updatePendingPayroll();
+      _this5.updatePendingPayroll();
 
-      _this3.updatePaidPayroll();
+      _this5.updatePaidPayroll();
     });
     this.$root.$on('isClose', function (data) {
-      _this3.openDialog = false;
+      _this5.openDialog = false;
     });
   }
 });
@@ -72628,7 +72768,10 @@ var render = function() {
                                 staticClass: "dropdown-item",
                                 attrs: { to: "/settings" }
                               },
-                              [_vm._v("Settings")]
+                              [
+                                _c("i", { staticClass: "fas fa-sliders-h" }),
+                                _vm._v(" Settings")
+                              ]
                             ),
                             _vm._v(" "),
                             _c("div", { staticClass: "dropdown-divider" })
@@ -72637,14 +72780,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _c(
-                      "a",
-                      {
-                        staticClass: "dropdown-item",
-                        attrs: { href: "/logout" }
-                      },
-                      [_vm._v("Log Out")]
-                    )
+                    _vm._m(4)
                   ]
                 )
               ])
@@ -72712,6 +72848,16 @@ var staticRenderFns = [
     return _c("div", { staticClass: "media-left" }, [
       _c("i", { staticClass: "fa fa-bullhorn media-object bg-silver-darker" })
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      { staticClass: "dropdown-item", attrs: { href: "/logout" } },
+      [_c("i", { staticClass: "fas fa-sign-out-alt" }), _vm._v(" Log Out")]
+    )
   }
 ]
 render._withStripped = true
@@ -72796,6 +72942,30 @@ var render = function() {
       ]
     )
   ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/APISampleComponent.vue?vue&type=template&id=16866ae2&":
+/*!***************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/APISampleComponent.vue?vue&type=template&id=16866ae2& ***!
+  \***************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div")
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -74995,6 +75165,37 @@ var render = function() {
         [
           _c("div", { staticClass: "container" }, [
             _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c("div", { staticClass: "pull-right" }, [
+                  _c("input", {
+                    ref: "file",
+                    staticClass: "hide",
+                    attrs: { name: "file", type: "file" },
+                    on: {
+                      change: function($event) {
+                        return _vm.importPayroll()
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-primary btn-sm",
+                      on: {
+                        click: function($event) {
+                          return _vm.$refs.file.click()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-plus" }),
+                      _vm._v(" Import Payroll")
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
               _c("div", { staticClass: "col-md-12" }, [
                 _vm._m(0),
                 _vm._v(" "),
@@ -102299,6 +102500,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/APISampleComponent.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/pages/APISampleComponent.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _APISampleComponent_vue_vue_type_template_id_16866ae2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./APISampleComponent.vue?vue&type=template&id=16866ae2& */ "./resources/js/components/pages/APISampleComponent.vue?vue&type=template&id=16866ae2&");
+/* harmony import */ var _APISampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./APISampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/APISampleComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _APISampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _APISampleComponent_vue_vue_type_template_id_16866ae2___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _APISampleComponent_vue_vue_type_template_id_16866ae2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/APISampleComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/APISampleComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/pages/APISampleComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_APISampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./APISampleComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/APISampleComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_APISampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/APISampleComponent.vue?vue&type=template&id=16866ae2&":
+/*!*********************************************************************************************!*\
+  !*** ./resources/js/components/pages/APISampleComponent.vue?vue&type=template&id=16866ae2& ***!
+  \*********************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_APISampleComponent_vue_vue_type_template_id_16866ae2___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./APISampleComponent.vue?vue&type=template&id=16866ae2& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/APISampleComponent.vue?vue&type=template&id=16866ae2&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_APISampleComponent_vue_vue_type_template_id_16866ae2___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_APISampleComponent_vue_vue_type_template_id_16866ae2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/AccountComponent.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/pages/AccountComponent.vue ***!
@@ -105463,6 +105733,12 @@ var routes = [{
   component: __webpack_require__(/*! ./components/scholar_pages/Announcement/AnnouncementComponent.vue */ "./resources/js/components/scholar_pages/Announcement/AnnouncementComponent.vue")["default"],
   meta: {
     admins: false
+  }
+}, {
+  path: '/api_sample',
+  component: __webpack_require__(/*! ./components/pages/APISampleComponent.vue */ "./resources/js/components/pages/APISampleComponent.vue")["default"],
+  meta: {
+    admins: true
   }
 }];
 

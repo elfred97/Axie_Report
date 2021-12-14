@@ -32,6 +32,9 @@ body{
     width: 25rem;
     height: 3.5rem;
 }
+.brand-text {
+    font-size: 14px;
+}
 .header .header-logo .brand-logo{
     /* border: 15px solid; */
     width: 2rem;

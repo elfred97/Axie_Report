@@ -104,6 +104,8 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::get('getPayrollHistory/{status}', 'GlobalController@getPayrollHistory');
     Route::post('updatePayrollHistory', 'GlobalController@updatePayrollHistory');
     Route::post('updatePendingPayrollHistory', 'GlobalController@updatePendingPayrollHistory');
+
+    Route::post('importPayroll', 'FileConroller@importPayroll');
 });
 
 

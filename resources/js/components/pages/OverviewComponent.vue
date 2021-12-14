@@ -300,7 +300,7 @@ export default {
             .catch((error) =>{
                 console.log(error);
             })
-        },
+        },        
     },
     mounted(){
         this.getTotal();
@@ -311,6 +311,8 @@ export default {
             this.getPenalties(eventData);
             this.getLowestMMR(eventData);
         });
+        this.getSampleAxieDetails();
+        this.getAxieList();
         // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
     }
 }

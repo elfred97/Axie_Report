@@ -98,10 +98,11 @@
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <div v-if="getGuardType == 'admins'">
                                         <!-- <span href="javascript:;" class="dropdown-item">Settings</span> -->
-                                        <router-link to="/settings" class="dropdown-item">Settings</router-link>
+                                        <router-link to="/settings" class="dropdown-item"><i class="fas fa-sliders-h"></i> Settings</router-link>
                                         <div class="dropdown-divider" ></div>
                                     </div>
-                                    <a href="/logout" class="dropdown-item">Log Out</a>
+                                    <!-- <a href="/api_sample" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> API Sample</a> -->
+                                    <a href="/logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                                 </div>
                             </li>
                         </ul>
