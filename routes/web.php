@@ -105,7 +105,7 @@ Route::middleware(['auth:admins'])->group(function(){
     Route::post('updatePayrollHistory', 'GlobalController@updatePayrollHistory');
     Route::post('updatePendingPayrollHistory', 'GlobalController@updatePendingPayrollHistory');
 
-    Route::post('importPayroll', 'FileConroller@importPayroll');
+    Route::post('importPayroll', 'FileController@importPayroll');
 });
 
 
