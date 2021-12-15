@@ -47,8 +47,7 @@ class SendReminders extends Command
 
 
         $reminders = Reminder::all();
-//        $current_date = Carbon::now();
-        $current_date = Carbon::parse('2021-11-23 00:00');
+       $current_date = Carbon::now();
 
 //        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
 
@@ -68,7 +67,7 @@ class SendReminders extends Command
                     || ($recurrence == Reminder::RECURRENCE_WEEKLY && $reminder_time->format('l H:i') == $current_date->format('l H:i'))
                     || ($recurrence == Reminder::RECURRENCE_MONTHLY && $reminder_time->format('d H:i') == $current_date->format('d H:i'))
                 ) {
-//                    $this->info('Sending Reminder with id : ' . $reminder->id);
+                   $this->info('Sending Reminder with id : ' . $reminder->id);
 
                     $type = $reminder->type_id;
                     $scholars = Scholar::when($type, function ($q, $type) {

@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 use Auth;
 use Illuminate\Http\Request;
 use App\Models\Notification;
-use App\Models\Player;
 use App\Models\Scholar;
-use App\Models\PlayerScholarHistory;
 class NotificationController extends Controller
 {
     //
@@ -17,13 +15,10 @@ class NotificationController extends Controller
     public function index($account_type){
         if($account_type == 'scholars'){
             $username = Auth::user()->username;
-            $player = Player::LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
-                    ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
-                    ->SELECT('players.*', 'scholars.type_id')
-                    ->WHERE('scholars.username', $username)
-                    ->FIRST();
+            $scholar = Scholar::where('username', $username)->FIRST();
+
             return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')
-                ->WHERE([['notification.category', 3], ['reminders.type_id', $player->type_id]])
+                ->WHERE([['notification.category', 3], ['reminders.type_id', $scholar->type_id], ['reminders.type_id', NULL]])
                 ->get();
         }
         else if($account_type == 'admins'){
