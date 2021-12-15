@@ -19,6 +19,7 @@ class NotificationController extends Controller
             $username = Auth::user()->username;
             $player = Player::LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
                     ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+                    ->SELECT('players.*', 'scholars.type_id')
                     ->WHERE('scholars.username', $username)
                     ->FIRST();
             return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')
