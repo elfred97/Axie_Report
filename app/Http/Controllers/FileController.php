@@ -20,6 +20,9 @@ use App\Models\importModel as ImportModel;
 class FileController extends Controller
 {
 
+    public function importZipQR(Request $request){
+        dd($request->all());
+    }
     public function importPayroll(Request $request){
         Excel::import(new PayrollImport, $request->file);
         return "File Uploaded";

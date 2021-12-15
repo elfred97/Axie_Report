@@ -71669,6 +71669,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_2__["TableMixins"] ],
     data () {
@@ -71677,6 +71679,7 @@ __webpack_require__.r(__webpack_exports__);
             perPage    : 15,
             data       : [],
             import_file: '',
+            import_zip_file : '',
             detailRow  : _PlayerDetailRow_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
             sortOrder  : [
                 {
@@ -71765,6 +71768,36 @@ __webpack_require__.r(__webpack_exports__);
                 // console.log(response.data);
                 this.import_file = '';
                 this.$refs.file.value = '';
+                this.$noty.success("File Imported");;
+                this.updateTable();
+            })
+        },
+        uploadZipQR(){
+            this.import_zip_file = this.$refs.zip_file.files[0];
+
+            this.$alertify.confirmWithTitle("Import Zip File", "Confirm to upload file"+"</br>"+this.import_zip_file.name, 
+            ()=>
+                this.uploadZipFile()
+            ,() =>
+                this.$alertify.error("Cancel")
+            )
+            // console.log(this.import_file);
+        },
+        uploadZipFile(){
+            let formData = new FormData();
+            formData.append('file', this.import_zip_file);
+
+            this.axios.post('/importZipQR',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then((response) => {
+                // console.log(response.data);
+                this.import_zip_file = '';
+                this.$refs.zip_file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
@@ -76449,6 +76482,33 @@ var render = function() {
                   _c("i", { staticClass: "fa fa-plus" }),
                   _vm._v(" Import Axie Account ")
                 ]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                ref: "zip_file",
+                staticClass: "hide",
+                attrs: { name: "zip_file", type: "file" },
+                on: {
+                  change: function($event) {
+                    return _vm.uploadZipQR()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-sm",
+                  on: {
+                    click: function($event) {
+                      return _vm.$refs.zip_file.click()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-qrcode" }),
+                  _vm._v(" Upload Zip QR Code ")
+                ]
               )
             ])
           ])
@@ -76611,8 +76671,8 @@ var render = function() {
                               }
                             },
                             [
-                              _c("i", { staticClass: "fa fa-trash" }),
-                              _vm._v("Upload QR")
+                              _c("i", { staticClass: "fa fa-qrcode" }),
+                              _vm._v(" Upload QR")
                             ]
                           )
                         ])

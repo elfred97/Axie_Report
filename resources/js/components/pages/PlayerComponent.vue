@@ -39,6 +39,8 @@
                         <input name="file" type="file" ref="file" @change="importPlayer()" class="hide">
                         <button class="btn btn-primary btn-sm"  @click="addPlayer"><i class="fa fa-plus"></i> Add New Axie Account </button>
                         <button class="btn btn-warning btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Axie Account </button>
+                        <input name="zip_file" type="file" ref="zip_file" @change="uploadZipQR()" class="hide">
+                        <button class="btn btn-info btn-sm"  @click="$refs.zip_file.click()"><i class="fa fa-qrcode"></i> Upload Zip QR Code </button>
                     </div>
                 </div>
             </div>
@@ -92,7 +94,7 @@
                                 <button class="btn btn-white btn-xs" @click="editPlayer(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit</button>
                                 <button class="btn btn-white btn-xs text-danger" @click="deletePlayer(props.rowData.id)"><i class="fa fa-trash"></i> Delete</button>
 
-                                <button class="btn btn-white btn-xs text-primary" @click="uploadQR(props.rowData)"><i class="fa fa-trash"></i>Upload QR</button>
+                                <button class="btn btn-white btn-xs text-primary" @click="uploadQR(props.rowData)"><i class="fa fa-qrcode"></i> Upload QR</button>
                             </div>
                         </div>
                     </vuetable>
@@ -133,6 +135,7 @@ export default {
             perPage    : 15,
             data       : [],
             import_file: '',
+            import_zip_file : '',
             detailRow  : PlayerDetailRow,
             sortOrder  : [
                 {
@@ -221,6 +224,36 @@ export default {
                 // console.log(response.data);
                 this.import_file = '';
                 this.$refs.file.value = '';
+                this.$noty.success("File Imported");;
+                this.updateTable();
+            })
+        },
+        uploadZipQR(){
+            this.import_zip_file = this.$refs.zip_file.files[0];
+
+            this.$alertify.confirmWithTitle("Import Zip File", "Confirm to upload file"+"</br>"+this.import_zip_file.name, 
+            ()=>
+                this.uploadZipFile()
+            ,() =>
+                this.$alertify.error("Cancel")
+            )
+            // console.log(this.import_file);
+        },
+        uploadZipFile(){
+            let formData = new FormData();
+            formData.append('file', this.import_zip_file);
+
+            this.axios.post('/importZipQR',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then((response) => {
+                // console.log(response.data);
+                this.import_zip_file = '';
+                this.$refs.zip_file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
