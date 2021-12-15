@@ -72819,9 +72819,7 @@ var render = function() {
                         )
                       : _vm._e(),
                     _vm._v(" "),
-                    _vm._m(4),
-                    _vm._v(" "),
-                    _vm._m(5)
+                    _vm._m(4)
                   ]
                 )
               ])
@@ -72889,16 +72887,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "media-left" }, [
       _c("i", { staticClass: "fa fa-bullhorn media-object bg-silver-darker" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "dropdown-item", attrs: { href: "/api_sample" } },
-      [_c("i", { staticClass: "fas fa-sign-out-alt" }), _vm._v(" API Sample")]
-    )
   },
   function() {
     var _vm = this
