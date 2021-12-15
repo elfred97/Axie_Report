@@ -15,7 +15,7 @@ class CreateSlpPriceNotificationHistories extends Migration
     {
         Schema::create('slp_price_notification_histories', function (Blueprint $table) {
             $table->id();
-            $table->decimal('value',20,10);
+            $table->decimal('value',20,10)->nullable();
             $table->string('currency');
             $table->timestamp('sent_at')->useCurrent();
         });
