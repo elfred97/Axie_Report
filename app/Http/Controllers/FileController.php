@@ -27,11 +27,12 @@ class FileController extends Controller
         $zip->extractTo($path);
         foreach (glob(public_path().'/uploads/qr_codes/'.$zip->getNameIndex(0)."/*.png") as $file) {
             $fileName = explode("//",$file)[1];
-            if(!File::exists(public_path('uploads/qr_codes/'.$fileName))){
-                File::move(base_path('/public/uploads/qr_codes/'.$zip->getNameIndex(0).$fileName), base_path('/public/uploads/qr_codes/'.$fileName));
+            if(File::exists(public_path('uploads/qr_codes/'.$fileName))){
+                File::delete(base_path('/public/uploads/qr_codes/'.$fileName));
+            }
+            File::move(base_path('/public/uploads/qr_codes/'.$zip->getNameIndex(0).$fileName), base_path('/public/uploads/qr_codes/'.$fileName));
             Player::where('account_name', explode(".",$fileName)[0])->whereNull('qr_code')
             ->update(['qr_code' => 'qr_codes/'.$fileName,'qr_code_date' => Carbon::now()]);
-            }
         }
         File::deleteDirectory(base_path('/public/uploads/qr_codes/'.$zip->getNameIndex(0)));
         $zip->close();  
