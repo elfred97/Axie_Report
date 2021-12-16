@@ -24,7 +24,6 @@ class FileController extends Controller
         $file = $request->file('file');
         $zip->open($file->path());
         $path = 'uploads/qr_codes';
-        $fileNames = [];
         $zip->extractTo($path);
         foreach (glob(public_path().'/uploads/qr_codes/'.$zip->getNameIndex(0)."/*.png") as $file) {
             $fileName = explode("//",$file)[1];
