@@ -21,7 +21,17 @@ class FileController extends Controller
 {
 
     public function importZipQR(Request $request){
-        dd($request->all());
+        $zip = new \ZipArchive();
+        $file = $request->file('file');
+        $zip->open($file->path());
+        $path = 'uploads/qr_codes';    
+        for ($i = 1; $i < $zip->count(); $i++) {
+            $filename = explode("/",$zip->getNameIndex($i))[1];
+            Player::where('account_name', explode(".",$filename)[0])->whereNull('qr_code')
+            ->update(['qr_code' => 'qr_codes/'.$zip->getNameIndex($i),'qr_code_date' => Carbon::now()]);
+        }
+        $zip->extractTo($path);
+        $zip->close();
     }
     public function importPayroll(Request $request){
         Excel::import(new PayrollImport, $request->file);
