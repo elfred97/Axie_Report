@@ -19,7 +19,7 @@ class NotificationController extends Controller
 
             return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')
                 ->WHERE([['notification.category', 3], ['reminders.type_id', $scholar->type_id]])
-                ->ORWHERE('reminders.type_id', NULL)
+                ->ORWHERE(['reminders.type_id', NULL])
                 ->get();
         }
         else if($account_type == 'admins'){

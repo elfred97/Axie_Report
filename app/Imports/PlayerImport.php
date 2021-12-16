@@ -22,7 +22,7 @@ class PlayerImport implements ToCollection
 
             if($counter > 0){
                 Player::create([
-                    'account_name'       => $row[0],
+                    'account_name'       => trim($row[0]),
                     'ronin_address'      => $row[1],
                     'market_place_email' => $row[2],
                     'password'           => $row[3],

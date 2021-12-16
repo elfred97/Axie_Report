@@ -19,10 +19,23 @@ use App\Models\importModel as ImportModel;
 
 class FileController extends Controller
 {
-
     public function importZipQR(Request $request){
-        dd($request->all());
+        $zip = new \ZipArchive();
+        $file = $request->file('file');
+        $zip->open($file->path());
+        $path = 'uploads/qr_codes';
+        $fileNames = [];
+        $zip->extractTo($path);
+        foreach (glob(public_path().'/uploads/qr_codes/'.$zip->getNameIndex(0)."/*.png") as $file) {
+            $fileName = explode("//",$file)[1];
+            File::move(base_path('/public/uploads/qr_codes/'.$zip->getNameIndex(0).$fileName), base_path('/public/uploads/qr_codes/'.$fileName));
+            Player::where('account_name', explode(".",$fileName)[0])->whereNull('qr_code')
+            ->update(['qr_code' => 'qr_codes/'.$fileName,'qr_code_date' => Carbon::now()]);
+        }
+        File::deleteDirectory(base_path('/public/uploads/qr_codes/'.$zip->getNameIndex(0)));
+        $zip->close();  
     }
+
     public function importPayroll(Request $request){
         Excel::import(new PayrollImport, $request->file);
         return "File Uploaded";
