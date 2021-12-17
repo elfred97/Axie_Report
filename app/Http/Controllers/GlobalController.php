@@ -284,6 +284,7 @@ class GlobalController extends Controller
         $year  = $request->year;
         $month = $request->month;
         $type  = $request->type;
+        $search  = $request->search;
         $where = [];
 
         array_push($where, ['payrolls.status', '=', $status]);
