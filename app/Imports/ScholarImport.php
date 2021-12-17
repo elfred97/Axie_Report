@@ -27,7 +27,7 @@ class ScholarImport implements ToCollection
                     'last_name'    => $row[2],
                     'email'        => $row[3],
                     'username'     => $row[4],
-                    'password'     => $row[5],
+                    'password'     => bcrypt($row[5]),
                     'date_started' => date('Y-m-d H:i:s' , strtotime($row[6])),
                     'type_id'      => $row[7],
                     'status'       => $row[8],
