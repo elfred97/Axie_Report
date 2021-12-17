@@ -180,8 +180,6 @@ class PlayerController extends Controller
         $file_extension = $file->getClientOriginalExtension();
         $file_name      = substr($request->account_name,1).'.'.$file_extension;
         $path           = 'qr_codes/'.$file_name;
-        // $save = Storage::put($path, file_get_contents($request->file));
-
         $save = Storage::disk('public')->put($path, file_get_contents($file));
 
         if($save)
