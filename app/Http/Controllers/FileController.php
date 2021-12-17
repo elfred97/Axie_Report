@@ -25,7 +25,6 @@ class FileController extends Controller
         $zip->open($file->path());
         $path = 'uploads/qr_codes/';
         $zip->extractTo($path);
-        $fileNames = [];
         for($i=0;$i<$zip->numFiles;$i++){
             $fileName = substr($zip->getNameIndex($i),1);
             $n = $zip->getNameIndex($i);
