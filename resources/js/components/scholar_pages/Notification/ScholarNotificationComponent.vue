@@ -33,7 +33,7 @@
                                                                 
                                                             </span>
                                                             <span class="email-time">
-                                                                {{ notification.created_at | formatDate }}
+                                                                {{ notification.created_at | formatTimeDate }}
                                                             </span>
                                                         </a>
                                                     </div>

@@ -142,7 +142,7 @@
                                                     @change="updatePaidPayroll()"
                                                     v-model="filtersParam_paid.month"
                                                     >
-                                                        <option :value="month" v-for="month in month">{{ month}}</option>
+                                                        <option :value="index + 1" v-for="(month, index) in month">{{ month}}</option>
                                                 </select> 
                                             </label>
                                         </div>
@@ -273,6 +273,9 @@ export default {
     watch : {
         'filtersParam.type': function(newVal){
             this.updatePendingPayroll();
+        },
+        'filtersParam_paid.type': function(newVal){
+            this.updatePaidPayroll();
         }
     },
     components: {

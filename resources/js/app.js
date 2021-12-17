@@ -84,6 +84,10 @@ Vue.filter('formatDateTime', function(date){
     return moment(date).format('YYYY-MM-DD	hh:mm');
 });
 
+Vue.filter('formatTimeDate', function(date){
+    if(!date) return '';
+    return moment(date).format('hh:mm MM-DD-YYYY');
+});
 Vue.component('dialog-component', require('./components/layout/DialogComponent.vue').default);
 Vue.component('type-component', require('./components/layout/TypeComponent.vue').default);
 Vue.component('header-component', require('./components/layout/HeaderComponent.vue').default);

@@ -7747,6 +7747,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   watch: {
     'filtersParam.type': function filtersParamType(newVal) {
       this.updatePendingPayroll();
+    },
+    'filtersParam_paid.type': function filtersParam_paidType(newVal) {
+      this.updatePaidPayroll();
     }
   },
   components: {
@@ -76480,10 +76483,10 @@ var render = function() {
                                         ]
                                       }
                                     },
-                                    _vm._l(_vm.month, function(month) {
+                                    _vm._l(_vm.month, function(month, index) {
                                       return _c(
                                         "option",
-                                        { domProps: { value: month } },
+                                        { domProps: { value: index + 1 } },
                                         [_vm._v(_vm._s(month))]
                                       )
                                     }),
@@ -81575,7 +81578,9 @@ var render = function() {
                                                     _vm._v(
                                                       "\n                                                            " +
                                                         _vm._s(
-                                                          _vm._f("formatDate")(
+                                                          _vm._f(
+                                                            "formatTimeDate"
+                                                          )(
                                                             notification.created_at
                                                           )
                                                         ) +
@@ -103109,6 +103114,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDate', function (date) 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDateTime', function (date) {
   if (!date) return '';
   return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('YYYY-MM-DD	hh:mm');
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatTimeDate', function (date) {
+  if (!date) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('hh:mm MM-DD-YYYY');
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('dialog-component', __webpack_require__(/*! ./components/layout/DialogComponent.vue */ "./resources/js/components/layout/DialogComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('type-component', __webpack_require__(/*! ./components/layout/TypeComponent.vue */ "./resources/js/components/layout/TypeComponent.vue")["default"]);
