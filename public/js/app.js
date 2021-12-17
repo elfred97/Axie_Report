@@ -76190,7 +76190,58 @@ var render = function() {
                               })
                             ],
                             1
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3 offset-md-3" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dataTables_length",
+                                attrs: { id: "data-table-default_length" }
+                              },
+                              [
+                                _c("label", [
+                                  _vm._v(
+                                    "Search \n                                            "
+                                  ),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.filtersParam.search,
+                                        expression: "filtersParam.search"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-sm custom-input custom-input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      placeholder: "Search scholar name"
+                                    },
+                                    domProps: {
+                                      value: _vm.filtersParam.search
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        return _vm.updatePendingPayroll()
+                                      },
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.filtersParam,
+                                          "search",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
+                              ]
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row mt-2" }, [
@@ -76511,7 +76562,58 @@ var render = function() {
                               })
                             ],
                             1
-                          )
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-3 offset-md-3" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "dataTables_length",
+                                attrs: { id: "data-table-default_length" }
+                              },
+                              [
+                                _c("label", [
+                                  _vm._v(
+                                    "Search \n                                            "
+                                  ),
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: _vm.filtersParam_paid.search,
+                                        expression: "filtersParam_paid.search"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-sm custom-input custom-input-sm",
+                                    attrs: {
+                                      type: "text",
+                                      placeholder: "Search scholar name"
+                                    },
+                                    domProps: {
+                                      value: _vm.filtersParam_paid.search
+                                    },
+                                    on: {
+                                      change: function($event) {
+                                        return _vm.updatePaidPayroll()
+                                      },
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.filtersParam_paid,
+                                          "search",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ])
+                              ]
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "row mt-2" }, [
