@@ -71816,6 +71816,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_2__["TableMixins"] ],
     data () {
@@ -71835,7 +71843,8 @@ __webpack_require__.r(__webpack_exports__);
             css             : _TableStyle_js__WEBPACK_IMPORTED_MODULE_3__["TableStyle"],
             selected_player : {},
             filtersParam    : {
-                type : ""
+                type : "",
+                search : "",
             },
             openDialog        : false,
             uploadQRopenDialog: false,
@@ -72140,7 +72149,7 @@ __webpack_require__.r(__webpack_exports__);
             selected_scholar: {},            
             filtersParam    : {
                 type: "",
-                term : ""
+                search : ""
             },
             openDialog: false,
             actionType      : 'new',
@@ -77100,7 +77109,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-lg-4 col-md-4 col-sm-12" },
+            { staticClass: "col-lg-3 col-md-3 col-sm-12" },
             [
               _c("type-component", {
                 attrs: { type: _vm.filtersParam.type },
@@ -77114,7 +77123,51 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-lg-6 col-md-6 col-sm-12" }, [
+          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-12" }, [
+            _c(
+              "div",
+              {
+                staticClass: "dataTables_length",
+                attrs: { id: "data-table-default_length" }
+              },
+              [
+                _c("label", [
+                  _vm._v("Search \n                        "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filtersParam.search,
+                        expression: "filtersParam.search"
+                      }
+                    ],
+                    staticClass:
+                      "form-control form-control-sm custom-input custom-input-sm",
+                    attrs: { type: "text", placeholder: "Search account name" },
+                    domProps: { value: _vm.filtersParam.search },
+                    on: {
+                      change: function($event) {
+                        return _vm.updateTable()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.filtersParam,
+                          "search",
+                          $event.target.value
+                        )
+                      }
+                    }
+                  })
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-12" }, [
             _c("div", { staticClass: "pull-right" }, [
               _c("input", {
                 ref: "file",
@@ -78652,54 +78705,96 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-lg-4 offset-lg-3 offset-md-3 col-md-4 col-sm-12"
-            },
-            [
-              _c("div", { staticClass: "pull-right" }, [
-                _c("input", {
-                  ref: "file",
-                  staticClass: "hide",
-                  attrs: { name: "file", type: "file" },
-                  on: {
-                    change: function($event) {
-                      return _vm.importScholar()
-                    }
-                  }
-                }),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-sm",
-                    on: { click: _vm.addScholar }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-plus" }),
-                    _vm._v(" Add New Scholar ")
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-warning btn-sm",
+          _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-12" }, [
+            _c(
+              "div",
+              {
+                staticClass: "dataTables_length",
+                attrs: { id: "data-table-default_length" }
+              },
+              [
+                _c("label", [
+                  _vm._v("Search \n                        "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.filtersParam.search,
+                        expression: "filtersParam.search"
+                      }
+                    ],
+                    staticClass:
+                      "custom-input custom-input-sm form-control form-control-sm",
+                    attrs: {
+                      type: "text",
+                      "aria-controls": "data-table-default",
+                      placeholder: "Search Scholars"
+                    },
+                    domProps: { value: _vm.filtersParam.search },
                     on: {
-                      click: function($event) {
-                        return _vm.$refs.file.click()
+                      change: function($event) {
+                        return _vm.updateTable()
+                      },
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(
+                          _vm.filtersParam,
+                          "search",
+                          $event.target.value
+                        )
                       }
                     }
-                  },
-                  [
-                    _c("i", { staticClass: "fa fa-plus" }),
-                    _vm._v(" Import Scholar ")
-                  ]
-                )
-              ])
-            ]
-          )
+                  })
+                ])
+              ]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-12" }, [
+            _c("div", { staticClass: "pull-right" }, [
+              _c("input", {
+                ref: "file",
+                staticClass: "hide",
+                attrs: { name: "file", type: "file" },
+                on: {
+                  change: function($event) {
+                    return _vm.importScholar()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary btn-sm",
+                  on: { click: _vm.addScholar }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-plus" }),
+                  _vm._v(" Add New Scholar ")
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-warning btn-sm",
+                  on: {
+                    click: function($event) {
+                      return _vm.$refs.file.click()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-plus" }),
+                  _vm._v(" Import Scholar ")
+                ]
+              )
+            ])
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row no-margin mt-1" }, [

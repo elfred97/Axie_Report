@@ -31,10 +31,18 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
                     <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="col-lg-3 col-md-3 col-sm-12">
+                    <div class="dataTables_length" id="data-table-default_length">
+                        <label>Search 
+                            <input type="text" class="form-control form-control-sm custom-input custom-input-sm" placeholder="Search account name" @change="updateTable()" v-model="filtersParam.search">
+                        </label>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="pull-right">
                         <input name="file" type="file" ref="file" @change="importPlayer()" class="hide">
                         <button class="btn btn-primary btn-sm"  @click="addPlayer"><i class="fa fa-plus"></i> Add New Axie Account </button>
@@ -146,7 +154,8 @@ export default {
             css             : TableStyle,
             selected_player : {},
             filtersParam    : {
-                type : ""
+                type : "",
+                search : "",
             },
             openDialog        : false,
             uploadQRopenDialog: false,
