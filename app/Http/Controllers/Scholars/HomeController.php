@@ -68,6 +68,7 @@ class HomeController extends Controller
                 'type.name as type'
             )
             ->where($where)
+            ->orWhere('scholars.last_name', 'like', '%'.$request->search.'%')
             ->ORDERBY('scholars.id', 'desc')
             ->PAGINATE($request->per_page);
     }
