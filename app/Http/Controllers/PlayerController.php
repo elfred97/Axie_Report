@@ -177,9 +177,8 @@ class PlayerController extends Controller
 
     public function uploadQR(Request $request){
         $file           = $request->file;
-        $username       = explode(":",$request->id)[1];
         $file_extension = $file->getClientOriginalExtension();
-        $file_name      = $username.'.'.$file_extension;
+        $file_name      = substr($request->account_name,1).'.'.$file_extension;
         $path           = 'qr_codes/'.$file_name;
         // $save = Storage::put($path, file_get_contents($request->file));
 
