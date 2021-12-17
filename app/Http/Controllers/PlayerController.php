@@ -47,7 +47,7 @@ class PlayerController extends Controller
             $request->all(),
 			[
                 'ronin_address'      => 'required',
-                'account_name'       => 'required',
+                'account_name'       => 'required|unique:players',
                 'market_place_email' => 'required|email',
             ]
         );
