@@ -16,7 +16,7 @@
                                             <!-- begin list-email -->
                                             <ul class="list-group list-group-lg no-radius list-email">
                                                 <li class="list-group-item unread" v-for="announcement in announcementsData">
-                                                    <a href="email_detail.html" class="email-user bg-blue">
+                                                    <a class="email-user bg-blue">
                                                         <span class="text-white"><i class="fas fa-bullhorn"></i></span>
                                                     </a>
                                                     <div class="email-info">

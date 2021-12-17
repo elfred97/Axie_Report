@@ -8,13 +8,15 @@
                             <!-- BEGIN account-sidebar -->
                             <div class="account-sidebar">
                                 <div class="account-sidebar-cover">
-                                    <img src="assets/img/cover/cover-1.jpg" alt="" />
+                                    <img src='assets/img/cover/cover-1.jpg' alt="" />
                                 </div>
                                 <div class="account-sidebar-content text-center">
                                     <h4>{{ userData.account_name }}</h4>
                                     <div v-if="userData.qr_code">
                                         <p class="mb-2 mt-2">Scan QR Code</p>
-                                        <img :src='"/uploads/"+userData.qr_code' alt="" class="img-fluid">
+                                        <!-- <img :src='"{{asset(`uploads/"+userData.qr_code+"')}}"' alt="" class="img-fluid"> -->
+                                        <img :src="getQRCode"  class="img-fluid"/> 
+
                                         <p class="text-center mt-2">QR Code is valid for 7 days</p>
                                     </div>
                                     <div v-else class="no_qr_code">
@@ -108,6 +110,11 @@ export default {
         return {
             userData: {},
             onEdit  : false,
+        }
+    },
+    computed : {        
+        getQRCode: function (){
+            return '/uploads/' + this.userData.qr_code;
         }
     },
     methods : {
