@@ -52,6 +52,8 @@ class HomeController extends Controller
 
         if ($type)
             array_push($where, ['scholars.type_id', '=', $type]);
+        if ($request->search)
+            array_push($where, ['scholars.first_name', 'like', '%'.$request->search.'%']);
 
         $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
