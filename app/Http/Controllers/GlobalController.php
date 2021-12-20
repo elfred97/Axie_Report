@@ -312,6 +312,7 @@ class GlobalController extends Controller
             'type.name as type_name'
         )
         ->WHERE($where)
+        ->orWhere('scholars.last_name', 'like', '%'.$request->search.'%')
         ->ORDERBY('payrolls.created_at', 'desc')
         ->paginate($request->per_page);
     }

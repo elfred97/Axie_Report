@@ -23,6 +23,8 @@ class PlayerController extends Controller
         $where = [];
         if ($request->type)
             array_push($where, ['type_id', '=', $request->type]);
+        if ($request->search)
+            array_push($where, ['players.account_name', 'like', '%'.$request->search.'%']);
         return Player::
             SELECT(
                 'players.*',
