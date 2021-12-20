@@ -140,7 +140,7 @@ export default {
                 this.form = new Form(newVal);
                 this.selected = newVal;
             }
-        },
+        }
     },
     methods:{
         submitForm(){
@@ -200,8 +200,10 @@ export default {
             this.form.account_name = eventData.account_name;
         }
     },
-    mounted(){
+    created(){
         this.searchPlayer();
+    },
+    mounted(){
         if(this.scholarData){
             this.form = new Form(this.scholarData);            
         }

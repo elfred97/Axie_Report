@@ -12,8 +12,9 @@ class NotificationController extends Controller
     {
         $this->middleware('auth');
     }
-    public function index($account_type){
+    public function index($account_type, Request $request){
         if($account_type == 'scholars'){
+            dd($request->search);
             $username = Auth::user()->username;
             $scholar = Scholar::where('username', $username)->FIRST();
 

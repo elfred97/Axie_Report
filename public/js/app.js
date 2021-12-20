@@ -8514,9 +8514,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form.account_name = eventData.account_name;
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.searchPlayer();
-
+  },
+  mounted: function mounted() {
     if (this.scholarData) {
       this.form = new Form(this.scholarData);
     } else {
