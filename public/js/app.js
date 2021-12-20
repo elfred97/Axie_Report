@@ -10368,6 +10368,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -10408,6 +10414,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -81831,7 +81843,19 @@ var render = function() {
                           },
                           domProps: { value: _vm.search },
                           on: {
-                            change: function($event) {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
                               return _vm.getAnnouncement()
                             },
                             input: function($event) {
@@ -82080,7 +82104,19 @@ var render = function() {
                           },
                           domProps: { value: _vm.search },
                           on: {
-                            change: function($event) {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
                               return _vm.getPayrollHistory()
                             },
                             input: function($event) {

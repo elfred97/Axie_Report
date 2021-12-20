@@ -9,7 +9,13 @@
                             <div class="col-md-4 col-lg-4 col-sm-8 col-xs-12">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Search 
-                                        <input type="text" aria-controls="data-table-default" placeholder="Search Payroll" class="custom-input custom-input-sm form-control form-control-sm" v-model="search" @change="getPayrollHistory()">
+                                        <input 
+                                            type="text" 
+                                            aria-controls="data-table-default"
+                                            placeholder="Search Payroll" 
+                                            class="custom-input custom-input-sm form-control form-control-sm" 
+                                            v-model="search" 
+                                            v-on:keyup.enter="getPayrollHistory()">
                                     </label>
                                 </div>
                             </div>
