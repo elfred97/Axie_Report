@@ -8,32 +8,46 @@ use Carbon\Carbon;
 
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Illuminate\Validation\Rule;
+use Maatwebsite\Excel\Concerns\Importable;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Validators\Failure;
+use Throwable;
 
-class ScholarImport implements ToCollection
+class ScholarImport implements ToCollection,WithHeadingRow,WithValidation,SkipsOnError,SkipsOnFailure
 {
+    use SkipsErrors,SkipsFailures;
     /**
     * @param Collection $collection
     */
     public function collection(Collection $rows)
     {
-        $counter = 0;
         foreach ($rows as $row)
         {
-
-            if($counter > 0){
                 Scholar::create([
-                    'first_name'   => $row[0],
-                    'middle_name'  => $row[1],
-                    'last_name'    => $row[2],
-                    'email'        => $row[3],
-                    'username'     => $row[4],
-                    'password'     => bcrypt($row[5]),
-                    'date_started' => date('Y-m-d H:i:s' , strtotime($row[6])),
-                    'type_id'      => $row[7],
-                    'status'       => $row[8],
+                    'first_name'   => $row['first_name'],
+                    'middle_name'  => $row['middle_name'],
+                    'last_name'    => $row['last_name'],
+                    'email'        => $row['email'],
+                    'username'     => $row['username'],
+                    'password'     => bcrypt($row['password']),
+                    'date_started' => date('Y-m-d H:i:s' , strtotime($row['date_started'])),
+                    'type'      => $row['type'],
+                    'status'       => $row['status'],
                 ]);
-            }
-            $counter++;
         }
     }
+    public function rules(): array
+    {
+        return [
+            '*.email' => ['unique:scholars,email'],
+            '*.username' => ['unique:scholars,username']
+        ];
+    }
+    
 }

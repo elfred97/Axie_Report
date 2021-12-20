@@ -40,16 +40,17 @@ class PlayerController extends Controller
             ->PAGINATE($request->per_page);
     }
     public function getAllPlayers(){
-        return Player::GET();
+        return Player::doesnthave('histories')->get();
     }
 
     public function savePlayer(Request $request){
         // dd($request->all());
+        $ruleAccountName = isset($request->id) ? (Player::findOrFail($request->id)->account_name == $request->account_name ? 'required' : 'required|unique:players') : 'required|unique:players';
         $validator = Validator::make(
             $request->all(),
 			[
                 'ronin_address'      => 'required',
-                'account_name'       => 'required|unique:players',
+                'account_name'       => $ruleAccountName,
                 'market_place_email' => 'required|email',
             ]
         );

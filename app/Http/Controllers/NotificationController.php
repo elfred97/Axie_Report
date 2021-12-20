@@ -16,8 +16,13 @@ class NotificationController extends Controller
         if($account_type == 'scholars'){
             $username = Auth::user()->username;
             $scholar = Scholar::where('username', $username)->FIRST();
+            $search  = $request->search;
+            $where = [];
+            if ($search)
+            array_push($where, ['title','LIKE','%'.$request->search.'%']);
 
-            return Notification::LEFTJOIN('reminders', 'notification.reminder_id', '=', 'reminders.id')
+            return Notification::LEFTJOIN('reminders', 'reminders.id', '=', 'notification.reminder_id')
+                ->WHERE('title','LIKE','%'.$request->search.'%')
                 ->WHERE([['notification.category', 3], ['reminders.type_id', $scholar->type_id]])
                 ->orWhere([['notification.category', 3], ['reminders.type_id', 3]])
                 ->get();

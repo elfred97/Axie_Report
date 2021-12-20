@@ -73,16 +73,19 @@ class HomeController extends Controller
             ->PAGINATE($request->per_page);
     }
     public function save(Request $request){
+        $ruleUsername = isset($request->id) ? (Scholar::findOrFail($request->id)->username == $request->username ? 'required' : 'required|unique:scholars') : 'required|unique:scholars';
+        $ruleEmail = isset($request->id) ? (Scholar::findOrFail($request->id)->email == $request->email ? 'required' : 'required|unique:scholars') : 'required|unique:scholars';
         $validator = Validator::make(
             $request->all(),
             [
-                'username'     => 'required',
+                'username'     => $ruleUsername,
                 'first_name'   => 'required',
                 'last_name'    => 'required',
-                'email'        => 'required',
+                'email'        => $ruleEmail,
                 'date_started' => 'required',
                 'type_id'      => 'required',
                 'status'       => 'required',
+                'account_name' => 'required'
             ]
         );
 

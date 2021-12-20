@@ -115,10 +115,11 @@ class GlobalController extends Controller
     }
 
     public function updateUser(Request $request){
+        $rule = isset($request->id) ? (User::findOrFail($request->id)->username == $request->username ? 'required' : 'required|unique:user') : 'required|unique:user';
         $validator = Validator::make(
 			$request->all(),
 			[
-				'username'    => 'required',
+				'username'    => $rule,
 				'first_name'  => 'required',
 				'last_name'   => 'required',
 				// 'middle_name' => 'required',
@@ -191,19 +192,41 @@ class GlobalController extends Controller
     }
 
     public function saveNewType(Request $request){
-        if($request->name){
-            $type = Type::CREATE([
-                'name'   => $request->name,
-                'status' => 'Active'
-            ]);
-            if($type)
-                return response()->json(['message' => 'Type saved'], 200);
-            else
-                return response()->json(['message' => 'There was a problem processing your request'], 500);
-        }
+        $validator = Validator::make(
+            $request->all(),
+			[
+                'name'      => 'required|unique:type',
+            ]
+        );
+
+        if ($validator->fails())
+            return response()->json($validator->errors(), 422);
+
+            if($request->name){
+                $type = Type::CREATE([
+                    'name'   => $request->name,
+                    'status' => 'Active'
+                ]);
+                if($type)
+                    return response()->json(['message' => 'Type saved'], 200);
+                else
+                    return response()->json(['message' => 'There was a problem processing your request'], 500);
+            }
     }
 
     public function updateType(Request $request){
+        $typeName = Type::findOrFail($request->id)->name;
+        $rule = $typeName == $request->name ? 'required' : 'required|unique:type';
+        $validator = Validator::make(
+            $request->all(),
+			[
+                'name'      => $rule,
+            ]
+        );
+
+        if ($validator->fails())
+            return response()->json($validator->errors(), 422);
+
         try {
             $user = Type::UPDATEORCREATE(
                 [ 'id' => $request->id ],
@@ -326,6 +349,7 @@ class GlobalController extends Controller
                     'players.account_name as account_name'
                 )
                 ->WHERE('scholars.username', $username)
+                ->WHERE('payrolls.txn_id', 'like', '%'.$request->search.'%')
                 ->ORDERBY('payrolls.id', 'desc')
                 ->GET();
     }
