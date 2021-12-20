@@ -8855,7 +8855,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.getTypes();
       })["catch"](function (error) {
-        console.log(error);
+        // console.log(error);
+        _this2.$noty.error(error.response.data.message);
       });
     },
     deleteType: function deleteType(id) {
@@ -9288,6 +9289,8 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         // this.form.errors = error.response.data.errors;
         console.log(error);
+
+        _this.$noty.error(error.response.data.message);
       });
     }
   },
@@ -9634,6 +9637,12 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -80728,7 +80737,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-3 col-lg-3 col-sm-6 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-8 col-xs-12" },
                 [
                   _c(
                     "div",
@@ -80759,7 +80768,19 @@ var render = function() {
                           },
                           domProps: { value: _vm.search },
                           on: {
-                            change: function($event) {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
                               return _vm.getAnnouncement()
                             },
                             input: function($event) {
@@ -81781,7 +81802,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-3 col-lg-3 col-sm-6 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-8 col-xs-12" },
                 [
                   _c(
                     "div",
@@ -82030,7 +82051,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-3 col-lg-3 col-sm-6 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-8 col-xs-12" },
                 [
                   _c(
                     "div",

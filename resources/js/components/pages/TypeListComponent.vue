@@ -73,7 +73,8 @@ export default {
                 this.getTypes();
             })
             .catch((error) => {
-                console.log(error);
+                // console.log(error);
+                this.$noty.error(error.response.data.message);
             })
         },
         deleteType(id){
