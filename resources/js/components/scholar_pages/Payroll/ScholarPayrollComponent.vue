@@ -20,12 +20,22 @@
                                                         <a href="email_detail.html">
                                                             <span class="email-sender">{{ payroll.account_name }}</span>
                                                             <span class="email-title">
-                                                                <b>TX ID:</b> {{ payroll.txn_id }}
+                                                                <p class="no-margin text-content">
+                                                                    <b>TX ID:</b> {{ payroll.txn_id }}
+                                                                </p>
                                                             </span>
                                                             <span class="email-desc">
                                                                 <div class="row">
-                                                                    <div class="col-md-6"><b>Total SLP: </b>{{ payroll.total_slp }}</div>                                                                    
-                                                                    <div class="col-md-6"><b>Status: </b>{{ payroll.total_slp }}</div>
+                                                                    <div class="col-md-6">
+                                                                        <p class="no-margin text-content">
+                                                                            <b>Total SLP: </b>{{ payroll.total_slp }}
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <p class="no-margin text-content">
+                                                                            <b>Status: </b>{{ payroll.total_slp }}
+                                                                        </p>
+                                                                    </div>
                                                                 </div>
                                                             </span>
                                                             <span class="email-time">

@@ -10427,6 +10427,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -81939,11 +81949,24 @@ var render = function() {
                                                     staticClass: "email-title"
                                                   },
                                                   [
-                                                    _c("b", [_vm._v("TX ID:")]),
-                                                    _vm._v(
-                                                      " " +
-                                                        _vm._s(payroll.txn_id) +
-                                                        "\n                                                        "
+                                                    _c(
+                                                      "p",
+                                                      {
+                                                        staticClass:
+                                                          "no-margin text-content"
+                                                      },
+                                                      [
+                                                        _c("b", [
+                                                          _vm._v("TX ID:")
+                                                        ]),
+                                                        _vm._v(
+                                                          " " +
+                                                            _vm._s(
+                                                              payroll.txn_id
+                                                            ) +
+                                                            "\n                                                            "
+                                                        )
+                                                      ]
                                                     )
                                                   ]
                                                 ),
@@ -81963,15 +81986,25 @@ var render = function() {
                                                               "col-md-6"
                                                           },
                                                           [
-                                                            _c("b", [
-                                                              _vm._v(
-                                                                "Total SLP: "
-                                                              )
-                                                            ]),
-                                                            _vm._v(
-                                                              _vm._s(
-                                                                payroll.total_slp
-                                                              )
+                                                            _c(
+                                                              "p",
+                                                              {
+                                                                staticClass:
+                                                                  "no-margin text-content"
+                                                              },
+                                                              [
+                                                                _c("b", [
+                                                                  _vm._v(
+                                                                    "Total SLP: "
+                                                                  )
+                                                                ]),
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    payroll.total_slp
+                                                                  ) +
+                                                                    "\n                                                                    "
+                                                                )
+                                                              ]
                                                             )
                                                           ]
                                                         ),
@@ -81983,13 +82016,25 @@ var render = function() {
                                                               "col-md-6"
                                                           },
                                                           [
-                                                            _c("b", [
-                                                              _vm._v("Status: ")
-                                                            ]),
-                                                            _vm._v(
-                                                              _vm._s(
-                                                                payroll.total_slp
-                                                              )
+                                                            _c(
+                                                              "p",
+                                                              {
+                                                                staticClass:
+                                                                  "no-margin text-content"
+                                                              },
+                                                              [
+                                                                _c("b", [
+                                                                  _vm._v(
+                                                                    "Status: "
+                                                                  )
+                                                                ]),
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    payroll.total_slp
+                                                                  ) +
+                                                                    "\n                                                                    "
+                                                                )
+                                                              ]
                                                             )
                                                           ]
                                                         )
@@ -104731,10 +104776,13 @@ __webpack_require__.r(__webpack_exports__);
   dataClass: "text-center aligned uppercase"
 }, {
   name: "account_name",
-  title: 'Account Name'
+  title: 'Account Name',
+  width: "10%"
 }, {
   name: "ronin_address",
-  title: 'Ronin Address'
+  title: 'Ronin Address',
+  dataClass: 'text-content',
+  width: "25%"
 }, {
   name: "total_slp",
   title: 'Total SLP',
@@ -104744,7 +104792,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "txn_id",
   title: 'TXN ID',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned text-content",
+  width: "20%"
 }, {
   name: "type_name",
   title: 'Type',
@@ -104998,11 +105047,13 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   name: "qr_code_field",
   title: 'QR Code',
   titleClass: 'center aligned',
-  dataClass: 'center aligned'
+  dataClass: 'center aligned',
+  width: "8%"
 }, {
   name: "ronin_address",
   title: 'Ronin Address',
-  width: "5%"
+  dataClass: 'text-content',
+  width: "10%"
 }, {
   name: "account_name",
   title: 'Account Name'

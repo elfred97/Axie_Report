@@ -10,18 +10,21 @@ export default [
       name : "type_name",
       title: 'Type',
       titleClass: 'center aligned',
-      dataClass: 'center aligned uppercase bold',      
+      dataClass: 'center aligned uppercase bold',
+      
     },
     {
       name : "qr_code_field",
       title: 'QR Code',
       titleClass: 'center aligned',
       dataClass: 'center aligned',      
+      width     : "8%",
     },
     {
       name      : "ronin_address",
-      title     : 'Ronin Address',      
-      width     : "5%",
+      title     : 'Ronin Address',
+      dataClass: 'text-content',
+      width     : "10%",
     },
     {
       name : "account_name",
