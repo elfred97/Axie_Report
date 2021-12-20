@@ -8423,6 +8423,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -9689,10 +9690,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      announcementsData: {}
+      announcementsData: {},
+      search: ''
     };
   },
   methods: {
@@ -9700,7 +9711,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var account_type = this.$store.state.global_guard_type;
-      this.axios.get('notifications/' + account_type).then(function (response) {
+      this.axios.get('notifications/' + account_type, {
+        params: {
+          search: this.search
+        }
+      }).then(function (response) {
         // console.log(response.data);
         _this.announcementsData = response.data;
       })["catch"](function (error) {
@@ -10334,10 +10349,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      notificationsData: {}
+      notificationsData: {},
+      search: ''
     };
   },
   methods: {
@@ -10345,7 +10370,11 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var account_type = this.$store.state.global_guard_type;
-      this.axios.get('getScholarNotification/').then(function (response) {
+      this.axios.get('getScholarNotification/', {
+        params: {
+          search: this.search
+        }
+      }).then(function (response) {
         // console.log(response.data);
         _this.notificationsData = response.data;
       })["catch"](function (error) {
@@ -10437,17 +10466,31 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      payrolls: {}
+      payrolls: {},
+      search: ''
     };
   },
   methods: {
     getPayrollHistory: function getPayrollHistory() {
       var _this = this;
 
-      this.axios.get('getScholarPayrollHistory').then(function (response) {
+      this.axios.get('getScholarPayrollHistory', {
+        params: {
+          search: this.search
+        }
+      }).then(function (response) {
         _this.payrolls = response.data;
       });
     }
@@ -78470,7 +78513,16 @@ var render = function() {
               },
               expression: "selected"
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.form.errors.has("account_name")
+            ? _c("div", {
+                staticClass: "text-danger",
+                domProps: {
+                  innerHTML: _vm._s(_vm.form.errors.get("account_name"))
+                }
+              })
+            : _vm._e()
         ],
         1
       ),
@@ -80672,6 +80724,58 @@ var render = function() {
           _c("div", { staticClass: "container" }, [
             _c("h3", [_vm._v("Announcement")]),
             _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-3 col-lg-3 col-sm-6 col-xs-12" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dataTables_length",
+                      attrs: { id: "data-table-default_length" }
+                    },
+                    [
+                      _c("label", [
+                        _vm._v(
+                          "Search \n                                        "
+                        ),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.search,
+                              expression: "search"
+                            }
+                          ],
+                          staticClass:
+                            "custom-input custom-input-sm form-control form-control-sm",
+                          attrs: {
+                            type: "text",
+                            "aria-controls": "data-table-default",
+                            placeholder: "Search Announcement"
+                          },
+                          domProps: { value: _vm.search },
+                          on: {
+                            change: function($event) {
+                              return _vm.getAnnouncement()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.search = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "vertical-box-row" }, [
               _vm.announcementsData.length > 0
                 ? _c("div", { staticClass: "vertical-box-cell" }, [
@@ -81673,6 +81777,56 @@ var render = function() {
           _c("div", { staticClass: "container" }, [
             _c("h3", [_vm._v("Notification")]),
             _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-3 col-lg-3 col-sm-6 col-xs-12" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dataTables_length",
+                      attrs: { id: "data-table-default_length" }
+                    },
+                    [
+                      _c("label", [
+                        _vm._v("Search \n                                    "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.search,
+                              expression: "search"
+                            }
+                          ],
+                          staticClass:
+                            "custom-input custom-input-sm form-control form-control-sm",
+                          attrs: {
+                            type: "text",
+                            "aria-controls": "data-table-default",
+                            placeholder: "Search Notification"
+                          },
+                          domProps: { value: _vm.search },
+                          on: {
+                            change: function($event) {
+                              return _vm.getAnnouncement()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.search = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
             _c("div", { staticClass: "vertical-box-row" }, [
               _c("div", { staticClass: "vertical-box-cell" }, [
                 _vm.notificationsData.length > 0
@@ -81871,6 +82025,56 @@ var render = function() {
         _c("div", { staticClass: "col-md-10 offset-md-1" }, [
           _c("div", { staticClass: "container" }, [
             _c("h3", [_vm._v("Payroll History")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-md-3 col-lg-3 col-sm-6 col-xs-12" },
+                [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "dataTables_length",
+                      attrs: { id: "data-table-default_length" }
+                    },
+                    [
+                      _c("label", [
+                        _vm._v("Search \n                                    "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.search,
+                              expression: "search"
+                            }
+                          ],
+                          staticClass:
+                            "custom-input custom-input-sm form-control form-control-sm",
+                          attrs: {
+                            type: "text",
+                            "aria-controls": "data-table-default",
+                            placeholder: "Search Payroll"
+                          },
+                          domProps: { value: _vm.search },
+                          on: {
+                            change: function($event) {
+                              return _vm.getPayrollHistory()
+                            },
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.search = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]
+                  )
+                ]
+              )
+            ]),
             _vm._v(" "),
             _vm.payrolls.length > 0
               ? _c("div", { staticClass: "vertical-box-row" }, [

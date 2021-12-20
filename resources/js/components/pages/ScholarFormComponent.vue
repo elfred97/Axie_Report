@@ -77,16 +77,17 @@
             <div class="col-md-4">
                 <label for="">Axie Account</label>
                 <multi-select 
-                            v-model="selected"
-                            :multiple="false"
-                            @search-change="searchPlayer"
-                            @select="selectAxieAccount"
-                            track-by="id"
-                            :show-label="false"
-                            :options="options"
-                            :custom-label="customLabel"
-                            >
-                        </multi-select>
+                    v-model="selected"
+                    :multiple="false"
+                    @search-change="searchPlayer"
+                    @select="selectAxieAccount"
+                    track-by="id"
+                    :show-label="false"
+                    :options="options"
+                    :custom-label="customLabel"
+                    >
+                </multi-select>
+                <div v-if="form.errors.has('account_name')" v-html="form.errors.get('account_name')" class="text-danger"/>
             </div>
             <div class="col-md-4" v-if="form.ronin_wallet">
                 <label for="">Ronin Wallet</label>

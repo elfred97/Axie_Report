@@ -5,6 +5,15 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="container">
                         <h3>Payroll History</h3>
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+                                <div class="dataTables_length" id="data-table-default_length">
+                                    <label>Search 
+                                        <input type="text" aria-controls="data-table-default" placeholder="Search Payroll" class="custom-input custom-input-sm form-control form-control-sm" v-model="search" @change="getPayrollHistory()">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="vertical-box-row" v-if="payrolls.length > 0">
                             <!-- begin vertical-box-cell -->
                             <div class="vertical-box-cell">
@@ -70,12 +79,17 @@
 export default {    
     data() {
         return {
-            payrolls : {}
+            payrolls : {},
+            search : '',
         }
     },
     methods : {
         getPayrollHistory(){
-            this.axios.get('getScholarPayrollHistory')
+            this.axios.get('getScholarPayrollHistory', {
+                params: {
+                    search : this.search
+                }
+            })
             .then(response => {
                 this.payrolls = response.data;
             })

@@ -5,6 +5,15 @@
                 <div class="col-md-10 offset-md-1">
                     <div class="container">
                         <h3>Notification</h3>
+                        <div class="row">
+                            <div class="col-md-3 col-lg-3 col-sm-6 col-xs-12">
+                                <div class="dataTables_length" id="data-table-default_length">
+                                    <label>Search 
+                                        <input type="text" aria-controls="data-table-default" placeholder="Search Notification" class="custom-input custom-input-sm form-control form-control-sm" v-model="search" @change="getAnnouncement()">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="vertical-box-row">
                             <!-- begin vertical-box-cell -->
                             <div class="vertical-box-cell">
@@ -64,13 +73,18 @@
 export default {
     data() {
         return {
-            notificationsData : {}
+            notificationsData : {},
+            search: '',
         }
     },
     methods: {
         getNotification(){
             let account_type = this.$store.state.global_guard_type;
-            this.axios.get('getScholarNotification/')
+            this.axios.get('getScholarNotification/', {
+                params : {
+                    search : this.search
+                }
+            })
             .then(response => {
                 // console.log(response.data);
                 this.notificationsData = response.data;
