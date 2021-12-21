@@ -7,31 +7,40 @@ use App\Models\Player;
 use Carbon\Carbon;
 
 use Illuminate\Support\Collection;
+use Maatwebsite\Excel\Concerns\SkipsErrors;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Concerns\SkipsOnError;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToCollection;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
 
-class PlayerImport implements ToCollection
+class PlayerImport implements ToCollection,WithHeadingRow,WithValidation,SkipsOnError,SkipsOnFailure
 {
+    use SkipsErrors,SkipsFailures;
     /**
     * @param Collection $collection
     */
     public function collection(Collection $rows)
     {
-        $counter = 0;
         foreach ($rows as $row)
         {
-
-            if($counter > 0){
-                Player::create([
-                    'account_name'       => trim($row[0]),
-                    'ronin_address'      => $row[1],
-                    'market_place_email' => $row[2],
-                    'password'           => $row[3],
-                    'penalty'            => $row[4],
-                    'scholar_share'      => $row[5],
-                    'manager_share'      => $row[6],
-                ]);
-            }
-            $counter++;
+            Player::create([
+                'account_name'       => trim($row['account_name']),
+                'ronin_address'      => $row['ronin_address'],
+                'market_place_email' => $row['market_place_email'],
+                'password'           => $row['password'],
+                'penalty'            => $row['penalty'],
+                'scholar_share'      => $row['scholar_share'],
+                'manager_share'      => $row['manager_share'],
+            ]);
         }
+    }
+
+    public function rules(): array
+    {
+        return [
+            '*.account_name' => ['unique:players,account_name']
+        ];
     }
 }
