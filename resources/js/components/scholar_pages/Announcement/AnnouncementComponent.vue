@@ -35,7 +35,7 @@
                                                         <span class="text-white"><i class="fas fa-bullhorn"></i></span>
                                                     </a>
                                                     <div class="email-info">
-                                                        <a href="email_detail.html">
+                                                        <a href="">
                                                             <span class="email-title">
                                                                 {{ announcement.title }}
                                                             </span>

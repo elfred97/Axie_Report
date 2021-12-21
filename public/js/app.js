@@ -80867,61 +80867,51 @@ var render = function() {
                                           "div",
                                           { staticClass: "email-info" },
                                           [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href: "email_detail.html"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "email-title"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                                " +
-                                                        _vm._s(
-                                                          announcement.title
-                                                        ) +
-                                                        "\n                                                            "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "email-desc" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                                " +
-                                                        _vm._s(
-                                                          announcement.description
-                                                        ) +
-                                                        "\n                                                            "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "email-time" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                                " +
-                                                        _vm._s(
-                                                          _vm._f("formatDate")(
-                                                            announcement.created_at
-                                                          )
-                                                        ) +
-                                                        "\n                                                            "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
+                                            _c("a", { attrs: { href: "" } }, [
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-title" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                                " +
+                                                      _vm._s(
+                                                        announcement.title
+                                                      ) +
+                                                      "\n                                                            "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-desc" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                                " +
+                                                      _vm._s(
+                                                        announcement.description
+                                                      ) +
+                                                      "\n                                                            "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-time" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                                " +
+                                                      _vm._s(
+                                                        _vm._f("formatDate")(
+                                                          announcement.created_at
+                                                        )
+                                                      ) +
+                                                      "\n                                                            "
+                                                  )
+                                                ]
+                                              )
+                                            ])
                                           ]
                                         )
                                       ]
