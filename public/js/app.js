@@ -81920,77 +81920,66 @@ var render = function() {
                                           "div",
                                           { staticClass: "email-info" },
                                           [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href: "email_detail.html"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "email-title"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                            " +
-                                                        _vm._s(
-                                                          notification.account_name
-                                                        ) +
-                                                        "\n                                                        "
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "email-desc" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                            Penalty: \n                                                            " +
-                                                        _vm._s(
-                                                          notification.penalty
-                                                        ) +
-                                                        " - \n                                                            \n                                                            "
-                                                    ),
-                                                    notification.category == 1
-                                                      ? _c("span", [
-                                                          _vm._v(
-                                                            "Minimum SLP not met"
-                                                          )
-                                                        ])
-                                                      : notification.category ==
-                                                        2
-                                                      ? _c("span", [
-                                                          _vm._v(
-                                                            "Minimum MMR not met"
-                                                          )
-                                                        ])
-                                                      : _vm._e()
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "email-time" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                            " +
-                                                        _vm._s(
-                                                          _vm._f(
-                                                            "formatTimeDate"
-                                                          )(
-                                                            notification.created_at
-                                                          )
-                                                        ) +
-                                                        "\n                                                        "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
+                                            _c("a", { attrs: { href: "" } }, [
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-title" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            " +
+                                                      _vm._s(
+                                                        notification.account_name
+                                                      ) +
+                                                      "\n                                                        "
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-desc" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            Penalty: \n                                                            " +
+                                                      _vm._s(
+                                                        notification.penalty
+                                                      ) +
+                                                      " - \n                                                            \n                                                            "
+                                                  ),
+                                                  notification.category == 1
+                                                    ? _c("span", [
+                                                        _vm._v(
+                                                          "Minimum SLP not met"
+                                                        )
+                                                      ])
+                                                    : notification.category == 2
+                                                    ? _c("span", [
+                                                        _vm._v(
+                                                          "Minimum MMR not met"
+                                                        )
+                                                      ])
+                                                    : _vm._e()
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-time" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            " +
+                                                      _vm._s(
+                                                        _vm._f(
+                                                          "formatTimeDate"
+                                                        )(
+                                                          notification.created_at
+                                                        )
+                                                      ) +
+                                                      "\n                                                        "
+                                                  )
+                                                ]
+                                              )
+                                            ])
                                           ]
                                         )
                                       ]
@@ -82024,18 +82013,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        staticClass: "email-user bg-blue",
-        attrs: { href: "email_detail.html" }
-      },
-      [
-        _c("span", { staticClass: "text-white" }, [
-          _c("i", { staticClass: "fas fa-bullhorn" })
-        ])
-      ]
-    )
+    return _c("a", { staticClass: "email-user bg-blue", attrs: { href: "" } }, [
+      _c("span", { staticClass: "text-white" }, [
+        _c("i", { staticClass: "fas fa-bullhorn" })
+      ])
+    ])
   }
 ]
 render._withStripped = true

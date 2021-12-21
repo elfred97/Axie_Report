@@ -31,11 +31,11 @@
                                             <!-- begin list-email -->
                                             <ul class="list-group list-group-lg no-radius list-email">
                                                 <li class="list-group-item unread" v-for="notification in notificationsData">
-                                                    <a href="email_detail.html" class="email-user bg-blue">
+                                                    <a href="" class="email-user bg-blue">
                                                         <span class="text-white"><i class="fas fa-bullhorn"></i></span>
                                                     </a>
                                                     <div class="email-info">
-                                                        <a href="email_detail.html">
+                                                        <a href="">
                                                             <span class="email-title">
                                                                 {{ notification.account_name }}
                                                             </span>
