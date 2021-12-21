@@ -311,8 +311,8 @@ export default {
             this.getPenalties(eventData);
             this.getLowestMMR(eventData);
         });
-        this.getSampleAxieDetails();
-        this.getAxieList();
+        // this.getSampleAxieDetails();
+        // this.getAxieList();
         // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
     }
 }

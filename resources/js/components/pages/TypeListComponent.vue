@@ -73,8 +73,9 @@ export default {
                 this.getTypes();
             })
             .catch((error) => {
-                // console.log(error);
-                this.$noty.error(error.response.data.message);
+                console.log(error.response.data);
+                if(error.response.status == 422)
+                    this.$noty.error(error.response.data.name);
             })
         },
         deleteType(id){

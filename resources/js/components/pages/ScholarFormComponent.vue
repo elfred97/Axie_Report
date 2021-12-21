@@ -81,7 +81,7 @@
                     :multiple="false"
                     @search-change="searchPlayer"
                     @select="selectAxieAccount"
-                    track-by="id"
+                    track-by="account_name"
                     :show-label="false"
                     :options="options"
                     :custom-label="customLabel"
@@ -139,6 +139,7 @@ export default {
             if(newVal){
                 this.form = new Form(newVal);
                 this.selected = newVal;
+                this.searchPlayer();
             }
         }
     },
@@ -199,9 +200,6 @@ export default {
         selectAxieAccount(eventData){
             this.form.account_name = eventData.account_name;
         }
-    },
-    created(){
-        this.searchPlayer();
     },
     mounted(){
         if(this.scholarData){

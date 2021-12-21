@@ -97,7 +97,7 @@ export default {
             .then(response => {
                 // console.log(response.data);
                 this.axies = response.data.data.axies.results;
-                this.getSampleAxieDetails(this.axies[0].id);
+                // this.getSampleAxieDetails(this.axies[0].id);
             })
             .catch(error => {
                 console.log(error.response.data);

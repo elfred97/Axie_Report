@@ -89,7 +89,6 @@ export default {
             .catch((error) => {
                 // this.form.errors = error.response.data.errors;
                 console.log(error);
-                this.$noty.error(error.response.data.message);
             })
         }
     },

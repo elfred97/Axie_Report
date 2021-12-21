@@ -28,6 +28,7 @@ export default {
     },
     watch : {
         'type' : function(newVal){
+            console.log(newVal);
             if(newVal)
                 this.selected = newVal;
         },
@@ -54,7 +55,7 @@ export default {
             this.$emit('updateType', event.target.value);
         },
     },
-    created(){
+    mounted(){
         this.getType();
     }
 }

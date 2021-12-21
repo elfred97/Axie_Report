@@ -1,7 +1,7 @@
 <template>
     <div>
         <div id="scholars" class="section-container main-content-view bg-white">
-            <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
+            <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" :key="componentKey" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
                 <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></scholar-form-component>
             </dialog-component>
             <!-- BEGIN row -->
@@ -123,6 +123,7 @@ export default {
             actionType      : 'new',
             isLoading       : false,
             fullPage        : true,
+            componentKey    : 0,
         }
     },
     watch : {
@@ -137,7 +138,8 @@ export default {
         addScholar(){
             this.openDialog = true;
             this.actionType = 'new';
-            this.selected_scholar = {}
+            this.selected_scholar = {};
+            this.componentKey += 1;
         },
         editScholar(data){
             this.selected_scholar = data;

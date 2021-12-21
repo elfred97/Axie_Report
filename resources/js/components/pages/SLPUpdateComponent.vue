@@ -6,7 +6,7 @@
             <div class="container">
 
                 <!-- begin row -->
-                <div class="row row-space-10 m-b-20">
+                <div class="row row-space-10 m-b-20" v-if="SLPData">
                     <div class="col-md-6">
                         <select name="" id="" v-model="currency">
                             <option value="usd">USD</option>

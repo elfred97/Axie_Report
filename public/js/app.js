@@ -5969,6 +5969,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     'type': function type(newVal) {
+      console.log(newVal);
       if (newVal) this.selected = newVal;
     },
     'type_id': function type_id(newVal) {
@@ -5993,7 +5994,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('updateType', event.target.value);
     }
   },
-  created: function created() {
+  mounted: function mounted() {
     this.getType();
   }
 });
@@ -6106,9 +6107,7 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         // console.log(response.data);
-        _this.axies = response.data.data.axies.results;
-
-        _this.getSampleAxieDetails(_this.axies[0].id);
+        _this.axies = response.data.data.axies.results; // this.getSampleAxieDetails(this.axies[0].id);
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -7453,9 +7452,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
       _this5.getPenalties(eventData);
 
       _this5.getLowestMMR(eventData);
-    });
-    this.getSampleAxieDetails();
-    this.getAxieList(); // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
+    }); // this.getSampleAxieDetails();
+    // this.getAxieList();
+    // this.$events.$on('graph-data', (eventData) => this.getAverage(eventData));
   }
 });
 
@@ -8450,6 +8449,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       if (newVal) {
         this.form = new Form(newVal);
         this.selected = newVal;
+        this.searchPlayer();
       }
     }
   },
@@ -8513,9 +8513,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     selectAxieAccount: function selectAxieAccount(eventData) {
       this.form.account_name = eventData.account_name;
     }
-  },
-  created: function created() {
-    this.searchPlayer();
   },
   mounted: function mounted() {
     if (this.scholarData) {
@@ -8855,8 +8852,8 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.getTypes();
       })["catch"](function (error) {
-        // console.log(error);
-        _this2.$noty.error(error.response.data.message);
+        console.log(error.response.data);
+        if (error.response.status == 422) _this2.$noty.error(error.response.data.name);
       });
     },
     deleteType: function deleteType(id) {
@@ -9289,8 +9286,6 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         // this.form.errors = error.response.data.errors;
         console.log(error);
-
-        _this.$noty.error(error.response.data.message);
       });
     }
   },
@@ -72230,6 +72225,7 @@ __webpack_require__.r(__webpack_exports__);
             actionType      : 'new',
             isLoading       : false,
             fullPage        : true,
+            componentKey    : 0,
         }
     },
     watch : {
@@ -72244,7 +72240,8 @@ __webpack_require__.r(__webpack_exports__);
         addScholar(){
             this.openDialog = true;
             this.actionType = 'new';
-            this.selected_scholar = {}
+            this.selected_scholar = {};
+            this.componentKey += 1;
         },
         editScholar(data){
             this.selected_scholar = data;
@@ -77999,140 +77996,146 @@ var render = function() {
       { staticClass: "section-container", attrs: { id: "slp-update" } },
       [
         _c("div", { staticClass: "container" }, [
-          _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c(
-                "select",
-                {
-                  directives: [
+          _vm.SLPData
+            ? _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _c(
+                    "select",
                     {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.currency,
-                      expression: "currency"
-                    }
-                  ],
-                  attrs: { name: "", id: "" },
-                  on: {
-                    change: function($event) {
-                      var $$selectedVal = Array.prototype.filter
-                        .call($event.target.options, function(o) {
-                          return o.selected
-                        })
-                        .map(function(o) {
-                          var val = "_value" in o ? o._value : o.value
-                          return val
-                        })
-                      _vm.currency = $event.target.multiple
-                        ? $$selectedVal
-                        : $$selectedVal[0]
-                    }
-                  }
-                },
-                [
-                  _c("option", { attrs: { value: "usd" } }, [_vm._v("USD")]),
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.currency,
+                          expression: "currency"
+                        }
+                      ],
+                      attrs: { name: "", id: "" },
+                      on: {
+                        change: function($event) {
+                          var $$selectedVal = Array.prototype.filter
+                            .call($event.target.options, function(o) {
+                              return o.selected
+                            })
+                            .map(function(o) {
+                              var val = "_value" in o ? o._value : o.value
+                              return val
+                            })
+                          _vm.currency = $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        }
+                      }
+                    },
+                    [
+                      _c("option", { attrs: { value: "usd" } }, [
+                        _vm._v("USD")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "php" } }, [
+                        _vm._v("PHP")
+                      ]),
+                      _vm._v(" "),
+                      _c("option", { attrs: { value: "jpy" } }, [_vm._v("JPY")])
+                    ]
+                  ),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "php" } }, [_vm._v("PHP")]),
+                  _c("button", { staticClass: "btn btn-inverse btn-xs" }, [
+                    _vm._v("Rank #" + _vm._s(_vm.SLPData.market_cap_rank))
+                  ]),
                   _vm._v(" "),
-                  _c("option", { attrs: { value: "jpy" } }, [_vm._v("JPY")])
-                ]
-              ),
-              _vm._v(" "),
-              _c("button", { staticClass: "btn btn-inverse btn-xs" }, [
-                _vm._v("Rank #" + _vm._s(_vm.SLPData.market_cap_rank))
-              ]),
-              _vm._v(" "),
-              _c("h2", [
-                _c(
-                  "span",
-                  {
-                    attrs: {
-                      "data-animation": "number",
-                      "data-value": _vm.getSLPPrice
-                    }
-                  },
-                  [_vm._v(_vm._s(_vm.getSLPPrice))]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    class:
-                      _vm.getSLPChange("1h") > 0
-                        ? "text-success"
-                        : "text-danger"
-                  },
-                  [_vm._v(_vm._s(_vm.getSLPChange("1h")) + " %")]
-                )
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "no-margin" }, [
-                _vm._v(
-                  _vm._s(this.SLPData.market_data.current_price.btc) +
-                    " BTC \n                        "
-                ),
-                _vm.SLPData.market_data.price_change_percentage_24h_in_currency
-                  .btc > 0
-                  ? _c("span", { staticClass: "text-success" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(
-                            _vm.SLPData.market_data.price_change_percentage_24h_in_currency.btc.toFixed(
-                              1
-                            )
-                          ) +
-                          " %\n                            "
-                      ),
-                      _c("i", { staticClass: "fas fa-caret-up" })
-                    ])
-                  : _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(
-                            _vm.SLPData.market_data.price_change_percentage_24h_in_currency.btc.toFixed(
-                              1
-                            )
-                          ) +
-                          " %\n                            "
-                      ),
-                      _c("i", { staticClass: "fas fa-caret-down" })
-                    ])
-              ]),
-              _vm._v(" "),
-              _c("p", { staticClass: "no-margin" }, [
-                _vm._v(
-                  _vm._s(this.SLPData.market_data.current_price.eth) +
-                    " ETH \n                        "
-                ),
-                _vm.SLPData.market_data.price_change_percentage_24h_in_currency
-                  .eth > 0
-                  ? _c("span", { staticClass: "text-success" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(
-                            _vm.SLPData.market_data.price_change_percentage_24h_in_currency.eth.toFixed(
-                              1
-                            )
-                          ) +
-                          " %\n                            "
-                      ),
-                      _c("i", { staticClass: "fas fa-caret-up" })
-                    ])
-                  : _c("span", { staticClass: "text-danger" }, [
-                      _vm._v(
-                        "\n                            " +
-                          _vm._s(
-                            _vm.SLPData.market_data.price_change_percentage_24h_in_currency.eth.toFixed(
-                              1
-                            )
-                          ) +
-                          " %\n                            "
-                      ),
-                      _c("i", { staticClass: "fas fa-caret-down" })
-                    ])
+                  _c("h2", [
+                    _c(
+                      "span",
+                      {
+                        attrs: {
+                          "data-animation": "number",
+                          "data-value": _vm.getSLPPrice
+                        }
+                      },
+                      [_vm._v(_vm._s(_vm.getSLPPrice))]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      {
+                        class:
+                          _vm.getSLPChange("1h") > 0
+                            ? "text-success"
+                            : "text-danger"
+                      },
+                      [_vm._v(_vm._s(_vm.getSLPChange("1h")) + " %")]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "no-margin" }, [
+                    _vm._v(
+                      _vm._s(this.SLPData.market_data.current_price.btc) +
+                        " BTC \n                        "
+                    ),
+                    _vm.SLPData.market_data
+                      .price_change_percentage_24h_in_currency.btc > 0
+                      ? _c("span", { staticClass: "text-success" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm.SLPData.market_data.price_change_percentage_24h_in_currency.btc.toFixed(
+                                  1
+                                )
+                              ) +
+                              " %\n                            "
+                          ),
+                          _c("i", { staticClass: "fas fa-caret-up" })
+                        ])
+                      : _c("span", { staticClass: "text-danger" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm.SLPData.market_data.price_change_percentage_24h_in_currency.btc.toFixed(
+                                  1
+                                )
+                              ) +
+                              " %\n                            "
+                          ),
+                          _c("i", { staticClass: "fas fa-caret-down" })
+                        ])
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "no-margin" }, [
+                    _vm._v(
+                      _vm._s(this.SLPData.market_data.current_price.eth) +
+                        " ETH \n                        "
+                    ),
+                    _vm.SLPData.market_data
+                      .price_change_percentage_24h_in_currency.eth > 0
+                      ? _c("span", { staticClass: "text-success" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm.SLPData.market_data.price_change_percentage_24h_in_currency.eth.toFixed(
+                                  1
+                                )
+                              ) +
+                              " %\n                            "
+                          ),
+                          _c("i", { staticClass: "fas fa-caret-up" })
+                        ])
+                      : _c("span", { staticClass: "text-danger" }, [
+                          _vm._v(
+                            "\n                            " +
+                              _vm._s(
+                                _vm.SLPData.market_data.price_change_percentage_24h_in_currency.eth.toFixed(
+                                  1
+                                )
+                              ) +
+                              " %\n                            "
+                          ),
+                          _c("i", { staticClass: "fas fa-caret-down" })
+                        ])
+                  ])
+                ])
               ])
-            ])
-          ])
+            : _vm._e()
         ])
       ]
     )
@@ -78519,7 +78522,7 @@ var render = function() {
           _c("multi-select", {
             attrs: {
               multiple: false,
-              "track-by": "id",
+              "track-by": "account_name",
               "show-label": false,
               options: _vm.options,
               "custom-label": _vm.customLabel
@@ -78676,6 +78679,7 @@ var render = function() {
         _c(
           "dialog-component",
           {
+            key: _vm.componentKey,
             attrs: {
               isOpen: _vm.openDialog,
               modalWidth: "50%",
