@@ -28,7 +28,7 @@ export default {
     },
     watch : {
         'type' : function(newVal){
-            console.log(newVal);
+            // console.log(newVal);
             if(newVal)
                 this.selected = newVal;
         },

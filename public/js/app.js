@@ -5969,7 +5969,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     'type': function type(newVal) {
-      console.log(newVal);
+      // console.log(newVal);
       if (newVal) this.selected = newVal;
     },
     'type_id': function type_id(newVal) {
@@ -8161,7 +8161,7 @@ __webpack_require__.r(__webpack_exports__);
       var local = this.data; // sortOrder can be empty, so we have to check for that as well
 
       if (sortOrder.length > 0) {
-        console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
+        // console.log("orderBy:", sortOrder[0].sortField, sortOrder[0].direction);
         local = _.orderBy(local, sortOrder[0].sortField, sortOrder[0].direction);
       }
 
@@ -9596,7 +9596,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.axios.get("getAccountInfo/scholars").then(function (response) {
-        console.log(response.data);
+        // console.log(response.data);
         _this.userData = response.data;
       })["catch"](function (error) {
         console.log(error.data);

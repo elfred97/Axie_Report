@@ -121,7 +121,7 @@ export default {
         getAccountInformation(){
             this.axios.get("getAccountInfo/scholars")
             .then((response) => {
-                console.log(response.data);
+                // console.log(response.data);
                 this.userData = response.data;
             })
             .catch((error) => {
