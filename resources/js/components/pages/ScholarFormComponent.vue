@@ -81,7 +81,7 @@
                     :multiple="false"
                     @search-change="searchPlayer"
                     @select="selectAxieAccount"
-                    track-by="account_name"
+                    track-by="id"
                     :show-label="false"
                     :options="options"
                     :custom-label="customLabel"

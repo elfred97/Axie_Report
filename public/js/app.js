@@ -78522,7 +78522,7 @@ var render = function() {
           _c("multi-select", {
             attrs: {
               multiple: false,
-              "track-by": "account_name",
+              "track-by": "id",
               "show-label": false,
               options: _vm.options,
               "custom-label": _vm.customLabel
