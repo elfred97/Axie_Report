@@ -202,6 +202,7 @@ export default {
         }
     },
     mounted(){
+        this.searchPlayer();
         if(this.scholarData){
             this.form = new Form(this.scholarData);            
         }
