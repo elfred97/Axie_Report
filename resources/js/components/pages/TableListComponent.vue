@@ -136,17 +136,17 @@ export default {
             isLoading: false,
             sortOrder: [
                 {
-                    field    : 'average_per_day',   // Choose the Defualt Sorted Data by name
-                    direction: 'desc',
-                },
-                {
                     field    : 'ronin_address',   // Choose the Defualt Sorted Data by name
                     direction: 'desc',
                 },
-                {
-                    field    : 'created_at',   // Choose the Defualt Sorted Data by name
-                    direction: 'desc',
-                },
+                // {
+                //     field    : 'average_per_day',   // Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'created_at',   // Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
             ],
         }
     },

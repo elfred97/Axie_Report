@@ -236,17 +236,17 @@ export default {
             isLoading: false,
             sortOrder: [
                 {
-                    field    : 'total_slp',   // Choose the Defualt Sorted Data by name
-                    direction: 'desc',
-                },
-                {
                     field    : 'ronin_address',   // Choose the Defualt Sorted Data by name
                     direction: 'desc',
                 },
-                {
-                    field    : 'account_name',   // Choose the Defualt Sorted Data by name
-                    direction: 'desc',
-                },
+                // {
+                //     field    : 'total_slp',   // Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'account_name',   // Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
             ],
             filtersParam : {
                 month : '',

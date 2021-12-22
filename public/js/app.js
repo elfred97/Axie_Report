@@ -7729,18 +7729,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fullPage: true,
       isLoading: false,
       sortOrder: [{
-        field: 'total_slp',
-        // Choose the Defualt Sorted Data by name
-        direction: 'desc'
-      }, {
         field: 'ronin_address',
         // Choose the Defualt Sorted Data by name
         direction: 'desc'
-      }, {
-        field: 'account_name',
-        // Choose the Defualt Sorted Data by name
-        direction: 'desc'
-      }],
+      } // {
+      //     field    : 'total_slp',   // Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      // {
+      //     field    : 'account_name',   // Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      ],
       filtersParam: {
         month: '',
         year: '',
@@ -8694,18 +8694,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       fullPage: true,
       isLoading: false
     }, "sortOrder", [{
-      field: 'average_per_day',
-      // Choose the Defualt Sorted Data by name
-      direction: 'desc'
-    }, {
       field: 'ronin_address',
       // Choose the Defualt Sorted Data by name
       direction: 'desc'
-    }, {
-      field: 'created_at',
-      // Choose the Defualt Sorted Data by name
-      direction: 'desc'
-    }]);
+    } // {
+    //     field    : 'average_per_day',   // Choose the Defualt Sorted Data by name
+    //     direction: 'desc',
+    // },
+    // {
+    //     field    : 'created_at',   // Choose the Defualt Sorted Data by name
+    //     direction: 'desc',
+    // },
+    ]);
   },
   watch: {
     'reportData': function reportData(newVal) {
