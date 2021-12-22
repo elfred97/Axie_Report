@@ -186,7 +186,7 @@ label{
 }
 .custom-select.custom-select-sm, .custom-input.custom-input-sm, .custom-select .multiselect{
     margin: 0 8px;
-    padding-right: 6rem;
+    padding-right: 4rem;
 
 }
 .dataTables_length label{

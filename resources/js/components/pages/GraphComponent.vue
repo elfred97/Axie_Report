@@ -52,7 +52,7 @@
                                 <multi-select 
                                     v-model="selected_player"
                                     :multiple="false"
-                                    @search-change="searchPlayer"
+                                    @search-change="getListPlayers"
                                     @select="selectAxieAccount"
                                     track-by="id"
                                     :show-label="false"
@@ -174,8 +174,8 @@ export default {
                 // this.clearAll();
             })
         },
-        searchPlayer(query){
-            this.axios.get('getAllPlayers', {
+        getListPlayers(query){
+            this.axios.get('getListPlayers', {
                 params : {
                     term : query
                 }
@@ -200,7 +200,7 @@ export default {
       JSCharting,
     },
     mounted(){
-        this.searchPlayer();
+        this.getListPlayers();
         this.filter.selected_year = moment().format('YYYY');
         this.filter.selected_month = moment().format('M');
         // console.log(this.month[moment().format('M')])

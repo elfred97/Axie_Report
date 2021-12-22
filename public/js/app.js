@@ -6573,10 +6573,10 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {// this.clearAll();
       });
     },
-    searchPlayer: function searchPlayer(query) {
+    getListPlayers: function getListPlayers(query) {
       var _this2 = this;
 
-      this.axios.get('getAllPlayers', {
+      this.axios.get('getListPlayers', {
         params: {
           term: query
         }
@@ -6600,7 +6600,7 @@ __webpack_require__.r(__webpack_exports__);
     JSCharting: jscharting_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
-    this.searchPlayer();
+    this.getListPlayers();
     this.filter.selected_year = moment().format('YYYY');
     this.filter.selected_month = moment().format('M'); // console.log(this.month[moment().format('M')])
 
@@ -74379,7 +74379,7 @@ var render = function() {
                         "custom-label": _vm.customLabel
                       },
                       on: {
-                        "search-change": _vm.searchPlayer,
+                        "search-change": _vm.getListPlayers,
                         select: _vm.selectAxieAccount
                       },
                       model: {
