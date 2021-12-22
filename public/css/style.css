@@ -120,6 +120,9 @@ body{
 .text-content{
     word-break: break-all !important;
 }
+.table thead th.sortable{
+    color: #348fe2 !important;
+}
 /* .btn-xs{
     padding: .125rem .50rem;
     font-size: 12px;
