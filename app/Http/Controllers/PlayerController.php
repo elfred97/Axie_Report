@@ -49,6 +49,10 @@ class PlayerController extends Controller
         return Player::doesnthave('histories')->get();
     }
 
+    public function getListOfPlayers(){
+        return Player::GET();
+    }
+
     public function savePlayer(Request $request){
         // dd($request->all());
         $ruleAccountName = isset($request->id) ? (Player::findOrFail($request->id)->account_name == $request->account_name ? 'required' : 'required|unique:players') : 'required|unique:players';

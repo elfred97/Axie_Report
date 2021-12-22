@@ -74,6 +74,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
         Route::get('/getPlayers', 'PlayerController@getPlayers');
         Route::get('/getAllPlayers', 'PlayerController@getAllPlayers');
+        Route::get('/getListPlayers', 'PlayerController@getListOfPlayers');
         Route::post('/deleteScholar', [HomeController::class,'delete'])->name('scholar.delete');
         Route::post('/importPlayer', 'PlayerController@import');
 

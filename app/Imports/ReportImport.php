@@ -115,7 +115,7 @@ class ReportImport implements ToCollection
 
                 Report::create([
                     'ronin_address'    => $row[0],
-                    'name'             => $row[2],
+                    'name'             => preg_replace('/\s+/', '', $row[2]),
                     'batch'            => $batch + 1,
                     'average_per_day'  => $row[3],
                     'gained_slp_today' => $gained_slp_today,

@@ -26,7 +26,7 @@ class PlayerImport implements ToCollection,WithHeadingRow,WithValidation,SkipsOn
         foreach ($rows as $row)
         {
             Player::create([
-                'account_name'       => trim($row['account_name']),
+                'account_name'       => preg_replace('/\s+/', '', $row['account_name']),
                 'ronin_address'      => $row['ronin_address'],
                 'market_place_email' => $row['market_place_email'],
                 'password'           => $row['password'],

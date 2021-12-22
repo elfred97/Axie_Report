@@ -118,6 +118,7 @@ class FileController extends Controller
         $year  = $request->year;
         $month = $request->month;
         $type  = $request->type;
+        $account_name  = $request->account_name;
         $where = [];
 
         // $typeData = Type::WHERE('id', $type)->FIRST();
@@ -130,6 +131,9 @@ class FileController extends Controller
 
         if ($type)
             array_push($where, ['s.type_id', '=', $type]);
+        
+        if ($account_name)
+            array_push($where, ['r.name', '=', $account_name]);
 
         return DB::TABLE('report as r')
             ->SELECT(DB::raw("SUM(r.total_slp) as slp, SUM(r.unclaimed) as unclaimed, SUM(r.claimed) as claimed, DATE(r.created_at) as date"))
@@ -138,6 +142,9 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'history.scholar_id')
             ->groupBy('date')
             ->where($where)
+            ->when($account_name, function ($query) use ($account_name) {
+                $query->where('p.account_name', $account_name);
+            })
             ->GET(array(
                 DB::raw('Date(r.created_at) as date'),
             ));
