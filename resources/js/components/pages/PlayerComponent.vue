@@ -147,7 +147,7 @@ export default {
             detailRow  : PlayerDetailRow,
             sortOrder  : [
                 {
-                    field    : "type",   // Choose the Defualt Sorted Data by name
+                    field    : "type_name",   // Choose the Defualt Sorted Data by name
                     direction: "desc"    // Sorting Direction
                 }
             ],

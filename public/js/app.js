@@ -71924,7 +71924,7 @@ __webpack_require__.r(__webpack_exports__);
             detailRow  : _PlayerDetailRow_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
             sortOrder  : [
                 {
-                    field    : "type",   // Choose the Defualt Sorted Data by name
+                    field    : "type_name",   // Choose the Defualt Sorted Data by name
                     direction: "desc"    // Sorting Direction
                 }
             ],
@@ -77750,14 +77750,16 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-3" }, [
-        _c("img", {
-          staticClass: "img-fluid",
-          attrs: { src: "uploads/" + _vm.form.qr_code, alt: "" }
-        })
-      ])
-    ]),
+    _vm.form.qr_code
+      ? _c("div", { staticClass: "row mt-2" }, [
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("img", {
+              staticClass: "img-fluid",
+              attrs: { src: "uploads/" + _vm.form.qr_code, alt: "" }
+            })
+          ])
+        ])
+      : _vm._e(),
     _vm._v(" "),
     _vm._m(3),
     _vm._v(" "),
@@ -105302,29 +105304,34 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   name: "type_name",
   title: 'Type',
   titleClass: 'center aligned',
-  dataClass: 'center aligned uppercase bold'
+  dataClass: 'center aligned uppercase bold',
+  sortField: 'type_name'
 }, {
   name: "qr_code_field",
   title: 'QR Code',
   titleClass: 'center aligned',
   dataClass: 'center aligned',
-  width: "8%"
+  width: "8%",
+  sortField: 'qr_code_field'
 }, {
   name: "ronin_address",
   title: 'Ronin Address',
   dataClass: 'text-content',
-  width: "10%"
+  width: "10%",
+  sortField: 'ronin_address'
 }, {
   name: "account_name",
   title: 'Account Name'
 }, {
   name: "player_name",
-  title: 'Scholar Name'
+  title: 'Scholar Name',
+  sortField: 'player_name'
 }, {
   name: "penalty",
   title: 'Penalty',
   titleClass: 'center aligned',
   dataClass: 'center aligned',
+  sortField: 'penalty',
   formatter: function formatter(value) {
     var color = 'text-default';
 

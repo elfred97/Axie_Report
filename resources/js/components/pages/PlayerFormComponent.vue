@@ -31,7 +31,7 @@
         
         </div>
 
-        <div class="row mt-2">            
+        <div class="row mt-2" v-if="form.qr_code">        
             <div class="col-md-3">
                 <img :src="'uploads/'+form.qr_code" alt="" class="img-fluid">
             </div>

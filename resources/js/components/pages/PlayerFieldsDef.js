@@ -11,6 +11,7 @@ export default [
       title: 'Type',
       titleClass: 'center aligned',
       dataClass: 'center aligned uppercase bold',
+      sortField: 'type_name'
       
     },
     {
@@ -19,12 +20,14 @@ export default [
       titleClass: 'center aligned',
       dataClass: 'center aligned',      
       width     : "8%",
+      sortField: 'qr_code_field'
     },
     {
       name      : "ronin_address",
       title     : 'Ronin Address',
       dataClass: 'text-content',
       width     : "10%",
+      sortField: 'ronin_address'
     },
     {
       name : "account_name",
@@ -33,12 +36,14 @@ export default [
     {
       name : "player_name",
       title: 'Scholar Name',
+      sortField: 'player_name'
     },
     {
       name : "penalty",
       title: 'Penalty',
       titleClass: 'center aligned',
       dataClass: 'center aligned',
+      sortField: 'penalty',
       formatter: value => {
         let color = 'text-default';
         if(value == 0){
