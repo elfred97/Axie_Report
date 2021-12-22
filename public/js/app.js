@@ -6492,6 +6492,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -6518,9 +6530,12 @@ __webpack_require__.r(__webpack_exports__);
       filter: {
         selected_year: '',
         selected_month: '',
-        selected_type: ''
+        selected_type: '',
+        selected_account_name: ''
       },
-      selected_type: ''
+      selected_type: '',
+      options: [],
+      selected_player: ''
     };
   },
   watch: {
@@ -6535,13 +6550,15 @@ __webpack_require__.r(__webpack_exports__);
       var term = {
         year: this.filter.selected_year,
         month: this.filter.selected_month,
-        type: this.filter.selected_type
+        type: this.filter.selected_type,
+        account_name: this.filter.selected_account_name
       };
       this.axios.get('/getGraph', {
         params: {
           year: this.filter.selected_year,
           month: this.filter.selected_month,
-          type: this.filter.selected_type
+          type: this.filter.selected_type,
+          account_name: this.filter.selected_account_name
         }
       }).then(function (response) {
         _this.chartOptions.series[0].points = [];
@@ -6555,12 +6572,35 @@ __webpack_require__.r(__webpack_exports__);
         _this.$events.fire('graph-data', response.data);
       })["catch"](function (error) {// this.clearAll();
       });
+    },
+    searchPlayer: function searchPlayer(query) {
+      var _this2 = this;
+
+      this.axios.get('getAllPlayers', {
+        params: {
+          term: query
+        }
+      }).then(function (response) {
+        // console.log(response.data);
+        _this2.options = response.data;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    customLabel: function customLabel(_ref) {
+      var account_name = _ref.account_name;
+      return "".concat(account_name);
+    },
+    selectAxieAccount: function selectAxieAccount(eventData) {
+      this.filter.selected_account_name = eventData.account_name;
+      this.getGraph();
     }
   },
   components: {
     JSCharting: jscharting_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
+    this.searchPlayer();
     this.filter.selected_year = moment().format('YYYY');
     this.filter.selected_month = moment().format('M'); // console.log(this.month[moment().format('M')])
 
@@ -74172,7 +74212,7 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-8" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-2" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
                 _c(
                   "div",
                   {
@@ -74234,7 +74274,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-2" }, [
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
                 _c(
                   "div",
                   {
@@ -74300,7 +74340,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-lg-3" },
+                { staticClass: "col-lg-3 col-md-3 col-sm-6" },
                 [
                   _c("type-component", {
                     attrs: { type: _vm.filter.selected_type },
@@ -74314,11 +74354,48 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-2" })
+              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" })
             ])
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-lg-4" })
+          _c("div", { staticClass: "col-lg-4" }, [
+            _c(
+              "div",
+              {
+                staticClass: "dataTables_length",
+                attrs: { id: "data-table-default_length" }
+              },
+              [
+                _c(
+                  "label",
+                  [
+                    _vm._v("Search \n                            "),
+                    _c("multi-select", {
+                      attrs: {
+                        multiple: false,
+                        "track-by": "id",
+                        "show-label": false,
+                        options: _vm.options,
+                        "custom-label": _vm.customLabel
+                      },
+                      on: {
+                        "search-change": _vm.searchPlayer,
+                        select: _vm.selectAxieAccount
+                      },
+                      model: {
+                        value: _vm.selected_player,
+                        callback: function($$v) {
+                          _vm.selected_player = $$v
+                        },
+                        expression: "selected_player"
+                      }
+                    })
+                  ],
+                  1
+                )
+              ]
+            )
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "category-container" }, [
@@ -105335,7 +105412,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   sortField: 'ronin_address'
 }, {
   name: "account_name",
-  title: 'Account Name'
+  title: 'Account Name',
+  sortField: 'account_name'
 }, {
   name: "player_name",
   title: 'Scholar Name',

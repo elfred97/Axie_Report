@@ -184,13 +184,16 @@ label{
 .dataTables_length{
     display: inline-flex;
 }
-.custom-select.custom-select-sm, .custom-input.custom-input-sm{
+.custom-select.custom-select-sm, .custom-input.custom-input-sm, .custom-select .multiselect{
     margin: 0 8px;
-    padding-right: 2rem;
+    padding-right: 6rem;
 
 }
 .dataTables_length label{
     align-items: center;
+}
+.dataTables_length .multiselect{
+    margin: 0 8px;
 }
 /* Multi Select */
 .multiselect, .multiselect__input, .multiselect__single{

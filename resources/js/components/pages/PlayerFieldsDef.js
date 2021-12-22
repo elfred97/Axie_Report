@@ -32,6 +32,7 @@ export default [
     {
       name : "account_name",
       title: 'Account Name',
+      sortField: 'account_name'
     },
     {
       name : "player_name",
