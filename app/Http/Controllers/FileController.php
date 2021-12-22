@@ -54,7 +54,7 @@ class FileController extends Controller
 
         $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
-
+        
         return DB::TABLE('report as r')
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
@@ -68,7 +68,7 @@ class FileController extends Controller
                 't.name as type_name',
                 )
             ->where($where)
-            ->orderBy('r.created_at', 'desc')
+            ->orderBy($field, $direction)
             ->PAGINATE($request->per_page);
     }
 

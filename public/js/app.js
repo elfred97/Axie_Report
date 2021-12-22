@@ -6766,18 +6766,34 @@ __webpack_require__.r(__webpack_exports__);
       fullPage: true,
       lowest_mmr: 800,
       sortOrder: [{
-        field: 'average_per_day',
-        // Choose the Defualt Sorted Data by name
-        direction: 'desc'
-      }, {
         field: 'ronin_address',
         // Choose the Defualt Sorted Data by name
         direction: 'desc'
-      }, {
-        field: 'created_at',
-        // Choose the Defualt Sorted Data by name
-        direction: 'desc'
-      }]
+      } // {
+      //     field    : 'account_name',// Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      // {
+      //     field    : 'gained_slp_today',// Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      // {
+      //     field    : 'average_per_day',// Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      // {
+      //     field    : 'total_slp',// Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      // {
+      //     field    : 'mmr',// Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      // {
+      //     field    : 'created_at',// Choose the Defualt Sorted Data by name
+      //     direction: 'desc',
+      // },
+      ]
     };
   },
   watch: {
@@ -104571,7 +104587,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   sortField: 'ronin_address'
 }, {
   name: "account_name",
-  title: 'Account Name'
+  title: 'Account Name',
+  sortField: 'account_name'
 }, {
   name: "player_name",
   title: 'Scholar Name',
@@ -104581,7 +104598,8 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   name: "gained_slp_today",
   title: '1 Day SLP',
   titleClass: 'center aligned',
-  dataClass: 'center aligned'
+  dataClass: 'center aligned',
+  sortField: 'gained_slp_today'
 }, {
   name: "created_at",
   title: 'Date',
@@ -104611,12 +104629,14 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   name: "total_slp",
   title: 'Total SLP',
   titleClass: 'center aligned',
-  dataClass: 'center aligned'
+  dataClass: 'center aligned',
+  sortField: 'total_slp'
 }, {
   name: "mmr_field",
   title: 'MMR',
   titleClass: 'center aligned',
-  dataClass: 'center aligned'
+  dataClass: 'center aligned',
+  sortField: 'mmr_field'
 }, {
   name: "rank",
   title: 'Rank',

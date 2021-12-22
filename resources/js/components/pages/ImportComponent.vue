@@ -147,17 +147,33 @@ export default {
             lowest_mmr : 800,
             sortOrder  : [
                 {
-                    field    : 'average_per_day',// Choose the Defualt Sorted Data by name
-                    direction: 'desc',
-                },
-                {
                     field    : 'ronin_address',// Choose the Defualt Sorted Data by name
                     direction: 'desc',
                 },
-                {
-                    field    : 'created_at',// Choose the Defualt Sorted Data by name
-                    direction: 'desc',
-                },
+                // {
+                //     field    : 'account_name',// Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'gained_slp_today',// Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'average_per_day',// Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'total_slp',// Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'mmr',// Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
+                // {
+                //     field    : 'created_at',// Choose the Defualt Sorted Data by name
+                //     direction: 'desc',
+                // },
             ],
         }
     },
