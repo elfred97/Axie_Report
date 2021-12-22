@@ -73,14 +73,14 @@ class FileController extends Controller
     }
 
     public function getReport(Request $request){
+        $queryRequest   = array_slice($request->all(), 3);
         $where = [];
-
-        $sortType = (isset($request->sortType)) ? $request->sortType : 'r.name';
-        $type = (isset($request->type)) ? $request->type : 'Trust';
 
         if ($request->type)
             array_push($where, ['s.type_id', '=', $request->type]);
 
+        $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
+        $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';    
 
         $latest_id_per_account = DB::table('report as r')
                         ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
@@ -98,10 +98,8 @@ class FileController extends Controller
                 't.name as type_name',
             )
             ->WHERE($where)
-            // ->orderBy($sortType, $request->sortOrder)
-            ->orderBy($sortType, 'asc')
+            ->orderBy($field,$direction)
             ->whereIn('r.id', $latest_id_per_account)
-//            ->GROUPBY('account_name')
             ->paginate($request->get('per_page', 15));
 
         // return $this->buildJson(compact('reports'));

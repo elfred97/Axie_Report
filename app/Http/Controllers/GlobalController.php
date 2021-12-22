@@ -309,6 +309,10 @@ class GlobalController extends Controller
         $type  = $request->type;
         $search  = $request->search;
         $where = [];
+        $queryRequest   = array_slice($request->all(), 3);
+
+        $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
+        $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
 
         array_push($where, ['payrolls.status', '=', $status]);
 
@@ -336,7 +340,7 @@ class GlobalController extends Controller
         )
         ->WHERE($where)
         ->orWhere('scholars.last_name', 'like', '%'.$request->search.'%')
-        ->ORDERBY('payrolls.created_at', 'desc')
+        ->ORDERBY($field,$direction)
         ->paginate($request->per_page);
     }
 

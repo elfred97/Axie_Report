@@ -69,7 +69,7 @@ class HomeController extends Controller
             )
             ->where($where)
             ->orWhere('scholars.last_name', 'like', '%'.$request->search.'%')
-            ->ORDERBY('scholars.id', 'desc')
+            ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);
     }
     public function save(Request $request){

@@ -21,10 +21,16 @@ class PlayerController extends Controller
 {
     public function getPlayers(Request $request){
         $where = [];
+        $queryRequest   = array_slice($request->all(), 3);
+
         if ($request->type)
             array_push($where, ['type_id', '=', $request->type]);
         if ($request->search)
             array_push($where, ['players.account_name', 'like', '%'.$request->search.'%']);
+
+            $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
+        $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
+        
         return Player::
             SELECT(
                 'players.*',
@@ -36,7 +42,7 @@ class PlayerController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->WHERE($where)
-            ->ORDERBY('players.id', 'desc')
+            ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);
     }
     public function getAllPlayers(){
