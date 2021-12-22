@@ -50,8 +50,6 @@ class HomeController extends Controller
         $type  = $request->type;
         $where = [];
 
-        if ($type)
-            array_push($where, ['scholars.type_id', '=', $type]);
         if ($request->search)
             array_push($where, ['scholars.first_name', 'like', '%'.$request->search.'%']);
 
@@ -69,6 +67,9 @@ class HomeController extends Controller
             )
             ->where($where)
             ->orWhere('scholars.last_name', 'like', '%'.$request->search.'%')
+            ->when($type, function ($q) use ($type) {
+                $q->whereRaw('scholars.type_id=' . (int)$type);
+            })
             ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);
     }
