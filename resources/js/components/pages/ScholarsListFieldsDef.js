@@ -10,16 +10,19 @@ export default [
       title     : 'Type',
       titleClass: 'center aligned',
       dataClass : 'center aligned uppercase',
+      sortField: "type",
     },
     {
       name : "scholar_name",
       title: 'Scholar Name',
+      sortField: "scholar_name",
     },
     {
       name : "account_name",
       title: 'Axie Account',
       titleClass: 'center aligned',
       dataClass : 'center aligned',
+      sortField: "account_name",
     },
     {
       name      : "username",
@@ -54,6 +57,7 @@ export default [
       title     : 'Date Started',
       titleClass: 'center aligned',
       dataClass : 'center aligned',
+      sortField: "date_started",
       formatter : value => {
         return '<span>'+ moment(value).format('MMM D, YYYY') +'</span>';
         }

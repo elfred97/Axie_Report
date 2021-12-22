@@ -9,18 +9,21 @@ export default [
         name: "account_name",
         title: 'Account Name',
         width     : "10%",
+        sortField: "account_name",
     },
     {
         name: "ronin_address",
         title: 'Ronin Address',
         dataClass: 'text-content',
         width     : "25%",
+        sortField: "ronin_address",
     },
     {
         name: "total_slp",
         title: 'Total SLP',
         titleClass: "text-center aligned",
         dataClass: "text-center aligned",
+        sortField: "total_slp",
     },
     {
         name: "txn_id",
@@ -34,12 +37,14 @@ export default [
         title: 'Type',
         titleClass: "text-center aligned",
         dataClass: "text-center aligned",
+        sortField: "type_name",
     },
     {
         name: "created_at",
         title: 'Date',
         titleClass: "text-center aligned",
-        dataClass: "text-center aligned",        
+        dataClass: "text-center aligned",
+        sortField: "created_at",
         formatter: value => {            
             return '<span>'+ moment(value).format('MMM D, YYYY') +'</span>';
         }

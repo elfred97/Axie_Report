@@ -121,7 +121,7 @@ export default {
             detailRow : ImportedDetailRow,
             lowest_mmr : 800,
             sortOrder : {
-                type : '',
+                type : 'type_name',
                 order: "desc",
             },
             penalties : {

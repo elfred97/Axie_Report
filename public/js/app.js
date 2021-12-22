@@ -8680,7 +8680,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       detailRow: _ImportedDetailRow_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
       lowest_mmr: 800,
       sortOrder: {
-        type: '',
+        type: 'type_name',
         order: "desc"
       },
       penalties: {
@@ -104228,33 +104228,40 @@ __webpack_require__.r(__webpack_exports__);
   name: "type_name",
   title: 'type',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned uppercase"
+  dataClass: "text-center aligned uppercase",
+  sortField: "type_name"
 }, {
   name: "account_name",
-  title: 'Account Name'
+  title: 'Account Name',
+  sortField: "account_name"
 }, {
   name: "player_name",
-  title: 'Scholar Name'
+  title: 'Scholar Name',
+  sortField: "player_name"
 }, {
   name: "penalty",
   title: 'Penalty',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "penalty"
 }, {
   name: "mmr_field",
   title: 'MMR',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "mmr_field"
 }, {
   name: "gained_slp_today",
   title: '1 Day SLP',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "gained_slp_today"
 }, {
   name: "created_at",
   title: 'Date',
   titleClass: "text-center aligned",
   dataClass: "text-center aligned",
+  sortField: "created_at",
   formatter: function formatter(value) {
     return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
   }
@@ -104262,7 +104269,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "average_per_day",
   title: 'Ave Per Day',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "average_per_day"
 }, {
   name: "unclaimed",
   title: 'Unclaimed',
@@ -104277,7 +104285,8 @@ __webpack_require__.r(__webpack_exports__);
   name: "total_slp",
   title: 'Total SLP',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "total_slp"
 }, {
   name: "last_claim_date",
   title: "Last Claim Date",
@@ -105039,17 +105048,20 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   name: "account_name",
   title: 'Account Name',
-  width: "10%"
+  width: "10%",
+  sortField: "account_name"
 }, {
   name: "ronin_address",
   title: 'Ronin Address',
   dataClass: 'text-content',
-  width: "25%"
+  width: "25%",
+  sortField: "ronin_address"
 }, {
   name: "total_slp",
   title: 'Total SLP',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "total_slp"
 }, {
   name: "txn_id",
   title: 'TXN ID',
@@ -105060,12 +105072,14 @@ __webpack_require__.r(__webpack_exports__);
   name: "type_name",
   title: 'Type',
   titleClass: "text-center aligned",
-  dataClass: "text-center aligned"
+  dataClass: "text-center aligned",
+  sortField: "type_name"
 }, {
   name: "created_at",
   title: 'Date',
   titleClass: "text-center aligned",
   dataClass: "text-center aligned",
+  sortField: "created_at",
   formatter: function formatter(value) {
     return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
   }
@@ -105748,15 +105762,18 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   name: "type",
   title: 'Type',
   titleClass: 'center aligned',
-  dataClass: 'center aligned uppercase'
+  dataClass: 'center aligned uppercase',
+  sortField: "type"
 }, {
   name: "scholar_name",
-  title: 'Scholar Name'
+  title: 'Scholar Name',
+  sortField: "scholar_name"
 }, {
   name: "account_name",
   title: 'Axie Account',
   titleClass: 'center aligned',
-  dataClass: 'center aligned'
+  dataClass: 'center aligned',
+  sortField: "account_name"
 }, {
   name: "username",
   title: 'Username',
@@ -105778,6 +105795,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   title: 'Date Started',
   titleClass: 'center aligned',
   dataClass: 'center aligned',
+  sortField: "date_started",
   formatter: function formatter(value) {
     return '<span>' + moment(value).format('MMM D, YYYY') + '</span>';
   }
