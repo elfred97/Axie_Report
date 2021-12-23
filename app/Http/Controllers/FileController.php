@@ -191,6 +191,22 @@ class FileController extends Controller
         return $notification;
     }
 
+    public function changeStatusNotification(Request $request){
+        $notifID = $request->id;
+        try {
+            $notif = Notification::find($notifID);
+            $notif->status = 2;
+            $notif->save();            
+            if($notif)
+                return response()->json(['message' => 'Notification has been read!'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
     public function showFile($file_name, Request $request){
         // $type = $request->type;
         // if($type == 'qr_code'){
