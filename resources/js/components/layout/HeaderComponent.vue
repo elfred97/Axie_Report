@@ -156,13 +156,25 @@ export default {
             // let announcementCount = Object.keys(this.announcementsData).length;
 
             this.notificationData.forEach((element, index) => {                                        
-                if(element.status == 1)
-                notif_count = notif_count + 1;
+                if(this.$store.state.global_guard_type == 'admins'){
+                    if(element.status == 1)
+                        notif_count = notif_count + 1;
+                }
+                else{
+                    if(element.status_scholar == 1)
+                        notif_count = notif_count + 1;
+                }
             });
 
             Object.keys(this.announcementsData).forEach((element, index) => {                                        
-                if(element.status == 1)
-                ann_count = ann_count + 1;
+                if(this.$store.state.global_guard_type == 'admins'){
+                    if(element.status == 1)
+                        ann_count = ann_count + 1;
+                }
+                else{
+                    if(element.status_scholar == 1)
+                        ann_count = ann_count + 1;
+                }
             });
 
             this.total_count =  notif_count + ann_count;

@@ -5865,20 +5865,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getTotalNotificationCount: function getTotalNotificationCount() {
+      var _this = this;
+
       var notif_count = 0;
       var ann_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
       // let announcementCount = Object.keys(this.announcementsData).length;
 
       this.notificationData.forEach(function (element, index) {
-        if (element.status == 1) notif_count = notif_count + 1;
+        if (_this.$store.state.global_guard_type == 'admins') {
+          if (element.status == 1) notif_count = notif_count + 1;
+        } else {
+          if (element.status_scholar == 1) notif_count = notif_count + 1;
+        }
       });
       Object.keys(this.announcementsData).forEach(function (element, index) {
-        if (element.status == 1) ann_count = ann_count + 1;
+        if (_this.$store.state.global_guard_type == 'admins') {
+          if (element.status == 1) ann_count = ann_count + 1;
+        } else {
+          if (element.status_scholar == 1) ann_count = ann_count + 1;
+        }
       });
       this.total_count = notif_count + ann_count;
     },
     getNotification: function getNotification() {
-      var _this = this;
+      var _this2 = this;
 
       if (this.$store.state.global_guard_type == 'admins') {
         this.axios.get('/getNotification', {
@@ -5886,7 +5896,7 @@ __webpack_require__.r(__webpack_exports__);
             date: 'today'
           }
         }).then(function (response) {
-          _this.notificationData = response.data;
+          _this2.notificationData = response.data;
         })["catch"](function (error) {
           // this.clearAll();
           console.log(error.response.data);
@@ -5894,25 +5904,25 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.axios.get('getScholarNotification/').then(function (response) {
           // console.log(response.data);
-          _this.notificationData = response.data;
+          _this2.notificationData = response.data;
         })["catch"](function (error) {
           console.log(error.response.data);
         });
       }
     },
     getAccountInfo: function getAccountInfo() {
-      var _this2 = this;
+      var _this3 = this;
 
       // if(this.$store.state.global_guard_type == 'admins'){
       this.axios.get('/getAccountInfo/' + this.$store.state.global_guard_type).then(function (response) {
-        _this2.accountData = response.data;
+        _this3.accountData = response.data;
       })["catch"](function (error) {
         // this.clearAll();
         console.log(error.response.data);
       }); // }
     },
     gotoNotification: function gotoNotification(data) {
-      var _this3 = this;
+      var _this4 = this;
 
       var url = '';
       var redirect = '';
@@ -5926,9 +5936,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.axios.post(redirect).then(function (response) {
-        _this3.getNotification();
+        _this4.getNotification();
 
-        _this3.getAnnouncement();
+        _this4.getAnnouncement();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -5938,25 +5948,25 @@ __webpack_require__.r(__webpack_exports__);
       window.open('/scholar_announcement', '_self');
     },
     getAnnouncement: function getAnnouncement() {
-      var _this4 = this;
+      var _this5 = this;
 
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('notifications/' + account_type).then(function (response) {
         // console.log(response.data);
-        _this4.announcementsData = response.data;
+        _this5.announcementsData = response.data;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
     }
   },
   created: function created() {
-    var _this5 = this;
+    var _this6 = this;
 
     this.getNotification();
     this.getAccountInfo();
     this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
-      _this5.getNotification();
+      _this6.getNotification();
     });
   }
 });
