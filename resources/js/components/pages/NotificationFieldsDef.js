@@ -45,9 +45,9 @@ export default [
     dataClass: 'center aligned',
     formatter: value => {
         if(value == 1)
-            return '<span>Active</span>';
+            return '<span>Unread</span>';
         else if(value == 2)
-            return '<span>Inactive</span>';
+            return '<span>Read</span>';
     },
     sortField: "status",
   },

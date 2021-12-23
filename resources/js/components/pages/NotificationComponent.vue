@@ -115,6 +115,19 @@ export default {
                 // this.clearAll();
                 console.log(error.response.data)
             })
+        },
+        onCellClicked(data, field, event){
+            // console.log(data);
+            if(data.data.status == 0)
+                this.axios.post('changeStatusNotification', {
+                    id : data.data.id
+                })
+                .then(response => {
+                    Vue.nextTick( () => this.$refs.vuetable.refresh())
+                })
+                .catch(error => {
+                    console.log(error.response.data);
+                });
         }
     },
     created(){

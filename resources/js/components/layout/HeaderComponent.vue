@@ -55,15 +55,15 @@
                     <div class="header-nav">
                         <ul class="nav pull-right" >
                             <li class="dropdown dropdown-hover">
-                                <a href="#" class="header-cart" data-toggle="dropdown" v-if="getTotalNotificationCount > 0">
+                                <a href="#" class="header-cart" data-toggle="dropdown" v-if="total_count > 0">
                                     <i class="fa fa-bell"></i>
-                                    <span class="total">{{ getTotalNotificationCount }}</span>
+                                    <span class="total">{{ total_count }}</span>
                                     <span class="arrow top"></span>
                                 </a>
                                 <div class="dropdown-menu media-list dropdown-menu-cart p-0">
                                     <div v-if="notificationData.length > 0">
                                         <div class="dropdown-header">Penalty</div>
-                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification">
+                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="notification.status == 0">
                                             <div class="media-left">
                                                 <i class="fa fa-exclamation-triangle media-object text-warning"></i>
                                             </div>
@@ -127,20 +127,46 @@ export default {
             notificationData : {},
             accountData      : {},
             announcementsData: {},
+            total_count : 0,
+        }
+    },
+    watch: {
+        'notificationData': function(newVal){
+            if(newVal){
+                this.getTotalNotificationCount();
+            }
+        },
+        'announcementsData': function(newVal){
+            if(newVal){
+                this.getTotalNotificationCount();
+            }
         }
     },
     computed : {
         getGuardType(){
             return this.$store.state.global_guard_type;
         },
-        getTotalNotificationCount(){
-            let notificationCount = Object.keys(this.notificationData).length;
-            let announcementCount = Object.keys(this.announcementsData).length;;
-
-            return notificationCount + announcementCount;
-        }
+        
     },
     methods: {
+        getTotalNotificationCount(){
+            let notif_count = 0;
+            let ann_count = 0;
+            // let notificationCount = Object.keys(this.notificationData).length;
+            // let announcementCount = Object.keys(this.announcementsData).length;
+
+            this.notificationData.forEach((element, index) => {                                        
+                if(element.status == 0)
+                notif_count = notif_count + 1;
+            });
+
+            Object.keys(this.announcementsData).forEach((element, index) => {                                        
+                if(element.status == 0)
+                ann_count = ann_count + 1;
+            });
+
+            this.total_count =  notif_count + ann_count;
+        },
         getNotification(){
             if(this.$store.state.global_guard_type == 'admins'){
                 this.axios.get('/getNotification',{
@@ -179,7 +205,16 @@ export default {
                 })
             // }
         },
-        gotoNotification(){
+        gotoNotification(data){
+            this.axios.post('changeStatusNotification', {
+                id : data.id
+            })
+            .then(response => {
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            });
+            
             let url = '';
             if(this.$store.state.global_guard_type == 'admins'){
                 url = '/notification';
@@ -188,6 +223,7 @@ export default {
                 url = '/scholar_notification'
             }
             window.open(url, '_self'); 
+            
         },
         gotoAnnouncement(){
             window.open('/scholar_announcement', '_self'); 

@@ -5842,21 +5842,41 @@ __webpack_require__.r(__webpack_exports__);
     return {
       notificationData: {},
       accountData: {},
-      announcementsData: {}
+      announcementsData: {},
+      total_count: 0
     };
+  },
+  watch: {
+    'notificationData': function notificationData(newVal) {
+      if (newVal) {
+        this.getTotalNotificationCount();
+      }
+    },
+    'announcementsData': function announcementsData(newVal) {
+      if (newVal) {
+        this.getTotalNotificationCount();
+      }
+    }
   },
   computed: {
     getGuardType: function getGuardType() {
       return this.$store.state.global_guard_type;
-    },
-    getTotalNotificationCount: function getTotalNotificationCount() {
-      var notificationCount = Object.keys(this.notificationData).length;
-      var announcementCount = Object.keys(this.announcementsData).length;
-      ;
-      return notificationCount + announcementCount;
     }
   },
   methods: {
+    getTotalNotificationCount: function getTotalNotificationCount() {
+      var notif_count = 0;
+      var ann_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
+      // let announcementCount = Object.keys(this.announcementsData).length;
+
+      this.notificationData.forEach(function (element, index) {
+        if (element.status == 0) notif_count = notif_count + 1;
+      });
+      Object.keys(this.announcementsData).forEach(function (element, index) {
+        if (element.status == 0) ann_count = ann_count + 1;
+      });
+      this.total_count = notif_count + ann_count;
+    },
     getNotification: function getNotification() {
       var _this = this;
 
@@ -5891,7 +5911,12 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response.data);
       }); // }
     },
-    gotoNotification: function gotoNotification() {
+    gotoNotification: function gotoNotification(data) {
+      this.axios.post('changeStatusNotification', {
+        id: data.id
+      }).then(function (response) {})["catch"](function (error) {
+        console.log(error.response.data);
+      });
       var url = '';
 
       if (this.$store.state.global_guard_type == 'admins') {
@@ -7005,6 +7030,20 @@ __webpack_require__.r(__webpack_exports__);
         _this.notificationData = response.data;
       })["catch"](function (error) {
         // this.clearAll();
+        console.log(error.response.data);
+      });
+    },
+    onCellClicked: function onCellClicked(data, field, event) {
+      var _this2 = this;
+
+      // console.log(data);
+      if (data.data.status == 0) this.axios.post('changeStatusNotification', {
+        id: data.data.id
+      }).then(function (response) {
+        Vue.nextTick(function () {
+          return _this2.$refs.vuetable.refresh();
+        });
+      })["catch"](function (error) {
         console.log(error.response.data);
       });
     }
@@ -72939,7 +72978,7 @@ var render = function() {
         _c("div", { staticClass: "header-nav" }, [
           _c("ul", { staticClass: "nav pull-right" }, [
             _c("li", { staticClass: "dropdown dropdown-hover" }, [
-              _vm.getTotalNotificationCount > 0
+              _vm.total_count > 0
                 ? _c(
                     "a",
                     {
@@ -72950,7 +72989,7 @@ var render = function() {
                       _c("i", { staticClass: "fa fa-bell" }),
                       _vm._v(" "),
                       _c("span", { staticClass: "total" }, [
-                        _vm._v(_vm._s(_vm.getTotalNotificationCount))
+                        _vm._v(_vm._s(_vm.total_count))
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "arrow top" })
@@ -72973,68 +73012,82 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.notificationData, function(notification) {
-                            return _c(
-                              "a",
-                              {
-                                staticClass: "dropdown-item media",
-                                attrs: { href: "javascript:;" },
-                                on: { click: _vm.gotoNotification }
-                              },
-                              [
-                                _vm._m(2, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "media-body" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "text-muted f-s-10 pull-right"
-                                    },
-                                    [
-                                      _vm._v(
-                                        _vm._s(
-                                          _vm._f("formatDate")(
-                                            notification.created_at
-                                          )
+                            return notification.status == 0
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item media",
+                                    attrs: { href: "javascript:;" },
+                                    on: {
+                                      click: function($event) {
+                                        return _vm.gotoNotification(
+                                          notification
                                         )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("h6", { staticClass: "media-heading" }, [
-                                    _vm._v(
-                                      " " +
-                                        _vm._s(notification.player_name) +
-                                        " (" +
-                                        _vm._s(notification.account_name) +
-                                        ")"
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  notification.category == 1
-                                    ? _c("p", [
-                                        _vm._v(
-                                          " " +
+                                      }
+                                    }
+                                  },
+                                  [
+                                    _vm._m(2, true),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "media-body" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "text-muted f-s-10 pull-right"
+                                        },
+                                        [
+                                          _vm._v(
                                             _vm._s(
-                                              notification.gained_slp_today
-                                            ) +
-                                            " SLP "
-                                        )
-                                      ])
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  notification.category == 2
-                                    ? _c("p", [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(notification.mmr) +
-                                            " MMR "
-                                        )
-                                      ])
-                                    : _vm._e()
-                                ])
-                              ]
-                            )
+                                              _vm._f("formatDate")(
+                                                notification.created_at
+                                              )
+                                            )
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h6",
+                                        { staticClass: "media-heading" },
+                                        [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(notification.player_name) +
+                                              " (" +
+                                              _vm._s(
+                                                notification.account_name
+                                              ) +
+                                              ")"
+                                          )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      notification.category == 1
+                                        ? _c("p", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(
+                                                  notification.gained_slp_today
+                                                ) +
+                                                " SLP "
+                                            )
+                                          ])
+                                        : _vm._e(),
+                                      _vm._v(" "),
+                                      notification.category == 2
+                                        ? _c("p", [
+                                            _vm._v(
+                                              " " +
+                                                _vm._s(notification.mmr) +
+                                                " MMR "
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
                           })
                         ],
                         2
@@ -104911,7 +104964,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   titleClass: 'center aligned',
   dataClass: 'center aligned',
   formatter: function formatter(value) {
-    if (value == 1) return '<span>Active</span>';else if (value == 2) return '<span>Inactive</span>';
+    if (value == 1) return '<span>Unread</span>';else if (value == 2) return '<span>Read</span>';
   },
   sortField: "status"
 }]);
