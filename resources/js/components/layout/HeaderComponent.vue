@@ -206,10 +206,10 @@ export default {
             // }
         },
         gotoNotification(data){
-            this.axios.post('changeStatusNotification', {
-                id : data.id
-            })
+            this.axios.post('changeStatusNotification')
             .then(response => {
+                this.getNotification();
+                this.getAnnouncement();
             })
             .catch(error => {
                 console.log(error.response.data);
