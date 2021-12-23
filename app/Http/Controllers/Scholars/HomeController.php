@@ -280,14 +280,15 @@ class HomeController extends Controller
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                 'players.*'
             )
-        ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3]])
+        ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3],['notification.status_scholar', '=', 1]])
         ->GET();
 
     }
 
     public function changeStatusNotification(){
         try {
-            $notif = DB::table('notification')->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
+            $username = Auth::user()->username;
+            $notif = DB::table('notification')->where('account_name',$username)->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
             if($notif)
                 return response()->json(['message' => 'Notification has been read!'], 200);
             else
