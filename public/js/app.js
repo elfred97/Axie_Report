@@ -5914,21 +5914,24 @@ __webpack_require__.r(__webpack_exports__);
     gotoNotification: function gotoNotification(data) {
       var _this3 = this;
 
-      this.axios.post('changeStatusNotification').then(function (response) {
+      var url = '';
+      var redirect = '';
+
+      if (this.$store.state.global_guard_type == 'admins') {
+        redirect = 'changeStatusNotification';
+        url = '/notification';
+      } else {
+        redirect = 'changeStatusNotificationScholar';
+        url = '/scholar_notification';
+      }
+
+      this.axios.post(redirect).then(function (response) {
         _this3.getNotification();
 
         _this3.getAnnouncement();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
-      var url = '';
-
-      if (this.$store.state.global_guard_type == 'admins') {
-        url = '/notification';
-      } else {
-        url = '/scholar_notification';
-      }
-
       window.open(url, '_self');
     },
     gotoAnnouncement: function gotoAnnouncement() {

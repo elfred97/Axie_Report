@@ -206,7 +206,19 @@ export default {
             // }
         },
         gotoNotification(data){
-            this.axios.post('changeStatusNotification')
+            let url      = '';
+            let redirect = '';
+            if(this.$store.state.global_guard_type == 'admins'){
+                redirect = 'changeStatusNotification';
+                url = '/notification';
+            }
+            else{
+                redirect = 'changeStatusNotificationScholar';
+                url = '/scholar_notification';
+
+            }
+
+            this.axios.post(redirect)
             .then(response => {
                 this.getNotification();
                 this.getAnnouncement();
@@ -214,14 +226,7 @@ export default {
             .catch(error => {
                 console.log(error.response.data);
             });
-            
-            let url = '';
-            if(this.$store.state.global_guard_type == 'admins'){
-                url = '/notification';
-            }
-            else{
-                url = '/scholar_notification'
-            }
+
             window.open(url, '_self'); 
             
         },
