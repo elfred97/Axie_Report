@@ -66,7 +66,7 @@ class PlayerController extends Controller
         );
         $where = [
             'ronin_address'      => $request->ronin_address,
-            'account_name'       => $request->account_name,
+            'account_name'       => preg_replace('/\s+/', '', $request->account_name),
             'scholar_email'      => $request->scholar_email,
             'market_place_email' => $request->market_place_email,
             'password'           => $request->email_password,

@@ -309,7 +309,6 @@ class GlobalController extends Controller
         $type  = $request->type;
         $search  = $request->search;
         $where = [];
-        $orwhere = [];
         $queryRequest   = array_slice($request->all(), 3);
 
         $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
@@ -339,7 +338,10 @@ class GlobalController extends Controller
             'players.ronin_address',
             'type.name as type_name'
         )
-        ->WHERE($where)
+        ->where($where)
+        ->when($search, function ($q) use ($search) {
+            $q->orWhere('scholars.last_name','LIKE','%'.$search.'%');
+        })
         ->ORDERBY($field,$direction)
         ->paginate($request->per_page);
     }
