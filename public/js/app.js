@@ -7468,16 +7468,17 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     getPenalties: function getPenalties(filter) {
       var _this3 = this;
 
-      if (filter.selected_type != '') {
-        this.axios.get('/penalty-count/' + filter.selected_type).then(function (response) {
-          response.data.penalties.forEach(function (element) {
-            if (element.penalty == 1) _this3.penalties.first = element.total;else if (element.penalty == 2) _this3.penalties.second = element.total;else if (element.penalty == 3) _this3.penalties.third = element.total;
-          });
-        })["catch"](function (error) {
-          // this.clearAll();
-          console.log("error");
+      this.penalties.first = 0;
+      this.penalties.second = 0;
+      this.penalties.third = 0;
+      this.axios.get('/penalty-count/' + filter.selected_type).then(function (response) {
+        response.data.penalties.forEach(function (element) {
+          if (element.penalty == 1) _this3.penalties.first = element.total;else if (element.penalty == 2) _this3.penalties.second = element.total;else if (element.penalty == 3) _this3.penalties.third = element.total;
         });
-      }
+      })["catch"](function (error) {
+        // this.clearAll();
+        console.log("error");
+      });
     },
     getLowestMMR: function getLowestMMR(filter) {
       var _this4 = this;
@@ -8598,6 +8599,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ImportedDetailRow_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ImportedDetailRow.vue */ "./resources/js/components/pages/ImportedDetailRow.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -79228,6 +79245,46 @@ var render = function() {
                                   _vm._v(
                                     "\n                                    " +
                                       _vm._s(props.rowData.mmr) +
+                                      "\n                                "
+                                  )
+                                ])
+                          ])
+                        ]
+                      }
+                    },
+                    {
+                      key: "penalty",
+                      fn: function(props) {
+                        return [
+                          _c("div", [
+                            props.rowData.penalty == 1
+                              ? _c("span", { staticClass: "text-info" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.penalty) +
+                                      "\n                                "
+                                  )
+                                ])
+                              : props.rowData.penalty == 2
+                              ? _c("span", { staticClass: "text-warning" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.penalty) +
+                                      "\n                                "
+                                  )
+                                ])
+                              : props.rowData.penalty == 3
+                              ? _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.penalty) +
+                                      "\n                                "
+                                  )
+                                ])
+                              : _c("span", { staticClass: "text-default" }, [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(props.rowData.penalty) +
                                       "\n                                "
                                   )
                                 ])

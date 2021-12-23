@@ -53,6 +53,22 @@
                                     </span>
                                 </div>
                             </template>
+                            <template slot="penalty" slot-scope="props">
+                                <div>
+                                    <span class="text-info" v-if="props.rowData.penalty == 1">
+                                        {{ props.rowData.penalty }}
+                                    </span>
+                                    <span class="text-warning" v-else-if="props.rowData.penalty == 2">
+                                        {{ props.rowData.penalty}}
+                                    </span>
+                                    <span class="text-danger" v-else-if="props.rowData.penalty == 3">
+                                        {{ props.rowData.penalty }}
+                                    </span>
+                                    <span class="text-default" v-else>
+                                        {{ props.rowData.penalty }}
+                                    </span>
+                                </div>
+                            </template>
                             <template slot="detailRowIndicator" slot-scope="props">
                                 <div>
                                     <i v-if="$refs.vuetable.isVisibleDetailRow(props.rowData.id)"

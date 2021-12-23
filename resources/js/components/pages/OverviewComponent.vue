@@ -267,24 +267,24 @@ export default {
             this.total_average_slp = Math.round(total / data.length);
         },
         getPenalties(filter){
-
-            if(filter.selected_type != ''){
-                this.axios.get('/penalty-count/'+filter.selected_type)
-                .then((response) => {
-                    response.data.penalties.forEach( element => {
-                        if(element.penalty == 1)
-                            this.penalties.first = element.total;
-                        else if(element.penalty == 2)
-                            this.penalties.second = element.total;
-                        else if(element.penalty == 3)
-                            this.penalties.third = element.total;
-                    });
-                })
-                .catch((error) => {
-                    // this.clearAll();
-                    console.log("error")
-                })
-            }
+            this.penalties.first = 0;
+            this.penalties.second = 0;
+            this.penalties.third = 0;
+            this.axios.get('/penalty-count/'+filter.selected_type)
+            .then((response) => {
+                response.data.penalties.forEach( element => {
+                    if(element.penalty == 1)
+                        this.penalties.first = element.total;
+                    else if(element.penalty == 2)
+                        this.penalties.second = element.total;
+                    else if(element.penalty == 3)
+                        this.penalties.third = element.total;
+                });
+            })
+            .catch((error) => {
+                // this.clearAll();
+                console.log("error")
+            })
         },
         getLowestMMR(filter){
             this.axios.get('/getLowestMMR', {
