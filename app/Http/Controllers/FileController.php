@@ -164,7 +164,7 @@ class FileController extends Controller
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
-                ->whereDate('n.created_at', Carbon::parse($request->date))
+                ->where('n.status', 1)
                 ->whereIn('r.id', $latest_id_per_account)
                 ->ORDERBY($field,$direction)
                 ->GET();
