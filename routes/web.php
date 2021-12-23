@@ -70,6 +70,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
         Route::get('/getTotalReportbyDate', 'FileController@getTotalReportbyDate');
 
         Route::get('/getNotification', 'FileController@getNotification');
+        Route::post('/changeStatusNotification', 'FileController@changeStatusNotification');
         Route::post('/updateAccountInfo', 'GlobalController@updateAccountInfo');
 
         Route::get('/getPlayers', 'PlayerController@getPlayers');
