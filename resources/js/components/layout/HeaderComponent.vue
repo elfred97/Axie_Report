@@ -2,7 +2,7 @@
     <div>
         <div id="header" class="header">
             <!-- BEGIN container -->
-            <div class="container">
+            <!-- <div class="container"> -->
                 <!-- BEGIN header-container -->
                 <div class="header-container">
                     <!-- BEGIN navbar-toggle -->
@@ -115,7 +115,7 @@
                     <!-- END header-nav -->
                 </div>
                 <!-- END header-container -->
-            </div>
+            <!-- </div> -->
             <!-- END container -->
         </div>
     </div>

@@ -8,7 +8,7 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Year 
                                         <select 
@@ -23,7 +23,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Month 
                                         <select 
@@ -38,11 +38,8 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6">
+                            <div class="col-lg-4 col-md-4 col-sm-6">
                                 <type-component :type="filter.selected_type" @updateType="filter.selected_type = $event"></type-component>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-6">
-                                
                             </div>
                         </div>
                     </div>

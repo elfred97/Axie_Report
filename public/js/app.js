@@ -6501,9 +6501,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -72829,333 +72826,320 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "header", attrs: { id: "header" } }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "header-container" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _vm._m(1),
-          _vm._v(" "),
-          _c("div", { staticClass: "header-nav" }, [
-            _c(
-              "div",
-              {
-                staticClass: " collapse navbar-collapse",
-                attrs: { id: "navbar-collapse" }
-              },
-              [
-                _c("ul", { staticClass: "nav" }, [
-                  _c(
-                    "li",
-                    [
-                      _vm.getGuardType == "admins"
-                        ? _c("router-link", { attrs: { to: "/home" } }, [
-                            _vm._v("Home")
-                          ])
-                        : _c("router-link", { attrs: { to: "/scholars" } }, [
-                            _vm._v("Home")
-                          ])
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _vm.getGuardType == "admins"
-                    ? _c(
-                        "li",
-                        [
-                          _c("router-link", { attrs: { to: "/game_logs" } }, [
-                            _vm._v("Game Logs")
-                          ])
-                        ],
-                        1
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _vm.getGuardType == "admins"
-                        ? _c("router-link", { attrs: { to: "/players" } }, [
-                            _vm._v("Axie Accounts")
-                          ])
-                        : _c(
-                            "router-link",
-                            { attrs: { to: "/scholar_account" } },
-                            [_vm._v("Account")]
-                          )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _vm.getGuardType == "admins"
-                        ? _c(
-                            "router-link",
-                            { attrs: { to: "/payroll_history" } },
-                            [_vm._v("Payroll History")]
-                          )
-                        : _c(
-                            "router-link",
-                            { attrs: { to: "/scholar_payroll" } },
-                            [_vm._v("Payroll History")]
-                          )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _vm.getGuardType == "admins"
-                        ? _c("router-link", { attrs: { to: "/scholarList" } }, [
-                            _vm._v("Scholars")
-                          ])
-                        : _c(
-                            "router-link",
-                            { attrs: { to: "/scholar_announcement" } },
-                            [_vm._v("Announcement")]
-                          )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    [
-                      _vm.getGuardType == "admins"
-                        ? _c(
-                            "router-link",
-                            { attrs: { to: "/notification" } },
-                            [_vm._v("Notification")]
-                          )
-                        : _c(
-                            "router-link",
-                            { attrs: { to: "/scholar_notification" } },
-                            [_vm._v("Notification")]
-                          )
-                    ],
-                    1
-                  )
-                ])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "header-nav" }, [
-            _c("ul", { staticClass: "nav pull-right" }, [
-              _c("li", { staticClass: "dropdown dropdown-hover" }, [
-                _vm.getTotalNotificationCount > 0
+      _c("div", { staticClass: "header-container" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _c("div", { staticClass: "header-nav" }, [
+          _c(
+            "div",
+            {
+              staticClass: " collapse navbar-collapse",
+              attrs: { id: "navbar-collapse" }
+            },
+            [
+              _c("ul", { staticClass: "nav" }, [
+                _c(
+                  "li",
+                  [
+                    _vm.getGuardType == "admins"
+                      ? _c("router-link", { attrs: { to: "/home" } }, [
+                          _vm._v("Home")
+                        ])
+                      : _c("router-link", { attrs: { to: "/scholars" } }, [
+                          _vm._v("Home")
+                        ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm.getGuardType == "admins"
                   ? _c(
-                      "a",
-                      {
-                        staticClass: "header-cart",
-                        attrs: { href: "#", "data-toggle": "dropdown" }
-                      },
+                      "li",
                       [
-                        _c("i", { staticClass: "fa fa-bell" }),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "total" }, [
-                          _vm._v(_vm._s(_vm.getTotalNotificationCount))
-                        ]),
-                        _vm._v(" "),
-                        _c("span", { staticClass: "arrow top" })
-                      ]
+                        _c("router-link", { attrs: { to: "/game_logs" } }, [
+                          _vm._v("Game Logs")
+                        ])
+                      ],
+                      1
                     )
                   : _vm._e(),
                 _vm._v(" "),
                 _c(
-                  "div",
-                  {
-                    staticClass:
-                      "dropdown-menu media-list dropdown-menu-cart p-0"
-                  },
+                  "li",
                   [
-                    _vm.notificationData.length > 0
-                      ? _c(
-                          "div",
-                          [
-                            _c("div", { staticClass: "dropdown-header" }, [
-                              _vm._v("Penalty")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.notificationData, function(
-                              notification
-                            ) {
-                              return _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item media",
-                                  attrs: { href: "javascript:;" },
-                                  on: { click: _vm.gotoNotification }
-                                },
-                                [
-                                  _vm._m(2, true),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "media-body" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "text-muted f-s-10 pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(
-                                            _vm._f("formatDate")(
-                                              notification.created_at
-                                            )
-                                          )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("h6", { staticClass: "media-heading" }, [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(notification.player_name) +
-                                          " (" +
-                                          _vm._s(notification.account_name) +
-                                          ")"
-                                      )
-                                    ]),
-                                    _vm._v(" "),
-                                    notification.category == 1
-                                      ? _c("p", [
-                                          _vm._v(
-                                            " " +
-                                              _vm._s(
-                                                notification.gained_slp_today
-                                              ) +
-                                              " SLP "
-                                          )
-                                        ])
-                                      : _vm._e(),
-                                    _vm._v(" "),
-                                    notification.category == 2
-                                      ? _c("p", [
-                                          _vm._v(
-                                            " " +
-                                              _vm._s(notification.mmr) +
-                                              " MMR "
-                                          )
-                                        ])
-                                      : _vm._e()
-                                  ])
-                                ]
-                              )
-                            })
-                          ],
-                          2
+                    _vm.getGuardType == "admins"
+                      ? _c("router-link", { attrs: { to: "/players" } }, [
+                          _vm._v("Axie Accounts")
+                        ])
+                      : _c(
+                          "router-link",
+                          { attrs: { to: "/scholar_account" } },
+                          [_vm._v("Account")]
                         )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm.announcementsData.length > 0
-                      ? _c(
-                          "div",
-                          [
-                            _c("div", { staticClass: "dropdown-header" }, [
-                              _vm._v("Announcement")
-                            ]),
-                            _vm._v(" "),
-                            _vm._l(_vm.announcementsData, function(
-                              announcement
-                            ) {
-                              return _c(
-                                "a",
-                                {
-                                  staticClass: "dropdown-item media",
-                                  attrs: { href: "javascript:;" },
-                                  on: { click: _vm.gotoAnnouncement }
-                                },
-                                [
-                                  _vm._m(3, true),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "media-body" }, [
-                                    _c(
-                                      "div",
-                                      {
-                                        staticClass:
-                                          "text-muted f-s-10 pull-right"
-                                      },
-                                      [
-                                        _vm._v(
-                                          " " +
-                                            _vm._s(
-                                              _vm._f("formatDateTime")(
-                                                announcement.reminder_time
-                                              )
-                                            )
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c("h6", { staticClass: "media-heading" }, [
-                                      _vm._v(_vm._s(announcement.title))
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("p", [
-                                      _vm._v(_vm._s(announcement.description))
-                                    ])
-                                  ])
-                                ]
-                              )
-                            })
-                          ],
-                          2
-                        )
-                      : _vm._e()
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("li", { staticClass: "dropdown dropdown-hover" }, [
-                _c(
-                  "a",
-                  {
-                    staticClass: "dropdown-toggle",
-                    attrs: { href: "#", "data-toggle": "dropdown" }
-                  },
-                  [
-                    _c("span", { staticClass: "d-none d-md-inline" }, [
-                      _vm._v(
-                        _vm._s(_vm.accountData.first_name) +
-                          " " +
-                          _vm._s(_vm.accountData.last_name)
-                      )
-                    ])
-                  ]
+                  ],
+                  1
                 ),
                 _vm._v(" "),
                 _c(
-                  "div",
-                  { staticClass: "dropdown-menu dropdown-menu-right" },
+                  "li",
                   [
                     _vm.getGuardType == "admins"
                       ? _c(
-                          "div",
-                          [
-                            _c(
-                              "router-link",
+                          "router-link",
+                          { attrs: { to: "/payroll_history" } },
+                          [_vm._v("Payroll History")]
+                        )
+                      : _c(
+                          "router-link",
+                          { attrs: { to: "/scholar_payroll" } },
+                          [_vm._v("Payroll History")]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _vm.getGuardType == "admins"
+                      ? _c("router-link", { attrs: { to: "/scholarList" } }, [
+                          _vm._v("Scholars")
+                        ])
+                      : _c(
+                          "router-link",
+                          { attrs: { to: "/scholar_announcement" } },
+                          [_vm._v("Announcement")]
+                        )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _vm.getGuardType == "admins"
+                      ? _c("router-link", { attrs: { to: "/notification" } }, [
+                          _vm._v("Notification")
+                        ])
+                      : _c(
+                          "router-link",
+                          { attrs: { to: "/scholar_notification" } },
+                          [_vm._v("Notification")]
+                        )
+                  ],
+                  1
+                )
+              ])
+            ]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "header-nav" }, [
+          _c("ul", { staticClass: "nav pull-right" }, [
+            _c("li", { staticClass: "dropdown dropdown-hover" }, [
+              _vm.getTotalNotificationCount > 0
+                ? _c(
+                    "a",
+                    {
+                      staticClass: "header-cart",
+                      attrs: { href: "#", "data-toggle": "dropdown" }
+                    },
+                    [
+                      _c("i", { staticClass: "fa fa-bell" }),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "total" }, [
+                        _vm._v(_vm._s(_vm.getTotalNotificationCount))
+                      ]),
+                      _vm._v(" "),
+                      _c("span", { staticClass: "arrow top" })
+                    ]
+                  )
+                : _vm._e(),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "dropdown-menu media-list dropdown-menu-cart p-0"
+                },
+                [
+                  _vm.notificationData.length > 0
+                    ? _c(
+                        "div",
+                        [
+                          _c("div", { staticClass: "dropdown-header" }, [
+                            _vm._v("Penalty")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.notificationData, function(notification) {
+                            return _c(
+                              "a",
                               {
-                                staticClass: "dropdown-item",
-                                attrs: { to: "/settings" }
+                                staticClass: "dropdown-item media",
+                                attrs: { href: "javascript:;" },
+                                on: { click: _vm.gotoNotification }
                               },
                               [
-                                _c("i", { staticClass: "fas fa-sliders-h" }),
-                                _vm._v(" Settings")
+                                _vm._m(2, true),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-body" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "text-muted f-s-10 pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm._f("formatDate")(
+                                            notification.created_at
+                                          )
+                                        )
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("h6", { staticClass: "media-heading" }, [
+                                    _vm._v(
+                                      " " +
+                                        _vm._s(notification.player_name) +
+                                        " (" +
+                                        _vm._s(notification.account_name) +
+                                        ")"
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  notification.category == 1
+                                    ? _c("p", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(
+                                              notification.gained_slp_today
+                                            ) +
+                                            " SLP "
+                                        )
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  notification.category == 2
+                                    ? _c("p", [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(notification.mmr) +
+                                            " MMR "
+                                        )
+                                      ])
+                                    : _vm._e()
+                                ])
                               ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "dropdown-divider" })
-                          ],
-                          1
-                        )
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm._m(4)
-                  ]
-                )
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.announcementsData.length > 0
+                    ? _c(
+                        "div",
+                        [
+                          _c("div", { staticClass: "dropdown-header" }, [
+                            _vm._v("Announcement")
+                          ]),
+                          _vm._v(" "),
+                          _vm._l(_vm.announcementsData, function(announcement) {
+                            return _c(
+                              "a",
+                              {
+                                staticClass: "dropdown-item media",
+                                attrs: { href: "javascript:;" },
+                                on: { click: _vm.gotoAnnouncement }
+                              },
+                              [
+                                _vm._m(3, true),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "media-body" }, [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "text-muted f-s-10 pull-right"
+                                    },
+                                    [
+                                      _vm._v(
+                                        " " +
+                                          _vm._s(
+                                            _vm._f("formatDateTime")(
+                                              announcement.reminder_time
+                                            )
+                                          )
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("h6", { staticClass: "media-heading" }, [
+                                    _vm._v(_vm._s(announcement.title))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("p", [
+                                    _vm._v(_vm._s(announcement.description))
+                                  ])
+                                ])
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e()
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("li", { staticClass: "dropdown dropdown-hover" }, [
+              _c(
+                "a",
+                {
+                  staticClass: "dropdown-toggle",
+                  attrs: { href: "#", "data-toggle": "dropdown" }
+                },
+                [
+                  _c("span", { staticClass: "d-none d-md-inline" }, [
+                    _vm._v(
+                      _vm._s(_vm.accountData.first_name) +
+                        " " +
+                        _vm._s(_vm.accountData.last_name)
+                    )
+                  ])
+                ]
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "dropdown-menu dropdown-menu-right" }, [
+                _vm.getGuardType == "admins"
+                  ? _c(
+                      "div",
+                      [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: "/settings" }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-sliders-h" }),
+                            _vm._v(" Settings")
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "dropdown-divider" })
+                      ],
+                      1
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm._m(4)
               ])
             ])
           ])
@@ -74229,7 +74213,7 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-lg-8" }, [
             _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+              _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
                 _c(
                   "div",
                   {
@@ -74291,7 +74275,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" }, [
+              _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-6" }, [
                 _c(
                   "div",
                   {
@@ -74357,7 +74341,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-lg-3 col-md-3 col-sm-6" },
+                { staticClass: "col-lg-4 col-md-4 col-sm-6" },
                 [
                   _c("type-component", {
                     attrs: { type: _vm.filter.selected_type },
@@ -74369,9 +74353,7 @@ var render = function() {
                   })
                 ],
                 1
-              ),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-lg-3 col-md-3 col-sm-6" })
+              )
             ])
           ]),
           _vm._v(" "),
@@ -74530,7 +74512,7 @@ var render = function() {
       },
       [
         _c("div", { staticClass: "row no-margin mt-2" }, [
-          _c("div", { staticClass: "col-md-2" }, [
+          _c("div", { staticClass: "col-md-4 col-sm-6" }, [
             _c(
               "div",
               {
@@ -74598,7 +74580,7 @@ var render = function() {
           _vm._v(" "),
           _c(
             "div",
-            { staticClass: "col-lg-4 col-md-4 col-sm-12" },
+            { staticClass: "col-md-4 col-sm-6" },
             [
               _c("type-component", {
                 attrs: { type: _vm.filtersParam.type },
@@ -74612,7 +74594,7 @@ var render = function() {
             1
           ),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
+          _c("div", { staticClass: "col-md-4 col-sm-6" }, [
             _c("div", { staticClass: "pull-right" }, [
               _c("input", {
                 ref: "file",
