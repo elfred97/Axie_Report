@@ -5912,9 +5912,13 @@ __webpack_require__.r(__webpack_exports__);
       }); // }
     },
     gotoNotification: function gotoNotification(data) {
-      this.axios.post('changeStatusNotification', {
-        id: data.id
-      }).then(function (response) {})["catch"](function (error) {
+      var _this3 = this;
+
+      this.axios.post('changeStatusNotification').then(function (response) {
+        _this3.getNotification();
+
+        _this3.getAnnouncement();
+      })["catch"](function (error) {
         console.log(error.response.data);
       });
       var url = '';
@@ -5931,25 +5935,25 @@ __webpack_require__.r(__webpack_exports__);
       window.open('/scholar_announcement', '_self');
     },
     getAnnouncement: function getAnnouncement() {
-      var _this3 = this;
+      var _this4 = this;
 
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('notifications/' + account_type).then(function (response) {
         // console.log(response.data);
-        _this3.announcementsData = response.data;
+        _this4.announcementsData = response.data;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
     }
   },
   created: function created() {
-    var _this4 = this;
+    var _this5 = this;
 
     this.getNotification();
     this.getAccountInfo();
     this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
-      _this4.getNotification();
+      _this5.getNotification();
     });
   }
 });
