@@ -151,6 +151,9 @@ class FileController extends Controller
     }
 
     public function getNotification(Request $request){
+        $queryRequest   = array_slice($request->all(), 3);
+        $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
+        $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         $latest_id_per_account = DB::table('report as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
 
@@ -163,7 +166,7 @@ class FileController extends Controller
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
                 ->whereDate('n.created_at', Carbon::parse($request->date))
                 ->whereIn('r.id', $latest_id_per_account)
-                ->ORDERBY('n.created_at', 'desc')
+                ->ORDERBY($field,$direction)
                 ->GET();
         }else{
             $from = Carbon::parse('01-01-2020');
@@ -181,7 +184,7 @@ class FileController extends Controller
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
                 ->whereBetween('r.created_at', [$from, $to])
                 ->whereIn('r.id', $latest_id_per_account)
-                ->ORDERBY('n.created_at', 'desc')
+                ->ORDERBY($field,$direction)
                 ->PAGINATE(15);
         }
 
