@@ -5870,10 +5870,10 @@ __webpack_require__.r(__webpack_exports__);
       // let announcementCount = Object.keys(this.announcementsData).length;
 
       this.notificationData.forEach(function (element, index) {
-        if (element.status == 0) notif_count = notif_count + 1;
+        if (element.status == 1) notif_count = notif_count + 1;
       });
       Object.keys(this.announcementsData).forEach(function (element, index) {
-        if (element.status == 0) ann_count = ann_count + 1;
+        if (element.status == 1) ann_count = ann_count + 1;
       });
       this.total_count = notif_count + ann_count;
     },
@@ -73012,7 +73012,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.notificationData, function(notification) {
-                            return notification.status == 0
+                            return notification.status == 1
                               ? _c(
                                   "a",
                                   {

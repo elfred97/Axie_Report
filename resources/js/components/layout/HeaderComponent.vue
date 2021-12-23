@@ -63,7 +63,7 @@
                                 <div class="dropdown-menu media-list dropdown-menu-cart p-0">
                                     <div v-if="notificationData.length > 0">
                                         <div class="dropdown-header">Penalty</div>
-                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="notification.status == 0">
+                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="notification.status == 1">
                                             <div class="media-left">
                                                 <i class="fa fa-exclamation-triangle media-object text-warning"></i>
                                             </div>
@@ -156,12 +156,12 @@ export default {
             // let announcementCount = Object.keys(this.announcementsData).length;
 
             this.notificationData.forEach((element, index) => {                                        
-                if(element.status == 0)
+                if(element.status == 1)
                 notif_count = notif_count + 1;
             });
 
             Object.keys(this.announcementsData).forEach((element, index) => {                                        
-                if(element.status == 0)
+                if(element.status == 1)
                 ann_count = ann_count + 1;
             });
 
