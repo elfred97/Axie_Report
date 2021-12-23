@@ -284,4 +284,17 @@ class HomeController extends Controller
         ->GET();
 
     }
+
+    public function changeStatusNotification(){
+        try {
+            $notif = DB::table('notification')->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
+            if($notif)
+                return response()->json(['message' => 'Notification has been read!'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
 }

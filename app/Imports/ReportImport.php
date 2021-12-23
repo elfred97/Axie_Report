@@ -68,6 +68,7 @@ class ReportImport implements ToCollection
                                 'account_name' => $row[2],
                                 'category'     => 1,
                                 'status'       => 1,
+                                'status_scholar' => 1
                             ]);
                         }
 
@@ -78,6 +79,7 @@ class ReportImport implements ToCollection
                                 'account_name' => $row[2],
                                 'category'     => 2,
                                 'status'       => 1,
+                                'status_scholar' => 1,
                             ]);
                         }
 
@@ -96,6 +98,7 @@ class ReportImport implements ToCollection
                                 'account_name' => $row[2],
                                 'category'     => 3, // Scholar Terminated
                                 'status'       => 1,
+                                'status_scholar' => 1,
                             ]);
                         }
                         // Update Player
