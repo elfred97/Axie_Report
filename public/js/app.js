@@ -5957,6 +5957,13 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error.response.data);
       });
+    },
+    checkStatus: function checkStatus(data) {
+      if (this.$store.state.global_guard_type == 'admins') {
+        if (data.status == 1) return true;else return false;
+      } else {
+        if (data.status_scholar == 1) return true;else return false;
+      }
     }
   },
   created: function created() {
@@ -73029,7 +73036,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.notificationData, function(notification) {
-                            return notification.status == 1
+                            return _vm.checkStatus(notification)
                               ? _c(
                                   "a",
                                   {

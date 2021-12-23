@@ -63,7 +63,7 @@
                                 <div class="dropdown-menu media-list dropdown-menu-cart p-0">
                                     <div v-if="notificationData.length > 0">
                                         <div class="dropdown-header">Penalty</div>
-                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="notification.status == 1">
+                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="checkStatus(notification)">
                                             <div class="media-left">
                                                 <i class="fa fa-exclamation-triangle media-object text-warning"></i>
                                             </div>
@@ -256,6 +256,20 @@ export default {
                 console.log(error.response.data);
             })
         },
+        checkStatus(data){
+            if(this.$store.state.global_guard_type == 'admins'){
+                if(data.status == 1)
+                    return true;
+                else
+                    return false;
+            }
+            else{
+                if(data.status_scholar == 1)
+                    return true;
+                else
+                    return false;
+            }
+        }
     },
     created(){
         this.getNotification();
