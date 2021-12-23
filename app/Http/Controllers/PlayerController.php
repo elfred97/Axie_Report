@@ -145,18 +145,13 @@ class PlayerController extends Controller
             return $this->buildErrorJson('Type not found!');
         }
 
-        $where = [];
-
-        array_push($where,['players.penalty','>',0]);
-        if($type_id != '')
-        array_push($where,['s.type_id','=',$type_id]);
-
         $penalty_counts = Player::select('players.penalty', DB::raw('count(*) as total'))
             ->groupBy('players.penalty')
             ->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
             ->leftJoin('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->where($where)
-            ->get();
+            ->when($type_id, function ($q) use ($type_id) {
+                $q->whereRaw('s.type_id='.(int) $type_id);
+            })->get();
 
         return $this->buildJson(['penalties' => $penalty_counts, 'type' => $type]);
     }
