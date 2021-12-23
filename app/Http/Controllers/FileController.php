@@ -164,7 +164,7 @@ class FileController extends Controller
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
-                ->where('n.status', 1)
+                ->where('n.status',1)
                 ->whereIn('r.id', $latest_id_per_account)
                 ->ORDERBY($field,$direction)
                 ->GET();
@@ -182,7 +182,7 @@ class FileController extends Controller
                 ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
                 ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
                 ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
-                ->whereBetween('r.created_at', [$from, $to])
+                ->whereBetween('n.created_at', [$from, $to])
                 ->whereIn('r.id', $latest_id_per_account)
                 ->ORDERBY($field,$direction)
                 ->PAGINATE(15);
@@ -203,6 +203,7 @@ class FileController extends Controller
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
     }
+
 
     public function showFile($file_name, Request $request){
         // $type = $request->type;
