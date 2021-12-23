@@ -14,7 +14,7 @@
                             <option value="100">100</option>
                         </select>
                     </div> -->
-                    <div class="col-md-2">
+                    <div class="col-md-4 col-sm-6">
                         <div class="dataTables_length" id="data-table-default_length">
                             <label>Show 
                                 <select 
@@ -33,10 +33,10 @@
                             </label>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-4 col-sm-12">
+                    <div class="col-md-4 col-sm-6">
                         <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4 col-sm-6">
                         <div class="pull-right">
                             <input name="file" type="file" ref="file" @change="importFile()" class="hide">
                             <button class="btn btn-primary btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Excel File</button>
