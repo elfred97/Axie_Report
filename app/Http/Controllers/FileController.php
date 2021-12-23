@@ -191,12 +191,9 @@ class FileController extends Controller
         return $notification;
     }
 
-    public function changeStatusNotification(Request $request){
-        $notifID = $request->id;
+    public function changeStatusNotification(){
         try {
-            $notif = Notification::find($notifID);
-            $notif->status = 2;
-            $notif->save();            
+            $notif = DB::table('notification')->where('status', '=', 1)->update(array('status' => 2));
             if($notif)
                 return response()->json(['message' => 'Notification has been read!'], 200);
             else
