@@ -5958,7 +5958,7 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response.data);
       });
     },
-    checkStatus: function checkStatus(data) {
+    checkStatus: function checkStatus(data, type) {
       if (this.$store.state.global_guard_type == 'admins') {
         if (data.status == 1) return true;else return false;
       } else {
@@ -73036,7 +73036,7 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.notificationData, function(notification) {
-                            return _vm.checkStatus(notification)
+                            return _vm.checkStatus(notification, "notification")
                               ? _c(
                                   "a",
                                   {
@@ -73127,45 +73127,49 @@ var render = function() {
                           ]),
                           _vm._v(" "),
                           _vm._l(_vm.announcementsData, function(announcement) {
-                            return _c(
-                              "a",
-                              {
-                                staticClass: "dropdown-item media",
-                                attrs: { href: "javascript:;" },
-                                on: { click: _vm.gotoAnnouncement }
-                              },
-                              [
-                                _vm._m(3, true),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "media-body" }, [
-                                  _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "text-muted f-s-10 pull-right"
-                                    },
-                                    [
-                                      _vm._v(
-                                        " " +
-                                          _vm._s(
-                                            _vm._f("formatDateTime")(
-                                              announcement.reminder_time
-                                            )
+                            return _vm.checkStatus(announcement, "announcement")
+                              ? _c(
+                                  "a",
+                                  {
+                                    staticClass: "dropdown-item media",
+                                    attrs: { href: "javascript:;" },
+                                    on: { click: _vm.gotoAnnouncement }
+                                  },
+                                  [
+                                    _vm._m(3, true),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "media-body" }, [
+                                      _c(
+                                        "div",
+                                        {
+                                          staticClass:
+                                            "text-muted f-s-10 pull-right"
+                                        },
+                                        [
+                                          _vm._v(
+                                            " " +
+                                              _vm._s(
+                                                _vm._f("formatDateTime")(
+                                                  announcement.reminder_time
+                                                )
+                                              )
                                           )
-                                      )
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("h6", { staticClass: "media-heading" }, [
-                                    _vm._v(_vm._s(announcement.title))
-                                  ]),
-                                  _vm._v(" "),
-                                  _c("p", [
-                                    _vm._v(_vm._s(announcement.description))
-                                  ])
-                                ])
-                              ]
-                            )
+                                        ]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h6",
+                                        { staticClass: "media-heading" },
+                                        [_vm._v(_vm._s(announcement.title))]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("p", [
+                                        _vm._v(_vm._s(announcement.description))
+                                      ])
+                                    ])
+                                  ]
+                                )
+                              : _vm._e()
                           })
                         ],
                         2
