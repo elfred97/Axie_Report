@@ -292,8 +292,6 @@ class HomeController extends Controller
                 ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
                 ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
                 ->SELECT(
-                    'notification.*',
-                    DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                     'players.account_name'
                 )
             ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3],['notification.status_scholar', '=', 1]])
