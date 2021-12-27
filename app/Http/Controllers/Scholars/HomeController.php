@@ -85,7 +85,6 @@ class HomeController extends Controller
                 'email'        => $ruleEmail,
                 'date_started' => 'required',
                 'type_id'      => 'required',
-                'status'       => 'required',
                 'account_name' => 'required'
             ]
         );
@@ -95,11 +94,12 @@ class HomeController extends Controller
 
         try {
             $where = [
-                'username'     => $request->username,
-                'first_name'   => $request->first_name,
-                'middle_name'  => $request->middle_name,
-                'last_name'    => $request->last_name,
-                'email'        => $request->email,
+                'username'     => filter_var($request->username,FILTER_SANITIZE_STRING),
+                'password' => bcrypt('123456'),
+                'first_name'   => filter_var($request->first_name,FILTER_SANITIZE_STRING),
+                'middle_name'  => filter_var($request->middle_name,FILTER_SANITIZE_STRING),
+                'last_name'    => filter_var($request->last_name,FILTER_SANITIZE_STRING),
+                'email'        => filter_var($request->email,FILTER_SANITIZE_EMAIL),
                 'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
                 'type_id'      => $request->type_id,
                 'status'       => $request->status,
@@ -110,7 +110,7 @@ class HomeController extends Controller
             
             if($request->email_password){
                 $where = (array)$where;
-                $where['password'] = bcrypt($request->email_password);
+                $where['password'] = bcrypt(filter_var($request->email_password,FILTER_SANITIZE_STRING));
             }
             
             $scholar = Scholar::UPDATEORCREATE(

@@ -26,12 +26,12 @@ class ScholarImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
         foreach ($rows as $row)
         {
             Scholar::create([
-                'first_name'   => $row['first_name'],
-                'middle_name'  => $row['middle_name'],
-                'last_name'    => $row['last_name'],
-                'email'        => $row['email'],
-                'username'     => $row['username'],
-                'password'     => bcrypt($row['password']),
+                'first_name'   => filter_var($row['first_name'],FILTER_SANITIZE_STRING),
+                'middle_name'  => filter_var($row['middle_name'],FILTER_SANITIZE_STRING),
+                'last_name'    => filter_var($row['last_name'],FILTER_SANITIZE_STRING),
+                'email'        => filter_var($row['email'],FILTER_SANITIZE_EMAIL),
+                'username'     => filter_var($row['username'],FILTER_SANITIZE_STRING),
+                'password'     => filter_var(bcrypt($row['password']),FILTER_SANITIZE_STRING),
                 'date_started' => date('Y-m-d H:i:s' , strtotime($row['date_started'])),
                 'type'      => $row['type'],
                 'status'       => $row['status'],
