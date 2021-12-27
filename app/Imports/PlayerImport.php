@@ -41,7 +41,7 @@ class PlayerImport implements ToCollection,WithHeadingRow,WithValidation,SkipsOn
     {
         return [
             '*.account_name' => ['unique:players,account_name'],
-            '*.ronin_address' => ['regex:/^ronin:([a-z0-9-]{40})$/'],
+            '*.ronin_address' => ['starts_with:ronin'],
             '*.market_place_email' => ['email']
         ];
     }

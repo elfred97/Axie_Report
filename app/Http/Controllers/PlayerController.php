@@ -56,13 +56,18 @@ class PlayerController extends Controller
     public function savePlayer(Request $request){
         // dd($request->all());
         $ruleAccountName = isset($request->id) ? (Player::findOrFail($request->id)->account_name == $request->account_name ? 'required' : 'required|unique:players') : 'required|unique:players';
+        
+        $messages = [
+            'starts_with' => 'The :attribute field should start with the pattern ronin:',
+        ];
+        
         $validator = Validator::make(
             $request->all(),
 			[
-                'ronin_address'      => 'required|regex:/^ronin:([a-z0-9-]{40})$/',
+                'ronin_address'      => 'required|starts_with:ronin',
                 'account_name'       => $ruleAccountName,// /^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$/
                 'market_place_email' => 'required|email',
-            ]
+            ],$messages
         );
         $where = [
             'ronin_address'      => filter_var($request->ronin_address,FILTER_SANITIZE_STRING),
