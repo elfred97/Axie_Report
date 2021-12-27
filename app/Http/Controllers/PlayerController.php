@@ -80,6 +80,20 @@ class PlayerController extends Controller
             return response()->json($validator->errors(), 422);
             
         try {
+            if(isset($request->id)){
+                $find_player = Player::WHERE('id', $request->id)->FIRST();
+                $qrCode       = explode("/",$find_player->qr_code)[1];
+                $file_extension = explode(".",$qrCode)[1];
+                $file_name      = substr($request->account_name,1).'.'.$file_extension;
+                $path           = 'qr_codes/'.$file_name;
+
+                $where = (array)$where;
+                $where['qr_code'] = $path;
+                $where['qr_code_date'] = Carbon::now();
+
+                rename(public_path().'/uploads/qr_codes/'.$qrCode,public_path().'/uploads/qr_codes/'.$file_name);
+            }
+
             $player = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 $where
