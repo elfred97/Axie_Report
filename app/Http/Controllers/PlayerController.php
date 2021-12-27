@@ -59,17 +59,17 @@ class PlayerController extends Controller
         $validator = Validator::make(
             $request->all(),
 			[
-                'ronin_address'      => 'required',
+                'ronin_address'      => 'required|regex:/^ronin:([a-z0-9-]{40})$/',
                 'account_name'       => $ruleAccountName,
                 'market_place_email' => 'required|email',
             ]
         );
         $where = [
-            'ronin_address'      => $request->ronin_address,
-            'account_name'       => preg_replace('/\s+/', '', $request->account_name),
-            'scholar_email'      => $request->scholar_email,
-            'market_place_email' => $request->market_place_email,
-            'password'           => $request->email_password,
+            'ronin_address'      => filter_var($request->ronin_address,FILTER_SANITIZE_STRING),
+            'account_name'       => filter_var(preg_replace('/\s+/', '', $request->account_name),FILTER_SANITIZE_STRING),
+            'scholar_email'      => filter_var($request->scholar_email,FILTER_SANITIZE_EMAIL),
+            'market_place_email' => filter_var($request->market_place_email,FILTER_SANITIZE_EMAIL),
+            'password'           => filter_var($request->email_password,FILTER_SANITIZE_STRING),
         ];
         if ($validator->fails())
             return response()->json($validator->errors(), 422);
