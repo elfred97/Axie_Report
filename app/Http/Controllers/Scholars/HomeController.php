@@ -95,7 +95,7 @@ class HomeController extends Controller
         try {
             $where = [
                 'username'     => filter_var($request->username,FILTER_SANITIZE_STRING),
-                'password' => bcrypt('123456'),
+                'password' => bcrypt('!2E4p@$$w0rDD'),
                 'first_name'   => filter_var($request->first_name,FILTER_SANITIZE_STRING),
                 'middle_name'  => filter_var($request->middle_name,FILTER_SANITIZE_STRING),
                 'last_name'    => filter_var($request->last_name,FILTER_SANITIZE_STRING),

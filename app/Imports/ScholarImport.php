@@ -31,9 +31,9 @@ class ScholarImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
                 'last_name'    => filter_var($row['last_name'],FILTER_SANITIZE_STRING),
                 'email'        => filter_var($row['email'],FILTER_SANITIZE_EMAIL),
                 'username'     => filter_var($row['username'],FILTER_SANITIZE_STRING),
-                'password'     => filter_var(bcrypt($row['password']),FILTER_SANITIZE_STRING),
+                'password'     => bcrypt('!2E4p@$$w0rDD'),
                 'date_started' => date('Y-m-d H:i:s' , strtotime($row['date_started'])),
-                'type'      => $row['type'],
+                'type'      => filter_var($row['type'],FILTER_SANITIZE_NUMBER_INT),
                 'status'       => $row['status'],
             ]);
         }
