@@ -270,7 +270,7 @@ class HomeController extends Controller
 		}
     }
 
-    public function getScholarNotification(Request $request){
+    public function getScholarNotification(){
         $username = Auth::user()->username;
         return Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
             ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
