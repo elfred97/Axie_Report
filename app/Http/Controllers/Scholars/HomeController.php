@@ -280,7 +280,7 @@ class HomeController extends Controller
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                 'players.*'
             )
-        ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3],['notification.status_scholar', '=', 1]])
+        ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3]])
         ->GET();
 
     }
@@ -288,7 +288,17 @@ class HomeController extends Controller
     public function changeStatusNotification(){
         try {
             $username = Auth::user()->username;
-            $notif = DB::table('notification')->where('account_name',$username)->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
+            $accountName = Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
+                ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
+                ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
+                ->SELECT(
+                    'notification.*',
+                    DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
+                    'players.account_name'
+                )
+            ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3],['notification.status_scholar', '=', 1]])
+            ->FIRST()->account_name;
+            $notif = DB::table('notification')->where('account_name',$accountName)->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
             if($notif)
                 return response()->json(['message' => 'Notification has been read!'], 200);
             else
