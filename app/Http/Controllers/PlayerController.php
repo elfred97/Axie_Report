@@ -60,7 +60,7 @@ class PlayerController extends Controller
             $request->all(),
 			[
                 'ronin_address'      => 'required|regex:/^ronin:([a-z0-9-]{40})$/',
-                'account_name'       => $ruleAccountName,
+                'account_name'       => $ruleAccountName,// /^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$/
                 'market_place_email' => 'required|email',
             ]
         );
@@ -75,21 +75,6 @@ class PlayerController extends Controller
             return response()->json($validator->errors(), 422);
             
         try {
-            if(isset($request->id)){
-                $find_player = Player::WHERE('id', $request->id)->FIRST();
-                if($request->ronin_address != $find_player->ronin_address){
-                    $username       = explode(":",$request->ronin_address)[1];
-                    $file_extension = explode(".",$find_player->qr_code)[1];
-                    $file_name      = $username.'.'.$file_extension;
-                    $path           = 'qr_codes/'.$file_name;
-                    Storage::disk('public')->move($find_player->qr_code, $path);
-
-                    $where = (array)$where;
-                    $where['qr_code'] = $path;
-                    $where['qr_code_date'] = Carbon::now();
-                }
-            }
-            
             $player = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 $where
