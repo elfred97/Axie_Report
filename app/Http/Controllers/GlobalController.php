@@ -364,7 +364,7 @@ class GlobalController extends Controller
             array_push($where, ['scholars.type_id', '=', $type]);
 
         if ($search)
-            array_push($where, ['scholars.first_name', 'like', '%'.$search.'%']);
+            array_push($where, [DB::RAW("CONCAT(scholars.first_name,' ',scholars.last_name)"), 'LIKE', '%'.$search.'%']);
 
         return Payroll::LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
         ->LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
@@ -377,9 +377,6 @@ class GlobalController extends Controller
             'type.name as type_name'
         )
         ->where($where)
-        ->when($search, function ($q) use ($search) {
-            $q->orWhere('scholars.last_name','LIKE','%'.$search.'%');
-        })
         ->ORDERBY($field,$direction)
         ->paginate($request->per_page);
     }
