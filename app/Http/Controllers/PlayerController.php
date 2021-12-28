@@ -56,20 +56,25 @@ class PlayerController extends Controller
     public function savePlayer(Request $request){
         // dd($request->all());
         $ruleAccountName = isset($request->id) ? (Player::findOrFail($request->id)->account_name == $request->account_name ? 'required' : 'required|unique:players') : 'required|unique:players';
+        
+        $messages = [
+            'starts_with' => 'The :attribute field should start with the pattern ronin:',
+        ];
+        
         $validator = Validator::make(
             $request->all(),
 			[
-                'ronin_address'      => 'required',
-                'account_name'       => $ruleAccountName,
+                'ronin_address'      => 'required|starts_with:ronin',
+                'account_name'       => $ruleAccountName,// /^([a-fA-F0-9]{2}:){5}[a-fA-F0-9]{2}$/
                 'market_place_email' => 'required|email',
-            ]
+            ],$messages
         );
         $where = [
-            'ronin_address'      => $request->ronin_address,
-            'account_name'       => preg_replace('/\s+/', '', $request->account_name),
-            'scholar_email'      => $request->scholar_email,
-            'market_place_email' => $request->market_place_email,
-            'password'           => $request->email_password,
+            'ronin_address'      => filter_var($request->ronin_address,FILTER_SANITIZE_STRING),
+            'account_name'       => filter_var(preg_replace('/\s+/', '', $request->account_name),FILTER_SANITIZE_STRING),
+            'scholar_email'      => filter_var($request->scholar_email,FILTER_SANITIZE_EMAIL),
+            'market_place_email' => filter_var($request->market_place_email,FILTER_SANITIZE_EMAIL),
+            'password'           => filter_var($request->email_password,FILTER_SANITIZE_STRING),
         ];
         if ($validator->fails())
             return response()->json($validator->errors(), 422);
@@ -77,19 +82,21 @@ class PlayerController extends Controller
         try {
             if(isset($request->id)){
                 $find_player = Player::WHERE('id', $request->id)->FIRST();
-                if($request->ronin_address != $find_player->ronin_address){
-                    $username       = explode(":",$request->ronin_address)[1];
-                    $file_extension = explode(".",$find_player->qr_code)[1];
-                    $file_name      = $username.'.'.$file_extension;
+                
+                if($find_player->qr_code != NULL){
+                    $qrCode       = explode("/",$find_player->qr_code)[1];
+                    $file_extension = explode(".",$qrCode)[1];
+                    $file_name      = substr($request->account_name,1).'.'.$file_extension;
                     $path           = 'qr_codes/'.$file_name;
-                    Storage::disk('public')->move($find_player->qr_code, $path);
 
                     $where = (array)$where;
                     $where['qr_code'] = $path;
                     $where['qr_code_date'] = Carbon::now();
+
+                    rename(public_path().'/uploads/qr_codes/'.$qrCode,public_path().'/uploads/qr_codes/'.$file_name);    
                 }
             }
-            
+
             $player = Player::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 $where

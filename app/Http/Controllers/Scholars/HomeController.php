@@ -85,7 +85,6 @@ class HomeController extends Controller
                 'email'        => $ruleEmail,
                 'date_started' => 'required',
                 'type_id'      => 'required',
-                'status'       => 'required',
                 'account_name' => 'required'
             ]
         );
@@ -95,11 +94,12 @@ class HomeController extends Controller
 
         try {
             $where = [
-                'username'     => $request->username,
-                'first_name'   => $request->first_name,
-                'middle_name'  => $request->middle_name,
-                'last_name'    => $request->last_name,
-                'email'        => $request->email,
+                'username'     => filter_var($request->username,FILTER_SANITIZE_STRING),
+                'password' => bcrypt('!2E4p@$$w0rDD'),
+                'first_name'   => filter_var($request->first_name,FILTER_SANITIZE_STRING),
+                'middle_name'  => filter_var($request->middle_name,FILTER_SANITIZE_STRING),
+                'last_name'    => filter_var($request->last_name,FILTER_SANITIZE_STRING),
+                'email'        => filter_var($request->email,FILTER_SANITIZE_EMAIL),
                 'date_started' => date('Y-m-d H:i:s' , strtotime($request->date_started)),
                 'type_id'      => $request->type_id,
                 'status'       => $request->status,
@@ -110,7 +110,7 @@ class HomeController extends Controller
             
             if($request->email_password){
                 $where = (array)$where;
-                $where['password'] = bcrypt($request->email_password);
+                $where['password'] = bcrypt(filter_var($request->email_password,FILTER_SANITIZE_STRING));
             }
             
             $scholar = Scholar::UPDATEORCREATE(
@@ -270,7 +270,7 @@ class HomeController extends Controller
 		}
     }
 
-    public function getScholarNotification(Request $request){
+    public function getScholarNotification(){
         $username = Auth::user()->username;
         return Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
             ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
@@ -287,7 +287,16 @@ class HomeController extends Controller
 
     public function changeStatusNotification(){
         try {
-            $notif = DB::table('notification')->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
+            $username = Auth::user()->username;
+            $accountName = Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
+                ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
+                ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
+                ->SELECT(
+                    'players.account_name'
+                )
+            ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3],['notification.status_scholar', '=', 1]])
+            ->FIRST()->account_name;
+            $notif = DB::table('notification')->where('account_name',$accountName)->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
             if($notif)
                 return response()->json(['message' => 'Notification has been read!'], 200);
             else

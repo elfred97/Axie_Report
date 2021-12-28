@@ -26,10 +26,10 @@ class PlayerImport implements ToCollection,WithHeadingRow,WithValidation,SkipsOn
         foreach ($rows as $row)
         {
             Player::create([
-                'account_name'       => preg_replace('/\s+/', '', $row['account_name']),
-                'ronin_address'      => $row['ronin_address'],
-                'market_place_email' => $row['market_place_email'],
-                'password'           => $row['password'],
+                'account_name'       => filter_var(preg_replace('/\s+/', '', $row['account_name']),FILTER_SANITIZE_STRING),
+                'ronin_address'      => filter_var($row['ronin_address'],FILTER_SANITIZE_STRING),
+                'market_place_email' => filter_var($row['market_place_email'],FILTER_SANITIZE_EMAIL),
+                'password'           => filter_var($row['password'],FILTER_SANITIZE_STRING),
                 'penalty'            => $row['penalty'],
                 'scholar_share'      => $row['scholar_share'],
                 'manager_share'      => $row['manager_share'],
@@ -40,7 +40,9 @@ class PlayerImport implements ToCollection,WithHeadingRow,WithValidation,SkipsOn
     public function rules(): array
     {
         return [
-            '*.account_name' => ['unique:players,account_name']
+            '*.account_name' => ['unique:players,account_name'],
+            '*.ronin_address' => ['starts_with:ronin'],
+            '*.market_place_email' => ['email']
         ];
     }
 }

@@ -12,9 +12,8 @@ use App\Models\Type;
 use App\Models\Payroll;
 use App\Models\Scholar;
 use Illuminate\Support\Facades\Validator;
-
 use Illuminate\Support\Facades\Hash;
-
+use App\Rules\IsUniqueExceptDeleted;
 class GlobalController extends Controller
 {
     //
@@ -115,11 +114,14 @@ class GlobalController extends Controller
     }
 
     public function updateUser(Request $request){
-        $rule = isset($request->id) ? (User::findOrFail($request->id)->username == $request->username ? 'required' : 'required|unique:user') : 'required|unique:user';
+        $sanitizeUsername = filter_var(preg_replace('/\s+/','',$request->username),FILTER_SANITIZE_STRING);
+        $ruleUsername = isset($request->id) ? (User::findOrFail($request->id)->username == $sanitizeUsername ? ['required'] : 
+        ['required',new IsUniqueExceptDeleted]) : 
+        ['required',new IsUniqueExceptDeleted];
         $validator = Validator::make(
 			$request->all(),
 			[
-				'username'    => $rule,
+				'username'    => $ruleUsername,
 				'first_name'  => 'required',
 				'last_name'   => 'required',
 				// 'middle_name' => 'required',
@@ -133,11 +135,11 @@ class GlobalController extends Controller
             $user = User::UPDATEORCREATE(
                 [ 'id' => $request->id ],
                 [
-                    'username'    => $request->username,
-                    'first_name'  => $request->first_name,
-                    'middle_name' => $request->middle_name,
-                    'last_name'   => $request->last_name,
-                    'password'    => Hash::make($request->new_password),
+                    'username'    => filter_var(preg_replace('/\s+/','',$request->username),FILTER_SANITIZE_STRING),
+                    'first_name'  => filter_var($request->first_name,FILTER_SANITIZE_STRING),
+                    'middle_name' => filter_var($request->middle_name,FILTER_SANITIZE_STRING),
+                    'last_name'   => filter_var($request->last_name,FILTER_SANITIZE_STRING),
+                    'password'    => filter_var(Hash::make($request->new_password),FILTER_SANITIZE_STRING),
                     'status'      => $request->status,
                 ]
             );
