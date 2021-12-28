@@ -9209,6 +9209,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['reminder'],
   data: function data() {
@@ -80124,7 +80127,14 @@ var render = function() {
               _vm.$set(_vm.form, "title", $event.target.value)
             }
           }
-        })
+        }),
+        _vm._v(" "),
+        _vm.form.errors.has("title")
+          ? _c("div", {
+              staticClass: "text-danger",
+              domProps: { innerHTML: _vm._s(_vm.form.errors.get("title")) }
+            })
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
@@ -80184,7 +80194,16 @@ var render = function() {
               },
               expression: "form.reminder_time"
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.form.errors.has("reminder_time")
+            ? _c("div", {
+                staticClass: "text-danger",
+                domProps: {
+                  innerHTML: _vm._s(_vm.form.errors.get("reminder_time"))
+                }
+              })
+            : _vm._e()
         ],
         1
       ),
@@ -80233,7 +80252,14 @@ var render = function() {
             ])
           }),
           0
-        )
+        ),
+        _vm._v(" "),
+        _vm.form.errors.has("recurrence")
+          ? _c("div", {
+              staticClass: "text-danger",
+              domProps: { innerHTML: _vm._s(_vm.form.errors.get("recurrence")) }
+            })
+          : _vm._e()
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-4" }, [

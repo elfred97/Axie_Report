@@ -9,6 +9,7 @@
             <div class="col-md-12">
                 <label for="">Title</label>
                 <input type="text" class="form-control" placeholder="Title" v-model="form.title">
+                <div v-if="form.errors.has('title')" v-html="form.errors.get('title')" class="text-danger"/>
             </div>
         </div>
         <div class="row">
@@ -22,6 +23,7 @@
             <div class="col-md-4">
                 <label for="">Date and Time</label>
                 <v-datepicker v-model="form.reminder_time" type="datetime" valueType="format"  format="YYYY-MM-DD HH:mm:ss"></v-datepicker>
+                <div v-if="form.errors.has('reminder_time')" v-html="form.errors.get('reminder_time')" class="text-danger"/>
             </div>
             <div class="col-md-4">
                 <label for="">Repeat</label>
@@ -33,6 +35,7 @@
                     >
                         <option :value="index" v-for="(recurrence, index) in recurrences">{{ recurrence }}</option>
                 </select> 
+                <div v-if="form.errors.has('recurrence')" v-html="form.errors.get('recurrence')" class="text-danger"/>
             </div>
             <div class="col-md-4">
                 <label for="">Status</label>
