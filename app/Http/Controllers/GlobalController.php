@@ -171,6 +171,24 @@ class GlobalController extends Controller
 		}
     }
 
+    public function restoreUser(Request $request){
+        try {
+            $user = User::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'status'      => 1,
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'User restored'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
     protected function error($username, $password){
         session()->flash('username', $username);
         session()->flash('password', $password);
@@ -257,6 +275,24 @@ class GlobalController extends Controller
             );
             if($user)
                 return response()->json(['message' => 'Type deleted'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
+    public function restoreType(Request $request){
+        try {
+            $user = Type::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'status'      => 'Active',
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'Type restored'], 200);
             else
                 return response()->json(['message' => 'There was a problem processing your request'], 500);
         }
