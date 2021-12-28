@@ -13,7 +13,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-equals fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL SLP</div>
-                                <div class="stats-number" v-if="total_slp">{{ total_slp.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="total_slp">{{ total_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">Better than last week (54.9%)</div> -->
                             </div>
@@ -26,7 +26,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fab fa-bitcoin fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL UNCLAIMED SLP</div>
-                                <div class="stats-number" v-if="total_unclaimed">{{ total_unclaimed.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="total_unclaimed">{{ total_unclaimed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">More than last week (23.5%)</div> -->
                             </div>
@@ -39,7 +39,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-money-bill fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL CLAIMED</div>
-                                <div class="stats-number" v-if="total_claimed">{{ total_claimed.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="total_claimed">{{ total_claimed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">More than last week (10.5%)</div> -->
                             </div>
@@ -53,7 +53,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-calendar fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL SLP TODAY</div>
-                                <div class="stats-number" v-if="today_slp">{{ today_slp.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="today_slp">{{ today_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">Better than last week (70.1%)</div> -->
                             </div>
@@ -66,7 +66,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-calendar-check fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL SLP YESTERDAY</div>
-                                <div class="stats-number" v-if="yesterday_slp">{{ yesterday_slp.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="yesterday_slp">{{ yesterday_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">Better than last week (40.5%)</div> -->
                             </div>
@@ -79,7 +79,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">TOTAL AVERAGE</div>
-                                <div class="stats-number" v-if="total_average_slp">{{ total_average_slp.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="total_average_slp">{{ total_average_slp.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>
@@ -93,7 +93,7 @@
                             <div class="stats-icon stats-icon-lg"><i class="fas fa-divide fa-fw"></i></div>
                             <div class="stats-content">
                                 <div class="stats-title">LOWEST MMR</div>
-                                <div class="stats-number" v-if="mmr_count">{{ mmr_count.replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
+                                <div class="stats-number" v-if="mmr_count">{{ mmr_count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") }}</div>
                                 <div class="stats-number" v-else>0</div>
                                 <!-- <div class="stats-desc">Better than last week (76.3%)</div> -->
                             </div>

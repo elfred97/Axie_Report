@@ -39,6 +39,9 @@
                                 <button class="btn btn-primary btn-sm" @click="saveNewType()"><i class="fas fa-plus"></i> New Type</button>
                             </div>
                         </div>
+                        <div v-if="formError != ''" class="text-danger">
+                            <span>{{formError}}</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,6 +54,7 @@ export default {
         return {
             newType    : '',
             typeData   : {},
+            formError  : '',
         }
     },
     methods: {
@@ -70,12 +74,14 @@ export default {
             .then((response) => {
                 this.$noty.success(response.data.message);
                 this.newType = '';
+                this.formError = '';
                 this.getTypes();
             })
             .catch((error) => {
                 console.log(error.response.data);
                 if(error.response.status == 422)
-                    this.$noty.error(error.response.data.name);
+                    this.formError = error.response.data.name;
+                    // this.$noty.error(error.response.data.name);
             })
         },
         deleteType(id){

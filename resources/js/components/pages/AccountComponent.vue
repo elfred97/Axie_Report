@@ -9,7 +9,7 @@
         <div class="section-container main-content-view bg-white">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-7">
+                    <div class=" col-lg-7 col-md-6 col-sm-12 col-xs-12">
                         <!-- Begin Account Settings -->
                         <account-information></account-information>
                         <!-- End Account Settings -->
@@ -22,7 +22,7 @@
                         <reminder-component></reminder-component>
                         <!-- End Notification Settings -->
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
                         <!-- Begin Users List -->
                         <users-component></users-component>
                         <!-- End Users List -->

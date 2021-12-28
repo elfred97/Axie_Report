@@ -8965,11 +8965,15 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       newType: '',
-      typeData: {}
+      typeData: {},
+      formError: ''
     };
   },
   methods: {
@@ -8991,11 +8995,12 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$noty.success(response.data.message);
 
         _this2.newType = '';
+        _this2.formError = '';
 
         _this2.getTypes();
       })["catch"](function (error) {
         console.log(error.response.data);
-        if (error.response.status == 422) _this2.$noty.error(error.response.data.name);
+        if (error.response.status == 422) _this2.formError = error.response.data.name; // this.$noty.error(error.response.data.name);
       });
     },
     deleteType: function deleteType(id) {
@@ -74292,7 +74297,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-7" },
+                { staticClass: " col-lg-7 col-md-6 col-sm-12 col-xs-12" },
                 [
                   _c("account-information"),
                   _vm._v(" "),
@@ -74305,7 +74310,7 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-md-5" },
+                { staticClass: "col-lg-5 col-md-6 col-sm-12 col-xs-12" },
                 [_c("users-component"), _vm._v(" "), _c("type-component")],
                 1
               )
@@ -76049,10 +76054,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.total_slp.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.total_slp
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -76085,10 +76089,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.total_unclaimed.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.total_unclaimed
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -76118,10 +76121,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.total_claimed.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.total_claimed
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -76153,10 +76155,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.today_slp.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.today_slp
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -76188,10 +76189,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.yesterday_slp.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.yesterday_slp
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -76224,10 +76224,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.total_average_slp.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.total_average_slp
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -76259,10 +76258,9 @@ var render = function() {
                           ? _c("div", { staticClass: "stats-number" }, [
                               _vm._v(
                                 _vm._s(
-                                  _vm.mmr_count.replace(
-                                    /\B(?=(\d{3})+(?!\d))/g,
-                                    ","
-                                  )
+                                  _vm.mmr_count
+                                    .toString()
+                                    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
                                 )
                               )
                             ])
@@ -79876,7 +79874,13 @@ var render = function() {
                   [_c("i", { staticClass: "fas fa-plus" }), _vm._v(" New Type")]
                 )
               ])
-            ])
+            ]),
+            _vm._v(" "),
+            _vm.formError != ""
+              ? _c("div", { staticClass: "text-danger" }, [
+                  _c("span", [_vm._v(_vm._s(_vm.formError))])
+                ])
+              : _vm._e()
           ])
         ])
       ])
