@@ -169,7 +169,7 @@ export default {
             .catch(error => {
                 console.log(error.response.data);
             })
-        }
+        },
     },
     mounted(){
         this.getAxieList();

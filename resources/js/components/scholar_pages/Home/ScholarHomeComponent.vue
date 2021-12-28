@@ -35,6 +35,17 @@
             </div>
         </div>
 
+        <!-- Axie Details -->
+        <div class="section-container">
+            <div class="container">
+                <div class="row row-space-10 m-b-20">
+                    <div class="col-md-12">
+                        <scholar-axie-details-component></scholar-axie-details-component>
+                    </div>
+                </div>
+
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -43,6 +54,7 @@ import SLPUpdateComponent from './SLPUpdateComponent.vue';
 import ScholarGraphComponent from './ScholarGraphComponent.vue';
 import ScholarPenaltyComponent from './ScholarPenaltyComponent.vue';
 import ScholarImportListComponent from './ScholarImportListComponent.vue';
+import ScholarAxieDetailsComponent from './ScholarAxieDetailsComponent';
 export default {
     components : {
         'stats-component'              : StatsComponent,
@@ -50,6 +62,7 @@ export default {
         'scholar-graph-component'      : ScholarGraphComponent,
         'scholar-penalty-component'    : ScholarPenaltyComponent,
         'scholar-import-list-component': ScholarImportListComponent,
+        'scholar-axie-details-component': ScholarAxieDetailsComponent,
     }
 }
 </script>

@@ -154,28 +154,28 @@ export default {
             let ann_count = 0;
             // let notificationCount = Object.keys(this.notificationData).length;
             // let announcementCount = Object.keys(this.announcementsData).length;
-
-            this.notificationData.forEach((element, index) => {                                        
-                if(this.$store.state.global_guard_type == 'admins'){
-                    if(element.status == 1)
-                        notif_count = notif_count + 1;
-                }
-                else{
-                    if(element.status_scholar == 1)
-                        notif_count = notif_count + 1;
-                }
-            });
-
-            Object.keys(this.announcementsData).forEach((element, index) => {                                        
-                if(this.$store.state.global_guard_type == 'admins'){
-                    if(element.status == 1)
-                        ann_count = ann_count + 1;
-                }
-                else{
-                    if(element.status_scholar == 1)
-                        ann_count = ann_count + 1;
-                }
-            });
+            if(this.notificationData)
+                Object.keys(this.notificationData).forEach((element, index) => {                                        
+                    if(this.$store.state.global_guard_type == 'admins'){
+                        if(element.status == 1)
+                            notif_count = notif_count + 1;
+                    }
+                    else{
+                        if(element.status_scholar == 1)
+                            notif_count = notif_count + 1;
+                    }
+                });
+            if(this.announcementsData)
+                Object.keys(this.announcementsData).forEach((element, index) => {                                        
+                    if(this.$store.state.global_guard_type == 'admins'){
+                        if(element.status == 1)
+                            ann_count = ann_count + 1;
+                    }
+                    else{
+                        if(element.status_scholar == 1)
+                            ann_count = ann_count + 1;
+                    }
+                });
 
             this.total_count =  notif_count + ann_count;
         },

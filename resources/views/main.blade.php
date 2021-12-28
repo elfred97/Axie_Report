@@ -25,6 +25,7 @@
 	<link href="{{ asset('css/mediaList.css')}}" rel="stylesheet" />
 	<link href="{{ asset('assets/css/panel.css')}}" rel="stylesheet" />
 	<link href="{{ asset('css/axie_color.css')}}" rel="stylesheet" />
+	<link href="{{ asset('css/axie.css')}}" rel="stylesheet" />
 	<!-- ================== END BASE CSS STYLE ================== -->
 
 </head>

@@ -5871,14 +5871,14 @@ __webpack_require__.r(__webpack_exports__);
       var ann_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
       // let announcementCount = Object.keys(this.announcementsData).length;
 
-      this.notificationData.forEach(function (element, index) {
+      if (this.notificationData) Object.keys(this.notificationData).forEach(function (element, index) {
         if (_this.$store.state.global_guard_type == 'admins') {
           if (element.status == 1) notif_count = notif_count + 1;
         } else {
           if (element.status_scholar == 1) notif_count = notif_count + 1;
         }
       });
-      Object.keys(this.announcementsData).forEach(function (element, index) {
+      if (this.announcementsData) Object.keys(this.announcementsData).forEach(function (element, index) {
         if (_this.$store.state.global_guard_type == 'admins') {
           if (element.status == 1) ann_count = ann_count + 1;
         } else {
@@ -7260,6 +7260,13 @@ function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Sy
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10011,6 +10018,217 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// import EyeComponent from './BodyParts/EyeComponent.vue';
+// import EarComponent from './BodyParts/EarComponent.vue';
+// import BackComponent from './BodyParts/BackComponent.vue';
+// import MouthComponent from './BodyParts/MouthComponent.vue';
+// import HornComponent from './BodyParts/HornComponent.vue';
+// import TailComponent from './BodyParts/TailComponent.vue';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      display: {
+        first: false,
+        second: false,
+        third: false
+      },
+      userData: {},
+      axies: {}
+    };
+  },
+  // components : {
+  //     'eye-component' : EyeComponent,
+  //     'ear-component' : EarComponent,
+  //     'back-component' : BackComponent,
+  //     'mouth-component' : MouthComponent,
+  //     'horn-component' : HornComponent,
+  //     'tail-component' : TailComponent,
+  // },
+  watch: {
+    'display': function display(newVal) {
+      console.log(newVal);
+    }
+  },
+  methods: {
+    previewAxie: function previewAxie(id) {
+      window.open('https://marketplace.axieinfinity.com/axie/' + id, '_blank');
+    },
+    getAxieParts: function getAxieParts(data) {
+      console.log(data);
+    },
+    changeStatus: function changeStatus(id) {
+      if (id == 1) this.display.first = !this.display.first;else if (id == 2) this.display.second = !this.display.second;else if (id == 3) this.display.third = !this.display.third;
+    },
+    getAxieList: function getAxieList() {
+      var _this = this;
+
+      // let ronin_address = "0x" + this.userData.ronin_address.split(":")[1];
+      var ronin_address = "0x" + this.userData.ronin_address.split(':')[1]; // let ronin_address = "0xc417a4b041f18d8cf2bb90b754969afb2146cc8c";
+
+      console.log(ronin_address);
+      this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
+        params: {
+          operationName: "GetAxieBriefList",
+          variables: {
+            from: 0,
+            size: 100,
+            sort: "IdDesc",
+            auctionType: "All",
+            owner: ronin_address,
+            criteria: {
+              region: null,
+              parts: null,
+              bodyShapes: null,
+              classes: null,
+              stages: null,
+              numMystic: null,
+              pureness: null,
+              title: null,
+              breedable: null,
+              breedCount: null,
+              hp: [],
+              skill: [],
+              speed: [],
+              morale: []
+            }
+          },
+          query: "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n birthDate\n breedCount\n  image\n  genes\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"
+        }
+      }).then(function (response) {
+        // console.log(response.data);
+        _this.axies = response.data.data.axies.results; // this.getSampleAxieDetails(this.axies[0].id);
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    getAccountInformation: function getAccountInformation() {
+      var _this2 = this;
+
+      this.axios.get("getAccountInfo/scholars").then(function (response) {
+        // console.log(response.data);
+        _this2.userData = response.data;
+
+        _this2.getAxieList();
+      })["catch"](function (error) {
+        console.log(error.data);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getAccountInformation();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js&":
 /*!***************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=script&lang=js& ***!
@@ -10107,6 +10325,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScholarGraphComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ScholarGraphComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue");
 /* harmony import */ var _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScholarPenaltyComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarPenaltyComponent.vue");
 /* harmony import */ var _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ScholarImportListComponent.vue */ "./resources/js/components/scholar_pages/Home/ScholarImportListComponent.vue");
+/* harmony import */ var _ScholarAxieDetailsComponent__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./ScholarAxieDetailsComponent */ "./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue");
 //
 //
 //
@@ -10146,6 +10365,18 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -10157,7 +10388,8 @@ __webpack_require__.r(__webpack_exports__);
     'slp-update-component': _SLPUpdateComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     'scholar-graph-component': _ScholarGraphComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     'scholar-penalty-component': _ScholarPenaltyComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    'scholar-import-list-component': _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+    'scholar-import-list-component': _ScholarImportListComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    'scholar-axie-details-component': _ScholarAxieDetailsComponent__WEBPACK_IMPORTED_MODULE_5__["default"]
   }
 });
 
@@ -75810,15 +76042,20 @@ var render = function() {
                           _vm._v("TOTAL SLP")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.total_slp
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.total_slp
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.total_slp.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -75841,15 +76078,20 @@ var render = function() {
                           _vm._v("TOTAL UNCLAIMED SLP")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.total_unclaimed
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.total_unclaimed
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.total_unclaimed.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -75869,15 +76111,20 @@ var render = function() {
                           _vm._v("TOTAL CLAIMED")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.total_claimed
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.total_claimed
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.total_claimed.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -75899,15 +76146,20 @@ var render = function() {
                           _vm._v("TOTAL SLP TODAY")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.today_slp
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.today_slp
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.today_slp.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -75929,15 +76181,20 @@ var render = function() {
                           _vm._v("TOTAL SLP YESTERDAY")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.yesterday_slp
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.yesterday_slp
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.yesterday_slp.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -75960,15 +76217,20 @@ var render = function() {
                           _vm._v("TOTAL AVERAGE")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.total_average_slp
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.total_average_slp
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.total_average_slp.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -75990,15 +76252,20 @@ var render = function() {
                           _vm._v("LOWEST MMR")
                         ]),
                         _vm._v(" "),
-                        _c("div", { staticClass: "stats-number" }, [
-                          _vm._v(
-                            _vm._s(
-                              _vm.mmr_count
-                                .toString()
-                                .replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-                            )
-                          )
-                        ])
+                        _vm.mmr_count
+                          ? _c("div", { staticClass: "stats-number" }, [
+                              _vm._v(
+                                _vm._s(
+                                  _vm.mmr_count.replace(
+                                    /\B(?=(\d{3})+(?!\d))/g,
+                                    ","
+                                  )
+                                )
+                              )
+                            ])
+                          : _c("div", { staticClass: "stats-number" }, [
+                              _vm._v("0")
+                            ])
                       ])
                     ]
                   )
@@ -81401,6 +81668,146 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3&":
+/*!*************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3& ***!
+  \*************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "row" },
+      _vm._l(_vm.axies, function(axie, index) {
+        return _c("div", { staticClass: "col-md-4" }, [
+          _c("div", { staticClass: "axie-card" }, [
+            _c("div", { staticClass: "title" }, [
+              _c("div", { staticClass: "row no-margin" }, [
+                _c("div", { staticClass: "col-md-8" }, [
+                  _c("h4", { staticClass: "text-bold" }, [
+                    _vm._v(_vm._s(axie.name) + " "),
+                    _c(
+                      "a",
+                      {
+                        attrs: {
+                          href:
+                            "https://marketplace.axieinfinity.com/axie/" +
+                            axie.id,
+                          target: "_blank"
+                        }
+                      },
+                      [_c("i", { staticClass: "fas fa-share" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row no-margin" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _vm._m(1, true),
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(axie.class) +
+                          "\n                                "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _vm._m(2, true),
+                      _vm._v(
+                        "\n                                    " +
+                          _vm._s(axie.breedCount) +
+                          "\n                                "
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-4" }, [
+                  _c("img", {
+                    staticClass: "img-fluid",
+                    attrs: { src: axie.image, alt: "" }
+                  })
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "body" }, [
+              _c(
+                "div",
+                { staticClass: "row no-margin" },
+                _vm._l(axie.parts, function(parts) {
+                  return _c("div", { staticClass: "col-md-4 text-center" }, [
+                    _c(
+                      "label",
+                      { staticClass: "text-center", attrs: { for: "" } },
+                      [_vm._v(_vm._s(parts.type))]
+                    ),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "no-margin" }, [
+                      _vm._v(_vm._s(parts.name))
+                    ])
+                  ])
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      }),
+      0
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row row-space-10" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("p", { staticClass: "no-margin" }, [
+          _vm._v("\n                Total 3\n            ")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("div", { staticClass: "pull-right" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "no-margin" }, [
+      _c("small", [_vm._v("Class")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", { staticClass: "no-margin" }, [
+      _c("small", [_vm._v("Breeds")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4&":
 /*!*******************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Home/ScholarGraphComponent.vue?vue&type=template&id=35c0a2d4& ***!
@@ -81512,6 +81919,19 @@ var render = function() {
             "div",
             { staticClass: "col-md-12" },
             [_c("scholar-graph-component")],
+            1
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "section-container" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+          _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [_c("scholar-axie-details-component")],
             1
           )
         ])
@@ -106910,6 +107330,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SLPUpdateComponent_vue_vue_type_template_id_cba4f2e4___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SLPUpdateComponent_vue_vue_type_template_id_cba4f2e4___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ScholarAxieDetailsComponent_vue_vue_type_template_id_024b6cd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3& */ "./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3&");
+/* harmony import */ var _ScholarAxieDetailsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarAxieDetailsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarAxieDetailsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ScholarAxieDetailsComponent_vue_vue_type_template_id_024b6cd3___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ScholarAxieDetailsComponent_vue_vue_type_template_id_024b6cd3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAxieDetailsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarAxieDetailsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAxieDetailsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3&":
+/*!*******************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3& ***!
+  \*******************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAxieDetailsComponent_vue_vue_type_template_id_024b6cd3___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Home/ScholarAxieDetailsComponent.vue?vue&type=template&id=024b6cd3&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAxieDetailsComponent_vue_vue_type_template_id_024b6cd3___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarAxieDetailsComponent_vue_vue_type_template_id_024b6cd3___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

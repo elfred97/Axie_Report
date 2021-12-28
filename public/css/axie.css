@@ -1,0 +1,20 @@
+.axie-card{
+    /* width: 33%;
+    margin: 15px; */
+    background-color: white;
+    border-radius: 25px;
+}
+.axie-card .title{
+    padding: 30px 15px 15px 15px;
+    /* border-bottom: 1px solid #ccc; */
+    background: linear-gradient(139.73deg, rgb(229, 253, 255) 0%, rgb(243, 239, 255) 100%);
+    border-radius: 25px 25px 0 0;
+}
+.axie-card .body{
+    padding: 15px;
+    border-bottom: 1px solid #ccc;
+}
+.axie-card .foot{
+    padding: 15px;
+    text-align: center;
+}
