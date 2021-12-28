@@ -51,7 +51,7 @@ class HomeController extends Controller
         $where = [];
 
         if ($request->search)
-            array_push($where, ['scholars.first_name', 'like', '%'.$request->search.'%']);
+        array_push($where, [DB::RAW("CONCAT(scholars.first_name,' ',scholars.last_name)"), 'LIKE', '%'.$request->search.'%']);
 
         $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
@@ -66,7 +66,6 @@ class HomeController extends Controller
                 'type.name as type'
             )
             ->where($where)
-            ->orWhere('scholars.last_name', 'like', '%'.$request->search.'%')
             ->when($type, function ($q) use ($type) {
                 $q->whereRaw('scholars.type_id=' . (int)$type);
             })
