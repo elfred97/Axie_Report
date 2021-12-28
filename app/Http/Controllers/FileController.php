@@ -52,7 +52,7 @@ class FileController extends Controller
         if ($type)
             array_push($where, ['s.type_id', '=', $type]);
 
-        $field          = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
+            $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         
         return DB::TABLE('report as r')
