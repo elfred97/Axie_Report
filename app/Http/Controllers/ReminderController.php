@@ -47,7 +47,7 @@ class ReminderController extends Controller
                 'reminder_time' => $request->reminder_time,
                 'recurrence' => $request->recurrence,
                 'title' => filter_var($request->title,FILTER_SANITIZE_STRING),
-                'description' => $request->description,
+                'description' => filter_var($request->description,FILTER_SANITIZE_STRING),
                 'type_id' => $request->type_id,
                 'status' => $request->status,
             ]);
