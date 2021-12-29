@@ -171,6 +171,24 @@ class GlobalController extends Controller
 		}
     }
 
+    public function restoreUser(Request $request){
+        try {
+            $user = User::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'status'      => 1,
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'User restored'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
     protected function error($username, $password){
         session()->flash('username', $username);
         session()->flash('password', $password);
@@ -265,6 +283,24 @@ class GlobalController extends Controller
 		}
     }
 
+    public function restoreType(Request $request){
+        try {
+            $user = Type::UPDATEORCREATE(
+                [ 'id' => $request->id ],
+                [
+                    'status'      => 'Active',
+                ]
+            );
+            if($user)
+                return response()->json(['message' => 'Type restored'], 200);
+            else
+                return response()->json(['message' => 'There was a problem processing your request'], 500);
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
     public function changePassword(Request $request){
 
         $validator = Validator::make(
@@ -328,7 +364,7 @@ class GlobalController extends Controller
             array_push($where, ['scholars.type_id', '=', $type]);
 
         if ($search)
-            array_push($where, ['scholars.first_name', 'like', '%'.$search.'%']);
+            array_push($where, [DB::RAW("CONCAT(scholars.first_name,' ',scholars.last_name)"), 'LIKE', '%'.$search.'%']);
 
         return Payroll::LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
         ->LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
@@ -341,9 +377,6 @@ class GlobalController extends Controller
             'type.name as type_name'
         )
         ->where($where)
-        ->when($search, function ($q) use ($search) {
-            $q->orWhere('scholars.last_name','LIKE','%'.$search.'%');
-        })
         ->ORDERBY($field,$direction)
         ->paginate($request->per_page);
     }

@@ -89,12 +89,14 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
         Route::get('/getType', 'GlobalController@getType');
         Route::post('/deleteType', 'GlobalController@deleteType');
+        Route::post('/restoreType', 'GlobalController@restoreType');
         Route::post('/updateType', 'GlobalController@updateType');
         Route::post('/saveNewType', 'GlobalController@saveNewType');
 
         Route::get('/getUsers', 'GlobalController@getUsers');
         Route::post('/updateUser', 'GlobalController@updateUser');
         Route::post('/deleteUser', 'GlobalController@deleteUser');
+        Route::post('/restoreUser', 'GlobalController@restoreUser');
         Route::post('/changePassword', 'GlobalController@changePassword');
 
         Route::get('penalty-count/{type?}', 'PlayerController@getPenaltyCount');
