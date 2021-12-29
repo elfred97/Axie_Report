@@ -170,8 +170,18 @@ export default {
                 console.log(error.response.data);
             })
         },
+        getSample(){
+            this.axios.get('https://axieinfinity.com/graphql-server-v2/graphql')
+            .then(response => {
+                console.log(response.data)
+            })
+            .catch(error => {
+                console.log(error.response.data)
+            })
+        }
     },
     mounted(){
+        this.getSample();
         this.getAxieList();
         this.getProfileByRoninAddress();
         this.getModel();

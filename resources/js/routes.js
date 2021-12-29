@@ -42,6 +42,13 @@ export const routes = [
             admins : true,
         }
     },
+    { 
+        path: '/audit', 
+        component: require('./components/pages/AuditComponent.vue').default,
+        meta : {
+            admins : true,
+        }
+    },
     {
         path: '/notification', 
         component: require('./components/pages/NotificationComponent.vue').default,

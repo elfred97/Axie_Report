@@ -28,6 +28,7 @@ class vueComponentsMiddleware
             '403',
             null,
             'api_sample',
+            'audit',
             
             'scholars',
             // 'scholar_home',
