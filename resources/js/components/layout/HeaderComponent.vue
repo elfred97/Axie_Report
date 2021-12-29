@@ -100,7 +100,7 @@
                                         <!-- <span href="javascript:;" class="dropdown-item">Settings</span> -->
                                         <router-link to="/settings" class="dropdown-item"><i class="fas fa-sliders-h"></i> Settings</router-link>
                                         <div class="dropdown-divider" ></div>
-                                        <router-link to="/audit" class="dropdown-item"><i class="fas fa-sliders-h"></i> Audit</router-link>
+                                        <!-- <router-link to="/audit" class="dropdown-item"><i class="fas fa-sliders-h"></i> Audit</router-link> -->
                                     </div>
                                     <!-- <a href="/api_sample" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> API Sample</a> -->
                                     <a href="/logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Log Out</a>

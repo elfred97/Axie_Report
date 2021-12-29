@@ -73463,19 +73463,7 @@ var render = function() {
                           ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "dropdown-divider" }),
-                        _vm._v(" "),
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { to: "/audit" }
-                          },
-                          [
-                            _c("i", { staticClass: "fas fa-sliders-h" }),
-                            _vm._v(" Audit")
-                          ]
-                        )
+                        _c("div", { staticClass: "dropdown-divider" })
                       ],
                       1
                     )
