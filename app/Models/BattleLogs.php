@@ -21,9 +21,18 @@ class BattleLogs extends Model
         'win_total',
         'total_matches',
         'win_rate',
-        'ronin_slp',
+        'average_per_day',
+        'gained_slp_today',
+        'last_claim_days',
+        'thirty_percent',
+        'forty_percent',
+        'manager_share',
+        'scholar_share',
+        'manager_slp',
+        'scholar_slp',
+        'claimed',
         'raw_total',
-        'in_game_slp',
+        'unclaimed',
         'lifetime_slp'
 	];
 }
