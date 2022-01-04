@@ -6579,7 +6579,7 @@ __webpack_require__.r(__webpack_exports__);
           ]
         }]
       },
-      year: [2020, 2021],
+      year: [],
       month: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
       graphData: [],
       filter: {
@@ -6649,12 +6649,21 @@ __webpack_require__.r(__webpack_exports__);
     selectAxieAccount: function selectAxieAccount(eventData) {
       this.filter.selected_account_name = eventData.account_name;
       this.getGraph();
+    },
+    getYear: function getYear() {
+      var start_year = 2020;
+      var current_year = new Date().getFullYear();
+
+      for (var i = start_year; i <= current_year; i++) {
+        this.year.push(i);
+      }
     }
   },
   components: {
     JSCharting: jscharting_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   mounted: function mounted() {
+    this.getYear();
     this.getListPlayers();
     this.filter.selected_year = moment().format('YYYY');
     this.filter.selected_month = moment().format('M'); // console.log(this.month[moment().format('M')])
@@ -8426,7 +8435,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    var _this2 = this;
+
     this.getSLPUpdate();
+    window.setInterval(function () {
+      _this2.getSLPUpdate(); // console.log("Triggered");
+
+    }, 60000);
   }
 });
 
@@ -78538,11 +78553,11 @@ var render = function() {
                       "span",
                       {
                         class:
-                          _vm.getSLPChange("1h") > 0
+                          _vm.getSLPChange("24h") > 0
                             ? "text-success"
                             : "text-danger"
                       },
-                      [_vm._v(_vm._s(_vm.getSLPChange("1h")) + " %")]
+                      [_vm._v(_vm._s(_vm.getSLPChange("24h")) + " %")]
                     )
                   ]),
                   _vm._v(" "),

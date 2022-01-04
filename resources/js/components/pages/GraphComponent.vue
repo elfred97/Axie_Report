@@ -117,7 +117,7 @@ export default {
                     },
                 ]
             },
-            year     : [ 2020 , 2021 ],
+            year     : [],
             month    : ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
             graphData: [],
             filter   : {
@@ -191,12 +191,21 @@ export default {
         selectAxieAccount(eventData){
             this.filter.selected_account_name = eventData.account_name;
             this.getGraph();
+        },
+        getYear(){
+            let start_year = 2020;
+            let current_year = new Date().getFullYear();
+
+            for (var i = start_year; i <= current_year; i++) {
+                this.year.push(i);
+            }
         }
     },
     components: {
       JSCharting,
     },
     mounted(){
+        this.getYear();
         this.getListPlayers();
         this.filter.selected_year = moment().format('YYYY');
         this.filter.selected_month = moment().format('M');

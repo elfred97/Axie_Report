@@ -16,7 +16,7 @@
                         <button class="btn btn-inverse btn-xs">Rank #{{SLPData.market_cap_rank}}</button>
 
                         <h2><span data-animation="number" :data-value="getSLPPrice">{{ getSLPPrice }}</span>
-                            <span :class="getSLPChange('1h') > 0 ? 'text-success' : 'text-danger'">{{getSLPChange('1h')}} %</span>
+                            <span :class="getSLPChange('24h') > 0 ? 'text-success' : 'text-danger'">{{getSLPChange('24h')}} %</span>
                         </h2>
                         <p class="no-margin">{{this.SLPData.market_data.current_price.btc}} BTC 
                             <span v-if="(SLPData.market_data.price_change_percentage_24h_in_currency.btc > 0)" class="text-success">
@@ -88,6 +88,11 @@ export default {
     },
     mounted(){
         this.getSLPUpdate();
+        window.setInterval(() => {
+            this.getSLPUpdate();
+            // console.log("Triggered");
+        }, 60000)
+
     }
 }
 </script>
