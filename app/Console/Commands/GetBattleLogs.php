@@ -53,27 +53,20 @@ class GetBattleLogs extends Command
             $roninAddress = str_replace("ronin:","0x",$player['ronin_address']);
             $response = Http::get('https://game-api.axie.technology/api/v1/'.$roninAddress);
 
-            if ($response->failed()) {
-                $this->error('Error: Can not access game-api.axie');
-                $this->line('Fetching Battle Logs API End: ' . Carbon::now()->format('Y-m-d H:i:s'));
-
-                BattleLogs::create([
-                    'ronin_address' => $player['ronin_address'],
-                    'account_name' => $player['account_name']
-                ]);
-                
-            }
+            do{
+                $response = Http::get('https://game-api.axie.technology/api/v1/'.$roninAddress);
+            }while($response->failed());
 
             $json_response = $response->json();
 
-            //$notification_settings = auth()->user()->notification_settings;
+            $notification_settings = NotificationSettings::firstOrNew();
             $mmr = 800;
             $minimum_slp = 75;
 
-            // if($notification_settings) {
-            //     $mmr = $notification_settings->options['mmr'] ?? 800;
-            //     $minimum_slp = $notification_settings->options['minimum_slp'] ?? 75;
-            // }
+            if($notification_settings) {
+                $mmr = $notification_settings->options['mmr'] ?? 800;
+                $minimum_slp = $notification_settings->options['minimum_slp'] ?? 75;
+            }
 
             $report = BattleLogs::WHERE('account_name', $player['account_name'])->latest('created_at')->first();
 
@@ -170,7 +163,7 @@ class GetBattleLogs extends Command
             BattleLogs::create([
                 'ronin_address' => $player['ronin_address'],
                 'account_name' => $player['account_name'],
-                'average_per_day' => $json_response['in_game_slp'] / $lastClaimDays,
+                'average_per_day' => $json_response['in_game_slp'] == 0 ? 0 : $json_response['in_game_slp'] / $lastClaimDays,
                 'gained_slp_today' => $gained_slp_today,
                 'unclaimed' => $json_response['in_game_slp'],
                 'claimed' => $json_response['ronin_slp'],
@@ -197,6 +190,6 @@ class GetBattleLogs extends Command
 
         }
 
-        $this->line('Fetching Battle Logs API End: ' . Carbon::now()->format('Y-m-d H:i:s'));
+        $this->line('API Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
     }
 }
