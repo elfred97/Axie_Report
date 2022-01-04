@@ -5,6 +5,8 @@
                 <label for="">Name</label>
                 <input type="text" class="form-control mb-2" v-model="form.name">
 
+                <div v-if="form.errors.has('name')" v-html="form.errors.get('name')" class="text-danger"/>
+
                 <label for="">Status</label>
                 <select name="" id="" class="form-control mb-2" v-model="form.status">
                     <option value="Active">Active</option>

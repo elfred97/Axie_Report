@@ -9501,6 +9501,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['typeInfo'],
   data: function data() {
@@ -80892,6 +80894,13 @@ var render = function() {
             }
           }
         }),
+        _vm._v(" "),
+        _vm.form.errors.has("name")
+          ? _c("div", {
+              staticClass: "text-danger",
+              domProps: { innerHTML: _vm._s(_vm.form.errors.get("name")) }
+            })
+          : _vm._e(),
         _vm._v(" "),
         _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
         _vm._v(" "),
