@@ -9023,7 +9023,7 @@ __webpack_require__.r(__webpack_exports__);
 
         _this2.getTypes();
       })["catch"](function (error) {
-        console.log(error.response.data);
+        console.log(error.response.data.name);
         if (error.response.status == 422) _this2.formError = error.response.data.name; // this.$noty.error(error.response.data.name);
       });
     },
@@ -79925,9 +79925,16 @@ var render = function() {
             ]),
             _vm._v(" "),
             _vm.formError != ""
-              ? _c("div", { staticClass: "text-danger" }, [
-                  _c("span", [_vm._v(_vm._s(_vm.formError))])
-                ])
+              ? _c(
+                  "div",
+                  { staticClass: "text-danger" },
+                  _vm._l(_vm.formError, function(error) {
+                    return _c("p", { staticClass: "no-margin" }, [
+                      _vm._v(_vm._s(error))
+                    ])
+                  }),
+                  0
+                )
               : _vm._e()
           ])
         ])

@@ -40,7 +40,7 @@
                             </div>
                         </div>
                         <div v-if="formError != ''" class="text-danger">
-                            <span>{{formError}}</span>
+                            <p class="no-margin" v-for="error in formError">{{error}}</p>
                         </div>
                     </div>
                 </div>
@@ -78,7 +78,7 @@ export default {
                 this.getTypes();
             })
             .catch((error) => {
-                console.log(error.response.data);
+                console.log(error.response.data.name);
                 if(error.response.status == 422)
                     this.formError = error.response.data.name;
                     // this.$noty.error(error.response.data.name);
