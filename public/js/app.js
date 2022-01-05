@@ -7837,6 +7837,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
  // import FieldsDef from "./ImportedFieldsDef.js";
 
@@ -7953,6 +7954,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     uploadFile: function uploadFile() {
       var _this4 = this;
 
+      this.$refs.loader.style.display = 'block';
       var formData = new FormData();
       formData.append('file', this.import_file);
       this.axios.post('/importPayroll', formData, {
@@ -7969,7 +7971,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this4.updatePendingPayroll();
 
         _this4.updatePaidPayroll();
+      })["catch"](function (error) {
+        console.log(error.response.data);
+
+        _this4.$noty.error("Something went wrong");
       });
+      this.$refs.loader.style.display = 'none';
     }
   },
   mounted: function mounted() {
@@ -8021,6 +8028,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['payrollData'],
   data: function data() {
@@ -8039,6 +8047,7 @@ __webpack_require__.r(__webpack_exports__);
     saveForm: function saveForm() {
       var _this = this;
 
+      this.$refs.loader.style.display = 'block';
       this.form.post('updatePayrollHistory').then(function (response) {
         _this.$noty.success(response.data.message);
 
@@ -8049,7 +8058,10 @@ __webpack_require__.r(__webpack_exports__);
         _this.form.reset();
       })["catch"](function (error) {
         console.log(error.response.data);
+
+        _this.$noty.error("Something went wrong");
       });
+      this.$refs.loader.style.display = 'none';
     }
   },
   mounted: function mounted() {
@@ -8068,6 +8080,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
 //
 //
 //
@@ -8152,8 +8165,8 @@ __webpack_require__.r(__webpack_exports__);
     submitForm: function submitForm() {
       var _this = this;
 
+      this.$refs.loader.style.display = 'block';
       this.form.post('/savePlayer').then(function (response) {
-        // this.$refs.calysta_loader.style.display = 'none';
         _this.$noty.success(response.data.message);
 
         _this.$events.fire('update_players_table');
@@ -8168,6 +8181,7 @@ __webpack_require__.r(__webpack_exports__);
           _this.$noty.error("Something went wrong please try again later.");
         }
       });
+      this.$refs.loader.style.display = 'none';
     },
     resetForm: function resetForm() {
       this.form = new Form({
@@ -8571,6 +8585,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -8605,8 +8620,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     submitForm: function submitForm() {
       var _this = this;
 
+      this.$refs.loader.style.display = 'block';
       this.form.post('/saveScholar').then(function (response) {
-        // this.$refs.calysta_loader.style.display = 'none';
         _this.$noty.success(response.data.message);
 
         _this.$events.fire('update_scholars_table');
@@ -8623,6 +8638,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.$noty.error("Something went wrong please try again later.");
         }
       });
+      this.$refs.loader.style.display = 'none';
     },
     resetForm: function resetForm() {
       this.form = new Form({
@@ -72605,6 +72621,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_1__["TableMixins"] ],
@@ -72697,6 +72714,7 @@ __webpack_require__.r(__webpack_exports__);
             // console.log(this.import_file);
         },
         uploadHistoryFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_history_file);
 
@@ -72709,13 +72727,20 @@ __webpack_require__.r(__webpack_exports__);
                 }
             ).then((response) => {
                 // console.log(response.data);
+                
                 this.import_history_file = '';
                 this.$refs.import_history_file.value = '';
                 this.$noty.success("File Imported");;
                 // this.updateTable();
             })
+            .catch(error => {
+                console.log(error.response.data);
+                this.$noty.error("Something went wrong");;
+            })
+            this.$refs.loader.style.display = 'none';
         },
         uploadFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_file);
 
@@ -72728,11 +72753,17 @@ __webpack_require__.r(__webpack_exports__);
                 }
             ).then((response) => {
                 // console.log(response.data);
+                
                 this.import_file = '';
                 this.$refs.file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
+            .catch(error => {
+                console.log(error.response.data)
+                this.$noty.error('Something went wrong');;
+            })
+            this.$refs.loader.style.display = 'none';
         },
         changeScholarPassword(data){
 
@@ -76556,6 +76587,8 @@ var render = function() {
   return _c(
     "div",
     [
+      _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+      _vm._v(" "),
       _c(
         "dialog-component",
         {
@@ -77461,6 +77494,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _c("label", { attrs: { for: "" } }, [_vm._v("TXN ID")]),
@@ -78107,6 +78142,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+    _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12" }, [
         _vm._m(0),
@@ -78695,6 +78732,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+    _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
       _c("div", { staticClass: "col-md-4" }, [
         _vm._m(0),
@@ -79200,6 +79239,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+    _vm._v(" "),
     _c(
       "div",
       {

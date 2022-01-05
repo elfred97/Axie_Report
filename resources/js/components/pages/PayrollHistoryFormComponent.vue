@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div ref="loader" id="ajax-loading"></div>
         <div class="row">
             <div class="col-md-12">
                 <label for="">TXN ID</label>
@@ -40,6 +41,7 @@ export default {
     },
     methods: {
         saveForm(){
+            this.$refs.loader.style.display = 'block';
             this.form.post('updatePayrollHistory')
             .then(response => {
                 this.$noty.success(response.data.message);
@@ -49,7 +51,9 @@ export default {
             })
             .catch(error => {
                 console.log(error.response.data);
+                this.$noty.error("Something went wrong");
             })
+            this.$refs.loader.style.display = 'none';
         }
     },
     mounted(){

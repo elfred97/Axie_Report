@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div ref="loader" id="ajax-loading"></div>
         <div id="scholars" class="section-container main-content-view bg-white">
             <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" :key="componentKey" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
                 <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></scholar-form-component>
@@ -194,6 +195,7 @@ export default {
             // console.log(this.import_file);
         },
         uploadHistoryFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_history_file);
 
@@ -206,13 +208,20 @@ export default {
                 }
             ).then((response) => {
                 // console.log(response.data);
+                
                 this.import_history_file = '';
                 this.$refs.import_history_file.value = '';
                 this.$noty.success("File Imported");;
                 // this.updateTable();
             })
+            .catch(error => {
+                console.log(error.response.data);
+                this.$noty.error("Something went wrong");;
+            })
+            this.$refs.loader.style.display = 'none';
         },
         uploadFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_file);
 
@@ -225,11 +234,17 @@ export default {
                 }
             ).then((response) => {
                 // console.log(response.data);
+                
                 this.import_file = '';
                 this.$refs.file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
             })
+            .catch(error => {
+                console.log(error.response.data)
+                this.$noty.error('Something went wrong');;
+            })
+            this.$refs.loader.style.display = 'none';
         },
         changeScholarPassword(data){
 

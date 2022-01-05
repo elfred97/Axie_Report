@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div ref="loader" id="ajax-loading"></div>
         <div class="row">
             <div class="col-md-12">
                 <label for="">Ronin Address <span class="text-danger">*</span></label>
@@ -82,9 +83,9 @@ export default {
     },
     methods:{
         submitForm(){
+            this.$refs.loader.style.display = 'block';
             this.form.post('/savePlayer')
-            .then((response) => {
-                // this.$refs.calysta_loader.style.display = 'none';
+            .then((response) => {                
                 this.$noty.success(response.data.message);
                 this.$events.fire('update_players_table');
                 this.$root.$emit('isClose', true);
@@ -98,6 +99,7 @@ export default {
                     this.$noty.error("Something went wrong please try again later.")
                 }
             });
+            this.$refs.loader.style.display = 'none';
         },
         resetForm(){
             this.form = new Form({

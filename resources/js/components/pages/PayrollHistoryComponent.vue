@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div ref="loader" id="ajax-loading"></div>
         <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="30%" :dialogTitle="'Update Payroll History Information'">
             <payroll-history-form-component v-bind:payrollData="selected_payroll" v-on:closeModal="openDialog = false"></payroll-history-form-component>
         </dialog-component>
@@ -329,6 +330,7 @@ export default {
             // console.log(this.import_file);
         },
         uploadFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_file);
 
@@ -347,7 +349,11 @@ export default {
                 this.updatePendingPayroll();
                 this.updatePaidPayroll();
             })
-
+            .catch(error => {
+                console.log(error.response.data);
+                this.$noty.error("Something went wrong");
+            })
+            this.$refs.loader.style.display = 'none';
         }
     },
     mounted(){

@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div ref="loader" id="ajax-loading"></div>
         <div class="row mt-2">
             <div class="col-md-4">
                 <label for="">Username <span class="text-danger">*</span></label>
@@ -145,8 +146,8 @@ export default {
     },
     methods:{
         submitForm(){
+            this.$refs.loader.style.display = 'block';
             this.form.post('/saveScholar').then((response) => {
-                // this.$refs.calysta_loader.style.display = 'none';
                 this.$noty.success(response.data.message);
                 this.$events.fire('update_scholars_table');
                 this.$root.$emit('isClose', true);
@@ -163,6 +164,7 @@ export default {
                     this.$noty.error("Something went wrong please try again later.")
                 }
             });
+            this.$refs.loader.style.display = 'none';
         },
         resetForm(){
             this.form = new Form({
