@@ -163,7 +163,7 @@ class GetBattleLogs extends Command
             BattleLogs::create([
                 'ronin_address' => $player['ronin_address'],
                 'account_name' => $player['account_name'],
-                'average_per_day' => $json_response['in_game_slp'] == 0 ? 0 : $json_response['in_game_slp'] / $lastClaimDays,
+                'average_per_day' => $json_response['in_game_slp'] == 0 ? 0 : ($lastClaimDays == 0 ? 0 : $json_response['in_game_slp'] / $lastClaimDays),
                 'gained_slp_today' => $gained_slp_today,
                 'unclaimed' => $json_response['in_game_slp'],
                 'claimed' => $json_response['ronin_slp'],

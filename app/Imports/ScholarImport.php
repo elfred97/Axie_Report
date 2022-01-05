@@ -3,9 +3,6 @@
 namespace App\Imports;
 
 use App\Models\Scholar;
-
-use Carbon\Carbon;
-
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithValidation;
@@ -33,7 +30,7 @@ class ScholarImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
                 'username'     => filter_var($row['username'],FILTER_SANITIZE_STRING),
                 'password'     => bcrypt('!2E4p@$$w0rDD'),
                 'date_started' => date('Y-m-d H:i:s' , strtotime($row['date_started'])),
-                'type'      => filter_var($row['type'],FILTER_SANITIZE_NUMBER_INT),
+                'type_id'      => filter_var($row['type'],FILTER_SANITIZE_NUMBER_INT),
                 'status'       => $row['status'],
             ]);
         }
