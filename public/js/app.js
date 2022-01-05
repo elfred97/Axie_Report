@@ -72600,6 +72600,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_1__["TableMixins"] ],
@@ -72627,6 +72630,7 @@ __webpack_require__.r(__webpack_exports__);
             isLoading       : false,
             fullPage        : true,
             componentKey    : 0,
+            import_history_file : '',
         }
     },
     watch : {
@@ -72678,6 +72682,36 @@ __webpack_require__.r(__webpack_exports__);
                 this.$alertify.error("Cancel")
             )
             // console.log(this.import_file);
+        },
+        importPlayerScholarHistory(){
+            this.import_history_file = this.$refs.import_history_file.files[0];
+
+            this.$alertify.confirmWithTitle("Import CSV File", "Confirm to upload file"+"</br>"+this.import_history_file.name, 
+            ()=>
+                this.uploadHistoryFile()
+            ,() =>
+                this.$alertify.error("Cancel")
+            )
+            // console.log(this.import_file);
+        },
+        uploadHistoryFile(){
+            let formData = new FormData();
+            formData.append('file', this.import_history_file);
+
+            this.axios.post('/importPlayerScholarHistory',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then((response) => {
+                // console.log(response.data);
+                this.import_history_file = '';
+                this.$refs.import_history_file.value = '';
+                this.$noty.success("File Imported");;
+                // this.updateTable();
+            })
         },
         uploadFile(){
             let formData = new FormData();
@@ -79339,6 +79373,33 @@ var render = function() {
           _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-12" }, [
             _c("div", { staticClass: "pull-right" }, [
               _c("input", {
+                ref: "import_history_file",
+                staticClass: "hide",
+                attrs: { name: "import_history_file", type: "file" },
+                on: {
+                  change: function($event) {
+                    return _vm.importPlayerScholarHistory()
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-info btn-sm",
+                  on: {
+                    click: function($event) {
+                      return _vm.$refs.import_history_file.click()
+                    }
+                  }
+                },
+                [
+                  _c("i", { staticClass: "fa fa-plus" }),
+                  _vm._v(" Import History ")
+                ]
+              ),
+              _vm._v(" "),
+              _c("input", {
                 ref: "file",
                 staticClass: "hide",
                 attrs: { name: "file", type: "file" },
@@ -81778,7 +81839,19 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "row row-space-10" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("p", { staticClass: "no-margin" }, [
+          _vm._v(
+            "\n                Total " +
+              _vm._s(_vm.axies.length) +
+              "\n            "
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -81867,16 +81940,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row row-space-10" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("p", { staticClass: "no-margin" }, [
-          _vm._v("\n                Total 3\n            ")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "pull-right" })
-      ])
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "pull-right" })
     ])
   },
   function() {

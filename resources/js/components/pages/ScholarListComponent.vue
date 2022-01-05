@@ -37,6 +37,9 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="pull-right">
+                        <input name="import_history_file" type="file" ref="import_history_file" @change="importPlayerScholarHistory()" class="hide">
+                        <button class="btn btn-info btn-sm"  @click="$refs.import_history_file.click()"><i class="fa fa-plus"></i> Import History </button>
+
                         <input name="file" type="file" ref="file" @change="importScholar()" class="hide">
                         <button class="btn btn-primary btn-sm"  @click="addScholar"><i class="fa fa-plus"></i> Add New Scholar </button>
                         <button class="btn btn-warning btn-sm"  @click="$refs.file.click()"><i class="fa fa-plus"></i> Import Scholar </button>
@@ -124,6 +127,7 @@ export default {
             isLoading       : false,
             fullPage        : true,
             componentKey    : 0,
+            import_history_file : '',
         }
     },
     watch : {
@@ -175,6 +179,36 @@ export default {
                 this.$alertify.error("Cancel")
             )
             // console.log(this.import_file);
+        },
+        importPlayerScholarHistory(){
+            this.import_history_file = this.$refs.import_history_file.files[0];
+
+            this.$alertify.confirmWithTitle("Import CSV File", "Confirm to upload file"+"</br>"+this.import_history_file.name, 
+            ()=>
+                this.uploadHistoryFile()
+            ,() =>
+                this.$alertify.error("Cancel")
+            )
+            // console.log(this.import_file);
+        },
+        uploadHistoryFile(){
+            let formData = new FormData();
+            formData.append('file', this.import_history_file);
+
+            this.axios.post('/importPlayerScholarHistory',
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then((response) => {
+                // console.log(response.data);
+                this.import_history_file = '';
+                this.$refs.import_history_file.value = '';
+                this.$noty.success("File Imported");;
+                // this.updateTable();
+            })
         },
         uploadFile(){
             let formData = new FormData();
