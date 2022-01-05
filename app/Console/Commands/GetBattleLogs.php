@@ -80,7 +80,13 @@ class GetBattleLogs extends Command
                 
                 if(!empty($player)){
                     // Check shcolar share
-                    $date_started = Carbon::parse($player['date_started']);
+                    $scholarDateStarted = Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+                                ->LEFTJOIN('players', 'history.scholar_id','=', 'players.id')
+                                ->SELECT('scholars.date_started')
+                                ->WHERE([['players.account_name', $player['account_name']]])
+                                ->FIRST()->date_started;
+
+                    $date_started = Carbon::parse($scholarDateStarted);
                     $interval = $date_started->diff(Carbon::now())->days;
                     // Check interval
                     if($interval <= 30){
