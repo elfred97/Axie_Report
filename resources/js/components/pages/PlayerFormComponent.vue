@@ -90,6 +90,7 @@ export default {
                 this.$events.fire('update_players_table');
                 this.$root.$emit('isClose', true);
                 this.form.reset();
+                this.$refs.loader.style.display = 'none';
             })
             .catch((error) => {
                 if(error.response.status == 422){
@@ -98,8 +99,9 @@ export default {
                 else{
                     this.$noty.error("Something went wrong please try again later.")
                 }
+                this.$refs.loader.style.display = 'none';
             });
-            this.$refs.loader.style.display = 'none';
+            
         },
         resetForm(){
             this.form = new Form({

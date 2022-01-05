@@ -207,18 +207,17 @@ export default {
                     }
                 }
             ).then((response) => {
-                // console.log(response.data);
-                
                 this.import_history_file = '';
                 this.$refs.import_history_file.value = '';
                 this.$noty.success("File Imported");;
-                // this.updateTable();
+                this.$refs.loader.style.display = 'none';
             })
             .catch(error => {
                 console.log(error.response.data);
-                this.$noty.error("Something went wrong");;
+                this.$noty.error("Something went wrong");
+                this.$refs.loader.style.display = 'none';
             })
-            this.$refs.loader.style.display = 'none';
+            
         },
         uploadFile(){
             this.$refs.loader.style.display = 'block';
@@ -233,18 +232,17 @@ export default {
                     }
                 }
             ).then((response) => {
-                // console.log(response.data);
-                
                 this.import_file = '';
                 this.$refs.file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
+                this.$refs.loader.style.display = 'none';
             })
             .catch(error => {
                 console.log(error.response.data)
                 this.$noty.error('Something went wrong');;
+                this.$refs.loader.style.display = 'none';
             })
-            this.$refs.loader.style.display = 'none';
         },
         changeScholarPassword(data){
 

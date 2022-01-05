@@ -7859,15 +7859,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         field: 'ronin_address',
         // Choose the Defualt Sorted Data by name
         direction: 'desc'
-      } // {
-      //     field    : 'total_slp',   // Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      // {
-      //     field    : 'account_name',   // Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      ],
+      }],
       filtersParam: {
         month: '',
         year: '',
@@ -7898,17 +7890,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     'payroll-history-form-component': _PayrollHistoryFormComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   methods: {
-    // updatePayroll(status,  data){
-    //     this.axios.post('updatePayrollHistory', {
-    //         id : data.id,
-    //         status : status
-    //     })
-    //     .then( response => {
-    //         this.$noty.success(response.data.message);
-    //         this.updatePendingPayroll();
-    //         this.updatePaidPayroll();
-    //     })
-    // },
     updatePendingPayroll: function updatePendingPayroll() {
       var _this = this;
 
@@ -7971,12 +7952,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this4.updatePendingPayroll();
 
         _this4.updatePaidPayroll();
+
+        _this4.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
         console.log(error.response.data);
 
         _this4.$noty.error("Something went wrong");
+
+        _this4.$refs.loader.style.display = 'none';
       });
-      this.$refs.loader.style.display = 'none';
     }
   },
   mounted: function mounted() {
@@ -8056,12 +8040,15 @@ __webpack_require__.r(__webpack_exports__);
         _this.$root.$emit('isClose', true);
 
         _this.form.reset();
+
+        _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
         console.log(error.response.data);
 
         _this.$noty.error("Something went wrong");
+
+        _this.$refs.loader.style.display = 'none';
       });
-      this.$refs.loader.style.display = 'none';
     }
   },
   mounted: function mounted() {
@@ -8174,14 +8161,17 @@ __webpack_require__.r(__webpack_exports__);
         _this.$root.$emit('isClose', true);
 
         _this.form.reset();
+
+        _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
         if (error.response.status == 422) {
           _this.$noty.error('Recheck Form inputs');
         } else {
           _this.$noty.error("Something went wrong please try again later.");
         }
+
+        _this.$refs.loader.style.display = 'none';
       });
-      this.$refs.loader.style.display = 'none';
     },
     resetForm: function resetForm() {
       this.form = new Form({
@@ -8629,6 +8619,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.$root.$emit('isClose', true);
 
         _this.form.reset();
+
+        _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
         if (error.response.status == 422) {
           error.response.forEach(function (element) {
@@ -8637,8 +8629,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         } else {
           _this.$noty.error("Something went wrong please try again later.");
         }
+
+        _this.$refs.loader.style.display = 'none';
       });
-      this.$refs.loader.style.display = 'none';
     },
     resetForm: function resetForm() {
       this.form = new Form({
@@ -72311,6 +72304,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_2__["TableMixins"] ],
     data () {
@@ -72395,6 +72389,7 @@ __webpack_require__.r(__webpack_exports__);
             // console.log(this.import_file);
         },
         uploadFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_file);
 
@@ -72411,6 +72406,12 @@ __webpack_require__.r(__webpack_exports__);
                 this.$refs.file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
+                this.$refs.loader.style.display = 'none';
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                this.$noty.error("Something went wrong");;
+                this.$refs.loader.style.display = 'none';
             })
         },
         uploadZipQR(){
@@ -72726,18 +72727,17 @@ __webpack_require__.r(__webpack_exports__);
                     }
                 }
             ).then((response) => {
-                // console.log(response.data);
-                
                 this.import_history_file = '';
                 this.$refs.import_history_file.value = '';
                 this.$noty.success("File Imported");;
-                // this.updateTable();
+                this.$refs.loader.style.display = 'none';
             })
             .catch(error => {
                 console.log(error.response.data);
-                this.$noty.error("Something went wrong");;
+                this.$noty.error("Something went wrong");
+                this.$refs.loader.style.display = 'none';
             })
-            this.$refs.loader.style.display = 'none';
+            
         },
         uploadFile(){
             this.$refs.loader.style.display = 'block';
@@ -72752,18 +72752,17 @@ __webpack_require__.r(__webpack_exports__);
                     }
                 }
             ).then((response) => {
-                // console.log(response.data);
-                
                 this.import_file = '';
                 this.$refs.file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
+                this.$refs.loader.style.display = 'none';
             })
             .catch(error => {
                 console.log(error.response.data)
                 this.$noty.error('Something went wrong');;
+                this.$refs.loader.style.display = 'none';
             })
-            this.$refs.loader.style.display = 'none';
         },
         changeScholarPassword(data){
 
@@ -77609,6 +77608,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+    _vm._v(" "),
     _c(
       "div",
       {

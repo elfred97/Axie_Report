@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div ref="loader" id="ajax-loading"></div>
          <!-- BEGIN #overview -->
         <div id="player" class="section-container main-content-view bg-white">
             <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Axie Account' : 'Update Axie Account Information'">
@@ -219,6 +220,7 @@ export default {
             // console.log(this.import_file);
         },
         uploadFile(){
+            this.$refs.loader.style.display = 'block';
             let formData = new FormData();
             formData.append('file', this.import_file);
 
@@ -235,6 +237,12 @@ export default {
                 this.$refs.file.value = '';
                 this.$noty.success("File Imported");;
                 this.updateTable();
+                this.$refs.loader.style.display = 'none';
+            })
+            .catch(error => {
+                console.log(error.response.data);
+                this.$noty.error("Something went wrong");;
+                this.$refs.loader.style.display = 'none';
             })
         },
         uploadZipQR(){

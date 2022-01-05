@@ -48,12 +48,14 @@ export default {
                 this.$events.fire('update_payroll_history_table');
                 this.$root.$emit('isClose', true);
                 this.form.reset();
+                this.$refs.loader.style.display = 'none';
             })
             .catch(error => {
                 console.log(error.response.data);
                 this.$noty.error("Something went wrong");
+                this.$refs.loader.style.display = 'none';
             })
-            this.$refs.loader.style.display = 'none';
+            
         }
     },
     mounted(){

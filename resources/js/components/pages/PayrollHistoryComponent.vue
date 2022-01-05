@@ -240,14 +240,6 @@ export default {
                     field    : 'ronin_address',   // Choose the Defualt Sorted Data by name
                     direction: 'desc',
                 },
-                // {
-                //     field    : 'total_slp',   // Choose the Defualt Sorted Data by name
-                //     direction: 'desc',
-                // },
-                // {
-                //     field    : 'account_name',   // Choose the Defualt Sorted Data by name
-                //     direction: 'desc',
-                // },
             ],
             filtersParam : {
                 month : '',
@@ -283,17 +275,6 @@ export default {
         'payroll-history-form-component' : PayrollHistoryFormComponent
     },
     methods: {
-        // updatePayroll(status,  data){
-        //     this.axios.post('updatePayrollHistory', {
-        //         id : data.id,
-        //         status : status
-        //     })
-        //     .then( response => {
-        //         this.$noty.success(response.data.message);
-        //         this.updatePendingPayroll();
-        //         this.updatePaidPayroll();
-        //     })
-        // },
         updatePendingPayroll(){
             Vue.nextTick( () => this.$refs.pending_payroll.refresh())
         },
@@ -348,12 +329,13 @@ export default {
                 this.$noty.success("File Imported");
                 this.updatePendingPayroll();
                 this.updatePaidPayroll();
+                this.$refs.loader.style.display = 'none';
             })
             .catch(error => {
                 console.log(error.response.data);
                 this.$noty.error("Something went wrong");
+                this.$refs.loader.style.display = 'none';
             })
-            this.$refs.loader.style.display = 'none';
         }
     },
     mounted(){
