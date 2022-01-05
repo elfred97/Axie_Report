@@ -72603,6 +72603,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_1__["TableMixins"] ],
@@ -79372,32 +79374,37 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "col-lg-4 col-md-4 col-sm-12" }, [
             _c("div", { staticClass: "pull-right" }, [
-              _c("input", {
-                ref: "import_history_file",
-                staticClass: "hide",
-                attrs: { name: "import_history_file", type: "file" },
-                on: {
-                  change: function($event) {
-                    return _vm.importPlayerScholarHistory()
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-info btn-sm",
-                  on: {
-                    click: function($event) {
-                      return _vm.$refs.import_history_file.click()
-                    }
-                  }
-                },
-                [
-                  _c("i", { staticClass: "fa fa-plus" }),
-                  _vm._v(" Import History ")
-                ]
-              ),
+              _vm.$store.state.global_guard_username == "mhardz" ||
+              _vm.$store.state.global_guard_username == "admin"
+                ? _c("span", [
+                    _c("input", {
+                      ref: "import_history_file",
+                      staticClass: "hide",
+                      attrs: { name: "import_history_file", type: "file" },
+                      on: {
+                        change: function($event) {
+                          return _vm.importPlayerScholarHistory()
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info btn-sm",
+                        on: {
+                          click: function($event) {
+                            return _vm.$refs.import_history_file.click()
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "fa fa-plus" }),
+                        _vm._v(" Import History ")
+                      ]
+                    )
+                  ])
+                : _vm._e(),
               _vm._v(" "),
               _c("input", {
                 ref: "file",
@@ -108277,7 +108284,8 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    global_guard_type: global_guard_type
+    global_guard_type: global_guard_type,
+    global_guard_username: global_guard_username
   }
 });
 

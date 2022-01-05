@@ -37,8 +37,10 @@
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-12">
                     <div class="pull-right">
-                        <input name="import_history_file" type="file" ref="import_history_file" @change="importPlayerScholarHistory()" class="hide">
-                        <button class="btn btn-info btn-sm"  @click="$refs.import_history_file.click()"><i class="fa fa-plus"></i> Import History </button>
+                        <span v-if="$store.state.global_guard_username == 'mhardz' || $store.state.global_guard_username == 'admin'">
+                            <input name="import_history_file" type="file" ref="import_history_file" @change="importPlayerScholarHistory()" class="hide">
+                            <button class="btn btn-info btn-sm"  @click="$refs.import_history_file.click()"><i class="fa fa-plus"></i> Import History </button>
+                        </span>
 
                         <input name="file" type="file" ref="file" @change="importScholar()" class="hide">
                         <button class="btn btn-primary btn-sm"  @click="addScholar"><i class="fa fa-plus"></i> Add New Scholar </button>
