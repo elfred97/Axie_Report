@@ -38,8 +38,8 @@ class ScholarImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
     public function rules(): array
     {
         return [
-            '*.email' => ['unique:scholars,email'],
-            '*.username' => ['unique:scholars,username']
+            '*.email' => ['unique:scholars'],
+            '*.username' => ['unique:scholars']
         ];
     }
     
