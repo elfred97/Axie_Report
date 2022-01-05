@@ -40,6 +40,6 @@ class IsUniqueExceptDeleted implements Rule
      */
     public function message()
     {
-        return 'The username must be unique';
+        return 'The username has already been taken';
     }
 }
