@@ -15,6 +15,7 @@ use App\Models\Scholar;
 use App\Models\Payroll;
 use Illuminate\Http\Request;
 use App\Imports\ScholarImport;
+use App\Imports\HistoryImport;
 use App\Models\PlayerScholarHistory;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,6 +39,11 @@ class HomeController extends Controller
     public function index()
     {
         return view('main');
+    }
+
+    public function import_history(Request $request){
+        Excel::import(new HistoryImport, $request->file);
+        return "File Uploaded";
     }
 
     public function import(Request $request){

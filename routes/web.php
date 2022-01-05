@@ -83,6 +83,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
         Route::post('/savePlayer', 'PlayerController@savePlayer');
         Route::post('/deletePlayer', 'PlayerController@deletePlayer');
 
+        Route::post('/importPlayerScholarHistory', [HomeController::class, 'import_history'])->name('scholar.import_history');
         Route::post('/importScholar', [HomeController::class,'import'])->name('scholar.import');
         Route::get('/getScholars', [HomeController::class,'getScholars'])->name('scholar.getScholars');
         Route::post('/saveScholar', [HomeController::class,'save'])->name('scholar.save');
