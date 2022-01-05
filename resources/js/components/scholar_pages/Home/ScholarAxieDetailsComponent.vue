@@ -46,7 +46,7 @@
         <div class="row row-space-10">
             <div class="col-md-6">
                 <p class="no-margin">
-                    Total 3
+                    Total {{ axies.length}}
                 </p>
             </div>
             <div class="col-md-6">

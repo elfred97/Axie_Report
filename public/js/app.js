@@ -81778,7 +81778,19 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "row row-space-10" }, [
+      _c("div", { staticClass: "col-md-6" }, [
+        _c("p", { staticClass: "no-margin" }, [
+          _vm._v(
+            "\n                Total " +
+              _vm._s(_vm.axies.length) +
+              "\n            "
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -81867,16 +81879,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row row-space-10" }, [
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("p", { staticClass: "no-margin" }, [
-          _vm._v("\n                Total 3\n            ")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-6" }, [
-        _c("div", { staticClass: "pull-right" })
-      ])
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "pull-right" })
     ])
   },
   function() {
