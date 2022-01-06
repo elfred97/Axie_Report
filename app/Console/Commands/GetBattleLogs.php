@@ -5,9 +5,7 @@ namespace App\Console\Commands;
 use App\Models\BattleLogs;
 use App\Models\Notification;
 use App\Models\NotificationSettings;
-use App\Models\Payroll;
 use App\Models\Player;
-use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -48,7 +46,9 @@ class GetBattleLogs extends Command
     {
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        $players = Player::all();
+        $players = Player::select('ronin_address','account_name','penalty','players.id as p_id')
+                        ->join('player_scholar_histories', 'players.id', '=', 'player_scholar_histories.player_id')
+                        ->get();
 
 
         foreach($players as $player){
@@ -136,14 +136,9 @@ class GetBattleLogs extends Command
                         ->WHERE('players.account_name', '=', $player['account_name'])
                         ->UPDATE(
                             [
-                                'scholars.status' => 'Terminated'
+                                'scholars.status' => 'TERMINATED'
                             ]
                         );
-
-                        //Remove relationship for the account to be available again for other scholar
-                        $history = PlayerScholarHistory::WHERE('player_id', $player['id'])->FIRST();
-                        if(!empty($history))
-                            $history->DELETE();
 
                         Notification::CREATE([
                             'account_name' => $player['account_name'],
@@ -204,6 +199,6 @@ class GetBattleLogs extends Command
 
         }
 
-        $this->line('API Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
+        $this->line('Fetching Battle Logs API Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
     }
 }

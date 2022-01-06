@@ -33,10 +33,11 @@ class HistoryImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
             $ifExist = PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->count();
             $scholarObj = $ifExist > 0 ? Scholar::WHERE('email',$scholarEmail)->skip(1)->first() : Scholar::WHERE('email',$scholarEmail)->first();
 
-            PlayerScholarHistory::CREATE([
-                'scholar_id'   => $scholarObj->id,
-                'player_id'   => $player->id
-            ]);
+            if($scholar['status'] != 'TERMINATED' && $scholar['status'] != 'RESIGNED')
+                PlayerScholarHistory::CREATE([
+                    'scholar_id'   => $scholarObj->id,
+                    'player_id'   => $player->id
+                ]);    
 
             
         }
