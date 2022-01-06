@@ -192,7 +192,7 @@ class GetBattleLogs extends Command
                 'lifetime_slp' => $json_response['lifetime_slp'],
                 'mmr' => $json_response['mmr'],
                 'rank' => $json_response['rank'],
-                'cache_last_updated' => $json_response['cache_last_updated']
+                'cache_last_updated' => Carbon::parse($json_response['cache_last_updated'])
             ]);
 
         }
