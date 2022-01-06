@@ -26,10 +26,13 @@
                         </label>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="col-lg-2 col-md-2 col-sm-12">
                     <type-component :type="filtersParam.type" @updateType="filtersParam.type = $event"></type-component>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12">
+                <div class="col-lg-2 col-md-2 col-sm-12">
+                    <status-component :status="filtersParam.status" @updateStatus="filtersParam.status = $event"></status-component>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-12">
                     <div class="dataTables_length" id="data-table-default_length">
                         <label>Search 
                             <input type="text" aria-controls="data-table-default" placeholder="Search Scholars" class="custom-input custom-input-sm form-control form-control-sm" v-model="filtersParam.search" @change="updateTable()">
@@ -123,7 +126,8 @@ export default {
             selected_scholar: {},            
             filtersParam    : {
                 type: "",
-                search : ""
+                search : "",
+                status : "",
             },
             openDialog: false,
             actionType      : 'new',
@@ -136,7 +140,10 @@ export default {
     watch : {
         'filtersParam.type' : function(newVal){
             this.updateTable();
-        }
+        },
+        'filtersParam.status' : function(newVal){
+            this.updateTable();
+        },
     },
     components:{
         'scholar-form-component' : ScholarFormComponent

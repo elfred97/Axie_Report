@@ -55,22 +55,7 @@
             </div>
 
             <div class="col-md-4">                
-                <div class="dataTables_length" id="data-table-default_length">
-                    <label>Status
-                        <select 
-                            name="data-table-default_length" 
-                            aria-controls="data-table-default" 
-                            class="custom-select custom-select-sm form-control form-control-sm"
-                            v-model="form.status"
-                            >
-                                <option value="Playing">Playing</option>
-                                <option value="Resigned">Resigned</option>
-                                <option value="Terminated">Terminated</option>
-                                <option value="For QR">For QR</option>
-                                <option value="No Axie">No Axie</option>
-                        </select> 
-                    </label>
-                </div>
+                <status-component :action="action" :status="form.status" @updateStatus="form.status = $event"></status-component>
             </div>
         </div>
         <hr>
@@ -132,7 +117,8 @@ export default {
                 email_password    : '',
             }),
             options           : [],
-            selected          : {}
+            selected          : {},
+            action            : "new",
         }
     },
     watch : {
@@ -141,6 +127,7 @@ export default {
                 this.form = new Form(newVal);
                 this.selected = newVal;
                 this.searchPlayer();
+                this.action = "update";
             }
         }
     },
@@ -208,10 +195,12 @@ export default {
     mounted(){
         this.searchPlayer();
         if(this.scholarData){
-            this.form = new Form(this.scholarData);            
+            this.form = new Form(this.scholarData);
+            this.action = "new";
         }
         else{
             this.resetForm();
+            this.action = "update";
         }
     }
 }

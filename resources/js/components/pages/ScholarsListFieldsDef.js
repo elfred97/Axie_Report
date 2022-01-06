@@ -38,18 +38,21 @@ export default [
       name      : "status",
       title     : 'Status',
       titleClass: 'center aligned',
-      dataClass : 'center aligned uppercase',
+      dataClass : 'center aligned',
+      sortField: "status",
       formatter : value => {
-        if(value == 'Playing')
-            return '<span class="text-primary text-bold">'+value+'</span>';
-        else if(value == 'Resigned')
-            return '<span class="text-info text-bold">'+value+'</span>';
-        else if(value == 'No Axie')
-            return '<span class="text-warning text-bold">'+value+'</span>';
-        else if(value == 'Terminated')
-            return '<span class="text-danger text-bold">'+value+'</span>';        
+        if(value.trim().toUpperCase() == 'PLAYING')
+            return '<span class="text-primary text-bold">'+value.trim().toUpperCase()+'</span>';
+        else if(value.trim().toUpperCase() == 'RESIGNED')
+            return '<span class="text-info text-bold">'+value.trim().toUpperCase()+'</span>';
+        else if(value.trim().toUpperCase() == 'NO AXIE')
+            return '<span class="text-warning text-bold">'+value.trim().toUpperCase()+'</span>';
+        else if(value.trim().toUpperCase() == 'TERMINATED')
+            return '<span class="text-danger text-bold">'+value.trim().toUpperCase()+'</span>';
+          else if(value.trim().toUpperCase() == 'DELIVERED')
+            return '<span class="text-success text-bold">'+value.trim().toUpperCase()+'</span>';
         else
-            return '<span class="text-default text-bold">'+value+'</span>';
+            return '<span class="text-default text-bold">'+value.trim().toUpperCase()+'</span>';
       }
     },
     {
