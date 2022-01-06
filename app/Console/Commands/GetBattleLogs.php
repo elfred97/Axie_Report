@@ -81,7 +81,7 @@ class GetBattleLogs extends Command
                 if(!empty($player)){
                     // Check shcolar share
                     $scholarDateStarted = Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
-                                ->LEFTJOIN('players', 'history.scholar_id','=', 'players.id')
+                                ->LEFTJOIN('players', 'history.player_id','=', 'players.id')
                                 ->SELECT('scholars.date_started')
                                 ->WHERE([['players.account_name', $player['account_name']]])
                                 ->FIRST()->date_started;

@@ -60,6 +60,11 @@
 				<div class="brand">
 					<span class="logo"><img src="../img/pet-logo-white.png" alt=""></span>
 					<b>Axie Management Tracker</b>
+					<?php 
+					$lastClaimDate = Carbon\Carbon::parse('2021-12-13');
+            $lastClaimDays = $lastClaimDate->diff(Carbon\Carbon::now())->days;
+					echo $lastClaimDays;
+					?>
 					<!-- <small>responsive bootstrap 4 admin template</small> -->
 				</div>
 			</div>
