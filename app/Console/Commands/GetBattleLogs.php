@@ -136,7 +136,7 @@ class GetBattleLogs extends Command
                         ->WHERE('players.account_name', '=', $player['account_name'])
                         ->UPDATE(
                             [
-                                'scholars.status' => 'Terminated'
+                                'scholars.status' => 'TERMINATED'
                             ]
                         );
 
