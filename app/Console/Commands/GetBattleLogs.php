@@ -191,7 +191,8 @@ class GetBattleLogs extends Command
                 'scholar_slp'      => $json_response['in_game_slp'] == 0 ? 0 : $json_response['in_game_slp'] - $managerSLP,
                 'lifetime_slp' => $json_response['lifetime_slp'],
                 'mmr' => $json_response['mmr'],
-                'rank' => $json_response['rank']
+                'rank' => $json_response['rank'],
+                'cache_last_updated' => $json_response['cache_last_updated']
             ]);
 
         }

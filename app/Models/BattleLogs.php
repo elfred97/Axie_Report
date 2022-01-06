@@ -33,6 +33,7 @@ class BattleLogs extends Model
         'claimed',
         'raw_total',
         'unclaimed',
-        'lifetime_slp'
+        'lifetime_slp',
+        'cache_last_updated'
 	];
 }
