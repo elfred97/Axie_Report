@@ -154,7 +154,7 @@ class FileController extends Controller
         $queryRequest   = array_slice($request->all(), 3);
         $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
-        $latest_id_per_account = DB::table('report as r')
+        $latest_id_per_account = DB::table('battle_logs as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
 
         if($request->date == 'today'){
