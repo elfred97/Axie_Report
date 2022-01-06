@@ -48,7 +48,7 @@ class GetBattleLogs extends Command
     {
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        $players = Player::all();
+        $players = Player::select('ronin_address','account_name','penalty','players.id as p_id')->with('histories')->get();
 
 
         foreach($players as $player){
@@ -139,11 +139,6 @@ class GetBattleLogs extends Command
                                 'scholars.status' => 'Terminated'
                             ]
                         );
-
-                        //Remove relationship for the account to be available again for other scholar
-                        $history = PlayerScholarHistory::WHERE('player_id', $player['id'])->FIRST();
-                        if(!empty($history))
-                            $history->DELETE();
 
                         Notification::CREATE([
                             'account_name' => $player['account_name'],

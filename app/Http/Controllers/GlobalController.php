@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Type;
 use App\Models\Payroll;
+use App\Models\Player;
 use App\Models\Scholar;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
