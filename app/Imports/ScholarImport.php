@@ -31,7 +31,7 @@ class ScholarImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
                 'password'     => bcrypt('!2E4p@$$w0rDD'),
                 'date_started' => date('Y-m-d H:i:s' , strtotime($row['date_started'])),
                 'type_id'      => filter_var($row['type'],FILTER_SANITIZE_NUMBER_INT),
-                'status'       => $row['status'],
+                'status'       => strtoupper($row['status']),
             ]);
         }
     }
