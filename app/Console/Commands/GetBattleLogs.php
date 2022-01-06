@@ -48,7 +48,9 @@ class GetBattleLogs extends Command
     {
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        $players = Player::select('ronin_address','account_name','penalty','players.id as p_id')->with('histories')->get();
+        $players = DB::table('players')
+                        ->join('player_scholar_histories', 'players.id', '=', 'player_scholar_histories.player_id')
+                        ->select('ronin_address','account_name','penalty','players.id as p_id')->get();
 
 
         foreach($players as $player){
@@ -199,6 +201,6 @@ class GetBattleLogs extends Command
 
         }
 
-        $this->line('API Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
+        $this->line('Fetching Battle Logs API Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
     }
 }
