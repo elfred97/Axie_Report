@@ -5,7 +5,9 @@ namespace App\Console\Commands;
 use App\Models\BattleLogs;
 use App\Models\Notification;
 use App\Models\NotificationSettings;
+use App\Models\Payroll;
 use App\Models\Player;
+use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -137,6 +139,12 @@ class GetBattleLogs extends Command
                                 'scholars.status' => 'Terminated'
                             ]
                         );
+
+                        //Remove relationship for the account to be available again for other scholar
+                        $history = PlayerScholarHistory::WHERE('player_id', $player['id'])->FIRST();
+                        if(!empty($history))
+                            $history->DELETE();
+
                         Notification::CREATE([
                             'account_name' => $player['account_name'],
                             'category'     => 3, // Scholar Terminated

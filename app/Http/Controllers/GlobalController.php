@@ -92,6 +92,10 @@ class GlobalController extends Controller
         return User::WHERE([['username', '!=', Auth::user()->username], ['status', '!=', 3]])->GET();
     }
 
+    public function getStatuses(){
+        return DB::table('scholars')->select('status')->distinct('status')->get();
+    }
+
     public function updateAccountInfo(Request $request){
         try {
             $user = User::UPDATEORCREATE(

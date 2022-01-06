@@ -88,6 +88,8 @@ Route::middleware(['PreventBackHistory'])->group(function(){
         Route::get('/getScholars', [HomeController::class,'getScholars'])->name('scholar.getScholars');
         Route::post('/saveScholar', [HomeController::class,'save'])->name('scholar.save');
 
+        Route::get('/getStatuses', 'GlobalController@getStatuses');
+
         Route::get('/getType', 'GlobalController@getType');
         Route::post('/deleteType', 'GlobalController@deleteType');
         Route::post('/restoreType', 'GlobalController@restoreType');
