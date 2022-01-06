@@ -9,7 +9,6 @@ use App\Models\Player;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 
 class GetBattleLogs extends Command
@@ -47,9 +46,9 @@ class GetBattleLogs extends Command
     {
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        $players = DB::table('players')
+        $players = Player::select('ronin_address','account_name','penalty','players.id as p_id')
                         ->join('player_scholar_histories', 'players.id', '=', 'player_scholar_histories.player_id')
-                        ->select('ronin_address','account_name','penalty','players.id as p_id')->get();
+                        ->get();
 
 
         foreach($players as $player){
