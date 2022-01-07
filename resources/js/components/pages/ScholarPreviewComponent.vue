@@ -37,18 +37,54 @@
             </div>
         </div>
         <hr>
+        <h5>Scholar History</h5>
         <div class="row h-15">
-            <div class="col-md-6"></div>
-            <div class="col-md-3"></div>
-            <div class="col-md-3"></div>
+            <div class="col-md-12">
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="(history, index) in scholarHistory">
+                        <div class="row no-margin">
+                            <div class="col-md-6">{{ history.account_name }}</div>
+                            <div class="col-md-3">{{ history.h_created | formatDate }}</div>
+                            <div class="col-md-3">
+                                <span v-if="history.status == 1">Active</span>
+                                <span v-else-if="history.status == 0">Inactive</span>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
 <script>
 export default {
     props: ['scholarData'],
+    data(){
+        return {
+            scholarHistory : {}
+        }
+    },
+    // watch: {
+    //     'scholarData' : function(newVal){
+    //         if(newVal){
+                
+    //         }
+    //     }
+    // },
     methods: {
-        getPlayerScholarHistory(){},
+        getPlayerScholarHistory(){
+            this.axios.get('getScholarHistories', {
+                params : {
+                    id : this.scholarData.id
+                }
+            })
+            .then(response => {
+                this.scholarHistory = response.data;
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            })
+        },
     },
     mounted() {
         this.getPlayerScholarHistory();

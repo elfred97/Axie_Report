@@ -60,7 +60,7 @@
         </div>
         <hr>
         <div class="row mt-2">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <label for="">Axie Account</label>
                 <multi-select 
                     v-model="selected"

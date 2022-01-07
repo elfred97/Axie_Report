@@ -8798,10 +8798,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
+  data: function data() {
+    return {
+      scholarHistory: {}
+    };
+  },
+  // watch: {
+  //     'scholarData' : function(newVal){
+  //         if(newVal){
+  //         }
+  //     }
+  // },
   methods: {
-    getPlayerScholarHistory: function getPlayerScholarHistory() {}
+    getPlayerScholarHistory: function getPlayerScholarHistory() {
+      var _this = this;
+
+      this.axios.get('getScholarHistories', {
+        params: {
+          id: this.scholarData.id
+        }
+      }).then(function (response) {
+        _this.scholarHistory = response.data;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    }
   },
   mounted: function mounted() {
     this.getPlayerScholarHistory();
@@ -79279,7 +79314,7 @@ var render = function() {
     _c("div", { staticClass: "row mt-2" }, [
       _c(
         "div",
-        { staticClass: "col-md-4" },
+        { staticClass: "col-md-6" },
         [
           _c("label", { attrs: { for: "" } }, [_vm._v("Axie Account")]),
           _vm._v(" "),
@@ -79952,23 +79987,41 @@ var render = function() {
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _vm._m(0)
+    _c("h5", [_vm._v("Scholar History")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row h-15" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c(
+          "ul",
+          { staticClass: "list-group" },
+          _vm._l(_vm.scholarHistory, function(history, index) {
+            return _c("li", { staticClass: "list-group-item" }, [
+              _c("div", { staticClass: "row no-margin" }, [
+                _c("div", { staticClass: "col-md-6" }, [
+                  _vm._v(_vm._s(history.account_name))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  _vm._v(_vm._s(_vm._f("formatDate")(history.h_created)))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-md-3" }, [
+                  history.status == 1
+                    ? _c("span", [_vm._v("Active")])
+                    : history.status == 0
+                    ? _c("span", [_vm._v("Inactive")])
+                    : _vm._e()
+                ])
+              ])
+            ])
+          }),
+          0
+        )
+      ])
+    ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row h-15" }, [
-      _c("div", { staticClass: "col-md-6" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

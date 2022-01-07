@@ -214,14 +214,14 @@ label{
     font-size: 12px !important;
 }
 .multiselect__tags{
-    padding: 4px 40px 0 8px !important;
+    padding: 4px 10px 0 8px !important;
 }
 .multiselect__tags{
     min-height: 1px !important;
 }
-.multiselect, .multiselect__select {
+/* .multiselect, .multiselect__select {
     height: 30px !important;
-}
+} */
 
 .input-group .btn{
     border-radius: 0 !important;
