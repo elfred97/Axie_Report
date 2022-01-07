@@ -130,7 +130,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
         Route::get('/','GlobalController@redirectMain');
 
-        Route::post('/getScholarHistories','GlobalController@getScholarPlayingHistories');
+        Route::get('/getScholarHistories','GlobalController@getScholarPlayingHistories');
 
         Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
 
