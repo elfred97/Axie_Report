@@ -47,8 +47,8 @@ class GetBattleLogs extends Command
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
         $players = Player::select('ronin_address','account_name','penalty','players.id as p_id')
-                        ->join('player_scholar_histories', 'players.id', '=', 'player_scholar_histories.player_id')
-                        ->get();
+                    ->join('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
+                    ->where('psh.status',1)->get();
 
 
         foreach($players as $player){

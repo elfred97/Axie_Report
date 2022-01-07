@@ -27,7 +27,7 @@ class PlayerController extends Controller
             array_push($where, ['type_id', '=', $request->type]);
         if ($request->search)
             array_push($where, ['players.account_name', 'like', '%'.$request->search.'%']);
-
+        
             $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         
@@ -36,7 +36,8 @@ class PlayerController extends Controller
                 'players.*',
                 DB::RAW('CONCAT(s.first_name, " ", s.last_name) as player_name'),
                 't.name as type_name',
-                's.status'
+                's.status',
+                'psh.status as history_stat'
             )
             ->LEFTJOIN('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
