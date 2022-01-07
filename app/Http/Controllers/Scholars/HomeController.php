@@ -54,6 +54,7 @@ class HomeController extends Controller
     public function getScholars(Request $request){
         $queryRequest   = array_slice($request->all(), 3);
         $type  = $request->type;
+        $status  = $request->status;
         $where = [];
 
         if ($request->search)
@@ -74,6 +75,9 @@ class HomeController extends Controller
             ->where($where)
             ->when($type, function ($q) use ($type) {
                 $q->whereRaw('scholars.type_id=' . (int)$type);
+            })
+            ->when($status, function ($q) use ($status) {
+                $q->where('scholars.status','=',$status);
             })
             ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);

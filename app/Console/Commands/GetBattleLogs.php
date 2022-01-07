@@ -6,6 +6,7 @@ use App\Models\BattleLogs;
 use App\Models\Notification;
 use App\Models\NotificationSettings;
 use App\Models\Player;
+use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -46,9 +47,9 @@ class GetBattleLogs extends Command
     {
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        $players = Player::select('ronin_address','account_name','penalty','players.id as p_id')
-                        ->join('player_scholar_histories', 'players.id', '=', 'player_scholar_histories.player_id')
-                        ->get();
+        $players = Player::select('ronin_address','account_name','penalty')
+                    ->join('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
+                    ->where('psh.status',1)->get();
 
 
         foreach($players as $player){
@@ -129,24 +130,26 @@ class GetBattleLogs extends Command
                     }
 
                     // Update Scholar Status
-                    if($penalty > 3)
-                    {
-                        Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
-                        ->LEFTJOIN('players', 'players.id', '=', 'history.player_id')
-                        ->WHERE('players.account_name', '=', $player['account_name'])
-                        ->UPDATE(
-                            [
-                                'scholars.status' => 'TERMINATED'
-                            ]
-                        );
+                    // if($penalty > 3)
+                    // {
+                    //     Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
+                    //     ->LEFTJOIN('players', 'players.id', '=', 'history.player_id')
+                    //     ->WHERE('players.account_name', '=', $player['account_name'])
+                    //     ->UPDATE(
+                    //         [
+                    //             'scholars.status' => 'TERMINATED'
+                    //         ]
+                    //     );
 
-                        Notification::CREATE([
-                            'account_name' => $player['account_name'],
-                            'category'     => 3, // Scholar Terminated
-                            'status'       => 1,
-                            'status_scholar' => 1,
-                        ]);
-                    }
+                    //     Notification::CREATE([
+                    //         'account_name' => $player['account_name'],
+                    //         'category'     => 3, // Scholar Terminated
+                    //         'status'       => 1,
+                    //         'status_scholar' => 1,
+                    //     ]);
+
+                    //     PlayerScholarHistory::WHERE('player_id',$player['p_id'])->UPDATE(['status' => 0]);
+                    // }
                     // Update Player
                     Player::WHERE('account_name', $player['account_name'])->update(
                         [
