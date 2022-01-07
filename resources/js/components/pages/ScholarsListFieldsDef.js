@@ -13,7 +13,7 @@ export default [
       sortField: "type",
     },
     {
-      name : "scholar_name",
+      name : "scholar_name_field",
       title: 'Scholar Name',
       sortField: "scholar_name",
     },

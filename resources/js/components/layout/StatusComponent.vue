@@ -49,7 +49,7 @@ export default {
         },
         checkAction(status_data){
             let status = status_data;
-            if(this.action == "update")
+            if(this.action == "new")
             {
                 if(status != 'TERMINATED' && status != 'RESIGNED')
                     return true;

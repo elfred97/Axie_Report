@@ -6040,7 +6040,7 @@ __webpack_require__.r(__webpack_exports__);
     checkAction: function checkAction(status_data) {
       var status = status_data;
 
-      if (this.action == "update") {
+      if (this.action == "new") {
         if (status != 'TERMINATED' && status != 'RESIGNED') return true;else return false;
       } else return true;
     }
@@ -8738,6 +8738,73 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.resetForm();
       this.action = "update";
     }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['scholarData'],
+  methods: {
+    getPlayerScholarHistory: function getPlayerScholarHistory() {}
+  },
+  mounted: function mounted() {
+    this.getPlayerScholarHistory();
   }
 });
 
@@ -72574,9 +72641,20 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ScholarFormComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarFormComponent.vue */ "./resources/js/components/pages/ScholarFormComponent.vue");
-/* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
-/* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
-/* harmony import */ var _ScholarsListFieldsDef_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ScholarsListFieldsDef.js */ "./resources/js/components/pages/ScholarsListFieldsDef.js");
+/* harmony import */ var _ScholarPreviewComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarPreviewComponent.vue */ "./resources/js/components/pages/ScholarPreviewComponent.vue");
+/* harmony import */ var _TableMixins__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./TableMixins */ "./resources/js/components/pages/TableMixins.js");
+/* harmony import */ var _TableStyle_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./TableStyle.js */ "./resources/js/components/pages/TableStyle.js");
+/* harmony import */ var _ScholarsListFieldsDef_js__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./ScholarsListFieldsDef.js */ "./resources/js/components/pages/ScholarsListFieldsDef.js");
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -72687,10 +72765,10 @@ __webpack_require__.r(__webpack_exports__);
 
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_1__["TableMixins"] ],
+    mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_2__["TableMixins"] ],
     data () {
         return {
-            fields     : _ScholarsListFieldsDef_js__WEBPACK_IMPORTED_MODULE_3__["default"],
+            fields     : _ScholarsListFieldsDef_js__WEBPACK_IMPORTED_MODULE_4__["default"],
             perPage    : 15,
             data       : [],
             import_file: '',
@@ -72701,18 +72779,21 @@ __webpack_require__.r(__webpack_exports__);
                     direction: "desc"    // Sorting Direction
                 }
             ],
-            css             : _TableStyle_js__WEBPACK_IMPORTED_MODULE_2__["TableStyle"],
-            selected_scholar: {},            
+            css             : _TableStyle_js__WEBPACK_IMPORTED_MODULE_3__["TableStyle"],
+            selected_scholar: {},
+            selected_scholar_preview : {},
             filtersParam    : {
                 type: "",
                 search : "",
                 status : "",
             },
             openDialog: false,
+            openDialog_preview: false,
             actionType      : 'new',
             isLoading       : false,
             fullPage        : true,
             componentKey    : 0,
+            componentKey2    : 1,
             import_history_file : '',
         }
     },
@@ -72725,14 +72806,15 @@ __webpack_require__.r(__webpack_exports__);
         },
     },
     components:{
-        'scholar-form-component' : _ScholarFormComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+        'scholar-form-component'   : _ScholarFormComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+        'scholar-preview-component': _ScholarPreviewComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     },
     methods:{
         addScholar(){
             this.openDialog = true;
             this.actionType = 'new';
             this.selected_scholar = {};
-            this.componentKey += 1;
+            this.componentKey += 2;
         },
         editScholar(data){
             this.selected_scholar = data;
@@ -72832,6 +72914,11 @@ __webpack_require__.r(__webpack_exports__);
         },
         changeScholarPassword(data){
 
+        },
+        viewScholarInfo(data){
+            this.selected_scholar_preview = data;
+            this.openDialog_preview = true;
+            this.componentKey2 += 2;
         }
     },
     mounted(){
@@ -75458,7 +75545,7 @@ var render = function() {
                 _vm._v(
                   " " +
                     _vm._s(_vm._f("formatDate")(_vm.rowData.last_claim_date)) +
-                    "                    \n                "
+                    "\n                "
                 )
               ])
             ])
@@ -79198,7 +79285,7 @@ var render = function() {
           _vm._v(" "),
           _c("multi-select", {
             attrs: {
-              multiple: false,
+              multiple: true,
               "track-by": "id",
               "show-label": false,
               options: _vm.options,
@@ -79230,7 +79317,7 @@ var render = function() {
       ),
       _vm._v(" "),
       _vm.form.ronin_wallet
-        ? _c("div", { staticClass: "col-md-4" }, [
+        ? _c("div", { staticClass: "col-md-6" }, [
             _c("label", { attrs: { for: "" } }, [_vm._v("Ronin Wallet")]),
             _vm._v(" "),
             _c("p", { staticClass: "no-margin text-content" }, [
@@ -79382,6 +79469,34 @@ var render = function() {
               on: {
                 closeModal: function($event) {
                   _vm.openDialog = false
+                }
+              }
+            })
+          ],
+          1
+        ),
+        _vm._v(" "),
+        _c(
+          "dialog-component",
+          {
+            key: _vm.componentKey2,
+            attrs: {
+              isOpen: _vm.openDialog_preview,
+              modalWidth: "50%",
+              dialogTitle: "Scholar Details"
+            },
+            on: {
+              isClose: function($event) {
+                _vm.openDialog_preview = false
+              }
+            }
+          },
+          [
+            _c("scholar-preview-component", {
+              attrs: { scholarData: _vm.selected_scholar_preview },
+              on: {
+                closeModal: function($event) {
+                  _vm.openDialog_preview = false
                 }
               }
             })
@@ -79651,6 +79766,33 @@ var render = function() {
                 },
                 scopedSlots: _vm._u([
                   {
+                    key: "scholar_name_field",
+                    fn: function(props) {
+                      return _c("div", {}, [
+                        _c("div", [
+                          _c(
+                            "span",
+                            {
+                              staticClass: "text-success onHover",
+                              on: {
+                                click: function($event) {
+                                  return _vm.viewScholarInfo(props.rowData)
+                                }
+                              }
+                            },
+                            [
+                              _vm._v(
+                                "\n                                " +
+                                  _vm._s(props.rowData.scholar_name) +
+                                  "\n                            "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }
+                  },
+                  {
                     key: "action",
                     fn: function(props) {
                       return _c("div", {}, [
@@ -79722,6 +79864,111 @@ var render = function() {
   ])
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "no-margin text-content" }, [
+          _vm._v(_vm._s(_vm.scholarData.scholar_name))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "no-margin text-content" }, [
+          _vm._v(_vm._s(_vm.scholarData.email))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Date Started")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "no-margin text-content" }, [
+          _vm._v(_vm._s(_vm._f("formatDate")(_vm.scholarData.date_started)))
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "no-margin text-content" }, [
+          _vm._v(_vm._s(_vm.scholarData.type))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "no-margin text-content" }, [
+          _vm._v(_vm._s(_vm.scholarData.status))
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-4" }, [
+        _c("label", { attrs: { for: "" } }, [_vm._v("Username")]),
+        _vm._v(" "),
+        _c("p", { staticClass: "no-margin text-content" }, [
+          _vm._v(_vm._s(_vm.scholarData.username))
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.scholarData.ronin_wallet
+      ? _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("label", { attrs: { for: "" } }, [_vm._v("Ronin Wallet")]),
+            _vm._v(" "),
+            _c("p", { staticClass: "no-margin text-content" }, [
+              _vm._v(_vm._s(_vm.scholarData.ronin_wallet))
+            ])
+          ])
+        ])
+      : _vm._e(),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row h-15" }, [
+      _c("div", { staticClass: "col-md-6" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-3" })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -106817,6 +107064,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/ScholarPreviewComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/pages/ScholarPreviewComponent.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ScholarPreviewComponent_vue_vue_type_template_id_1c7c5975___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975& */ "./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975&");
+/* harmony import */ var _ScholarPreviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ScholarPreviewComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ScholarPreviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ScholarPreviewComponent_vue_vue_type_template_id_1c7c5975___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ScholarPreviewComponent_vue_vue_type_template_id_1c7c5975___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/ScholarPreviewComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPreviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarPreviewComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPreviewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPreviewComponent_vue_vue_type_template_id_1c7c5975___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/ScholarPreviewComponent.vue?vue&type=template&id=1c7c5975&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPreviewComponent_vue_vue_type_template_id_1c7c5975___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ScholarPreviewComponent_vue_vue_type_template_id_1c7c5975___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/ScholarsListFieldsDef.js":
 /*!****************************************************************!*\
   !*** ./resources/js/components/pages/ScholarsListFieldsDef.js ***!
@@ -106840,7 +107156,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   dataClass: 'center aligned uppercase',
   sortField: "type"
 }, {
-  name: "scholar_name",
+  name: "scholar_name_field",
   title: 'Scholar Name',
   sortField: "scholar_name"
 }, {

@@ -64,7 +64,7 @@
                 <label for="">Axie Account</label>
                 <multi-select 
                     v-model="selected"
-                    :multiple="false"
+                    :multiple="true"
                     @search-change="searchPlayer"
                     @select="selectAxieAccount"
                     track-by="id"
@@ -75,7 +75,7 @@
                 </multi-select>
                 <div v-if="form.errors.has('account_name')" v-html="form.errors.get('account_name')" class="text-danger"/>
             </div>
-            <div class="col-md-4" v-if="form.ronin_wallet">
+            <div class="col-md-6" v-if="form.ronin_wallet">
                 <label for="">Ronin Wallet</label>
                 <p class="no-margin text-content">{{ form.ronin_wallet }}</p>
             </div>

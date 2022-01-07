@@ -5,6 +5,9 @@
             <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" :key="componentKey" modalWidth="50%" :dialogTitle="actionType == 'new' ? 'Add New Scholar' : 'Update Scholar Information'">
                 <scholar-form-component v-bind:scholarData="selected_scholar" v-bind:actionType="actionType" v-on:closeModal="openDialog = false"></scholar-form-component>
             </dialog-component>
+            <dialog-component v-bind:isOpen="openDialog_preview" v-on:isClose="openDialog_preview = false" :key="componentKey2" modalWidth="50%" dialogTitle="Scholar Details">
+                <scholar-preview-component v-bind:scholarData="selected_scholar_preview" v-on:closeModal="openDialog_preview = false"></scholar-preview-component>
+            </dialog-component>
             <!-- BEGIN row -->
             <div class="row no-margin mt-2">
                 <div class="col-lg-2 col-md-2 col-sm-12">
@@ -73,7 +76,13 @@
                         @vuetable:row-clicked="onCellClicked"
                         @vuetable:loading="onLoading"
                         @vuetable:loaded="onLoaded">
-
+                        <div slot="scholar_name_field" slot-scope="props">
+                            <div>
+                                <span @click="viewScholarInfo(props.rowData)" class="text-success onHover">
+                                    {{ props.rowData.scholar_name }}
+                                </span>
+                            </div>
+                        </div>
                         <div slot="action" slot-scope="props">
                             <div class="btn-group">
                                 <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit </button>
@@ -103,6 +112,7 @@
 </template>
 <script lang="ts">
 import ScholarFormComponent from './ScholarFormComponent.vue';
+import ScholarPreviewComponent from './ScholarPreviewComponent.vue';
 import { TableMixins } from './TableMixins';
 import { TableStyle } from './TableStyle.js';
 import FieldsDef from "./ScholarsListFieldsDef.js";
@@ -123,17 +133,20 @@ export default {
                 }
             ],
             css             : TableStyle,
-            selected_scholar: {},            
+            selected_scholar: {},
+            selected_scholar_preview : {},
             filtersParam    : {
                 type: "",
                 search : "",
                 status : "",
             },
             openDialog: false,
+            openDialog_preview: false,
             actionType      : 'new',
             isLoading       : false,
             fullPage        : true,
             componentKey    : 0,
+            componentKey2    : 1,
             import_history_file : '',
         }
     },
@@ -146,14 +159,15 @@ export default {
         },
     },
     components:{
-        'scholar-form-component' : ScholarFormComponent
+        'scholar-form-component'   : ScholarFormComponent,
+        'scholar-preview-component': ScholarPreviewComponent,
     },
     methods:{
         addScholar(){
             this.openDialog = true;
             this.actionType = 'new';
             this.selected_scholar = {};
-            this.componentKey += 1;
+            this.componentKey += 2;
         },
         editScholar(data){
             this.selected_scholar = data;
@@ -253,6 +267,11 @@ export default {
         },
         changeScholarPassword(data){
 
+        },
+        viewScholarInfo(data){
+            this.selected_scholar_preview = data;
+            this.openDialog_preview = true;
+            this.componentKey2 += 2;
         }
     },
     mounted(){
