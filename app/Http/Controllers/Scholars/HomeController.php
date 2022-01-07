@@ -131,9 +131,19 @@ class HomeController extends Controller
                 ['scholar_id' => $scholar->id],
                 [
                     'player_id'  => (!empty($player)) ? $player->id : NULL,
-                    'scholar_id' => $scholar->id,
+                    'scholar_id' => $scholar->id
                 ]
             );
+
+            if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED')
+                PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
+                    // Notification::CREATE([
+                    //         'account_name' => $player['account_name'],
+                    //         'category'     => 3, // Scholar Terminated
+                    //         'status'       => 1,
+                    //         'status_scholar' => 1,
+                    //     ]);
+
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);

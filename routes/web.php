@@ -129,6 +129,9 @@ Route::middleware(['PreventBackHistory'])->group(function(){
         Route::get('/getAccountInfo/{type}', 'GlobalController@getAccountInfo');
 
         Route::get('/','GlobalController@redirectMain');
+
+        Route::post('/getScholarHistories','GlobalController@getScholarPlayingHistories');
+
         Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
 
         Route::middleware(['vue.components'])->group(function(){
