@@ -94,10 +94,7 @@ class GlobalController extends Controller
     }
 
     public function getStatuses(){
-        // return DB::table('scholars')->select('status')->distinct('status')->get();
-        return Player::select('ronin_address','account_name','penalty','psh.id as history_id')
-        ->join('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
-        ->where('psh.status',1)->get();
+        return DB::table('scholars')->select('status')->distinct('status')->get();
     }
 
     public function updateAccountInfo(Request $request){
