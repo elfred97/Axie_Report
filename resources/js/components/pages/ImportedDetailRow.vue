@@ -16,7 +16,7 @@
                     </p>
                 </div>
                 <div class="col-md-2" v-if="rowData.last_claim_date">
-                    <p class="no-margin"><b>Last Claim Date: </b> {{ rowData.last_claim_date | formatDate }}                    
+                    <p class="no-margin"><b>Last Claim Date: </b> {{ rowData.last_claim_date | formatDate }}
                     </p>
                 </div>
             </div>
