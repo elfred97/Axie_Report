@@ -47,7 +47,9 @@ class PlayerController extends Controller
             ->PAGINATE($request->per_page);
     }
     public function getAllPlayers(){
-        return Player::doesnthave('histories')->get();
+        return Player::whereHas('histories',function($query){
+                    $query->where('status',0);
+                })->orDoesntHave('histories')->get();
     }
 
     public function getListOfPlayers(){

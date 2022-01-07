@@ -6,6 +6,7 @@ use App\Models\BattleLogs;
 use App\Models\Notification;
 use App\Models\NotificationSettings;
 use App\Models\Player;
+use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
@@ -146,6 +147,8 @@ class GetBattleLogs extends Command
                             'status'       => 1,
                             'status_scholar' => 1,
                         ]);
+
+                        PlayerScholarHistory::WHERE('player_id',$player['p_id'])->UPDATE(['status' => 0]);
                     }
                     // Update Player
                     Player::WHERE('account_name', $player['account_name'])->update(
