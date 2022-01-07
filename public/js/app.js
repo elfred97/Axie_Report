@@ -8631,6 +8631,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -8668,6 +8680,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       this.$refs.loader.style.display = 'block';
+      var account_name = [];
+      this.selected.forEach(function (element) {
+        account_name.push(element.account_name);
+      });
+      this.form.account_name = account_name.toString();
       this.form.post('/saveScholar').then(function (response) {
         _this.$noty.success(response.data.message);
 
@@ -8725,6 +8742,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return "".concat(account_name);
     },
     selectAxieAccount: function selectAxieAccount(eventData) {
+      console.log(eventData);
       this.form.account_name = eventData.account_name;
     }
   },
@@ -79326,10 +79344,7 @@ var render = function() {
               options: _vm.options,
               "custom-label": _vm.customLabel
             },
-            on: {
-              "search-change": _vm.searchPlayer,
-              select: _vm.selectAxieAccount
-            },
+            on: { "search-change": _vm.searchPlayer },
             model: {
               value: _vm.selected,
               callback: function($$v) {

@@ -66,6 +66,17 @@
                     v-model="selected"
                     :multiple="true"
                     @search-change="searchPlayer"
+                    track-by="id"
+                    :show-label="false"
+                    :options="options"
+                    :custom-label="customLabel"
+                    >
+                </multi-select>
+                <!-- 
+                <multi-select 
+                    v-model="selected"
+                    :multiple="true"
+                    @search-change="searchPlayer"
                     @select="selectAxieAccount"
                     track-by="id"
                     :show-label="false"
@@ -73,6 +84,7 @@
                     :custom-label="customLabel"
                     >
                 </multi-select>
+                 -->
                 <div v-if="form.errors.has('account_name')" v-html="form.errors.get('account_name')" class="text-danger"/>
             </div>
             <div class="col-md-6" v-if="form.ronin_wallet">
@@ -129,11 +141,19 @@ export default {
                 this.searchPlayer();
                 this.action = "update";
             }
-        }
+        },
     },
     methods:{
         submitForm(){
             this.$refs.loader.style.display = 'block';
+
+            let account_name = [];
+            this.selected.forEach(element => {
+                account_name.push(element.account_name);
+            });
+            
+            this.form.account_name =  account_name.toString();
+
             this.form.post('/saveScholar').then((response) => {
                 this.$noty.success(response.data.message);
                 this.$events.fire('update_scholars_table');
@@ -189,6 +209,7 @@ export default {
             return `${account_name}`
         },
         selectAxieAccount(eventData){
+            console.log(eventData)
             this.form.account_name = eventData.account_name;
         }
     },
