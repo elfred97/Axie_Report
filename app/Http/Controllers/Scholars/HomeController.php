@@ -137,12 +137,20 @@ class HomeController extends Controller
 
             if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED')
                 PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
-                    // Notification::CREATE([
-                    //         'account_name' => $player['account_name'],
-                    //         'category'     => 3, // Scholar Terminated
-                    //         'status'       => 1,
-                    //         'status_scholar' => 1,
-                    //     ]);
+
+                $scholar = Scholar::find($scholar->id);
+                $scholarsAccounts = $scholar->accounts;
+
+                    foreach($scholarsAccounts as $acc){
+                        Notification::CREATE([
+                            'account_name' => $acc['account_name'],
+                            'category'     => 3, // Scholar Terminated
+                            'status'       => 1,
+                            'status_scholar' => 1,
+                        ]);
+                    }
+
+                    
 
 
             if($scholar)

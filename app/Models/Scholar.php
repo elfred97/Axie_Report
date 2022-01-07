@@ -42,6 +42,10 @@ class Scholar extends Authenticatable
         return $this->hasOneThrough(Player::class,PlayerScholarHistory::class,'player_id','id','id','scholar_id')->latest('created_at');
     }
 
+    public function accounts(){
+        return $this->hasManyThrough(Player::class,PlayerScholarHistory::class,'scholar_id','id');
+    }
+
     public function notification_settings()
     {
         return $this->hasOne(NotificationSettings::class,'model_id','id')->where('model','App\Models\User');
