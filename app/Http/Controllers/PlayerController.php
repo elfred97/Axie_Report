@@ -47,9 +47,22 @@ class PlayerController extends Controller
             ->PAGINATE($request->per_page);
     }
     public function getAllPlayers(){
-        return Player::whereHas('histories',function($query){
+        $playerIDS = array();
+        $playerHistory = PlayerScholarHistory::WHERE('status',0)->get();
+
+        foreach ($playerHistory as $history){   
+            $playerHistoryB = PlayerScholarHistory::WHERE('status',1)->where('player_id',$history->player_id)->count();
+            if($playerHistoryB > 0)
+                array_push($playerIDS,$history->player_id);
+        }
+
+        $player = Player::whereHas('histories',function($query) use($playerIDS){
                     $query->where('status',0);
-                })->orDoesntHave('histories')->get();
+                    $query->whereNotIn('player_id',$playerIDS);
+                })->orDoesntHave('histories');
+        return $player->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')->get();
+        
+        
     }
 
     public function getListOfPlayers(){
