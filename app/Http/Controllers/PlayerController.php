@@ -54,15 +54,23 @@ class PlayerController extends Controller
     public function getAllPlayers(){
         $playerIDS = DB::table('player_scholar_histories')
                     ->select('player_id',DB::raw('count(`player_id`) as occurences'))
+                    ->where('status',0)
                     ->groupBy('player_id')
-                    ->having('occurences', '>', 1)
                     ->pluck('player_id');
+        
+        $idFinals = array();
 
-        $player = Player::whereHas('histories',function($query) use($playerIDS){
+        foreach($playerIDS as $id){
+            $playerHistory = PlayerScholarHistory::WHERE('player_id',$id)->where('status',1)->count();
+            if($playerHistory)
+                array_push($idFinals,$id);
+        }
+
+        $player = Player::whereHas('histories',function($query) use($idFinals){
                     $query->where('status',0);
-                    $query->whereNotIn('player_id',$playerIDS);
+                    $query->whereNotIn('player_id',$idFinals);
                 })->orDoesntHave('histories');
-        return $player->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')->get();
+        return $player->leftJoin('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')->distinct()->get(['players.*']);
     }
 
     public function getListOfPlayers(){
