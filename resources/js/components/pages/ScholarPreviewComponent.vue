@@ -40,14 +40,20 @@
         <h5>Scholar History</h5>
         <div class="row h-15">
             <div class="col-md-12">
-                <ul class="list-group">
+                <ul class="list-group" v-if="scholarHistory">
+                    <li class="list-group-item">
+                        <div class="row no-margin">
+                            <div class="col-md-6 text-bold">Axie Account</div>
+                            <div class="col-md-3 text-bold">Date</div>                            
+                            <div class="col-md-3 text-bold">Status</div>
+                        </div>
+                    </li>
                     <li class="list-group-item" v-for="(history, index) in scholarHistory">
                         <div class="row no-margin">
                             <div class="col-md-6">{{ history.account_name }}</div>
                             <div class="col-md-3">
                                 <span v-if="history.status == 1">{{ history.h_created | formatDate }}</span>
                                 <span v-else-if="history.status == 0">{{ history.h_updated | formatDate }}</span>
-                                
                             </div>
                             <div class="col-md-3">
                                 <span v-if="history.status == 1">Active</span>
@@ -90,7 +96,7 @@ export default {
             })
         },
     },
-    mounted() {
+    created() {
         this.getPlayerScholarHistory();
     },
 }
