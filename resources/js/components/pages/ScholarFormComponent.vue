@@ -168,16 +168,17 @@ export default {
                 this.$refs.loader.style.display = 'none';
             })
             .catch((error) => {
-                if(error.response.status == 422){
-                    error.response.forEach(element => {
+                if(error.response.data.status == 422){
+                    error.response.data.forEach(element => {
                         this.$noty.error('Recheck Form inputs');
-                        
+                        this.$refs.loader.style.display = 'none';
                     });
                 }
                 else{
                     this.$noty.error("Something went wrong please try again later.")
+                    this.$refs.loader.style.display = 'none';
                 }
-                this.$refs.loader.style.display = 'none';
+                
             });
             
         },

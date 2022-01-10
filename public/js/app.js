@@ -8704,15 +8704,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
-        if (error.response.status == 422) {
-          error.response.forEach(function (element) {
+        if (error.response.data.status == 422) {
+          error.response.data.forEach(function (element) {
             _this.$noty.error('Recheck Form inputs');
+
+            _this.$refs.loader.style.display = 'none';
           });
         } else {
           _this.$noty.error("Something went wrong please try again later.");
-        }
 
-        _this.$refs.loader.style.display = 'none';
+          _this.$refs.loader.style.display = 'none';
+        }
       });
     },
     resetForm: function resetForm() {
