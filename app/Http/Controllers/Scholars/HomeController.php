@@ -95,6 +95,7 @@ class HomeController extends Controller
                 'email'        => $ruleEmail,
                 'date_started' => 'required',
                 'type_id'      => 'required',
+                'status'      => 'required',
                 'account_name' => 'required'
             ]
         );
@@ -130,13 +131,13 @@ class HomeController extends Controller
 
                 foreach($playerAccounts as $playerAcc){
                     $player = Player::WHERE('account_name', $playerAcc)->FIRST();
-                    $playerHistory = PlayerScholarHistory::WHERE('player_id', $player->id)->WHERE('scholar_id', $request->id)->where('status',1)->FIRST();
+                    $playerHistory = PlayerScholarHistory::WHERE('player_id', $player->id)->WHERE('scholar_id', isset($request->id) ? $request->id : $scholar->id)->where('status',1)->FIRST();
 
                     if(empty($playerHistory)){
                         PlayerScholarHistory::CREATE(
                             [
                                 'player_id'  => $player->id,
-                                'scholar_id' => $request->id
+                                'scholar_id' => isset($request->id) ? $request->id : $scholar->id
                             ]
                         );
                     }
