@@ -69,9 +69,9 @@ class HomeController extends Controller
             ->SELECT(
                 'scholars.*',
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
-                'players.account_name',
                 'type.name as type'
             )
+            ->with('accounts')
             ->where($where)
             ->when($type, function ($q) use ($type) {
                 $q->whereRaw('scholars.type_id=' . (int)$type);
@@ -79,6 +79,7 @@ class HomeController extends Controller
             ->when($status, function ($q) use ($status) {
                 $q->where('scholars.status','=',$status);
             })
+            ->distinct('scholars.email')
             ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);
     }
