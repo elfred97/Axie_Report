@@ -161,11 +161,10 @@ class HomeController extends Controller
                 }
             }
 
-            if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED')
+            if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED'){
                 PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
 
-                $scholar = Scholar::find($scholar->id);
-                $scholarsAccounts = $scholar->accounts;
+                $scholarsAccounts = Scholar::find($scholar->id)->with('accounts');
 
                     foreach($scholarsAccounts as $acc){
                         Notification::CREATE([
@@ -175,6 +174,7 @@ class HomeController extends Controller
                             'status_scholar' => 1,
                         ]);
                     }
+            }
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);
