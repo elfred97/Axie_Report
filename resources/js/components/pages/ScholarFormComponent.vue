@@ -148,9 +148,15 @@ export default {
             this.$refs.loader.style.display = 'block';
 
             let account_name = [];
-            this.selected.forEach(element => {
-                account_name.push(element.account_name);
-            });
+            console.log(this.selected);
+            if(this.selected != null){
+                for(let i=0; i<this.selected.length; i++){
+                    account_name.push(this.selected[i].account_name);
+                }
+                // this.selected.forEach(element => {
+                //     account_name.push(element.account_name);
+                // });
+            }
             
             this.form.account_name =  account_name.toString();
 
