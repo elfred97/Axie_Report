@@ -8661,7 +8661,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         date_started: ''
       }, "email_password", '')),
       options: [],
-      selected: {},
+      selected: null,
       action: "new"
     };
   },
