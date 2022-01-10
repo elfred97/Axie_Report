@@ -101,7 +101,7 @@ class GlobalController extends Controller
         $scholarID = $request->id;
         return Scholar::LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
                 ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
-                ->SELECT('players.*','history.status','history.created_at as h_created')
+                ->SELECT('players.*','history.status','history.created_at as h_created','history.updated_at as h_updated')
                 ->WHERE('history.scholar_id',$scholarID)
                 ->get(); 
     }
