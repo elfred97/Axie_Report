@@ -130,7 +130,7 @@ class HomeController extends Controller
 
                 foreach($playerAccounts as $playerAcc){
                     $player = Player::WHERE('account_name', $playerAcc)->FIRST();
-                    $playerHistory = PlayerScholarHistory::WHERE('player_id', $player->id)->WHERE('scholar_id', $request->id)->FIRST();
+                    $playerHistory = PlayerScholarHistory::WHERE('player_id', $player->id)->WHERE('scholar_id', $request->id)->where('status',1)->FIRST();
 
                     if(empty($playerHistory)){
                         PlayerScholarHistory::CREATE(
@@ -145,20 +145,26 @@ class HomeController extends Controller
             else{
                 $player = Player::WHERE('account_name', $request->account_name)->FIRST();
 
-                PlayerScholarHistory::UPDATEORCREATE(
-                    ['scholar_id' => $scholar->id],
-                    [
-                        'player_id'  => (!empty($player)) ? $player->id : NULL,
-                        'scholar_id' => $scholar->id
-                    ]
-                );
+                $playerHistories = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('status',1)->get();
+
+                if($playerHistories->count() > 1){
+                    PlayerScholarHistory::WHERENOTIN('player_id',[$player->id])->WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
+                }
+                else if($playerHistories->count() <= 1){
+                    PlayerScholarHistory::UPDATEORCREATE(
+                        ['scholar_id' => $scholar->id],
+                        [
+                            'player_id'  => $player->id,
+                            'scholar_id' => $scholar->id
+                        ]
+                    );
+                }
             }
 
-            if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED')
+            if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED'){
                 PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
 
-                $scholar = Scholar::find($scholar->id);
-                $scholarsAccounts = $scholar->accounts;
+                $scholarsAccounts = Scholar::find($scholar->id)->with('accounts');
 
                     foreach($scholarsAccounts as $acc){
                         Notification::CREATE([
@@ -168,6 +174,7 @@ class HomeController extends Controller
                             'status_scholar' => 1,
                         ]);
                     }
+            }
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);
