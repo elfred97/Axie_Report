@@ -56,6 +56,7 @@
 
             <div class="col-md-4">                
                 <status-component :action="action" :status="form.status" @updateStatus="form.status = $event"></status-component>
+                <div v-if="form.errors.has('status')" v-html="form.errors.get('status')" class="text-danger"/>
             </div>
         </div>
         <hr>
@@ -128,7 +129,7 @@ export default {
                 market_place_email: '',
                 email_password    : '',
                 type_id           : '',
-                status            : 'Playing',
+                status            : 'PLAYING',
                 date_started      : '',
                 email_password    : '',
                 accounts          : []
@@ -146,6 +147,8 @@ export default {
                 this.searchPlayer();
                 this.action = "update";
             }
+            else
+                this.resetForm();
         },
     },
     methods:{
@@ -164,7 +167,7 @@ export default {
                 this.$noty.success(response.data.message);
                 this.$events.fire('update_scholars_table');
                 this.$root.$emit('isClose', true);
-                this.form.reset();
+                this.resetForm();
                 this.$refs.loader.style.display = 'none';
             })
             .catch((error) => {
@@ -183,19 +186,19 @@ export default {
         },
         resetForm(){
             this.form = new Form({
-                id            : NULL,
-                first_name    : '',
-                middle_name   : '',
-                last_name     : '',
-                username      : '',
-                account_name  : '',
-                email         : '',
-                password      : '',
-                type_id       : '',
-                status        : 'Active',
-                date_started  : '',
-                email_password: '',
-                accounts      : [],
+                ronin_address     : '',
+                first_name        : '',
+                middle_name       : '',
+                last_name         : '',
+                account_name      : '',
+                scholar_email     : '',
+                market_place_email: '',
+                email_password    : '',
+                type_id           : '',
+                status            : 'PLAYING',
+                date_started      : '',
+                email_password    : '',
+                accounts          : []
             })
         },
         searchPlayer(query){
@@ -220,16 +223,16 @@ export default {
             console.log(eventData);
         }
     },
-    mounted(){
+    created(){
         this.searchPlayer();
-        if(this.scholarData){
-            this.form = new Form(this.scholarData);
-            this.action = "new";
-        }
-        else{
-            this.resetForm();
-            this.action = "update";
-        }
+        // if(this.scholarData){
+        //     this.form = new Form(this.scholarData);
+        //     this.action = "new";
+        // }
+        // else{
+        //     this.resetForm();
+        //     this.action = "update";
+        // }
     }
 }
 </script>

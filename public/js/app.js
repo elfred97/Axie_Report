@@ -6047,6 +6047,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   created: function created() {
     this.getStatuses();
+    if (this.status) this.selected = this.status;
   }
 });
 
@@ -8647,6 +8648,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -8663,7 +8665,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         market_place_email: '',
         email_password: '',
         type_id: '',
-        status: 'Playing',
+        status: 'PLAYING',
         date_started: ''
       }, _defineProperty(_Form, "email_password", ''), _defineProperty(_Form, "accounts", []), _Form)),
       options: [],
@@ -8678,7 +8680,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.selected = newVal.accounts;
         this.searchPlayer();
         this.action = "update";
-      }
+      } else this.resetForm();
     }
   },
   methods: {
@@ -8698,7 +8700,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$root.$emit('isClose', true);
 
-        _this.form.reset();
+        _this.resetForm();
 
         _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
@@ -8714,21 +8716,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     resetForm: function resetForm() {
-      this.form = new Form({
-        id: NULL,
+      var _Form2;
+
+      this.form = new Form((_Form2 = {
+        ronin_address: '',
         first_name: '',
         middle_name: '',
         last_name: '',
-        username: '',
         account_name: '',
-        email: '',
-        password: '',
-        type_id: '',
-        status: 'Active',
-        date_started: '',
+        scholar_email: '',
+        market_place_email: '',
         email_password: '',
-        accounts: []
-      });
+        type_id: '',
+        status: 'PLAYING',
+        date_started: ''
+      }, _defineProperty(_Form2, "email_password", ''), _defineProperty(_Form2, "accounts", []), _Form2));
     },
     searchPlayer: function searchPlayer(query) {
       var _this2 = this;
@@ -8753,16 +8755,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       console.log(eventData);
     }
   },
-  mounted: function mounted() {
-    this.searchPlayer();
-
-    if (this.scholarData) {
-      this.form = new Form(this.scholarData);
-      this.action = "new";
-    } else {
-      this.resetForm();
-      this.action = "update";
-    }
+  created: function created() {
+    this.searchPlayer(); // if(this.scholarData){
+    //     this.form = new Form(this.scholarData);
+    //     this.action = "new";
+    // }
+    // else{
+    //     this.resetForm();
+    //     this.action = "update";
+    // }
   }
 });
 
@@ -79343,7 +79344,14 @@ var render = function() {
                 _vm.form.status = $event
               }
             }
-          })
+          }),
+          _vm._v(" "),
+          _vm.form.errors.has("status")
+            ? _c("div", {
+                staticClass: "text-danger",
+                domProps: { innerHTML: _vm._s(_vm.form.errors.get("status")) }
+              })
+            : _vm._e()
         ],
         1
       )

@@ -62,6 +62,8 @@ export default {
     },
     created(){
         this.getStatuses();
+        if(this.status)
+            this.selected = this.status;
     }
 }
 </script>
