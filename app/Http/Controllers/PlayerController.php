@@ -54,8 +54,8 @@ class PlayerController extends Controller
     public function getAllPlayers(){
         $playerIDS = DB::table('player_scholar_histories')
                     ->select('player_id',DB::raw('count(`player_id`) as occurences'))
-                    ->where('status',0)
                     ->groupBy('player_id')
+                    ->having('occurences', '>', 1)
                     ->pluck('player_id');
         
         $idFinals = array();
