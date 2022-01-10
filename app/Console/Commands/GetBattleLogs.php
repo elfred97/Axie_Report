@@ -79,7 +79,7 @@ class GetBattleLogs extends Command
             $scholarShare = 0;
 
             if(!empty($report)){
-                $gained_slp_today = ($report->total_slp >= $json_response['total_slp']) ? $json_response['total_slp'] : $json_response['total_slp'] - $report->total_slp;
+                $gained_slp_today = ($json_response['total_slp'] >= $report->total_slp) ? $json_response['total_slp'] - $report->total_slp : $json_response['total_slp'];
                 
                 if(!empty($player)){
                     // Check shcolar share
