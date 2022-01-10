@@ -44,7 +44,11 @@
                     <li class="list-group-item" v-for="(history, index) in scholarHistory">
                         <div class="row no-margin">
                             <div class="col-md-6">{{ history.account_name }}</div>
-                            <div class="col-md-3">{{ history.h_created | formatDate }}</div>
+                            <div class="col-md-3">
+                                <span v-if="history.status == 1">{{ history.h_created | formatDate }}</span>
+                                <span v-else-if="history.status == 0">{{ history.h_updated | formatDate }}</span>
+                                
+                            </div>
                             <div class="col-md-3">
                                 <span v-if="history.status == 1">Active</span>
                                 <span v-else-if="history.status == 0">Inactive</span>

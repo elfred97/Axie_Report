@@ -8835,6 +8835,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -80054,7 +80058,15 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
-                  _vm._v(_vm._s(_vm._f("formatDate")(history.h_created)))
+                  history.status == 1
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm._f("formatDate")(history.h_created)))
+                      ])
+                    : history.status == 0
+                    ? _c("span", [
+                        _vm._v(_vm._s(_vm._f("formatDate")(history.h_updated)))
+                      ])
+                    : _vm._e()
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-3" }, [
