@@ -83,6 +83,11 @@
                                 </span>
                             </div>
                         </div>
+                        <div slot="accounts_field" slot-scope="props">
+                            <div>
+                                <p class="no-margin" v-for="(account, index) in props.rowData.accounts">{{ account.account_name }}</p>
+                            </div>
+                        </div>
                         <div slot="action" slot-scope="props">
                             <div class="btn-group">
                                 <button class="btn btn-white btn-xs" @click="editScholar(props.rowData)"><i class="fa fa-pencil-alt"></i> Edit </button>

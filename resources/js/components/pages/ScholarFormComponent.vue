@@ -127,9 +127,10 @@ export default {
                 status            : 'Playing',
                 date_started      : '',
                 email_password    : '',
+                accounts          : []
             }),
             options           : [],
-            selected          : null,
+            selected          : {},
             action            : "new",
         }
     },
@@ -137,26 +138,20 @@ export default {
         'scholarData': function(newVal){
             if(newVal){
                 this.form = new Form(newVal);
-                this.selected = newVal;
+                this.selected = newVal.accounts;
                 this.searchPlayer();
                 this.action = "update";
             }
-        },        
+        },
     },
     methods:{
         submitForm(){
             this.$refs.loader.style.display = 'block';
 
             let account_name = [];
-            console.log(this.selected);
-            if(this.selected != null){
-                for(let i=0; i<this.selected.length; i++){
-                    account_name.push(this.selected[i].account_name);
-                }
-                // this.selected.forEach(element => {
-                //     account_name.push(element.account_name);
-                // });
-            }
+            this.selected.forEach(element => {
+                account_name.push(element.account_name);
+            });
             
             this.form.account_name =  account_name.toString();
 
@@ -168,17 +163,16 @@ export default {
                 this.$refs.loader.style.display = 'none';
             })
             .catch((error) => {
-                if(error.response.data.status == 422){
-                    error.response.data.forEach(element => {
+                if(error.response.status == 422){
+                    error.response.forEach(element => {
                         this.$noty.error('Recheck Form inputs');
-                        this.$refs.loader.style.display = 'none';
+                        
                     });
                 }
                 else{
                     this.$noty.error("Something went wrong please try again later.")
-                    this.$refs.loader.style.display = 'none';
                 }
-                
+                this.$refs.loader.style.display = 'none';
             });
             
         },
@@ -196,6 +190,7 @@ export default {
                 status        : 'Active',
                 date_started  : '',
                 email_password: '',
+                accounts      : [],
             })
         },
         searchPlayer(query){

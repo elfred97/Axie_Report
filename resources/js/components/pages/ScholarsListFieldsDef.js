@@ -18,7 +18,7 @@ export default [
       sortField: "scholar_name",
     },
     {
-      name : "account_name",
+      name : "accounts_field",
       title: 'Axie Account',
       titleClass: 'center aligned',
       dataClass : 'center aligned',

@@ -8646,8 +8646,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
+    var _Form;
+
     return {
-      form: new Form(_defineProperty({
+      form: new Form((_Form = {
         ronin_address: '',
         first_name: '',
         middle_name: '',
@@ -8659,9 +8661,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type_id: '',
         status: 'Playing',
         date_started: ''
-      }, "email_password", '')),
+      }, _defineProperty(_Form, "email_password", ''), _defineProperty(_Form, "accounts", []), _Form)),
       options: [],
-      selected: null,
+      selected: {},
       action: "new"
     };
   },
@@ -8669,7 +8671,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     'scholarData': function scholarData(newVal) {
       if (newVal) {
         this.form = new Form(newVal);
-        this.selected = newVal;
+        this.selected = newVal.accounts;
         this.searchPlayer();
         this.action = "update";
       }
@@ -8681,17 +8683,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$refs.loader.style.display = 'block';
       var account_name = [];
-      console.log(this.selected);
-
-      if (this.selected != null) {
-        for (var i = 0; i < this.selected.length; i++) {
-          account_name.push(this.selected[i].account_name);
-        } // this.selected.forEach(element => {
-        //     account_name.push(element.account_name);
-        // });
-
-      }
-
+      this.selected.forEach(function (element) {
+        account_name.push(element.account_name);
+      });
       this.form.account_name = account_name.toString();
       this.form.post('/saveScholar').then(function (response) {
         _this.$noty.success(response.data.message);
@@ -8704,17 +8698,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
-        if (error.response.data.status == 422) {
-          error.response.data.forEach(function (element) {
+        if (error.response.status == 422) {
+          error.response.forEach(function (element) {
             _this.$noty.error('Recheck Form inputs');
-
-            _this.$refs.loader.style.display = 'none';
           });
         } else {
           _this.$noty.error("Something went wrong please try again later.");
-
-          _this.$refs.loader.style.display = 'none';
         }
+
+        _this.$refs.loader.style.display = 'none';
       });
     },
     resetForm: function resetForm() {
@@ -8730,7 +8722,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type_id: '',
         status: 'Active',
         date_started: '',
-        email_password: ''
+        email_password: '',
+        accounts: []
       });
     },
     searchPlayer: function searchPlayer(query) {
@@ -72826,6 +72819,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
+
+
 // import PlayerDetailRow from './PlayerDetailRow.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
     mixins : [ _TableMixins__WEBPACK_IMPORTED_MODULE_2__["TableMixins"] ],
@@ -79849,6 +79847,25 @@ var render = function() {
                             ]
                           )
                         ])
+                      ])
+                    }
+                  },
+                  {
+                    key: "accounts_field",
+                    fn: function(props) {
+                      return _c("div", {}, [
+                        _c(
+                          "div",
+                          _vm._l(props.rowData.accounts, function(
+                            account,
+                            index
+                          ) {
+                            return _c("p", { staticClass: "no-margin" }, [
+                              _vm._v(_vm._s(account.account_name))
+                            ])
+                          }),
+                          0
+                        )
                       ])
                     }
                   },
@@ -107238,7 +107255,7 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
   title: 'Scholar Name',
   sortField: "scholar_name"
 }, {
-  name: "account_name",
+  name: "accounts_field",
   title: 'Axie Account',
   titleClass: 'center aligned',
   dataClass: 'center aligned',
