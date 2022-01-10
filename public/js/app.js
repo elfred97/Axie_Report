@@ -8643,6 +8643,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['scholarData'],
   data: function data() {
@@ -8745,8 +8749,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return "".concat(account_name);
     },
     selectAxieAccount: function selectAxieAccount(eventData) {
+      // this.form.account_name = eventData.account_name;
       console.log(eventData);
-      this.form.account_name = eventData.account_name;
     }
   },
   mounted: function mounted() {
@@ -8773,6 +8777,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -8859,7 +8873,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {
+  created: function created() {
     this.getPlayerScholarHistory();
   }
 });
@@ -79347,12 +79361,18 @@ var render = function() {
           _c("multi-select", {
             attrs: {
               multiple: true,
-              "track-by": "id",
+              "track-by": "account_name",
               "show-label": false,
               options: _vm.options,
-              "custom-label": _vm.customLabel
+              "custom-label": _vm.customLabel,
+              "close-on-select": false,
+              "clear-on-select": false,
+              taggable: true
             },
-            on: { "search-change": _vm.searchPlayer },
+            on: {
+              "search-change": _vm.searchPlayer,
+              select: _vm.selectAxieAccount
+            },
             model: {
               value: _vm.selected,
               callback: function($$v) {
@@ -80033,37 +80053,72 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row h-15" }, [
       _c("div", { staticClass: "col-md-12" }, [
-        _c(
-          "ul",
-          { staticClass: "list-group" },
-          _vm._l(_vm.scholarHistory, function(history, index) {
-            return _c("li", { staticClass: "list-group-item" }, [
-              _c("div", { staticClass: "row no-margin" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _vm._v(_vm._s(history.account_name))
-                ]),
+        _vm.scholarHistory
+          ? _c(
+              "ul",
+              { staticClass: "list-group" },
+              [
+                _vm._m(0),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  _vm._v(_vm._s(_vm._f("formatDate")(history.h_created)))
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-3" }, [
-                  history.status == 1
-                    ? _c("span", [_vm._v("Active")])
-                    : history.status == 0
-                    ? _c("span", [_vm._v("Inactive")])
-                    : _vm._e()
-                ])
-              ])
-            ])
-          }),
-          0
-        )
+                _vm._l(_vm.scholarHistory, function(history, index) {
+                  return _c("li", { staticClass: "list-group-item" }, [
+                    _c("div", { staticClass: "row no-margin" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _vm._v(_vm._s(history.account_name))
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3" }, [
+                        history.status == 1
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(_vm._f("formatDate")(history.h_created))
+                              )
+                            ])
+                          : history.status == 0
+                          ? _c("span", [
+                              _vm._v(
+                                _vm._s(_vm._f("formatDate")(history.h_updated))
+                              )
+                            ])
+                          : _vm._e()
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-3" }, [
+                        history.status == 1
+                          ? _c("span", [_vm._v("Active")])
+                          : history.status == 0
+                          ? _c("span", [_vm._v("Inactive")])
+                          : _vm._e()
+                      ])
+                    ])
+                  ])
+                })
+              ],
+              2
+            )
+          : _vm._e()
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("div", { staticClass: "row no-margin" }, [
+        _c("div", { staticClass: "col-md-6 text-bold" }, [
+          _vm._v("Axie Account")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-bold" }, [_vm._v("Date")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-bold" }, [_vm._v("Status")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

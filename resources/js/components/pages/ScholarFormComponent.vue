@@ -66,10 +66,14 @@
                     v-model="selected"
                     :multiple="true"
                     @search-change="searchPlayer"
-                    track-by="id"
+                    @select="selectAxieAccount"
+                    track-by="account_name"
                     :show-label="false"
                     :options="options"
                     :custom-label="customLabel"
+                    :close-on-select="false" 
+                    :clear-on-select="false" 
+                    :taggable="true"
                     >
                 </multi-select>
                 <!-- 
@@ -212,8 +216,8 @@ export default {
             return `${account_name}`
         },
         selectAxieAccount(eventData){
-            console.log(eventData)
-            this.form.account_name = eventData.account_name;
+            // this.form.account_name = eventData.account_name;
+            console.log(eventData);
         }
     },
     mounted(){
