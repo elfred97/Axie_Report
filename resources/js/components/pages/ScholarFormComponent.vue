@@ -130,7 +130,7 @@ export default {
                 accounts          : []
             }),
             options           : [],
-            selected          : {},
+            selected          : null,
             action            : "new",
         }
     },
@@ -149,9 +149,10 @@ export default {
             this.$refs.loader.style.display = 'block';
 
             let account_name = [];
-            this.selected.forEach(element => {
-                account_name.push(element.account_name);
-            });
+            if(this.selected != null)
+                this.selected.forEach(element => {
+                    account_name.push(element.account_name);
+                });
             
             this.form.account_name =  account_name.toString();
 
@@ -163,8 +164,8 @@ export default {
                 this.$refs.loader.style.display = 'none';
             })
             .catch((error) => {
-                if(error.response.status == 422){
-                    error.response.forEach(element => {
+                if(error.response.data.status == 422){
+                    error.response.data.forEach(element => {
                         this.$noty.error('Recheck Form inputs');
                         
                     });

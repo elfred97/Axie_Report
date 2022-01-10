@@ -8663,7 +8663,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         date_started: ''
       }, _defineProperty(_Form, "email_password", ''), _defineProperty(_Form, "accounts", []), _Form)),
       options: [],
-      selected: {},
+      selected: null,
       action: "new"
     };
   },
@@ -8683,7 +8683,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.$refs.loader.style.display = 'block';
       var account_name = [];
-      this.selected.forEach(function (element) {
+      if (this.selected != null) this.selected.forEach(function (element) {
         account_name.push(element.account_name);
       });
       this.form.account_name = account_name.toString();
@@ -8698,8 +8698,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this.$refs.loader.style.display = 'none';
       })["catch"](function (error) {
-        if (error.response.status == 422) {
-          error.response.forEach(function (element) {
+        if (error.response.data.status == 422) {
+          error.response.data.forEach(function (element) {
             _this.$noty.error('Recheck Form inputs');
           });
         } else {
