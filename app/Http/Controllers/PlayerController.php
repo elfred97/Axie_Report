@@ -27,6 +27,8 @@ class PlayerController extends Controller
             array_push($where, ['type_id', '=', $request->type]);
         if ($request->search)
             array_push($where, ['players.account_name', 'like', '%'.$request->search.'%']);
+
+        $status = 1;    
         
             $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
@@ -43,6 +45,9 @@ class PlayerController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->WHERE($where)
+            ->when($status, function ($q) use ($status) {
+                $q->whereRaw('psh.status=1');
+            })
             ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);
     }

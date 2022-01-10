@@ -151,8 +151,12 @@ class HomeController extends Controller
                     PlayerScholarHistory::WHERENOTIN('player_id',[$player->id])->WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
                 }
                 else if($playerHistories->count() <= 1){
-                    PlayerScholarHistory::UPDATEORCREATE(
-                        ['scholar_id' => $scholar->id],
+                    $historyPlayers = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('player_id',$player->id)->WHERE('status',1)->count();
+
+                    if($historyPlayers == 0){
+                        PlayerScholarHistory::WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
+                    }
+                    PlayerScholarHistory::CREATE(
                         [
                             'player_id'  => $player->id,
                             'scholar_id' => $scholar->id
