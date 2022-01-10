@@ -129,7 +129,7 @@ export default {
                 email_password    : '',
             }),
             options           : [],
-            selected          : {},
+            selected          : null,
             action            : "new",
         }
     },
@@ -141,7 +141,7 @@ export default {
                 this.searchPlayer();
                 this.action = "update";
             }
-        },
+        },        
     },
     methods:{
         submitForm(){
