@@ -114,9 +114,6 @@ class HomeController extends Controller
                 'status'       => $request->status,
             ];
 
-            if($request->account_name)
-                $player = Player::WHERE('account_name', $request->account_name)->FIRST();
-            
             if($request->email_password){
                 $where = (array)$where;
                 $where['password'] = bcrypt(filter_var($request->email_password,FILTER_SANITIZE_STRING));
@@ -127,13 +124,34 @@ class HomeController extends Controller
                 $where
             );
 
-            $history = PlayerScholarHistory::UPDATEORCREATE(
-                ['scholar_id' => $scholar->id],
-                [
-                    'player_id'  => (!empty($player)) ? $player->id : NULL,
-                    'scholar_id' => $scholar->id
-                ]
-            );
+            if(str_contains($request->account_name,",")){
+                $playerAccounts = explode(",",$request->account_name);
+
+                foreach($playerAccounts as $playerAcc){
+                    $player = Player::WHERE('account_name', $playerAcc)->FIRST();
+                    $playerHistory = PlayerScholarHistory::WHERE('player_id', $player->id)->WHERE('scholar_id', $request->id)->FIRST();
+
+                    if(empty($playerHistory)){
+                        PlayerScholarHistory::CREATE(
+                            [
+                                'player_id'  => $player->id,
+                                'scholar_id' => $request->id
+                            ]
+                        );
+                    }
+                }
+            }    
+            else{
+                $player = Player::WHERE('account_name', $request->account_name)->FIRST();
+
+                PlayerScholarHistory::UPDATEORCREATE(
+                    ['scholar_id' => $scholar->id],
+                    [
+                        'player_id'  => (!empty($player)) ? $player->id : NULL,
+                        'scholar_id' => $scholar->id
+                    ]
+                );
+            }
 
             if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED')
                 PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
@@ -149,9 +167,6 @@ class HomeController extends Controller
                             'status_scholar' => 1,
                         ]);
                     }
-
-                    
-
 
             if($scholar)
                 return response()->json(['message' => 'Scholar Informations is saved'], 200);
