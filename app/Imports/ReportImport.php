@@ -43,7 +43,7 @@ class ReportImport implements ToCollection
                 $forty_percent = 0;
                 
                 if(!empty($report)){
-                    $gained_slp_today = ($report->total_slp >= $row[6]) ? $row[6] : $row[6] - $report->total_slp;
+                    $gained_slp_today = ($row[6] >= $report->total_slp) ? $row[6] - $report->total_slp : $row[6];
                     
                     if(!empty($player)){
                         // Check shcolar share
