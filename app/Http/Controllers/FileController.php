@@ -162,7 +162,7 @@ class FileController extends Controller
         $from = Carbon::parse('01-01-2020');
         $to   = Carbon::now();
 
-        if(is_null($date) == false){
+        if($date != 'today'){
             $from = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[0])));
             $to   = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[1])));
         }
@@ -174,7 +174,7 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
             ->where('n.status',1)
-            ->when(is_null($date) == false, function ($query) use ($date,$from,$to) {
+            ->when($date != 'today', function ($query) use ($date,$from,$to) {
                 $query->whereBetween('battle_logs.created_at', [$from, $to]);
             })
             ->whereIn('r.id', $latest_id_per_account)
