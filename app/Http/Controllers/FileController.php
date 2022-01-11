@@ -156,8 +156,6 @@ class FileController extends Controller
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         $latest_id_per_account = DB::table('battle_logs as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
-
-        $date = $request->date;
     
         $from = Carbon::parse('01-01-2020');
         $to   = Carbon::now();
@@ -175,10 +173,12 @@ class FileController extends Controller
             ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
             ->where('n.status',1)
             ->whereIn('r.id', $latest_id_per_account)
-            ->ORDERBY($field,$direction)
-            ->GET();
+            ->ORDERBY($field,$direction);
         
-            if($date != 'today') {
+            if($request->date == 'today') {
+                $notification = $notification->get();
+            }
+            else{
                 $notification = $notification->whereBetween('n.created_at', [$from, $to]);
             }
 
