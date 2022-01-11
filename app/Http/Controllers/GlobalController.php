@@ -80,10 +80,8 @@ class GlobalController extends Controller
         else if($type == 'scholars'){
             $username = Auth::user()->username;
 
-            return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
-                ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
-                ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
-                ->SELECT('scholars.*', 'players.*', 'type.name as type_name')
+            return Scholar::LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
+                ->SELECT('scholars.*','type.name as type_name')
                 ->WHERE('scholars.username', $username)
                 ->FIRST();
         }
@@ -105,6 +103,11 @@ class GlobalController extends Controller
                 ->WHERE('history.scholar_id',$scholarID)
                 ->orderBy('history.id')
                 ->get(); 
+    }
+
+    public function getListAccounts(){
+        $scholarID = Auth::id();
+        return Scholar::find($scholarID)->where('username',Auth::user()->username)->with('accounts')->get(); 
     }
 
     public function updateAccountInfo(Request $request){
