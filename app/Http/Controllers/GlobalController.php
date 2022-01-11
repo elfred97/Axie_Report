@@ -92,13 +92,7 @@ class GlobalController extends Controller
     }
 
     public function getStatuses(){
-        // return DB::table('scholars')->select('status')->distinct('status')->get();
-
-        $scholars = Scholar::all();
-
-        foreach($scholars as $sch){
-            Scholar::find($sch->id)->update(['email' => preg_replace('/\s+/', '',$sch->email)]);
-        }
+        return DB::table('scholars')->select('status')->distinct('status')->get();
     }
 
     public function getScholarPlayingHistories(Request $request){
