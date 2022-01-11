@@ -43,7 +43,7 @@ class Scholar extends Authenticatable
     }
 
     public function accounts(){
-        return $this->hasManyThrough(Player::class,PlayerScholarHistory::class,'scholar_id','id','id','player_id')->select('account_name')->where('status',1)->orderBy('player_scholar_histories.id');
+        return $this->hasManyThrough(Player::class,PlayerScholarHistory::class,'scholar_id','id','id','player_id')->select('account_name','ronin_address')->where('status',1)->orderBy('player_scholar_histories.id');
     }
 
     public function notification_settings()
