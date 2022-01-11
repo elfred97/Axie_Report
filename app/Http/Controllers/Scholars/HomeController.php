@@ -228,7 +228,7 @@ class HomeController extends Controller
         return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
-            ->WHERE('scholars.username', $username)
+            ->WHERE([['scholars.username', $username],['report.average_per_day', '!=', null]])
             ->ORDERBY('scholars.id', 'desc')
             ->GET();
     }
