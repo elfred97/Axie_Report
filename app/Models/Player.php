@@ -31,7 +31,7 @@ class Player extends Model
 
     public function histories()
     {
-        return $this->hasMany(PlayerScholarHistory::class);
+        return $this->hasMany(PlayerScholarHistory::class)->distinct('player_id');
     }
 
     public function latestHistory()
