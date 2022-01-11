@@ -162,9 +162,9 @@ class FileController extends Controller
         $from = Carbon::parse('01-01-2020');
         $to   = Carbon::now();
 
-        if($date != 'today'){
-            $from = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[0])));
-            $to   = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[1])));
+        if($request->date){
+            $from = ($request->date[0]) ? Carbon::parse($request->date[0]) : $from;
+            $to   = ($request->date[1]) ? Carbon::parse($request->date[1]) : $to;
         }
 
         $notification = DB::TABLE('notification as n')
@@ -174,7 +174,7 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
             ->where('n.status',1)
-            ->when($date != 'today', function ($query) use ($date,$from,$to) {
+            ->when($request->date, function ($query) use ($date,$from,$to) {
                 $query->whereBetween('n.created_at', [$from, $to]);
             })
             ->whereIn('r.id', $latest_id_per_account)
