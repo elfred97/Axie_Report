@@ -315,7 +315,7 @@ class HomeController extends Controller
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                 'players.*'
             )
-        ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3]])
+        ->WHERE([['scholars.username', $username]])
         ->GET();
 
     }
