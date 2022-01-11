@@ -160,7 +160,7 @@ class FileController extends Controller
         $from = Carbon::parse('01-01-2020');
         $to   = Carbon::now();
 
-        if($request->date != 'today'){
+        if($request->date){
             $from = ($request->date[0]) ? Carbon::parse($request->date[0]) : $from;
             $to   = ($request->date[1]) ? Carbon::parse($request->date[1]) : $to;
         }
