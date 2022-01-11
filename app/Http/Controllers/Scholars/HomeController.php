@@ -290,7 +290,7 @@ class HomeController extends Controller
             $payroll = Payroll::WHERE('scholar_id', $id)->FIRST();
 
             if(!empty($history))
-                $history->DELETE();
+                PlayerScholarHistory::WHERE('scholar_id', $id)->DELETE();
 
             if(!empty($payroll))
                 $payroll->DELETE();
