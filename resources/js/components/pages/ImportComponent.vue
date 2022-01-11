@@ -147,7 +147,7 @@ export default {
             lowest_mmr : 800,
             sortOrder  : [
                 {
-                    field    : 'ronin_address',// Choose the Defualt Sorted Data by name
+                    field    : 'id',// Choose the Defualt Sorted Data by name
                     direction: 'desc',
                 },
                 // {

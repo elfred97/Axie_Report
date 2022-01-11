@@ -5569,6 +5569,73 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/AccountListComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/AccountListComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['account'],
+  data: function data() {
+    return {
+      accountList: {},
+      selected: ''
+    };
+  },
+  watch: {
+    'accountList': function accountList(newVal) {
+      if (newVal) {
+        this.selected = newVal[0].account_name;
+        this.$emit('updateAccountList', this.selected);
+      }
+    }
+  },
+  methods: {
+    getListOfAccounts: function getListOfAccounts() {
+      var _this = this;
+
+      this.axios.get('/getListOfAccounts').then(function (response) {
+        // console.log(response.data);
+        _this.accountList = response.data[0].accounts;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    updateAccountName: function updateAccountName(event) {
+      this.$emit('updateAccountList', event.target.value);
+    }
+  },
+  mounted: function mounted() {
+    this.getListOfAccounts();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/DialogComponent.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/DialogComponent.vue?vue&type=script&lang=js& ***!
@@ -6941,7 +7008,7 @@ __webpack_require__.r(__webpack_exports__);
       fullPage: true,
       lowest_mmr: 800,
       sortOrder: [{
-        field: 'ronin_address',
+        field: 'id',
         // Choose the Defualt Sorted Data by name
         direction: 'desc'
       } // {
@@ -9846,10 +9913,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js&":
-/*!********************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js& ***!
-  \********************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -9869,6 +9936,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['scholarData'],
+  computed: {
+    getQRCode: function getQRCode() {
+      return '/uploads/' + this.scholarData.qr_code;
+    }
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QRCodeViewComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QRCodeViewComponent.vue */ "./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue");
 //
 //
 //
@@ -9961,17 +10049,87 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       userData: {},
-      onEdit: false
+      onEdit: false,
+      scholarHistory: {},
+      openDialog: false,
+      openDialog_preview: false,
+      componentKey: 0,
+      selected: {}
     };
   },
-  computed: {
-    getQRCode: function getQRCode() {
-      return '/uploads/' + this.userData.qr_code;
+  watch: {
+    'userData': function userData(newVal) {
+      if (newVal) {
+        this.getPlayerScholarHistory(newVal.id);
+      }
     }
+  },
+  components: {
+    'qrcode-view-component': _QRCodeViewComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
     getAccountInformation: function getAccountInformation() {
@@ -9996,6 +10154,24 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         console.log(error.response.data);
       });
+    },
+    getPlayerScholarHistory: function getPlayerScholarHistory(id) {
+      var _this3 = this;
+
+      this.axios.get('getScholarHistories', {
+        params: {
+          id: id
+        }
+      }).then(function (response) {
+        _this3.scholarHistory = response.data;
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
+    viewQRCode: function viewQRCode(data) {
+      this.openDialog = true;
+      this.selected = data;
+      this.componentKey += 2;
     }
   },
   created: function created() {
@@ -10495,6 +10671,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -10515,11 +10696,15 @@ __webpack_require__.r(__webpack_exports__);
           points: []
         }]
       },
-      selected_date: ''
+      selected_date: '',
+      account_selected: {}
     };
   },
   watch: {
     'selected_date': function selected_date(newVal) {
+      this.getGraph();
+    },
+    'account_selected': function account_selected(newVal) {
       this.getGraph();
     }
   },
@@ -10529,7 +10714,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('/getScholarGraph', {
         params: {
-          date: this.selected_date
+          date: this.selected_date,
+          account_name: this.account_selected
         }
       }).then(function (response) {
         _this.chartOptions.series[0].points = [];
@@ -10544,8 +10730,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     JSCharting: jscharting_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  mounted: function mounted() {
-    this.getGraph();
+  mounted: function mounted() {// this.getGraph();
   }
 });
 
@@ -10726,6 +10911,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -10737,7 +10925,8 @@ __webpack_require__.r(__webpack_exports__);
       perPage: 15,
       css: _pages_TableStyle_js__WEBPACK_IMPORTED_MODULE_1__["TableStyle"],
       filtersParam: {
-        date: ''
+        date: '',
+        account_name: ''
       },
       isLoading: false,
       fullPage: true,
@@ -10749,6 +10938,11 @@ __webpack_require__.r(__webpack_exports__);
       }],
       lowest_mmr: 800
     };
+  },
+  watch: {
+    'filtersParam.account_name': function filtersParamAccount_name(newVal) {
+      this.updateTable();
+    }
   }
 });
 
@@ -10847,6 +11041,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -10856,14 +11053,24 @@ __webpack_require__.r(__webpack_exports__);
       unclaimed: 0,
       claimed: 0,
       penalty: 0,
-      mmr: 0
+      mmr: 0,
+      account_selected: {}
     };
+  },
+  watch: {
+    'account_selected': function account_selected(newVal) {
+      this.getScholarReport();
+    }
   },
   methods: {
     getScholarReport: function getScholarReport() {
       var _this = this;
 
-      this.axios.get('getScholarReport').then(function (response) {
+      this.axios.get('getScholarReport', {
+        params: {
+          account_name: this.account_selected
+        }
+      }).then(function (response) {
         var report = response.data;
 
         if (report.length > 0) {
@@ -10883,8 +11090,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  created: function created() {
-    this.getScholarReport();
+  created: function created() {// this.getScholarReport();
   }
 });
 
@@ -73278,6 +73484,93 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/AccountListComponent.vue?vue&type=template&id=4633143c&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/AccountListComponent.vue?vue&type=template&id=4633143c& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "div",
+      {
+        staticClass: "dataTables_length",
+        attrs: { id: "data-table-default_length" }
+      },
+      [
+        _c("label", [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.selected,
+                  expression: "selected"
+                }
+              ],
+              staticClass:
+                "custom-select custom-select-sm form-control form-control-sm",
+              attrs: {
+                name: "data-table-default_length",
+                "aria-controls": "data-table-default"
+              },
+              on: {
+                change: [
+                  function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.selected = $event.target.multiple
+                      ? $$selectedVal
+                      : $$selectedVal[0]
+                  },
+                  _vm.updateAccountName
+                ]
+              }
+            },
+            _vm._l(_vm.accountList, function(accounts) {
+              return _c(
+                "option",
+                { domProps: { value: accounts.account_name } },
+                [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(accounts.account_name) +
+                      "\n                    "
+                  )
+                ]
+              )
+            }),
+            0
+          )
+        ])
+      ]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/CopyRightComponent.vue?vue&type=template&id=16f26200&":
 /*!****************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/layout/CopyRightComponent.vue?vue&type=template&id=16f26200& ***!
@@ -81669,6 +81962,56 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=template&id=5e7065ae&":
+/*!********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=template&id=5e7065ae& ***!
+  \********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _vm.scholarData.qr_code
+      ? _c("div", [
+          _c("h4", { staticClass: "mb-2 mt-2 text-center" }, [
+            _vm._v("Scan QR Code")
+          ]),
+          _vm._v(" "),
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: _vm.getQRCode }
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-center mt-2" }, [
+            _vm._v("QR Code is valid for 7 days")
+          ])
+        ])
+      : _c("div", { staticClass: "no_qr_code" }, [
+          _c("img", {
+            staticClass: "img-fluid",
+            attrs: { src: "img/no_qr.jpg", alt: "" }
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "text-center" }, [
+            _vm._v("No QR Code uploaded")
+          ])
+        ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=template&id=b9e855d6&":
 /*!************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/scholar_pages/Account/ScholarAccountComponent.vue?vue&type=template&id=b9e855d6& ***!
@@ -81684,235 +82027,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "section-container" }, [
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row row-space-10 m-b-20" }, [
-          _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12" }, [
-            _c("div", { staticClass: "account-container" }, [
-              _c("div", { staticClass: "account-sidebar" }, [
+  return _c(
+    "div",
+    [
+      _c(
+        "dialog-component",
+        {
+          key: _vm.componentKey,
+          attrs: {
+            isOpen: _vm.openDialog,
+            modalWidth: "30%",
+            dialogTitle: this.selected.account_name + " QR Code"
+          },
+          on: {
+            isClose: function($event) {
+              _vm.openDialog = false
+            }
+          }
+        },
+        [
+          _c("qrcode-view-component", {
+            attrs: { scholarData: _vm.selected },
+            on: {
+              closeModal: function($event) {
+                _vm.openDialog = false
+              }
+            }
+          })
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "section-container" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+            _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12" }, [
+              _c("div", { staticClass: "account-container" }, [
                 _vm._m(0),
                 _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "account-sidebar-content text-center" },
-                  [
-                    _c("h4", [_vm._v(_vm._s(_vm.userData.account_name))]),
-                    _vm._v(" "),
-                    _vm.userData.qr_code
-                      ? _c("div", [
-                          _c("p", { staticClass: "mb-2 mt-2" }, [
-                            _vm._v("Scan QR Code")
+                _c("div", { staticClass: "account-body" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-7" }, [
+                      _c("h4", [_vm._v("Account Information")]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
+                              " " +
+                                _vm._s(_vm.userData.first_name) +
+                                " " +
+                                _vm._s(_vm.userData.last_name)
+                            )
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Ronin Address")
                           ]),
                           _vm._v(" "),
-                          _c("img", {
-                            staticClass: "img-fluid",
-                            attrs: { src: _vm.getQRCode }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-center mt-2" }, [
-                            _vm._v("QR Code is valid for 7 days")
+                          _c("p", [
+                            _vm._v(
+                              " " + _vm._s(_vm.userData.ronin_address) + " "
+                            )
                           ])
-                        ])
-                      : _c("div", { staticClass: "no_qr_code" }, [
-                          _c("img", {
-                            staticClass: "img-fluid",
-                            attrs: { src: "img/no_qr.jpg", alt: "" }
-                          }),
-                          _vm._v(" "),
-                          _c("p", { staticClass: "text-center" }, [
-                            _vm._v("No QR Code uploaded")
-                          ])
-                        ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "account-body" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-7" }, [
-                    _c("h4", [_vm._v("Account Information")]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+                        ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            " " +
-                              _vm._s(_vm.userData.first_name) +
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Email")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(" " + _vm._s(_vm.userData.email) + " ")
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Date Started")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(
                               " " +
-                              _vm._s(_vm.userData.last_name)
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Account Name")
+                                _vm._s(
+                                  _vm._f("formatDate")(
+                                    _vm.userData.date_started
+                                  )
+                                ) +
+                                " "
+                            )
+                          ])
                         ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v(" " + _vm._s(_vm.userData.account_name) + " ")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-12" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Ronin Address")
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Status")
+                          ]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(" " + _vm._s(_vm.userData.status) + " ")
+                          ])
                         ]),
                         _vm._v(" "),
-                        _c("p", [
-                          _vm._v(" " + _vm._s(_vm.userData.ronin_address) + " ")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c("label", { attrs: { for: "" } }, [_vm._v("Email")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(" " + _vm._s(_vm.userData.email) + " ")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Date Started")
-                        ]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(
-                            " " +
-                              _vm._s(
-                                _vm._f("formatDate")(_vm.userData.date_started)
-                              ) +
-                              " "
-                          )
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c("label", { attrs: { for: "" } }, [_vm._v("Status")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(" " + _vm._s(_vm.userData.status) + " ")
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-md-6" }, [
-                        _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
-                        _vm._v(" "),
-                        _c("p", [
-                          _vm._v(" " + _vm._s(_vm.userData.type_name) + " ")
+                        _c("div", { staticClass: "col-md-6" }, [
+                          _c("label", { attrs: { for: "" } }, [_vm._v("Type")]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _vm._v(" " + _vm._s(_vm.userData.type_name) + " ")
+                          ])
                         ])
                       ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-md-4" }, [
-                    _c("div", { staticClass: "panel panel-default" }, [
-                      _c(
-                        "div",
-                        { staticClass: "panel-heading bg-gradient-lime" },
-                        [
-                          _c("h4", { staticClass: "panel-title text-white" }, [
-                            _vm._v("Ronin Wallet")
-                          ]),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "panel-heading-btn" }, [
-                            _vm.onEdit == false
-                              ? _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-xs btn-default",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.onEdit = !_vm.onEdit
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", {
-                                      staticClass: "fas fa-pencil-alt"
-                                    }),
-                                    _vm._v(" Edit")
-                                  ]
-                                )
-                              : _c(
-                                  "button",
-                                  {
-                                    staticClass: "btn btn-xs btn-white",
-                                    on: {
-                                      click: function($event) {
-                                        _vm.onEdit = !_vm.onEdit
-                                      }
-                                    }
-                                  },
-                                  [
-                                    _c("i", { staticClass: "fas fa-times" }),
-                                    _vm._v(" Cancel")
-                                  ]
-                                )
-                          ])
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "panel-body" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c("div", { staticClass: "col-md-12" }, [
-                            _c("label", { attrs: { for: "" } }, [
-                              _vm._v("Ronin Wallet")
-                            ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "panel panel-default" }, [
+                        _c(
+                          "div",
+                          { staticClass: "panel-heading bg-gradient-lime" },
+                          [
+                            _c(
+                              "h4",
+                              { staticClass: "panel-title text-white" },
+                              [_vm._v("Ronin Wallet")]
+                            ),
                             _vm._v(" "),
-                            _vm.onEdit == true
-                              ? _c("div", [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.userData.ronin_wallet,
-                                        expression: "userData.ronin_wallet"
-                                      }
-                                    ],
-                                    staticClass: "form-control mb-2",
-                                    attrs: { type: "text" },
-                                    domProps: {
-                                      value: _vm.userData.ronin_wallet
-                                    },
-                                    on: {
-                                      input: function($event) {
-                                        if ($event.target.composing) {
-                                          return
+                            _c("div", { staticClass: "panel-heading-btn" }, [
+                              _vm.onEdit == false
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-xs btn-default",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.onEdit = !_vm.onEdit
                                         }
-                                        _vm.$set(
-                                          _vm.userData,
-                                          "ronin_wallet",
-                                          $event.target.value
-                                        )
                                       }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c("div", { staticClass: "pull-right" }, [
-                                    _c(
-                                      "button",
-                                      {
-                                        staticClass: "btn btn-primary btn-xs",
-                                        on: { click: _vm.updateRoninWallet }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fas fa-pencil-alt"
+                                      }),
+                                      _vm._v(" Edit")
+                                    ]
+                                  )
+                                : _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn btn-xs btn-white",
+                                      on: {
+                                        click: function($event) {
+                                          _vm.onEdit = !_vm.onEdit
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", { staticClass: "fas fa-times" }),
+                                      _vm._v(" Cancel")
+                                    ]
+                                  )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "panel-body" }, [
+                          _c("div", { staticClass: "row" }, [
+                            _c("div", { staticClass: "col-md-12" }, [
+                              _c("label", { attrs: { for: "" } }, [
+                                _vm._v("Ronin Wallet")
+                              ]),
+                              _vm._v(" "),
+                              _vm.onEdit == true
+                                ? _c("div", [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.userData.ronin_wallet,
+                                          expression: "userData.ronin_wallet"
+                                        }
+                                      ],
+                                      staticClass: "form-control mb-2",
+                                      attrs: { type: "text" },
+                                      domProps: {
+                                        value: _vm.userData.ronin_wallet
                                       },
-                                      [
-                                        _c("i", {
-                                          staticClass: "fas fa-check"
-                                        }),
-                                        _vm._v(" Save")
-                                      ]
-                                    )
+                                      on: {
+                                        input: function($event) {
+                                          if ($event.target.composing) {
+                                            return
+                                          }
+                                          _vm.$set(
+                                            _vm.userData,
+                                            "ronin_wallet",
+                                            $event.target.value
+                                          )
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c("div", { staticClass: "pull-right" }, [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary btn-xs",
+                                          on: { click: _vm.updateRoninWallet }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fas fa-check"
+                                          }),
+                                          _vm._v(" Save")
+                                        ]
+                                      )
+                                    ])
                                   ])
-                                ])
-                              : _c("p", { staticClass: "text-content" }, [
-                                  _vm._v(_vm._s(_vm.userData.ronin_wallet))
-                                ])
+                                : _c("p", { staticClass: "text-content" }, [
+                                    _vm._v(_vm._s(_vm.userData.ronin_wallet))
+                                  ])
+                            ])
                           ])
                         ])
                       ])
@@ -81921,19 +82261,158 @@ var render = function() {
                 ])
               ])
             ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row row-space-10 m-b-20" }, [
+            _c("div", { staticClass: "col-lg-12 col-md-12 col-sm-12" }, [
+              _c("h4", [_vm._v("Axie Account")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "row h-15" }, [
+                _c("div", { staticClass: "col-md-12" }, [
+                  _vm.scholarHistory
+                    ? _c(
+                        "ul",
+                        { staticClass: "list-group" },
+                        [
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _vm._l(_vm.scholarHistory, function(history, index) {
+                            return _c(
+                              "li",
+                              { staticClass: "list-group-item" },
+                              [
+                                _c("div", { staticClass: "row no-margin" }, [
+                                  _c("div", { staticClass: "col-md-4" }, [
+                                    _vm._v(_vm._s(history.account_name))
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-md-3 text-center" },
+                                    [
+                                      history.status == 1
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("formatDate")(
+                                                  history.h_created
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        : history.status == 0
+                                        ? _c("span", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm._f("formatDate")(
+                                                  history.h_updated
+                                                )
+                                              )
+                                            )
+                                          ])
+                                        : _vm._e()
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-md-2 text-center" },
+                                    [
+                                      history.status == 1
+                                        ? _c("span", [_vm._v("Active")])
+                                        : history.status == 0
+                                        ? _c("span", [_vm._v("Inactive")])
+                                        : _vm._e()
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "col-md-3 text-center" },
+                                    [
+                                      history.qr_code
+                                        ? _c("span", [
+                                            _c(
+                                              "a",
+                                              {
+                                                staticClass:
+                                                  "onHover text-primary",
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.viewQRCode(
+                                                      history
+                                                    )
+                                                  }
+                                                }
+                                              },
+                                              [_vm._v("View QR Code")]
+                                            )
+                                          ])
+                                        : _c("span", [_vm._v("No QR Code")])
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          })
+                        ],
+                        2
+                      )
+                    : _vm._e()
+                ])
+              ])
+            ])
           ])
         ])
       ])
-    ])
-  ])
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "account-sidebar-cover" }, [
-      _c("img", { attrs: { src: "assets/img/cover/cover-1.jpg", alt: "" } })
+    return _c("div", { staticClass: "account-sidebar" }, [
+      _c("div", { staticClass: "account-sidebar-cover" }, [
+        _c("img", { attrs: { src: "assets/img/cover/cover-1.jpg", alt: "" } })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "account-sidebar-content text-center" }, [
+        _c("h2", [_vm._v("Welcome to Axie Tracker")]),
+        _vm._v(" "),
+        _c("img", {
+          staticClass: "img-fluid",
+          attrs: { src: "img/welcome.png", alt: "" }
+        }),
+        _vm._v(" "),
+        _c("p", [_vm._v("Track your account and axie")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("div", { staticClass: "row no-margin" }, [
+        _c("div", { staticClass: "col-md-4 text-bold" }, [
+          _vm._v("Axie Account")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-bold text-center" }, [
+          _vm._v("Date")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-2 text-bold text-center" }, [
+          _vm._v("Status")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-bold text-center" }, [
+          _vm._v("QR Code")
+        ])
+      ])
     ])
   }
 ]
@@ -82559,26 +83038,50 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "row" }, [
+    _c("div", { staticClass: "row mt-2" }, [
       _c("div", { staticClass: "col-md-2" }, [
         _c(
-          "label",
+          "div",
+          {
+            staticClass: "dataTables_length",
+            attrs: { id: "data-table-default_length" }
+          },
           [
-            _vm._v("Date \n                "),
-            _c("v-datepicker", {
-              attrs: { range: "" },
-              model: {
-                value: _vm.selected_date,
-                callback: function($$v) {
-                  _vm.selected_date = $$v
-                },
-                expression: "selected_date"
-              }
-            })
-          ],
-          1
+            _c(
+              "label",
+              [
+                _vm._v("Date \n                    "),
+                _c("v-datepicker", {
+                  attrs: { range: "" },
+                  model: {
+                    value: _vm.selected_date,
+                    callback: function($$v) {
+                      _vm.selected_date = $$v
+                    },
+                    expression: "selected_date"
+                  }
+                })
+              ],
+              1
+            )
+          ]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2" },
+        [
+          _c("account-list-component", {
+            on: {
+              updateAccountList: function($event) {
+                _vm.filtersParam.account_name = $event
+              }
+            }
+          })
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
@@ -82730,7 +83233,22 @@ var render = function() {
             )
           ]
         )
-      ])
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2" },
+        [
+          _c("account-list-component", {
+            on: {
+              updateAccountList: function($event) {
+                _vm.filtersParam.account_name = $event
+              }
+            }
+          })
+        ],
+        1
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row mt-2" }, [
@@ -82952,6 +83470,21 @@ var render = function() {
       { staticClass: "card border-0 bg-dark text-white mb-3 overflow-hidden" },
       [
         _c("div", { staticClass: "card-body" }, [
+          _c(
+            "div",
+            { staticClass: "row" },
+            [
+              _c("account-list-component", {
+                on: {
+                  updateAccountList: function($event) {
+                    _vm.account_selected = $event
+                  }
+                }
+              })
+            ],
+            1
+          ),
+          _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c("div", { staticClass: "col-xl-8 col-lg-9" }, [
               _vm._m(0),
@@ -104974,6 +105507,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatTimeDate', function (da
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('dialog-component', __webpack_require__(/*! ./components/layout/DialogComponent.vue */ "./resources/js/components/layout/DialogComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('type-component', __webpack_require__(/*! ./components/layout/TypeComponent.vue */ "./resources/js/components/layout/TypeComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('status-component', __webpack_require__(/*! ./components/layout/StatusComponent.vue */ "./resources/js/components/layout/StatusComponent.vue")["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('account-list-component', __webpack_require__(/*! ./components/layout/AccountListComponent.vue */ "./resources/js/components/layout/AccountListComponent.vue"));
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('header-component', __webpack_require__(/*! ./components/layout/HeaderComponent.vue */ "./resources/js/components/layout/HeaderComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('copyright-component', __webpack_require__(/*! ./components/layout/CopyRightComponent.vue */ "./resources/js/components/layout/CopyRightComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('footer-component', __webpack_require__(/*! ./components/layout/FooterComponent.vue */ "./resources/js/components/layout/FooterComponent.vue")["default"]);
@@ -105041,6 +105575,75 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     forceTLS: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/layout/AccountListComponent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/layout/AccountListComponent.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AccountListComponent_vue_vue_type_template_id_4633143c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AccountListComponent.vue?vue&type=template&id=4633143c& */ "./resources/js/components/layout/AccountListComponent.vue?vue&type=template&id=4633143c&");
+/* harmony import */ var _AccountListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AccountListComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/layout/AccountListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AccountListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AccountListComponent_vue_vue_type_template_id_4633143c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AccountListComponent_vue_vue_type_template_id_4633143c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/layout/AccountListComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/layout/AccountListComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/layout/AccountListComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./AccountListComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/AccountListComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountListComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/layout/AccountListComponent.vue?vue&type=template&id=4633143c&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/layout/AccountListComponent.vue?vue&type=template&id=4633143c& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountListComponent_vue_vue_type_template_id_4633143c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./AccountListComponent.vue?vue&type=template&id=4633143c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/layout/AccountListComponent.vue?vue&type=template&id=4633143c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountListComponent_vue_vue_type_template_id_4633143c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AccountListComponent_vue_vue_type_template_id_4633143c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 
@@ -108051,6 +108654,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadQRCodeComponent_vue_vue_type_template_id_25285448___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_uploadQRCodeComponent_vue_vue_type_template_id_25285448___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue ***!
+  \*******************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _QRCodeViewComponent_vue_vue_type_template_id_5e7065ae___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./QRCodeViewComponent.vue?vue&type=template&id=5e7065ae& */ "./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=template&id=5e7065ae&");
+/* harmony import */ var _QRCodeViewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./QRCodeViewComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _QRCodeViewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _QRCodeViewComponent_vue_vue_type_template_id_5e7065ae___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _QRCodeViewComponent_vue_vue_type_template_id_5e7065ae___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QRCodeViewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./QRCodeViewComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_QRCodeViewComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=template&id=5e7065ae&":
+/*!**************************************************************************************************************!*\
+  !*** ./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=template&id=5e7065ae& ***!
+  \**************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QRCodeViewComponent_vue_vue_type_template_id_5e7065ae___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./QRCodeViewComponent.vue?vue&type=template&id=5e7065ae& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/scholar_pages/Account/QRCodeViewComponent.vue?vue&type=template&id=5e7065ae&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QRCodeViewComponent_vue_vue_type_template_id_5e7065ae___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_QRCodeViewComponent_vue_vue_type_template_id_5e7065ae___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

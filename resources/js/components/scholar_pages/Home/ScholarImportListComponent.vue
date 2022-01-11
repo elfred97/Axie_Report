@@ -8,6 +8,9 @@
                     </label>
                 </div>
             </div>
+            <div class="col-md-2">
+                <account-list-component @updateAccountList="filtersParam.account_name = $event"></account-list-component>
+            </div>
         </div>
         <div class="row mt-2">
             <div class="col-md-12">
@@ -89,7 +92,8 @@ export default {
             perPage     : 15,
             css         : TableStyle,
             filtersParam: {
-                date: ''
+                date: '',
+                account_name : ''
             },
             isLoading: false,
             fullPage : true,
@@ -99,9 +103,13 @@ export default {
                     direction: "desc"    // Sorting Direction
                 }
             ],
-            lowest_mmr: 800,
-            
+            lowest_mmr      : 800,
         }
-    }
+    },
+    watch : {
+        'filtersParam.account_name' : function(newVal){
+            this.updateTable();
+        }
+    },
 }
 </script>
