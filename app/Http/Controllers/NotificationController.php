@@ -23,7 +23,7 @@ class NotificationController extends Controller
 
             return Notification::LEFTJOIN('reminders', 'reminders.id', '=', 'notification.reminder_id')
                 ->WHERE('title','LIKE','%'.$request->search.'%')
-                ->WHERE('id','!=',null)
+                ->WHERE('notification.id','!=',null)
                 ->WHERE([['notification.category', 3], ['reminders.type_id', $scholar->type_id]])
                 ->orWhere([['notification.category', 3], ['reminders.type_id', NULL]])
                 ->get();
