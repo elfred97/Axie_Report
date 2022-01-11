@@ -175,6 +175,9 @@ class FileController extends Controller
             ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
             ->where('n.status',1)
             ->whereIn('r.id', $latest_id_per_account)
+            ->when($date == 'today', function ($query) use ($date,$from,$to) {
+                $query->whereBetween('n.created_at', [$from, $to]);
+            })
             ->when($date != 'today', function ($query) use ($date,$from,$to) {
                 $query->whereBetween('n.created_at', [$from, $to]);
             })
