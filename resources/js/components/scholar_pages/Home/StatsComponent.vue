@@ -5,6 +5,9 @@
             <div class="card-body">
                 <!-- begin row -->
                 <div class="row">
+                    <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
+                </div>
+                <div class="row">
                     <!-- begin col-7 -->
                     <div class="col-xl-8 col-lg-9">
                         <!-- begin title -->
@@ -93,11 +96,21 @@ export default {
             claimed        : 0,
             penalty        : 0,
             mmr            : 0,
+            account_selected : {}
+        }
+    },
+    watch : {
+        'account_selected' : function(newVal){
+            this.getScholarReport();
         }
     },
     methods: {
         getScholarReport(){
-            this.axios.get('getScholarReport')
+            this.axios.get('getScholarReport', {
+                params : {
+                    account_name : this.account_selected
+                }
+            })
             .then((response) => {
                 let report = response.data;
                 
@@ -121,7 +134,7 @@ export default {
         }
     },
     created(){
-        this.getScholarReport();
+        // this.getScholarReport();
     }
 }
 </script>
