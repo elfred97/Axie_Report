@@ -179,7 +179,7 @@ class FileController extends Controller
                 $notification = $notification->get();
             }
             else{
-                $notification = $notification->whereBetween('n.created_at', [$from, $to]);
+                $notification = $notification->whereBetween('n.created_at', [$from, $to])->get();
             }
 
         return $notification;
