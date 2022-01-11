@@ -198,19 +198,25 @@ class HomeController extends Controller
         $queryRequest = array_slice($request->all(), 3);
         $where        = [];
 
-        $from = Carbon::parse(strtotime($request->date[0]));
-        $to   = Carbon::parse(strtotime($request->date[1]));
+        $from = Carbon::parse('01-01-2020');
+        $to   = Carbon::now();
+
+        if(is_null($date) == false){
+            $from = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[0])));
+            $to   = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[1])));
+        }
         
         $field     = ($queryRequest) ? explode('|', $request->sort)[0] : 'created_at';
         $direction = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
             
         array_push($where, ['scholars.username', '=', $username]);
+        array_push($where, ['report.average_per_day', '!=', null]);
 
         return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
             ->WHERE($where)
-            ->when($date, function ($query) use ($date,$from,$to) {
+            ->when(is_null($date) == false, function ($query) use ($date,$from,$to) {
                 $query->whereBetween('report.created_at', [$from, $to]);
             })
             ->ORDERBY('report.batch', 'desc')
@@ -222,7 +228,7 @@ class HomeController extends Controller
         return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
-            ->WHERE('scholars.username', $username)
+            ->WHERE([['scholars.username', $username],['report.average_per_day', '!=', null]])
             ->ORDERBY('scholars.id', 'desc')
             ->GET();
     }
@@ -263,20 +269,25 @@ class HomeController extends Controller
         $username =  Auth::user()->username;
         $date = $request->date;
         
+        $from = Carbon::parse('01-01-2020');
+        $to   = Carbon::now();
+
+        if(is_null($date) == false){
             $from = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[0])));
             $to   = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[1])));
+        }
             
-            return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
-            ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
-            ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
-            ->SELECT(
-                'report.*'                
-            )
-            ->WHERE('scholars.username', $username)
-            ->when($date, function ($query) use ($date,$from,$to) {
-                $query->whereDateBetween('report.created_at',$from,$to);
-            })
-            ->GET();
+        return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
+        ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
+        ->LEFTJOIN('scholars', 'history.scholar_id', '=', 'scholars.id')
+        ->SELECT(
+            'report.*'                
+        )
+        ->WHERE('scholars.username', $username)
+        ->when(is_null($date) == false, function ($query) use ($date,$from,$to) {
+            $query->whereDateBetween('report.created_at',$from,$to);
+        })
+        ->GET();
     }
 
     public function delete(Request $request){
