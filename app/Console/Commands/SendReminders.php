@@ -81,7 +81,7 @@ class SendReminders extends Command
                     ]);
                     foreach ($scholars as $scholar) {
                         Mail::to($scholar->email)->send(new \App\Mail\SendEmailReminder($scholar, $reminder));
-                        $this->info('Sending Reminder with id : ' . $reminder->id . ' to ' . str_replace(' ', '',$scholar->email));
+                        $this->info('Sending Reminder with id : ' . $reminder->id . ' to ' . str_replace(" ","",$scholar->email));
                     }
                 }
 
