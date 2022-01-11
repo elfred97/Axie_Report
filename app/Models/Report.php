@@ -44,4 +44,9 @@ class Report extends Model
     public function players(){
         return $this->belongsTo(Player::class,'ronin_address','ronin_address');
     }
+
+    public function scopeWhereDateBetween($query,$fieldName,$fromDate,$todate)
+    {
+        return $query->whereDate($fieldName,'>=',$fromDate)->whereDate($fieldName,'<=',$todate);
+    }
 }

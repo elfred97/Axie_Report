@@ -263,8 +263,8 @@ class HomeController extends Controller
         $username =  Auth::user()->username;
         $date = $request->date;
         
-            $from = Carbon::parse(strtotime($request->date[0]));
-            $to   = Carbon::parse(strtotime($request->date[1]));
+            $from = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[0])));
+            $to   = Carbon::parse(strtotime(str_replace("T16:00:00.000Z","",$request->date[1])));
             
             return Report::LEFTJOIN('players', 'report.name', '=', 'players.account_name')
             ->LEFTJOIN('player_scholar_histories as history', 'players.id', '=', 'history.player_id')
@@ -274,7 +274,7 @@ class HomeController extends Controller
             )
             ->WHERE('scholars.username', $username)
             ->when($date, function ($query) use ($date,$from,$to) {
-                $query->whereBetween('report.created_at', [$from, $to]);
+                $query->whereDateBetween('report.created_at',$from,$to);
             })
             ->GET();
     }
