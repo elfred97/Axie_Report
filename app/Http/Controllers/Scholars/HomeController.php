@@ -210,6 +210,7 @@ class HomeController extends Controller
         $direction = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
             
         array_push($where, ['scholars.username', '=', $username]);
+        array_push($where, ['report.average_per_day', '!=', null]);
 
         return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
