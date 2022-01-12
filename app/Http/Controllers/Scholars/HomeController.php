@@ -194,6 +194,7 @@ class HomeController extends Controller
     public function getImport(Request $request){
         $username = Auth::user()->username;
         $date     = $request->date;
+        $accountName = $request->account_name;
         
         $queryRequest = array_slice($request->all(), 3);
         $where        = [];
@@ -211,6 +212,7 @@ class HomeController extends Controller
             
         array_push($where, ['scholars.username', '=', $username]);
         array_push($where, ['report.average_per_day', '!=', null]);
+        array_push($where, ['report.name','=',$accountName]);
 
         return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
@@ -223,12 +225,13 @@ class HomeController extends Controller
             ->PAGINATE(15);
     }
 
-    public function getScholarReport(){
+    public function getScholarReport(Request $request){
+        $accountName = $request->account_name;
         $username = Auth::user()->username;
         return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
             ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('report', 'report.name', '=', 'players.account_name')
-            ->WHERE([['scholars.username', $username],['report.average_per_day', '!=', null]])
+            ->WHERE([['scholars.username', $username],['report.name',$accountName],['report.average_per_day', '!=', null]])
             ->ORDERBY('scholars.id', 'desc')
             ->GET();
     }
@@ -268,6 +271,7 @@ class HomeController extends Controller
     public function getScholarGraph(Request $request){
         $username =  Auth::user()->username;
         $date = $request->date;
+        $accountName = $request->account_name;
         
         $from = Carbon::parse('01-01-2020');
         $to   = Carbon::now();
@@ -284,6 +288,7 @@ class HomeController extends Controller
             'report.*'                
         )
         ->WHERE('scholars.username', $username)
+        ->WHERE('report.name', $accountName)
         ->when(is_null($date) == false, function ($query) use ($date,$from,$to) {
             $query->whereDateBetween('report.created_at',$from,$to);
         })
@@ -326,7 +331,7 @@ class HomeController extends Controller
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                 'players.*'
             )
-        ->WHERE([['scholars.username', $username]])
+        ->WHERE([['scholars.username', $username],['history.status', 1]])
         ->GET();
 
     }

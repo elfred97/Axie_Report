@@ -172,6 +172,7 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
             ->where('n.status',1)
+            ->where('psh.status',1)
             ->whereIn('r.id', $latest_id_per_account)
             ->ORDERBY($field,$direction);
         
