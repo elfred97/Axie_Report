@@ -18,7 +18,7 @@ class PayrollImport implements ToCollection,WithHeadingRow
         foreach ($rows as $row)
         {
             $player = Player::WHERE('account_name', preg_replace('/\s+/', '', $row['account_name']))->first();
-            $scholar = Scholar::WHERE('username', $row['username'])->first();
+            $scholar = Scholar::WHERE('username', preg_replace('/\s+/', '', $row['username']))->first();
 
             Payroll::create([
                 'scholar_id'       => $scholar->id,
