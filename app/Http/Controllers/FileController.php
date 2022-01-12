@@ -170,7 +170,7 @@ class FileController extends Controller
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
+            ->LEFTJOIN('report as r', 'r.account_name', '=', 'n.account_name')
             ->where('n.status',1)
             ->where('psh.status',1)
             ->whereIn('r.id', $latest_id_per_account)
