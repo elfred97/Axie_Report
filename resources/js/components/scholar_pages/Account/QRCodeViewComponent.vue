@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="scholarData.qr_code">
-            <h4 class="mb-2 mt-2 text-center">Scan QR Code</h4>
+            <h5 class="mb-2 mt-2 text-center">Scan QR Code</h5>
             <img :src="getQRCode"  class="img-fluid"/> 
 
             <p class="text-center mt-2">QR Code is valid for 7 days</p>

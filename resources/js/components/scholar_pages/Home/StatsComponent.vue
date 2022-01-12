@@ -108,7 +108,7 @@ export default {
         getScholarReport(){
             this.axios.get('getScholarReport', {
                 params : {
-                    account_name : this.account_selected
+                    account_name : this.account_selected.account_name
                 }
             })
             .then((response) => {

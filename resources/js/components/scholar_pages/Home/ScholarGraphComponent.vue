@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row mt-2">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="dataTables_length" id="data-table-default_length">
                     <label>Date 
                         <v-datepicker v-model="selected_date" range class=""></v-datepicker>
@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <account-list-component @updateAccountList="filtersParam.account_name = $event"></account-list-component>
+                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
             </div>
         </div>
         <div class="row">
@@ -62,7 +62,7 @@ export default {
             this.axios.get('/getScholarGraph', {
                 params: {
                     date : this.selected_date,
-                    account_name : this.account_selected,
+                    account_name : this.account_selected.account_name,
                 }
             })
             .then((response) => {

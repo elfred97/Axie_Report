@@ -1,6 +1,6 @@
 <template>
     <div>
-        <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" :key="componentKey" modalWidth="30%" :dialogTitle="this.selected.account_name+' QR Code'">
+        <dialog-component v-bind:isOpen="openDialog" v-on:isClose="openDialog = false" :key="componentKey" modalWidth="30%" :dialogTitle="this.selected.account_name">
             <qrcode-view-component v-bind:scholarData="selected" v-on:closeModal="openDialog = false"></qrcode-view-component>
         </dialog-component>
         <div class="section-container">

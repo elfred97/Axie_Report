@@ -5599,7 +5599,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['account'],
+  props: ['account', 'type'],
   data: function data() {
     return {
       accountList: {},
@@ -5609,7 +5609,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     'accountList': function accountList(newVal) {
       if (newVal) {
-        this.selected = newVal[0].account_name;
+        this.selected = newVal[0];
         this.$emit('updateAccountList', this.selected);
       }
     }
@@ -5619,14 +5619,18 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.axios.get('/getListOfAccounts').then(function (response) {
-        // console.log(response.data);
+        // console.log(response.data[0].accounts);
         _this.accountList = response.data[0].accounts;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
     },
     updateAccountName: function updateAccountName(event) {
-      this.$emit('updateAccountList', event.target.value);
+      // console.log(this.selected);
+      // if(this.type){
+      this.$emit('updateAccountList', this.selected); // }    
+      // else
+      //     this.$emit('updateAccountList', this.selected.account_name);
     }
   },
   mounted: function mounted() {
@@ -10262,12 +10266,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       announcementsData: {},
       search: ''
     };
+  },
+  watch: {
+    'account_selected': function account_selected(newVal) {
+      if (newVal) this.getAnnouncement();
+    }
   },
   methods: {
     getAnnouncement: function getAnnouncement() {
@@ -10276,7 +10288,8 @@ __webpack_require__.r(__webpack_exports__);
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('notifications/' + account_type, {
         params: {
-          search: this.search
+          search: this.search,
+          account_name: this.account_selected.account_name
         }
       }).then(function (response) {
         // console.log(response.data);
@@ -10286,8 +10299,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {
-    this.getAnnouncement();
+  mounted: function mounted() {// this.getAnnouncement();
   }
 });
 
@@ -10542,6 +10554,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 // import EyeComponent from './BodyParts/EyeComponent.vue';
 // import EarComponent from './BodyParts/EarComponent.vue';
 // import BackComponent from './BodyParts/BackComponent.vue';
@@ -10557,7 +10572,8 @@ __webpack_require__.r(__webpack_exports__);
         third: false
       },
       userData: {},
-      axies: {}
+      axies: {},
+      account_selected: ''
     };
   },
   // components : {
@@ -10571,6 +10587,9 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     'display': function display(newVal) {
       console.log(newVal);
+    },
+    'account_selected': function account_selected(newVal) {
+      this.getAxieList();
     }
   },
   methods: {
@@ -10587,9 +10606,9 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       // let ronin_address = "0x" + this.userData.ronin_address.split(":")[1];
-      var ronin_address = "0x" + this.userData.ronin_address.split(':')[1]; // let ronin_address = "0xc417a4b041f18d8cf2bb90b754969afb2146cc8c";
+      var ronin_address = "0x" + this.account_selected.ronin_address.split(':')[1]; // let ronin_address = "0xc417a4b041f18d8cf2bb90b754969afb2146cc8c";
+      // console.log(ronin_address)
 
-      console.log(ronin_address);
       this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
         params: {
           operationName: "GetAxieBriefList",
@@ -10630,9 +10649,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get("getAccountInfo/scholars").then(function (response) {
         // console.log(response.data);
-        _this2.userData = response.data;
-
-        _this2.getAxieList();
+        _this2.userData = response.data; // this.getAxieList();
       })["catch"](function (error) {
         console.log(error.data);
       });
@@ -10715,7 +10732,7 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.get('/getScholarGraph', {
         params: {
           date: this.selected_date,
-          account_name: this.account_selected
+          account_name: this.account_selected.account_name
         }
       }).then(function (response) {
         _this.chartOptions.series[0].points = [];
@@ -11068,7 +11085,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('getScholarReport', {
         params: {
-          account_name: this.account_selected
+          account_name: this.account_selected.account_name
         }
       }).then(function (response) {
         var report = response.data;
@@ -73545,17 +73562,13 @@ var render = function() {
               }
             },
             _vm._l(_vm.accountList, function(accounts) {
-              return _c(
-                "option",
-                { domProps: { value: accounts.account_name } },
-                [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(accounts.account_name) +
-                      "\n                    "
-                  )
-                ]
-              )
+              return _c("option", { domProps: { value: accounts } }, [
+                _vm._v(
+                  "\n                        " +
+                    _vm._s(accounts.account_name) +
+                    "\n                    "
+                )
+              ])
             }),
             0
           )
@@ -81980,7 +81993,7 @@ var render = function() {
   return _c("div", [
     _vm.scholarData.qr_code
       ? _c("div", [
-          _c("h4", { staticClass: "mb-2 mt-2 text-center" }, [
+          _c("h5", { staticClass: "mb-2 mt-2 text-center" }, [
             _vm._v("Scan QR Code")
           ]),
           _vm._v(" "),
@@ -82037,7 +82050,7 @@ var render = function() {
           attrs: {
             isOpen: _vm.openDialog,
             modalWidth: "30%",
-            dialogTitle: this.selected.account_name + " QR Code"
+            dialogTitle: this.selected.account_name
           },
           on: {
             isClose: function($event) {
@@ -82447,7 +82460,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-4 col-lg-4 col-sm-8 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
                 [
                   _c(
                     "div",
@@ -82505,6 +82518,21 @@ var render = function() {
                     ]
                   )
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
+                [
+                  _c("account-list-component", {
+                    on: {
+                      updateAccountList: function($event) {
+                        _vm.account_selected.account_name = $event
+                      }
+                    }
+                  })
+                ],
+                1
               )
             ]),
             _vm._v(" "),
@@ -82895,7 +82923,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row row-space-10" }, [
-      _c("div", { staticClass: "col-md-6" }, [
+      _c("div", { staticClass: "col-md-3" }, [
         _c("p", { staticClass: "no-margin" }, [
           _vm._v(
             "\n                Total " +
@@ -82904,6 +82932,21 @@ var render = function() {
           )
         ])
       ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-md-2" },
+        [
+          _c("account-list-component", {
+            on: {
+              updateAccountList: function($event) {
+                _vm.account_selected = $event
+              }
+            }
+          })
+        ],
+        1
+      ),
       _vm._v(" "),
       _vm._m(0)
     ]),
@@ -82995,7 +83038,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
+    return _c("div", { staticClass: "col-md-7" }, [
       _c("div", { staticClass: "pull-right" })
     ])
   },
@@ -83039,7 +83082,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-2" }, [
+      _c("div", { staticClass: "col-md-3" }, [
         _c(
           "div",
           {
@@ -83075,7 +83118,7 @@ var render = function() {
           _c("account-list-component", {
             on: {
               updateAccountList: function($event) {
-                _vm.filtersParam.account_name = $event
+                _vm.account_selected = $event
               }
             }
           })
@@ -83201,7 +83244,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "row mt-2" }, [
-      _c("div", { staticClass: "col-md-2" }, [
+      _c("div", { staticClass: "col-md-3" }, [
         _c(
           "div",
           {
@@ -83242,7 +83285,7 @@ var render = function() {
           _c("account-list-component", {
             on: {
               updateAccountList: function($event) {
-                _vm.filtersParam.account_name = $event
+                _vm.filtersParam.account_name.account_name = $event
               }
             }
           })
@@ -105507,7 +105550,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatTimeDate', function (da
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('dialog-component', __webpack_require__(/*! ./components/layout/DialogComponent.vue */ "./resources/js/components/layout/DialogComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('type-component', __webpack_require__(/*! ./components/layout/TypeComponent.vue */ "./resources/js/components/layout/TypeComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('status-component', __webpack_require__(/*! ./components/layout/StatusComponent.vue */ "./resources/js/components/layout/StatusComponent.vue")["default"]);
-vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('account-list-component', __webpack_require__(/*! ./components/layout/AccountListComponent.vue */ "./resources/js/components/layout/AccountListComponent.vue"));
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('account-list-component', __webpack_require__(/*! ./components/layout/AccountListComponent.vue */ "./resources/js/components/layout/AccountListComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('header-component', __webpack_require__(/*! ./components/layout/HeaderComponent.vue */ "./resources/js/components/layout/HeaderComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('copyright-component', __webpack_require__(/*! ./components/layout/CopyRightComponent.vue */ "./resources/js/components/layout/CopyRightComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('footer-component', __webpack_require__(/*! ./components/layout/FooterComponent.vue */ "./resources/js/components/layout/FooterComponent.vue")["default"]);

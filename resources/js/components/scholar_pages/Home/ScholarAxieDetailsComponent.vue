@@ -44,12 +44,15 @@
             </div>
         </div> -->
         <div class="row row-space-10">
-            <div class="col-md-6">
+            <div class="col-md-3">
                 <p class="no-margin">
                     Total {{ axies.length}}
                 </p>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-2">
+                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
+            </div>
+            <div class="col-md-7">
                 <div class="pull-right">
 
                 </div>
@@ -114,6 +117,7 @@ export default {
             },
             userData: {},
             axies   : {},
+            account_selected : ''
         }
     },
     // components : {
@@ -127,6 +131,9 @@ export default {
     watch: {
         'display': function(newVal){
             console.log(newVal);
+        },
+        'account_selected' : function(newVal){
+            this.getAxieList();
         }
     },
     methods: {
@@ -146,9 +153,9 @@ export default {
         },
          getAxieList(){
             // let ronin_address = "0x" + this.userData.ronin_address.split(":")[1];
-            let ronin_address = "0x" + this.userData.ronin_address.split(':')[1];
+            let ronin_address = "0x" + this.account_selected.ronin_address.split(':')[1];
             // let ronin_address = "0xc417a4b041f18d8cf2bb90b754969afb2146cc8c";
-            console.log(ronin_address)
+            // console.log(ronin_address)
             this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
                 params: {
                     operationName: "GetAxieBriefList",
@@ -192,7 +199,7 @@ export default {
             .then((response) => {
                 // console.log(response.data);
                 this.userData = response.data;
-                this.getAxieList();
+                // this.getAxieList();
             })
             .catch((error) => {
                 console.log(error.data);

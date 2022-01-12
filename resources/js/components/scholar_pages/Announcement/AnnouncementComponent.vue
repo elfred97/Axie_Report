@@ -6,7 +6,7 @@
                     <div class="container">
                         <h3>Announcement</h3>
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-8 col-xs-12">
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Search 
                                         <input 
@@ -18,6 +18,9 @@
                                             v-on:keyup.enter="getAnnouncement()">
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                                <account-list-component @updateAccountList="account_selected.account_name = $event"></account-list-component>
                             </div>
                         </div>
                         <div class="vertical-box-row">
@@ -78,12 +81,19 @@ export default {
             search : '',
         }
     },
+    watch : {
+        'account_selected' : function(newVal){
+            if(newVal)
+                this.getAnnouncement();
+        }
+    },
     methods: {
         getAnnouncement(){
             let account_type = this.$store.state.global_guard_type;
             this.axios.get('notifications/'+account_type, {
                 params : {
-                    search: this.search
+                    search: this.search,
+                    account_name : this.account_selected.account_name
                 }
             })
             .then(response => {
@@ -96,7 +106,7 @@ export default {
         }
     },
     mounted(){
-        this.getAnnouncement();
+        // this.getAnnouncement();
     }
 }
 </script>

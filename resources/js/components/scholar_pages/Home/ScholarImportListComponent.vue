@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row mt-2">
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="dataTables_length" id="data-table-default_length">
                     <label>Date 
                         <v-datepicker v-model="filtersParam.date" range @change="updateTable()" class=""></v-datepicker>
@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <account-list-component @updateAccountList="filtersParam.account_name = $event"></account-list-component>
+                <account-list-component @updateAccountList="filtersParam.account_name.account_name = $event"></account-list-component>
             </div>
         </div>
         <div class="row mt-2">
