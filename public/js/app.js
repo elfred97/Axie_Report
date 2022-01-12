@@ -84110,145 +84110,131 @@ var render = function() {
                                           "div",
                                           { staticClass: "email-info" },
                                           [
-                                            _c(
-                                              "a",
-                                              {
-                                                attrs: {
-                                                  href: "email_detail.html"
-                                                }
-                                              },
-                                              [
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "email-sender"
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      _vm._s(
-                                                        payroll.account_name
+                                            _c("a", [
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-sender" },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(payroll.account_name)
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-title" },
+                                                [
+                                                  _c(
+                                                    "p",
+                                                    {
+                                                      staticClass:
+                                                        "no-margin text-content"
+                                                    },
+                                                    [
+                                                      _c("b", [
+                                                        _vm._v("TX ID:")
+                                                      ]),
+                                                      _vm._v(
+                                                        " " +
+                                                          _vm._s(
+                                                            payroll.txn_id
+                                                          ) +
+                                                          "\n                                                            "
                                                       )
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  {
-                                                    staticClass: "email-title"
-                                                  },
-                                                  [
-                                                    _c(
-                                                      "p",
-                                                      {
-                                                        staticClass:
-                                                          "no-margin text-content"
-                                                      },
-                                                      [
-                                                        _c("b", [
-                                                          _vm._v("TX ID:")
-                                                        ]),
-                                                        _vm._v(
-                                                          " " +
-                                                            _vm._s(
-                                                              payroll.txn_id
-                                                            ) +
-                                                            "\n                                                            "
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "email-desc" },
-                                                  [
-                                                    _c(
-                                                      "div",
-                                                      { staticClass: "row" },
-                                                      [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "col-md-6"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "p",
-                                                              {
-                                                                staticClass:
-                                                                  "no-margin text-content"
-                                                              },
-                                                              [
-                                                                _c("b", [
-                                                                  _vm._v(
-                                                                    "Total SLP: "
-                                                                  )
-                                                                ]),
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-desc" },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "row" },
+                                                    [
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "col-md-6"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "p",
+                                                            {
+                                                              staticClass:
+                                                                "no-margin text-content"
+                                                            },
+                                                            [
+                                                              _c("b", [
                                                                 _vm._v(
-                                                                  _vm._s(
-                                                                    payroll.total_slp
-                                                                  ) +
-                                                                    "\n                                                                    "
+                                                                  "Total SLP: "
                                                                 )
-                                                              ]
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "col-md-6"
-                                                          },
-                                                          [
-                                                            _c(
-                                                              "p",
-                                                              {
-                                                                staticClass:
-                                                                  "no-margin text-content"
-                                                              },
-                                                              [
-                                                                _c("b", [
-                                                                  _vm._v(
-                                                                    "Status: "
-                                                                  )
-                                                                ]),
-                                                                _vm._v(
-                                                                  _vm._s(
-                                                                    payroll.status
-                                                                  ) +
-                                                                    "\n                                                                    "
-                                                                )
-                                                              ]
-                                                            )
-                                                          ]
-                                                        )
-                                                      ]
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "span",
-                                                  { staticClass: "email-time" },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                            " +
-                                                        _vm._s(
-                                                          _vm._f("formatDate")(
-                                                            payroll.created_at
+                                                              ]),
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  payroll.total_slp
+                                                                ) +
+                                                                  "\n                                                                    "
+                                                              )
+                                                            ]
                                                           )
-                                                        ) +
-                                                        "\n                                                        "
-                                                    )
-                                                  ]
-                                                )
-                                              ]
-                                            )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "col-md-6"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "p",
+                                                            {
+                                                              staticClass:
+                                                                "no-margin text-content"
+                                                            },
+                                                            [
+                                                              _c("b", [
+                                                                _vm._v(
+                                                                  "Status: "
+                                                                )
+                                                              ]),
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  payroll.status
+                                                                ) +
+                                                                  "\n                                                                    "
+                                                              )
+                                                            ]
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "span",
+                                                { staticClass: "email-time" },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                            " +
+                                                      _vm._s(
+                                                        _vm._f("formatDate")(
+                                                          payroll.created_at
+                                                        )
+                                                      ) +
+                                                      "\n                                                        "
+                                                  )
+                                                ]
+                                              )
+                                            ])
                                           ]
                                         )
                                       ]
