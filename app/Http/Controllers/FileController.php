@@ -156,37 +156,31 @@ class FileController extends Controller
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         $latest_id_per_account = DB::table('battle_logs as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
+    
+        $from = Carbon::parse('01-01-2020');
+        $to   = Carbon::now();
 
-        if($request->date == 'today'){
-            $notification = DB::TABLE('notification as n')
-            ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
-                ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
-                ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
-                ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-                ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
-                ->where('n.status',1)
-                ->whereIn('r.id', $latest_id_per_account)
-                ->ORDERBY($field,$direction)
-                ->GET();
-        }else{
-            $from = Carbon::parse('01-01-2020');
-            $to   = Carbon::now();
-
-            if($request->date){
-                $from = ($request->date[0]) ? Carbon::parse($request->date[0]) : $from;
-                $to   = ($request->date[1]) ? Carbon::parse($request->date[1]) : $to;
-            }
-            $notification = DB::TABLE('notification as n')
-                ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
-                ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
-                ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
-                ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-                ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
-                ->whereBetween('n.created_at', [$from, $to])
-                ->whereIn('r.id', $latest_id_per_account)
-                ->ORDERBY($field,$direction)
-                ->PAGINATE(15);
+        if($request->date){
+            $from = ($request->date[0]) ? Carbon::parse($request->date[0]) : $from;
+            $to   = ($request->date[1]) ? Carbon::parse($request->date[1]) : $to;
         }
+
+        $notification = DB::TABLE('notification as n')
+        ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
+            ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
+            ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
+            ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
+            ->where('n.status',1)
+            ->whereIn('r.id', $latest_id_per_account)
+            ->ORDERBY($field,$direction);
+        
+            if($request->date == 'today') {
+                $notification = $notification->get();
+            }
+            else{
+                $notification = $notification->whereBetween('n.created_at', [$from, $to])->PAGINATE(15);
+            }
 
         return $notification;
     }
