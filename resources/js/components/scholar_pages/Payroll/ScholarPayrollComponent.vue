@@ -32,7 +32,7 @@
                                             <ul class="list-group list-group-lg no-radius list-email">
                                                 <li class="list-group-item unread" v-for="payroll in payrolls">
                                                     <div class="email-info">
-                                                        <a href="email_detail.html">
+                                                        <a >
                                                             <span class="email-sender">{{ payroll.account_name }}</span>
                                                             <span class="email-title">
                                                                 <p class="no-margin text-content">
