@@ -19,9 +19,6 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
-                                <account-list-component @updateAccountList="account_selected.account_name = $event"></account-list-component>
-                            </div>
                         </div>
                         <div class="vertical-box-row">
                             <!-- begin vertical-box-cell -->
@@ -81,12 +78,6 @@ export default {
             search : '',
         }
     },
-    watch : {
-        'account_selected' : function(newVal){
-            if(newVal)
-                this.getAnnouncement();
-        }
-    },
     methods: {
         getAnnouncement(){
             let account_type = this.$store.state.global_guard_type;
@@ -106,7 +97,7 @@ export default {
         }
     },
     mounted(){
-        // this.getAnnouncement();
+        this.getAnnouncement();
     }
 }
 </script>

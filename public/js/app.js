@@ -10266,20 +10266,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       announcementsData: {},
       search: ''
     };
-  },
-  watch: {
-    'account_selected': function account_selected(newVal) {
-      if (newVal) this.getAnnouncement();
-    }
   },
   methods: {
     getAnnouncement: function getAnnouncement() {
@@ -10299,7 +10291,8 @@ __webpack_require__.r(__webpack_exports__);
       });
     }
   },
-  mounted: function mounted() {// this.getAnnouncement();
+  mounted: function mounted() {
+    this.getAnnouncement();
   }
 });
 
@@ -82518,21 +82511,6 @@ var render = function() {
                     ]
                   )
                 ]
-              ),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
-                [
-                  _c("account-list-component", {
-                    on: {
-                      updateAccountList: function($event) {
-                        _vm.account_selected.account_name = $event
-                      }
-                    }
-                  })
-                ],
-                1
               )
             ]),
             _vm._v(" "),
