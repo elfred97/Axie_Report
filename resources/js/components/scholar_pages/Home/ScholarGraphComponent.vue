@@ -8,13 +8,16 @@
                     </label>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12" v-if="chartOptions.series[0].points.length > 0">
                 <JSCharting :options="chartOptions" class="columnChart"></JSCharting>
+            </div>
+            <div class="col-md-12" v-else>
+                <p>No Graph Data Available</p>
             </div>
         </div>
     </div>
@@ -59,6 +62,7 @@ export default {
     },
     methods : {
         getGraph(){
+            this.chartOptions.series[0].points = [];
             this.axios.get('/getScholarGraph', {
                 params: {
                     date : this.selected_date,
@@ -66,7 +70,6 @@ export default {
                 }
             })
             .then((response) => {
-                this.chartOptions.series[0].points = [];
                 response.data.forEach(element => {
                     this.chartOptions.series[0].points.push(
                         [

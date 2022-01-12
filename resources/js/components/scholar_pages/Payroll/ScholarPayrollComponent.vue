@@ -48,7 +48,7 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <p class="no-margin text-content">
-                                                                            <b>Status: </b>{{ payroll.total_slp }}
+                                                                            <b>Status: </b>{{ payroll.status }}
                                                                         </p>
                                                                     </div>
                                                                 </div>

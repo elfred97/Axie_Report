@@ -5918,18 +5918,18 @@ __webpack_require__.r(__webpack_exports__);
       total_count: 0
     };
   },
-  watch: {
-    'notificationData': function notificationData(newVal) {
-      if (newVal) {
-        this.getTotalNotificationCount();
-      }
-    },
-    'announcementsData': function announcementsData(newVal) {
-      if (newVal) {
-        this.getTotalNotificationCount();
-      }
-    }
-  },
+  // watch: {
+  //     'notificationData': function(newVal){
+  //         if(newVal){
+  //             this.getTotalNotificationCount();
+  //         }
+  //     },
+  //     'announcementsData': function(newVal){
+  //         if(newVal){
+  //             this.getTotalNotificationCount();
+  //         }
+  //     }
+  // },
   computed: {
     getGuardType: function getGuardType() {
       return this.$store.state.global_guard_type;
@@ -5943,21 +5943,27 @@ __webpack_require__.r(__webpack_exports__);
       var ann_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
       // let announcementCount = Object.keys(this.announcementsData).length;
 
-      if (this.notificationData) Object.keys(this.notificationData).forEach(function (element, index) {
-        if (_this.$store.state.global_guard_type == 'admins') {
-          if (element.status == 1) notif_count = notif_count + 1;
-        } else {
-          if (element.status_scholar == 1) notif_count = notif_count + 1;
-        }
-      });
-      if (this.announcementsData) Object.keys(this.announcementsData).forEach(function (element, index) {
+      if (this.notificationData.length > 0) {
+        this.notificationData.forEach(function (element, index) {
+          if (_this.$store.state.global_guard_type == 'admins') {
+            if (element.status == 1) notif_count = notif_count + 1;
+          } else {
+            if (element.status_scholar == 1) {
+              notif_count = notif_count + 1;
+            }
+          }
+        });
+      }
+
+      if (this.announcementsData.length > 0) this.announcementsData.forEach(function (element, index) {
         if (_this.$store.state.global_guard_type == 'admins') {
           if (element.status == 1) ann_count = ann_count + 1;
         } else {
           if (element.status_scholar == 1) ann_count = ann_count + 1;
         }
       });
-      this.total_count = notif_count + ann_count;
+      this.total_count = notif_count + ann_count; // console.log(notif_count);
+      // return notif_count + ann_count
     },
     getNotification: function getNotification() {
       var _this2 = this;
@@ -5974,9 +5980,11 @@ __webpack_require__.r(__webpack_exports__);
           console.log(error.response.data);
         });
       } else {
-        this.axios.get('getScholarNotification/').then(function (response) {
+        this.axios.get('getScholarNotification').then(function (response) {
           // console.log(response.data);
           _this2.notificationData = response.data;
+
+          _this2.getTotalNotificationCount();
         })["catch"](function (error) {
           console.log(error.response.data);
         });
@@ -5988,6 +5996,8 @@ __webpack_require__.r(__webpack_exports__);
       // if(this.$store.state.global_guard_type == 'admins'){
       this.axios.get('/getAccountInfo/' + this.$store.state.global_guard_type).then(function (response) {
         _this3.accountData = response.data;
+
+        _this3.getTotalNotificationCount();
       })["catch"](function (error) {
         // this.clearAll();
         console.log(error.response.data);
@@ -10685,6 +10695,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -10721,13 +10734,13 @@ __webpack_require__.r(__webpack_exports__);
     getGraph: function getGraph() {
       var _this = this;
 
+      this.chartOptions.series[0].points = [];
       this.axios.get('/getScholarGraph', {
         params: {
           date: this.selected_date,
           account_name: this.account_selected.account_name
         }
       }).then(function (response) {
-        _this.chartOptions.series[0].points = [];
         response.data.forEach(function (element) {
           _this.chartOptions.series[0].points.push([moment(element.created_at).format('YYYY, MM, D'), element.gained_slp_today]);
         });
@@ -11197,6 +11210,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -11209,7 +11227,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var account_type = this.$store.state.global_guard_type;
-      this.axios.get('getScholarNotification/', {
+      this.axios.get('getScholarNotification', {
         params: {
           search: this.search
         }
@@ -82097,18 +82115,6 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-12" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Ronin Address")
-                          ]),
-                          _vm._v(" "),
-                          _c("p", [
-                            _vm._v(
-                              " " + _vm._s(_vm.userData.ronin_address) + " "
-                            )
-                          ])
-                        ]),
-                        _vm._v(" "),
                         _c("div", { staticClass: "col-md-6" }, [
                           _c("label", { attrs: { for: "" } }, [
                             _vm._v("Email")
@@ -82918,7 +82924,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2" },
+        { staticClass: "col-md-3" },
         [
           _c("account-list-component", {
             on: {
@@ -83096,7 +83102,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2" },
+        { staticClass: "col-md-3" },
         [
           _c("account-list-component", {
             on: {
@@ -83111,17 +83117,21 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-12" },
-        [
-          _c("JSCharting", {
-            staticClass: "columnChart",
-            attrs: { options: _vm.chartOptions }
-          })
-        ],
-        1
-      )
+      _vm.chartOptions.series[0].points.length > 0
+        ? _c(
+            "div",
+            { staticClass: "col-md-12" },
+            [
+              _c("JSCharting", {
+                staticClass: "columnChart",
+                attrs: { options: _vm.chartOptions }
+              })
+            ],
+            1
+          )
+        : _c("div", { staticClass: "col-md-12" }, [
+            _c("p", [_vm._v("No Graph Data Available")])
+          ])
     ])
   ])
 }
@@ -83263,7 +83273,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "div",
-        { staticClass: "col-md-2" },
+        { staticClass: "col-md-3" },
         [
           _c("account-list-component", {
             on: {
@@ -83870,26 +83880,36 @@ var render = function() {
                                                 "span",
                                                 { staticClass: "email-desc" },
                                                 [
-                                                  _vm._v(
-                                                    "\n                                                            Penalty: \n                                                            " +
-                                                      _vm._s(
-                                                        notification.penalty
-                                                      ) +
-                                                      " - \n                                                            \n                                                            "
-                                                  ),
-                                                  notification.category == 1
+                                                  notification.category != 3
                                                     ? _c("span", [
                                                         _vm._v(
-                                                          "Minimum SLP not met"
-                                                        )
+                                                          "\n                                                                Penalty: \n                                                                " +
+                                                            _vm._s(
+                                                              notification.penalty
+                                                            ) +
+                                                            " - \n                                                                \n                                                                "
+                                                        ),
+                                                        notification.category ==
+                                                        1
+                                                          ? _c("span", [
+                                                              _vm._v(
+                                                                "Minimum SLP not met"
+                                                              )
+                                                            ])
+                                                          : notification.category ==
+                                                            2
+                                                          ? _c("span", [
+                                                              _vm._v(
+                                                                "Minimum MMR not met"
+                                                              )
+                                                            ])
+                                                          : _vm._e()
                                                       ])
-                                                    : notification.category == 2
-                                                    ? _c("span", [
+                                                    : _c("span", [
                                                         _vm._v(
-                                                          "Minimum MMR not met"
+                                                          "\n                                                                Terminated\n                                                            "
                                                         )
                                                       ])
-                                                    : _vm._e()
                                                 ]
                                               ),
                                               _vm._v(" "),
@@ -84199,7 +84219,7 @@ var render = function() {
                                                                 ]),
                                                                 _vm._v(
                                                                   _vm._s(
-                                                                    payroll.total_slp
+                                                                    payroll.status
                                                                   ) +
                                                                     "\n                                                                    "
                                                                 )

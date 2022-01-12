@@ -49,10 +49,10 @@
                                             </div> -->
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <!-- <div class="col-md-12">
                                                 <label for="">Ronin Address</label>
                                                 <p> {{ userData.ronin_address }} </p>
-                                            </div>
+                                            </div> -->
                                             <div class="col-md-6">
                                                 <label for="">Email</label>
                                                 <p> {{ userData.email }} </p>

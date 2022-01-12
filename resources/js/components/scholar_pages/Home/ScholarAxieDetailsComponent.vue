@@ -49,7 +49,7 @@
                     Total {{ axies.length}}
                 </p>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
             </div>
             <div class="col-md-7">

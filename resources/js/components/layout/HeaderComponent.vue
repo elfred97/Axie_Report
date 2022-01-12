@@ -131,18 +131,18 @@ export default {
             total_count : 0,
         }
     },
-    watch: {
-        'notificationData': function(newVal){
-            if(newVal){
-                this.getTotalNotificationCount();
-            }
-        },
-        'announcementsData': function(newVal){
-            if(newVal){
-                this.getTotalNotificationCount();
-            }
-        }
-    },
+    // watch: {
+    //     'notificationData': function(newVal){
+    //         if(newVal){
+    //             this.getTotalNotificationCount();
+    //         }
+    //     },
+    //     'announcementsData': function(newVal){
+    //         if(newVal){
+    //             this.getTotalNotificationCount();
+    //         }
+    //     }
+    // },
     computed : {
         getGuardType(){
             return this.$store.state.global_guard_type;
@@ -155,19 +155,22 @@ export default {
             let ann_count = 0;
             // let notificationCount = Object.keys(this.notificationData).length;
             // let announcementCount = Object.keys(this.announcementsData).length;
-            if(this.notificationData)
-                Object.keys(this.notificationData).forEach((element, index) => {                                        
+            if(this.notificationData.length > 0){
+                this.notificationData.forEach((element, index) => {                                        
                     if(this.$store.state.global_guard_type == 'admins'){
                         if(element.status == 1)
                             notif_count = notif_count + 1;
                     }
                     else{
-                        if(element.status_scholar == 1)
+                        if(element.status_scholar == 1){
                             notif_count = notif_count + 1;
+                        }
                     }
                 });
-            if(this.announcementsData)
-                Object.keys(this.announcementsData).forEach((element, index) => {                                        
+            }
+
+            if(this.announcementsData.length > 0)
+                this.announcementsData.forEach((element, index) => {                                        
                     if(this.$store.state.global_guard_type == 'admins'){
                         if(element.status == 1)
                             ann_count = ann_count + 1;
@@ -179,6 +182,8 @@ export default {
                 });
 
             this.total_count =  notif_count + ann_count;
+            // console.log(notif_count);
+            // return notif_count + ann_count
         },
         getNotification(){
             if(this.$store.state.global_guard_type == 'admins'){
@@ -188,7 +193,7 @@ export default {
                     }
                 })
                 .then((response) => {
-                    this.notificationData = response.data;
+                    this.notificationData = response.data;                    
                 })
                 .catch((error) => {
                     // this.clearAll();
@@ -196,10 +201,11 @@ export default {
                 })
             }
             else{
-                this.axios.get('getScholarNotification/')
+                this.axios.get('getScholarNotification')
                 .then(response => {
                     // console.log(response.data);
                     this.notificationData = response.data;
+                    this.getTotalNotificationCount();
                 })
                 .catch( error => {
                     console.log(error.response.data);
@@ -211,6 +217,7 @@ export default {
                 this.axios.get('/getAccountInfo/'+this.$store.state.global_guard_type)
                 .then((response) => {
                     this.accountData = response.data;
+                    this.getTotalNotificationCount();
                 })
                 .catch((error) => {
                     // this.clearAll();

@@ -40,11 +40,16 @@
                                                                 {{ notification.account_name }}
                                                             </span>
                                                             <span class="email-desc">
-                                                                Penalty: 
-                                                                {{ notification.penalty }} - 
-                                                                
-                                                                <span v-if="notification.category == 1">Minimum SLP not met</span>
-                                                                <span v-else-if="notification.category == 2">Minimum MMR not met</span>
+                                                                <span v-if="notification.category != 3">
+                                                                    Penalty: 
+                                                                    {{ notification.penalty }} - 
+                                                                    
+                                                                    <span v-if="notification.category == 1">Minimum SLP not met</span>
+                                                                    <span v-else-if="notification.category == 2">Minimum MMR not met</span>
+                                                                </span>
+                                                                <span v-else>
+                                                                    Terminated
+                                                                </span>
                                                                 
                                                             </span>
                                                             <span class="email-time">
@@ -86,7 +91,7 @@ export default {
     methods: {
         getNotification(){
             let account_type = this.$store.state.global_guard_type;
-            this.axios.get('getScholarNotification/', {
+            this.axios.get('getScholarNotification', {
                 params : {
                     search : this.search
                 }
