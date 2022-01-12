@@ -9,7 +9,7 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <account-list-component @updateAccountList="filtersParam.account_name.account_name = $event"></account-list-component>
+                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
             </div>
         </div>
         <div class="row mt-2">
@@ -104,11 +104,17 @@ export default {
                 }
             ],
             lowest_mmr      : 800,
+            account_selected : {
+                account_name : '',                
+            }
         }
     },
     watch : {
-        'filtersParam.account_name' : function(newVal){
-            this.updateTable();
+        'account_selected' : function(newVal){
+            if(newVal){
+                this.filtersParam.account_name = newVal.account_name;
+                this.updateTable();
+            }
         }
     },
 }

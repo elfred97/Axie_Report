@@ -84,7 +84,6 @@ export default {
             this.axios.get('notifications/'+account_type, {
                 params : {
                     search: this.search,
-                    account_name : this.account_selected.account_name
                 }
             })
             .then(response => {

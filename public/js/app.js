@@ -10280,8 +10280,7 @@ __webpack_require__.r(__webpack_exports__);
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('notifications/' + account_type, {
         params: {
-          search: this.search,
-          account_name: this.account_selected.account_name
+          search: this.search
         }
       }).then(function (response) {
         // console.log(response.data);
@@ -10946,12 +10945,18 @@ __webpack_require__.r(__webpack_exports__);
         direction: "desc" // Sorting Direction
 
       }],
-      lowest_mmr: 800
+      lowest_mmr: 800,
+      account_selected: {
+        account_name: ''
+      }
     };
   },
   watch: {
-    'filtersParam.account_name': function filtersParamAccount_name(newVal) {
-      this.updateTable();
+    'account_selected': function account_selected(newVal) {
+      if (newVal) {
+        this.filtersParam.account_name = newVal.account_name;
+        this.updateTable();
+      }
     }
   }
 });
@@ -83263,7 +83268,7 @@ var render = function() {
           _c("account-list-component", {
             on: {
               updateAccountList: function($event) {
-                _vm.filtersParam.account_name.account_name = $event
+                _vm.account_selected = $event
               }
             }
           })
