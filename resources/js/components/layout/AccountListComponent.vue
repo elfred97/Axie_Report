@@ -40,7 +40,10 @@ export default {
             this.axios.get('/getListOfAccounts')
             .then(response => {
                 // console.log(response.data[0].accounts);
-                this.accountList = response.data[0].accounts;
+                if(response.data.status == "TERMINATED" || response.data.status == "RESIGNED" )
+                    this.accountList = response.data[0].histories;
+                else
+                    this.accountList = response.data[0].accounts;
             })
             .catch(error => {
                 console.log(error.response.data);

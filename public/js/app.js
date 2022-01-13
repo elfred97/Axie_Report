@@ -5620,7 +5620,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('/getListOfAccounts').then(function (response) {
         // console.log(response.data[0].accounts);
-        _this.accountList = response.data[0].accounts;
+        if (response.data.status == "TERMINATED" || response.data.status == "RESIGNED") _this.accountList = response.data[0].histories;else _this.accountList = response.data[0].accounts;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
