@@ -342,9 +342,18 @@ class HomeController extends Controller
             $glblCtrl = new GlobalController;
             $scholarsAccounts = $glblCtrl->getListAccounts();
 
-            for($i=0;$i< count($scholarsAccounts);$i++){
-                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+            if(count($scholarsAccounts) > 0){
+                for($i=0;$i< count($scholarsAccounts);$i++){
+                    Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+                }
             }
+            else{
+                $scholarsAccounts = $glblCtrl->getInactiveAccounts();
+                for($i=0;$i< count($scholarsAccounts);$i++){
+                    Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+                }
+            }
+            
         }
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);

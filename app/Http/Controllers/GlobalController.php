@@ -110,6 +110,11 @@ class GlobalController extends Controller
         return Scholar::where('id',$scholarID)->with('accounts')->get()[0]->accounts; 
     }
 
+    public function getInactiveAccounts(){
+        $scholarID = Auth::id();
+        return Scholar::where('id',$scholarID)->with('accounts')->get()[0]->inactiveAccounts; 
+    }
+
     public function updateAccountInfo(Request $request){
         try {
             $user = User::UPDATEORCREATE(
