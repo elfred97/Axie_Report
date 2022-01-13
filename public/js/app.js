@@ -80411,7 +80411,7 @@ var render = function() {
                         history.status == 1
                           ? _c("span", [
                               _vm._v(
-                                "Created at " +
+                                "Started Playing on " +
                                   _vm._s(
                                     _vm._f("formatDateWord")(history.h_created)
                                   )
@@ -80420,7 +80420,7 @@ var render = function() {
                           : history.status == 0
                           ? _c("span", [
                               _vm._v(
-                                "Updated at " +
+                                "Terminated on " +
                                   _vm._s(
                                     _vm._f("formatDateWord")(history.h_updated)
                                   )

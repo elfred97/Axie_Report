@@ -52,8 +52,8 @@
                         <div class="row no-margin">
                             <div class="col-md-5">{{ history.account_name }}</div>
                             <div class="col-md-4 text-center">
-                                <span v-if="history.status == 1">Created at {{ history.h_created | formatDateWord }}</span>
-                                <span v-else-if="history.status == 0">Updated at {{ history.h_updated | formatDateWord }}</span>
+                                <span v-if="history.status == 1">Started Playing on {{ history.h_created | formatDateWord }}</span>
+                                <span v-else-if="history.status == 0">Terminated on {{ history.h_updated | formatDateWord }}</span>
                             </div>
                             <div class="col-md-3">
                                 <span v-if="history.status == 1">Active</span>
