@@ -107,7 +107,7 @@ class GlobalController extends Controller
 
     public function getListAccounts(){
         $scholarID = Auth::id();
-        return Scholar::find($scholarID)->where('username',Auth::user()->username)->with('accounts')->get(); 
+        return Scholar::where('id',$scholarID)->with('accounts')->get()[0]->accounts; 
     }
 
     public function updateAccountInfo(Request $request){

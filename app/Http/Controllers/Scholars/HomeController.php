@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Scholars;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\GlobalController;
 use DB;
 use Auth;
 use File;
@@ -116,7 +117,7 @@ class HomeController extends Controller
                 'status'       => $request->status,
             ];
 
-            if($request->email_password){
+            if(isset($request->email_password)){
                 $where = (array)$where;
                 $where['password'] = bcrypt(filter_var($request->email_password,FILTER_SANITIZE_STRING));
             }
@@ -128,12 +129,13 @@ class HomeController extends Controller
 
             if(str_contains($request->account_name,",")){
                 $playerAccounts = explode(",",$request->account_name);
-
+                $playerIDS = array();
                 foreach($playerAccounts as $playerAcc){
                     $player = Player::WHERE('account_name', $playerAcc)->FIRST();
                     $playerHistory = PlayerScholarHistory::WHERE('player_id', $player->id)->WHERE('scholar_id', isset($request->id) ? $request->id : $scholar->id)->where('status',1)->FIRST();
 
                     if(empty($playerHistory)){
+                        array_push($playerIDS,$player->id);
                         PlayerScholarHistory::CREATE(
                             [
                                 'player_id'  => $player->id,
@@ -141,22 +143,20 @@ class HomeController extends Controller
                             ]
                         );
                     }
+                    else{
+                        array_push($playerIDS,$player->id);
+                    }
                 }
+                PlayerScholarHistory::WHERENOTIN('player_id',$playerIDS)->WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
             }    
             else{
                 $player = Player::WHERE('account_name', $request->account_name)->FIRST();
 
-                $playerHistories = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('status',1)->get();
+                $playerHistories = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('player_id',$player->id)->WHERE('status',1)->count();
+                $countScholarAccounts = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('status',1)->count();
 
-                if($playerHistories->count() > 1){
-                    PlayerScholarHistory::WHERENOTIN('player_id',[$player->id])->WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
-                }
-                else if($playerHistories->count() <= 1){
-                    $historyPlayers = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('player_id',$player->id)->WHERE('status',1)->count();
-
-                    if($historyPlayers == 0){
-                        PlayerScholarHistory::WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
-                    }
+                if($playerHistories == 0 && $countScholarAccounts > 0){
+                    PlayerScholarHistory::WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
                     PlayerScholarHistory::CREATE(
                         [
                             'player_id'  => $player->id,
@@ -164,12 +164,15 @@ class HomeController extends Controller
                         ]
                     );
                 }
+                else{
+                    PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERENOTIN('player_id',[$player->id])->UPDATE(['status' => 0]);
+                }
             }
 
             if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED'){
                 PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
 
-                $scholarsAccounts = Scholar::find($scholar->id)->with('accounts');
+                $scholarsAccounts = Scholar::where('id',$scholar->id)->with('accounts')->get()[0]->accounts;
 
                     foreach($scholarsAccounts as $acc){
                         Notification::CREATE([
@@ -338,20 +341,12 @@ class HomeController extends Controller
 
     public function changeStatusNotification(){
         try {
-            $username = Auth::user()->username;
-            $accountName = Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
-                ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
-                ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
-                ->SELECT(
-                    'players.account_name'
-                )
-            ->WHERE([['scholars.username', $username], ['notification.category', '!=', 3],['notification.status_scholar', '=', 1]])
-            ->FIRST()->account_name;
-            $notif = DB::table('notification')->where('account_name',$accountName)->where('status_scholar', '=', 1)->update(array('status_scholar' => 2));
-            if($notif)
-                return response()->json(['message' => 'Notification has been read!'], 200);
-            else
-                return response()->json(['message' => 'There was a problem processing your request'], 500);
+            $glblCtrl = new GlobalController;
+            $scholarsAccounts = $glblCtrl->getListAccounts();
+
+            for($i=0;$i< count($scholarsAccounts);$i++){
+                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+            }
         }
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
