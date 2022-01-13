@@ -339,8 +339,9 @@ class HomeController extends Controller
 
     public function changeStatusNotification(){
         try {
+            $scholarID = Auth::id();
             $glblCtrl = new GlobalController;
-            $scholarsAccounts = $glblCtrl->getListAccounts();
+            $scholarsAccounts = Scholar::where('id',$scholarID)->with('accounts')->get()[0]->accounts;
 
             if(count($scholarsAccounts) > 0){
                 for($i=0;$i< count($scholarsAccounts);$i++){
