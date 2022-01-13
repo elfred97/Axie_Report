@@ -5620,7 +5620,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('/getListOfAccounts').then(function (response) {
         // console.log(response.data[0].accounts);
-        if (response.data.status == "TERMINATED" || response.data.status == "RESIGNED") _this.accountList = response.data[0].histories;else _this.accountList = response.data[0].accounts;
+        if (response.data[0].status == "TERMINATED" || response.data.status == "RESIGNED") _this.accountList = response.data[0].histories;else _this.accountList = response.data[0].accounts;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -6036,7 +6036,7 @@ __webpack_require__.r(__webpack_exports__);
     gotoAnnouncement: function gotoAnnouncement() {
       var _this6 = this;
 
-      this.axios.post('changeStatusAnnouncementScholar').then(function (response) {
+      this.axios.post('changeStatusReminders').then(function (response) {
         _this6.getAnnouncement();
       })["catch"](function (error) {
         console.log(error.response.data);

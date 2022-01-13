@@ -257,7 +257,7 @@ export default {
             
         },
         gotoAnnouncement(){
-            this.axios.post('changeStatusAnnouncementScholar')
+            this.axios.post('changeStatusReminders')
             .then(response => {
                 this.getAnnouncement();
             })
