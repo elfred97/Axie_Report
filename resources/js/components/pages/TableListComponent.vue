@@ -54,14 +54,14 @@
                                 </div>
                             </template>
                             <template slot="penalty" slot-scope="props">
-                                <div>
+                                <div>                                    
                                     <span class="text-info" v-if="props.rowData.penalty == 1">
                                         {{ props.rowData.penalty }}
                                     </span>
                                     <span class="text-warning" v-else-if="props.rowData.penalty == 2">
                                         {{ props.rowData.penalty}}
                                     </span>
-                                    <span class="text-danger" v-else-if="props.rowData.penalty == 3">
+                                    <span class="text-danger" v-else-if="props.rowData.penalty >= 3">
                                         {{ props.rowData.penalty }}
                                     </span>
                                     <span class="text-default" v-else>

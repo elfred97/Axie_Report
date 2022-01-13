@@ -80624,7 +80624,7 @@ var render = function() {
                                       "\n                                "
                                   )
                                 ])
-                              : props.rowData.penalty == 3
+                              : props.rowData.penalty >= 3
                               ? _c("span", { staticClass: "text-danger" }, [
                                   _vm._v(
                                     "\n                                    " +
