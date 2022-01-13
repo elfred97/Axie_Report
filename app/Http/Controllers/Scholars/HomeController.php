@@ -345,6 +345,8 @@ class HomeController extends Controller
             for($i=0;$i< count($scholarsAccounts);$i++){
                 Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
             }
+
+            Notification::WHERE('category',4)->WHERE('account_name',Auth::id())->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
         }
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
@@ -353,6 +355,13 @@ class HomeController extends Controller
 
     public function changeStatusReminders(){
         try {
+            $scholarID = Auth::id();
+            $scholarsAccounts = Scholar::where('id',$scholarID)->with('histories')->get()[0]->histories;
+
+            for($i=0;$i< count($scholarsAccounts);$i++){
+                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+            }
+
             Notification::WHERE('category',4)->WHERE('account_name',Auth::id())->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
         }
         catch (\Exception $e) {
