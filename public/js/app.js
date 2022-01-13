@@ -5915,7 +5915,9 @@ __webpack_require__.r(__webpack_exports__);
       notificationData: {},
       accountData: {},
       announcementsData: {},
-      total_count: 0
+      total_count: 0,
+      notification_count: 0,
+      announcement_count: 0
     };
   },
   // watch: {
@@ -5933,28 +5935,16 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     getGuardType: function getGuardType() {
       return this.$store.state.global_guard_type;
+    },
+    getTotal: function getTotal() {
+      return this.notification_count + this.announcement_count;
     }
   },
   methods: {
-    getTotalNotificationCount: function getTotalNotificationCount() {
+    getTotalAnnouncementCount: function getTotalAnnouncementCount() {
       var _this = this;
 
-      var notif_count = 0;
-      var ann_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
-      // let announcementCount = Object.keys(this.announcementsData).length;
-
-      if (this.notificationData.length > 0) {
-        this.notificationData.forEach(function (element, index) {
-          if (_this.$store.state.global_guard_type == 'admins') {
-            if (element.status == 1) notif_count = notif_count + 1;
-          } else {
-            if (element.status_scholar == 1) {
-              notif_count = notif_count + 1;
-            }
-          }
-        });
-      }
-
+      var ann_count = 0;
       if (this.announcementsData.length > 0) this.announcementsData.forEach(function (element, index) {
         if (_this.$store.state.global_guard_type == 'admins') {
           if (element.status == 1) ann_count = ann_count + 1;
@@ -5962,11 +5952,32 @@ __webpack_require__.r(__webpack_exports__);
           if (element.status_scholar == 1) ann_count = ann_count + 1;
         }
       });
-      this.total_count = notif_count + ann_count; // console.log(notif_count);
+      this.announcement_count = ann_count;
+    },
+    getTotalNotificationCount: function getTotalNotificationCount() {
+      var _this2 = this;
+
+      var notif_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
+      // let announcementCount = Object.keys(this.announcementsData).length;
+
+      if (this.notificationData.length > 0) {
+        this.notificationData.forEach(function (element, index) {
+          if (_this2.$store.state.global_guard_type == 'admins') {
+            if (element.status == 1) notif_count = notif_count + 1;
+          } else {
+            if (element.status_scholar == 1) {
+              notif_count = notif_count + 1;
+            }
+          }
+        });
+      } // this.total_count =  notif_count + ann_count;
+
+
+      this.notification_count = notif_count; // console.log(notif_count);
       // return notif_count + ann_count
     },
     getNotification: function getNotification() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.$store.state.global_guard_type == 'admins') {
         this.axios.get('/getNotification', {
@@ -5974,7 +5985,7 @@ __webpack_require__.r(__webpack_exports__);
             date: 'today'
           }
         }).then(function (response) {
-          _this2.notificationData = response.data;
+          _this3.notificationData = response.data;
         })["catch"](function (error) {
           // this.clearAll();
           console.log(error.response.data);
@@ -5982,29 +5993,27 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.axios.get('getScholarNotification').then(function (response) {
           // console.log(response.data);
-          _this2.notificationData = response.data;
+          _this3.notificationData = response.data;
 
-          _this2.getTotalNotificationCount();
+          _this3.getTotalNotificationCount();
         })["catch"](function (error) {
           console.log(error.response.data);
         });
       }
     },
     getAccountInfo: function getAccountInfo() {
-      var _this3 = this;
+      var _this4 = this;
 
       // if(this.$store.state.global_guard_type == 'admins'){
       this.axios.get('/getAccountInfo/' + this.$store.state.global_guard_type).then(function (response) {
-        _this3.accountData = response.data;
-
-        _this3.getTotalNotificationCount();
+        _this4.accountData = response.data;
       })["catch"](function (error) {
         // this.clearAll();
         console.log(error.response.data);
       }); // }
     },
     gotoNotification: function gotoNotification(data) {
-      var _this4 = this;
+      var _this5 = this;
 
       var url = '';
       var redirect = '';
@@ -6018,9 +6027,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.axios.post(redirect).then(function (response) {
-        _this4.getNotification();
+        _this5.getNotification();
 
-        _this4.getAnnouncement();
+        _this5.getAnnouncement();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -6030,12 +6039,14 @@ __webpack_require__.r(__webpack_exports__);
       window.open('/scholar_announcement', '_self');
     },
     getAnnouncement: function getAnnouncement() {
-      var _this5 = this;
+      var _this6 = this;
 
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('notifications/' + account_type).then(function (response) {
         // console.log(response.data);
-        _this5.announcementsData = response.data;
+        _this6.announcementsData = response.data;
+
+        _this6.getTotalAnnouncementCount();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -6049,13 +6060,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this6 = this;
+    var _this7 = this;
 
     this.getNotification();
     this.getAccountInfo();
     this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
-      _this6.getNotification();
+      _this7.getNotification();
     });
   }
 });
@@ -73885,7 +73896,7 @@ var render = function() {
         _c("div", { staticClass: "header-nav" }, [
           _c("ul", { staticClass: "nav pull-right" }, [
             _c("li", { staticClass: "dropdown dropdown-hover" }, [
-              _vm.total_count > 0
+              _vm.getTotal > 0
                 ? _c(
                     "a",
                     {
@@ -73896,7 +73907,7 @@ var render = function() {
                       _c("i", { staticClass: "fa fa-bell" }),
                       _vm._v(" "),
                       _c("span", { staticClass: "total" }, [
-                        _vm._v(_vm._s(_vm.total_count))
+                        _vm._v(_vm._s(_vm.getTotal))
                       ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "arrow top" })
@@ -80613,7 +80624,7 @@ var render = function() {
                                       "\n                                "
                                   )
                                 ])
-                              : props.rowData.penalty == 3
+                              : props.rowData.penalty >= 3
                               ? _c("span", { staticClass: "text-danger" }, [
                                   _vm._v(
                                     "\n                                    " +
@@ -105858,14 +105869,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!************************************************************!*\
   !*** ./resources/js/components/layout/HeaderComponent.vue ***!
   \************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _HeaderComponent_vue_vue_type_template_id_01b86276___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./HeaderComponent.vue?vue&type=template&id=01b86276& */ "./resources/js/components/layout/HeaderComponent.vue?vue&type=template&id=01b86276&");
 /* harmony import */ var _HeaderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./HeaderComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/layout/HeaderComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _HeaderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _HeaderComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -105895,7 +105907,7 @@ component.options.__file = "resources/js/components/layout/HeaderComponent.vue"
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/layout/HeaderComponent.vue?vue&type=script&lang=js& ***!
   \*************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
