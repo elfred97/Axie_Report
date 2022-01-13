@@ -107,12 +107,10 @@ class GlobalController extends Controller
 
     public function getListAccounts(){
         $scholarID = Auth::id();
-        return Scholar::where('id',$scholarID)->with('accounts')->get(); 
-    }
+        $scholarStatus = Scholar::where('id',$scholarID)->get()->first()->status;
+        $inactiveStatuses = array('RESIGNED','TERMINATED');
 
-    public function getInactiveAccounts(){
-        $scholarID = Auth::id();
-        return Scholar::where('id',$scholarID)->with('accounts')->get()[0]->inactiveAccounts; 
+        return in_array($scholarStatus,$inactiveStatuses) ? Scholar::where('id',$scholarID)->with('histories')->get() : Scholar::where('id',$scholarID)->with('accounts')->get();
     }
 
     public function updateAccountInfo(Request $request){

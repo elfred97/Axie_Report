@@ -55,6 +55,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
         Route::get('getScholarPayrollHistory', 'GlobalController@getScholarPayrollHistory');
         Route::get('getScholarNotification', [HomeController::class, 'getScholarNotification']);
         Route::post('changeStatusNotificationScholar', [HomeController::class, 'changeStatusNotification']);
+        Route::post('changeStatusReminders', [HomeController::class, 'changeStatusReminders']);
     });
 
     Route::middleware(['auth:admins'])->group(function(){

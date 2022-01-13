@@ -74,12 +74,14 @@ class SendReminders extends Command
                         $q->where('type_id', '=', $type);
                     })->get();
 
-                    Notification::create([
-                        'reminder_id' => $reminder->id,
-                        'category' => 3,
-                        'status_scholar' => 1
-                    ]);
+                    
                     foreach ($scholars as $scholar) {
+                        Notification::create([
+                            'account_name' => $scholar->id,
+                            'reminder_id' => $reminder->id,
+                            'category' => 4,
+                            'status_scholar' => 1
+                        ]);
                         Mail::to($scholar->email)->send(new \App\Mail\SendEmailReminder($scholar, $reminder));
                         $this->info('Sending Reminder with id : ' . $reminder->id . ' to ' . $scholar->email);
                     }
