@@ -14,16 +14,15 @@ class NotificationController extends Controller
     }
     public function index($account_type, Request $request){
         if($account_type == 'scholars'){
-            $username = Auth::user()->username;
-            $scholar = Scholar::where('username', $username)->FIRST();
             $search  = $request->search;
             $where = [];
             if ($search)
             array_push($where, ['title','LIKE','%'.$request->search.'%']);
 
             return Notification::LEFTJOIN('reminders', 'reminders.id', '=', 'notification.reminder_id')
+                ->LEFTJOIN('scholars', 'scholars.id', '=', 'notification.account_name')
                 ->WHERE('title','LIKE','%'.$request->search.'%')
-                ->WHERE([['notification.status', null]])
+                ->WHERE([['notification.category', 4]])
                 ->get();
         }
     }

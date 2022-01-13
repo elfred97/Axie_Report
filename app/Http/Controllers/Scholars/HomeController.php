@@ -340,21 +340,22 @@ class HomeController extends Controller
     public function changeStatusNotification(){
         try {
             $scholarID = Auth::id();
-            $glblCtrl = new GlobalController;
-            $scholarsAccounts = Scholar::where('id',$scholarID)->with('accounts')->get()[0]->accounts;
+            $scholarsAccounts = Scholar::where('id',$scholarID)->with('histories')->get()[0]->histories;
 
-            if(count($scholarsAccounts) > 0){
-                for($i=0;$i< count($scholarsAccounts);$i++){
-                    Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
-                }
+            for($i=0;$i< count($scholarsAccounts);$i++){
+                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->where('reminder',null)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
             }
-            else{
-                $scholarsAccounts = $glblCtrl->getInactiveAccounts();
-                for($i=0;$i< count($scholarsAccounts);$i++){
-                    Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
-                }
-            }
-            
+        }
+        catch (\Exception $e) {
+			return response()->json(['message' => $e->getMessage()], 500);
+		}
+    }
+
+    public function changeStatusReminders(){
+        try {
+            $scholarID = Auth::id();
+
+            Notification::WHERE('account_name',$scholarID)->WHERE('category',4)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
         }
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
