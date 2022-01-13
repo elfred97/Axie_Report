@@ -170,7 +170,7 @@ class FileController extends Controller
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->LEFTJOIN('report as r', 'r.account_name', '=', 'n.account_name')
+            ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
             ->where('psh.status',1)
             ->whereIn('r.id', $latest_id_per_account)
             ->ORDERBY($field,$direction);
