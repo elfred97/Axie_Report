@@ -332,7 +332,7 @@ class HomeController extends Controller
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                 'players.*'
             )
-        ->WHERE([['scholars.username', $username],['notification.status_scholar', 1]])
+        ->WHERE([['scholars.username', $username]])
         ->GET();
 
     }
@@ -343,8 +343,10 @@ class HomeController extends Controller
             $scholarsAccounts = Scholar::where('id',$scholarID)->with('histories')->get()[0]->histories;
 
             for($i=0;$i< count($scholarsAccounts);$i++){
-                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->where('reminder',null)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
             }
+
+            Notification::WHERE('category',4)->WHERE('account_name',Auth::id())->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
         }
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
@@ -354,11 +356,16 @@ class HomeController extends Controller
     public function changeStatusReminders(){
         try {
             $scholarID = Auth::id();
+            $scholarsAccounts = Scholar::where('id',$scholarID)->with('histories')->get()[0]->histories;
 
-            Notification::WHERE('account_name',$scholarID)->WHERE('category',4)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+            for($i=0;$i< count($scholarsAccounts);$i++){
+                Notification::WHERE('account_name',$scholarsAccounts[$i]->account_name)->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
+            }
+
+            Notification::WHERE('category',4)->WHERE('account_name',Auth::id())->WHERE('status_scholar',1)->update(['status_scholar' => 2]);
         }
         catch (\Exception $e) {
-			return response()->json(['message' => $e->getMessage()], 500);
-		}
+            return response()->json(['message' => $e->getMessage()], 500);
+        }
     }
 }
