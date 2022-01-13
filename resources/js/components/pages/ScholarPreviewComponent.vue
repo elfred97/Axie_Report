@@ -11,7 +11,7 @@
             </div>
             <div class="col-md-4">
                 <label for="">Date Started</label>
-                <p class="no-margin text-content">{{ scholarData.date_started | formatDate }}</p>
+                <p class="no-margin text-content">{{ scholarData.date_started | formatDateWord }}</p>
             </div>
         </div>
         <div class="row">
@@ -43,17 +43,17 @@
                 <ul class="list-group" v-if="scholarHistory">
                     <li class="list-group-item">
                         <div class="row no-margin">
-                            <div class="col-md-6 text-bold">Axie Account</div>
-                            <div class="col-md-3 text-bold">Date</div>                            
+                            <div class="col-md-5 text-bold">Axie Account</div>
+                            <div class="col-md-4 text-bold text-center">Date</div>                            
                             <div class="col-md-3 text-bold">Status</div>
                         </div>
                     </li>
                     <li class="list-group-item" v-for="(history, index) in scholarHistory">
                         <div class="row no-margin">
-                            <div class="col-md-6">{{ history.account_name }}</div>
-                            <div class="col-md-3">
-                                <span v-if="history.status == 1">{{ history.h_created | formatDate }}</span>
-                                <span v-else-if="history.status == 0">{{ history.h_updated | formatDate }}</span>
+                            <div class="col-md-5">{{ history.account_name }}</div>
+                            <div class="col-md-4 text-center">
+                                <span v-if="history.status == 1">Created at {{ history.h_created | formatDateWord }}</span>
+                                <span v-else-if="history.status == 0">Updated at {{ history.h_updated | formatDateWord }}</span>
                             </div>
                             <div class="col-md-3">
                                 <span v-if="history.status == 1">Active</span>
@@ -74,13 +74,6 @@ export default {
             scholarHistory : {}
         }
     },
-    // watch: {
-    //     'scholarData' : function(newVal){
-    //         if(newVal){
-                
-    //         }
-    //     }
-    // },
     methods: {
         getPlayerScholarHistory(){
             this.axios.get('getScholarHistories', {

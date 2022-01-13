@@ -79,6 +79,11 @@ Vue.filter('formatDate', function(date){
     return moment(date).format('L');
 });
 
+Vue.filter('formatDateWord', function(date){
+    if(!date) return '';
+    return moment(date).format('ll');
+});
+
 Vue.filter('formatDateTime', function(date){
     if(!date) return '';
     return moment(date).format('YYYY-MM-DD	hh:mm');

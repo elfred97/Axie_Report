@@ -248,7 +248,6 @@ export default {
             this.axios.post(redirect)
             .then(response => {
                 this.getNotification();
-                this.getAnnouncement();
             })
             .catch(error => {
                 console.log(error.response.data);
@@ -258,6 +257,14 @@ export default {
             
         },
         gotoAnnouncement(){
+            this.axios.post('changeStatusAnnouncementScholar')
+            .then(response => {
+                this.getAnnouncement();
+            })
+            .catch(error => {
+                console.log(error.response.data);
+            });
+
             window.open('/scholar_announcement', '_self'); 
         },
         getAnnouncement(){

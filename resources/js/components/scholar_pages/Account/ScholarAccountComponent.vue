@@ -124,8 +124,8 @@
                                         <div class="row no-margin">
                                             <div class="col-md-4">{{ history.account_name }}</div>
                                             <div class="col-md-3 text-center">
-                                                <span v-if="history.status == 1">{{ history.h_created | formatDate }}</span>
-                                                <span v-else-if="history.status == 0">{{ history.h_updated | formatDate }}</span>
+                                                <span v-if="history.status == 1">Created at {{ history.h_created | formatDateWord }}</span>
+                                                <span v-else-if="history.status == 0">Updated at {{ history.h_updated | formatDateWord }}</span>
                                             </div>
                                             <div class="col-md-2 text-center">
                                                 <span v-if="history.status == 1">Active</span>

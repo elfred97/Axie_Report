@@ -6028,25 +6028,30 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.post(redirect).then(function (response) {
         _this5.getNotification();
-
-        _this5.getAnnouncement();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
       window.open(url, '_self');
     },
     gotoAnnouncement: function gotoAnnouncement() {
+      var _this6 = this;
+
+      this.axios.post('changeStatusAnnouncementScholar').then(function (response) {
+        _this6.getAnnouncement();
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
       window.open('/scholar_announcement', '_self');
     },
     getAnnouncement: function getAnnouncement() {
-      var _this6 = this;
+      var _this7 = this;
 
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('notifications/' + account_type).then(function (response) {
         // console.log(response.data);
-        _this6.announcementsData = response.data;
+        _this7.announcementsData = response.data;
 
-        _this6.getTotalAnnouncementCount();
+        _this7.getTotalAnnouncementCount();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -6060,13 +6065,13 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    var _this7 = this;
+    var _this8 = this;
 
     this.getNotification();
     this.getAccountInfo();
     this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
-      _this7.getNotification();
+      _this8.getNotification();
     });
   }
 });
@@ -8945,12 +8950,6 @@ __webpack_require__.r(__webpack_exports__);
       scholarHistory: {}
     };
   },
-  // watch: {
-  //     'scholarData' : function(newVal){
-  //         if(newVal){
-  //         }
-  //     }
-  // },
   methods: {
     getPlayerScholarHistory: function getPlayerScholarHistory() {
       var _this = this;
@@ -80345,7 +80344,7 @@ var render = function() {
         _c("label", { attrs: { for: "" } }, [_vm._v("Date Started")]),
         _vm._v(" "),
         _c("p", { staticClass: "no-margin text-content" }, [
-          _vm._v(_vm._s(_vm._f("formatDate")(_vm.scholarData.date_started)))
+          _vm._v(_vm._s(_vm._f("formatDateWord")(_vm.scholarData.date_started)))
         ])
       ])
     ]),
@@ -80404,21 +80403,27 @@ var render = function() {
                 _vm._l(_vm.scholarHistory, function(history, index) {
                   return _c("li", { staticClass: "list-group-item" }, [
                     _c("div", { staticClass: "row no-margin" }, [
-                      _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "col-md-5" }, [
                         _vm._v(_vm._s(history.account_name))
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "col-md-3" }, [
+                      _c("div", { staticClass: "col-md-4 text-center" }, [
                         history.status == 1
                           ? _c("span", [
                               _vm._v(
-                                _vm._s(_vm._f("formatDate")(history.h_created))
+                                "Created at " +
+                                  _vm._s(
+                                    _vm._f("formatDateWord")(history.h_created)
+                                  )
                               )
                             ])
                           : history.status == 0
                           ? _c("span", [
                               _vm._v(
-                                _vm._s(_vm._f("formatDate")(history.h_updated))
+                                "Updated at " +
+                                  _vm._s(
+                                    _vm._f("formatDateWord")(history.h_updated)
+                                  )
                               )
                             ])
                           : _vm._e()
@@ -80449,11 +80454,13 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("li", { staticClass: "list-group-item" }, [
       _c("div", { staticClass: "row no-margin" }, [
-        _c("div", { staticClass: "col-md-6 text-bold" }, [
+        _c("div", { staticClass: "col-md-5 text-bold" }, [
           _vm._v("Axie Account")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-md-3 text-bold" }, [_vm._v("Date")]),
+        _c("div", { staticClass: "col-md-4 text-bold text-center" }, [
+          _vm._v("Date")
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "col-md-3 text-bold" }, [_vm._v("Status")])
       ])
@@ -82321,21 +82328,23 @@ var render = function() {
                                       history.status == 1
                                         ? _c("span", [
                                             _vm._v(
-                                              _vm._s(
-                                                _vm._f("formatDate")(
-                                                  history.h_created
+                                              "Created at " +
+                                                _vm._s(
+                                                  _vm._f("formatDateWord")(
+                                                    history.h_created
+                                                  )
                                                 )
-                                              )
                                             )
                                           ])
                                         : history.status == 0
                                         ? _c("span", [
                                             _vm._v(
-                                              _vm._s(
-                                                _vm._f("formatDate")(
-                                                  history.h_updated
+                                              "Updated at " +
+                                                _vm._s(
+                                                  _vm._f("formatDateWord")(
+                                                    history.h_updated
+                                                  )
                                                 )
-                                              )
                                             )
                                           ])
                                         : _vm._e()
@@ -105538,6 +105547,10 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_modaltor__WEBPACK_IMPORTED_MO
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDate', function (date) {
   if (!date) return '';
   return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('L');
+});
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDateWord', function (date) {
+  if (!date) return '';
+  return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('ll');
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDateTime', function (date) {
   if (!date) return '';
