@@ -55,9 +55,9 @@
                     <div class="header-nav">
                         <ul class="nav pull-right" >
                             <li class="dropdown dropdown-hover">
-                                <a href="#" class="header-cart" data-toggle="dropdown" v-if="total_count > 0">
+                                <a href="#" class="header-cart" data-toggle="dropdown" v-if="getTotal > 0">
                                     <i class="fa fa-bell"></i>
-                                    <span class="total">{{ total_count }}</span>
+                                    <span class="total">{{ getTotal }}</span>
                                     <span class="arrow top"></span>
                                 </a>
                                 <div class="dropdown-menu media-list dropdown-menu-cart p-0">
@@ -129,6 +129,8 @@ export default {
             accountData      : {},
             announcementsData: {},
             total_count : 0,
+            notification_count : 0,
+            announcement_count : 0,
         }
     },
     // watch: {
@@ -147,12 +149,31 @@ export default {
         getGuardType(){
             return this.$store.state.global_guard_type;
         },
+        getTotal(){
+            return this.notification_count + this.announcement_count;
+        }
         
     },
     methods: {
+        getTotalAnnouncementCount(){
+            let ann_count = 0;
+
+            if(this.announcementsData.length > 0)
+                this.announcementsData.forEach((element, index) => {                                        
+                    if(this.$store.state.global_guard_type == 'admins'){
+                        if(element.status == 1)
+                            ann_count = ann_count + 1;
+                    }
+                    else{
+                        if(element.status_scholar == 1)
+                            ann_count = ann_count + 1;
+                    }
+                });
+        
+            this.announcement_count = ann_count;
+        },
         getTotalNotificationCount(){
             let notif_count = 0;
-            let ann_count = 0;
             // let notificationCount = Object.keys(this.notificationData).length;
             // let announcementCount = Object.keys(this.announcementsData).length;
             if(this.notificationData.length > 0){
@@ -168,20 +189,8 @@ export default {
                     }
                 });
             }
-
-            if(this.announcementsData.length > 0)
-                this.announcementsData.forEach((element, index) => {                                        
-                    if(this.$store.state.global_guard_type == 'admins'){
-                        if(element.status == 1)
-                            ann_count = ann_count + 1;
-                    }
-                    else{
-                        if(element.status_scholar == 1)
-                            ann_count = ann_count + 1;
-                    }
-                });
-
-            this.total_count =  notif_count + ann_count;
+            // this.total_count =  notif_count + ann_count;
+            this.notification_count = notif_count;
             // console.log(notif_count);
             // return notif_count + ann_count
         },
@@ -217,7 +226,6 @@ export default {
                 this.axios.get('/getAccountInfo/'+this.$store.state.global_guard_type)
                 .then((response) => {
                     this.accountData = response.data;
-                    this.getTotalNotificationCount();
                 })
                 .catch((error) => {
                     // this.clearAll();
@@ -237,7 +245,6 @@ export default {
                 url = '/scholar_notification';
 
             }
-
             this.axios.post(redirect)
             .then(response => {
                 this.getNotification();
@@ -259,6 +266,7 @@ export default {
             .then(response => {
                 // console.log(response.data);
                 this.announcementsData = response.data;
+                this.getTotalAnnouncementCount();
             })
             .catch( error => {
                 console.log(error.response.data);
