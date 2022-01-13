@@ -170,18 +170,16 @@ class HomeController extends Controller
             }
 
             if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED'){
-                PlayerScholarHistory::WHERE('scholar_id',$scholar->id)->UPDATE(['status' => 0]);
-
-                $scholarsAccounts = Scholar::where('id',$scholar->id)->with('accounts')->get()[0]->accounts;
-
-                    foreach($scholarsAccounts as $acc){
+                $scholarsAccounts = Scholar::where('id',$request->id)->where('username',filter_var($request->username,FILTER_SANITIZE_STRING))->with('accounts')->get()[0]->accounts;
+                    for($i=0;$i< count($scholarsAccounts);$i++){
                         Notification::CREATE([
-                            'account_name' => $acc['account_name'],
+                            'account_name' => $scholarsAccounts[$i]->account_name,
                             'category'     => 3, // Scholar Terminated
                             'status'       => 1,
                             'status_scholar' => 1,
                         ]);
                     }
+                PlayerScholarHistory::WHERE('scholar_id',$request->id)->UPDATE(['status' => 0]);
             }
 
             if($scholar)
@@ -334,7 +332,7 @@ class HomeController extends Controller
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
                 'players.*'
             )
-        ->WHERE([['scholars.username', $username],['history.status', 1]])
+        ->WHERE([['scholars.username', $username],['notification.status_scholar', 1]])
         ->GET();
 
     }
