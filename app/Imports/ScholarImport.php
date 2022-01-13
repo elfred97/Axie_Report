@@ -16,7 +16,7 @@ class ScholarImport implements ToCollection,WithHeadingRow
     {
         foreach ($rows as $row)
         {
-            $scholar = Scholar::where('email',$row['email'])->count();
+            $scholar = Scholar::where('email',preg_replace('/\s+/', '',$row['email']))->count();
             if($scholar == 0)
                 Scholar::create([
                     'first_name'   => $row['first_name'],
