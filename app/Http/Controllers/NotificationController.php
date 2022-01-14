@@ -17,12 +17,12 @@ class NotificationController extends Controller
             $search  = $request->search;
             $where = [];
             if ($search)
-            array_push($where, ['title','LIKE','%'.$request->search.'%']);
+            array_push($where, ['reminders.title','LIKE','%'.$request->search.'%']);
 
-            return Notification::LEFTJOIN('reminders', 'reminders.id', '=', 'notification.reminder_id')
-                ->LEFTJOIN('scholars', 'notification.account_name', '=', 'scholars.id')
-                ->WHERE('title','LIKE','%'.$request->search.'%')
-                ->WHERE([['notification.category', 4],['scholars.id',Auth::id()]])
+            return Notification::LEFTJOIN('reminders', 'reminders.id', '=', 'notification.notification_reminder_id')
+                ->LEFTJOIN('scholars', 'notification.scholar_id', '=', 'scholars.id')
+                ->WHERE('reminders.title','LIKE','%'.$request->search.'%')
+                ->WHERE([['notification.category', 2],['scholars.id',Auth::id()]])
                 ->get();
         }
     }
