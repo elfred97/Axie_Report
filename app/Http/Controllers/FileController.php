@@ -151,6 +151,7 @@ class FileController extends Controller
     }
 
     public function getNotification(Request $request){
+        $category  = $request->category ? null : $request->category;
         $queryRequest   = array_slice($request->all(), 3);
         $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'n.created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
@@ -173,6 +174,9 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('report as r', 'r.name', '=', 'ns.account_name')
             ->whereIn('r.id', $latest_id_per_account)
+            ->when($category, function ($q) use ($category){
+                $q->where('ns.category',$category);
+            })
             ->ORDERBY($field,$direction);
         
             if($request->date == 'today') {
