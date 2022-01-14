@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use App\Imports\ScholarImport;
 use App\Imports\HistoryImport;
 use App\Models\PlayerScholarHistory;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
@@ -171,14 +172,18 @@ class HomeController extends Controller
 
             if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED'){
                 $scholarsAccounts = Scholar::where('id',$request->id)->where('username',filter_var($request->username,FILTER_SANITIZE_STRING))->with('accounts')->get()[0]->accounts;
-                    for($i=0;$i< count($scholarsAccounts);$i++){
+                $admins = User::select('id')->get();
+                for($i=0;$i<count($scholarsAccounts);$i++){
+                    for($j=0; $j<count($admins);$j++){
                         Notification::CREATE([
                             'account_name' => $scholarsAccounts[$i]->account_name,
                             'category'     => 3, // Scholar Terminated
                             'status'       => 1,
                             'status_scholar' => 1,
+                            'admin_id' => $admins[$j]->id
                         ]);
                     }
+                }
                 PlayerScholarHistory::WHERE('scholar_id',$request->id)->UPDATE(['status' => 0]);
             }
 

@@ -15,5 +15,6 @@ class Notification extends Model
         'category',
 		'reminder_id',
         'status',
+		'admin_id'
 	];
 }

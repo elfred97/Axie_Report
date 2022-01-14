@@ -154,7 +154,7 @@ class FileController extends Controller
         $queryRequest   = array_slice($request->all(), 3);
         $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
-        $latest_id_per_account = DB::table('report as r')
+        $latest_id_per_account = DB::table('battle_logs as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
     
         $from = Carbon::parse('01-01-2020');
@@ -170,16 +170,15 @@ class FileController extends Controller
             ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->LEFTJOIN('report as r', 'r.name', '=', 'n.account_name')
-            ->where('psh.status',1)
+            ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
             ->whereIn('r.id', $latest_id_per_account)
             ->ORDERBY($field,$direction);
         
             if($request->date == 'today') {
-                $notification = $notification->where('n.status',1)->get();
+                $notification = $notification->where('n.admin_id',Auth::id())->where('n.status',1)->get();
             }
             else{
-                $notification = $notification->whereBetween('n.created_at', [$from, $to])->whereIn('n.status',[1,2])->PAGINATE(15);
+                $notification = $notification->whereBetween('n.created_at', [$from, $to])->whereIn('n.status',[1,2])->where('n.admin_id',Auth::id())->PAGINATE(15);
             }
 
         return $notification;
