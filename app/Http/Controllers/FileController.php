@@ -152,7 +152,7 @@ class FileController extends Controller
 
     public function getNotification(Request $request){
         $queryRequest   = array_slice($request->all(), 3);
-        $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
+        $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'n.created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         $latest_id_per_account = DB::table('battle_logs as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
@@ -166,11 +166,12 @@ class FileController extends Controller
         }
 
         $notification = DB::TABLE('notification as n')
-        ->SELECT('n.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
-            ->LEFTJOIN('players as p', 'p.account_name', '=', 'n.account_name')
+        ->SELECT('n.*','ns.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
+            ->LEFTJOIN('notification_scholars as ns', 'n.notification_reminder_id', '=', 'ns.id')
+            ->LEFTJOIN('players as p', 'ns.account_name', '=', 'p.account_name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'n.account_name')
+            ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'ns.account_name')
             ->whereIn('r.id', $latest_id_per_account)
             ->ORDERBY($field,$direction);
         

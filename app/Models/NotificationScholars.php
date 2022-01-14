@@ -10,6 +10,7 @@ class NotificationScholars extends Model
 	public $timestamps  = TRUE;
 	protected $fillable = [
 		'player_id',
+        'account_name',
         'category',
         'status'
 	];

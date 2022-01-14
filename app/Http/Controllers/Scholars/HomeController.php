@@ -179,6 +179,7 @@ class HomeController extends Controller
                     $player = Player::where('account_name',$scholarsAccounts[$i]->account_name)->FIRST();
                     $newScholarNotification = NotificationScholars::CREATE([
                         'player_id' => $player->id,
+                        'account_name' => $player->account_name,
                         'category' => 3,
                         'status' => 1
                         ]);
