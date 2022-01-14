@@ -37,14 +37,16 @@ class ReportImport implements ToCollection
         foreach ($rows as $row)
         {
             if($counter > 0){
-                $report = Report::WHERE('name', $row[2])->latest('created_at')->first();
-                $player = Player::WHERE('account_name', $row[2])->first();
+                $report = Report::WHERE('name', $row[1])->latest('created_at')->first();
+                $player = Player::WHERE('account_name', $row[1])->first();
 
                 $thirty_percent = 0;
                 $forty_percent = 0;
+                $managerShare = 0;
+                $scholarShare = 0;
                 
                 if(!empty($report)){
-                    $gained_slp_today = ($row[6] >= $report->total_slp) ? $row[6] - $report->total_slp : $row[6];
+                    $gained_slp_today = ($row[5] >= $report->total_slp) ? $row[5] - $report->total_slp : $row[5];
                     
                     if(!empty($player)){
                         // Check shcolar share
@@ -61,11 +63,15 @@ class ReportImport implements ToCollection
                             $manager_share  = $gained_slp_today * 0.7;
                             $scholar_share  = $gained_slp_today * 0.3;
                             $thirty_percent = $scholar_share + $report->thirty_percent;
+                            $managerShare = 70;
+                            $scholarShare = 30;
                         }
                         else{
                             $manager_share = $gained_slp_today * 0.6;
                             $scholar_share = $gained_slp_today * 0.4;
                             $forty_percent = $scholar_share + $report->forty_percent;
+                            $managerShare = 60;
+                            $scholarShare = 40;
                         }
                         //Get All Active Admin
                         $admins = User::select('id')->where('status',1)->get();
@@ -76,7 +82,8 @@ class ReportImport implements ToCollection
                             $penalty = $penalty + 1;
 
                             $newScholarNotification = NotificationScholars::CREATE([
-                                'player_id' => $player['p_id'],
+                                'player_id' => $player['id'],
+                                'account_name' => $player['account_name'],
                                 'category' => 1,
                                 'status' => 1
                             ]);
@@ -93,13 +100,14 @@ class ReportImport implements ToCollection
                         }
 
                         // Check MMR Penalty
-                        if($row[14] < $mmr){
+                        if($row[13] < $mmr){
                             $penalty = $penalty + 1;
 
                             $newScholarNotification = NotificationScholars::CREATE([
-                            'player_id' => $player['p_id'],
-                            'category' => 2,
-                            'status' => 1
+                                'player_id' => $player['id'],
+                                'account_name' => $player['account_name'],
+                                'category' => 2,
+                                'status' => 1
                             ]);
 
                             for($j=0; $j<count($admins);$j++){
@@ -131,7 +139,7 @@ class ReportImport implements ToCollection
                         //     ]);
                         // }
                         // Update Player
-                        Player::WHERE('account_name', $row[2])->update(
+                        Player::WHERE('account_name', $row[1])->update(
                             [
                                 'penalty'       => $penalty,
                                 'scholar_share' => $player->scholar_share + $scholar_share,
@@ -141,30 +149,32 @@ class ReportImport implements ToCollection
                     }
                 }
                 else{
-                    $gained_slp_today = $row[6];
+                    $gained_slp_today = $row[5];
                     $thirty_percent   = $gained_slp_today * 0.3;
+                    $managerShare = 70;
+                    $scholarShare = 30;
                 }
 
                 Report::create([
                     'ronin_address'    => $row[0],
-                    'name'             => preg_replace('/\s+/', '', $row[2]),
+                    'name'             => preg_replace('/\s+/', '', $row[1]),
                     'batch'            => $batch + 1,
-                    'average_per_day'  => $row[3],
+                    'average_per_day'  => $row[2],
                     'gained_slp_today' => $gained_slp_today,
-                    'unclaimed'        => $row[4],
-                    'claimed'          => $row[5],
-                    'total_slp'        => $row[6],
-                    'last_claim_days'  => $row[7],
-                    'last_claim_date'  => date('Y-m-d H:i:s' , strtotime($row[8])),
-                    'claimable_on'     => date('Y-m-d H:i:s' , strtotime($row[9])),
+                    'unclaimed'        => $row[3],
+                    'claimed'          => $row[4],
+                    'total_slp'        => $row[5],
+                    'last_claim_days'  => $row[6],
+                    'last_claim_date'  => date('Y-m-d H:i:s' , strtotime($row[7])),
+                    'claimable_on'     => date('Y-m-d H:i:s' , strtotime($row[8])),
                     'thirty_percent'   => $thirty_percent,
                     'forty_percent'    => $forty_percent,
-                    'manager_share'    => $row[10],
-                    'scholar_share'    => $row[11],
-                    'manager_slp'      => is_string($row[12]) ? 0 : $row[12],
-                    'scholar_slp'      => is_string($row[13]) ? 0 : $row[13],
-                    'mmr'              => $row[14],
-                    'rank'             => $row[15],
+                    'manager_share'    => $managerShare,
+                    'scholar_share'    => $scholarShare,
+                    'manager_slp'      => is_string($row[11]) ? 0 : $row[11],
+                    'scholar_slp'      => is_string($row[12]) ? 0 : $row[12],
+                    'mmr'              => $row[13],
+                    'rank'             => $row[14],
                 ]);
             }
             $counter++;

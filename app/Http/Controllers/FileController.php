@@ -154,7 +154,7 @@ class FileController extends Controller
         $queryRequest   = array_slice($request->all(), 3);
         $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'n.created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
-        $latest_id_per_account = DB::table('battle_logs as r')
+        $latest_id_per_account = DB::table('report as r')
             ->select(DB::raw('max(id) as id'))->groupBy('ronin_address')->pluck('id');
     
         $from = Carbon::parse('01-01-2020');
@@ -171,7 +171,7 @@ class FileController extends Controller
             ->LEFTJOIN('players as p', 'ns.account_name', '=', 'p.account_name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
-            ->LEFTJOIN('battle_logs as r', 'r.account_name', '=', 'ns.account_name')
+            ->LEFTJOIN('report as r', 'r.name', '=', 'ns.account_name')
             ->whereIn('r.id', $latest_id_per_account)
             ->ORDERBY($field,$direction);
         

@@ -24,8 +24,8 @@ class HistoryImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
     {
         foreach ($rows as $row)
         {
-            $roninAddress = $row['ronin_address'];
-            $scholarEmail = $row['email'];
+            $roninAddress = preg_replace('/\s+/', '', $row['ronin_address']);
+            $scholarEmail = preg_replace('/\s+/', '', $row['email']);
 
             $player = Player::WHERE('ronin_address',$roninAddress)->first();
             $scholar = Scholar::WHERE('email',$scholarEmail)->first();
