@@ -4,10 +4,12 @@ namespace App\Console\Commands;
 
 use App\Models\BattleLogs;
 use App\Models\Notification;
+use App\Models\NotificationScholars;
 use App\Models\NotificationSettings;
 use App\Models\Player;
 use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -47,7 +49,7 @@ class GetBattleLogs extends Command
     {
         $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
-        $players = Player::select('ronin_address','account_name','penalty')
+        $players = Player::select('ronin_address','account_name','penalty','id as p_id')
                     ->join('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
                     ->where('psh.status',1)->get();
 
@@ -106,27 +108,50 @@ class GetBattleLogs extends Command
                         $managerShare = 60;
                         $scholarShare = 40;
                     }
-                    // Check SLP Penalty                        
+                    //Get All Active Admin
+                    $admins = User::select('id')->where('status',1)->get();
+
+                    // Check SLP Penalty
+                
                     $penalty = $player['penalty'];
                     if($gained_slp_today < $minimum_slp){
                         $penalty = $penalty + 1;
-                        Notification::CREATE([
-                            'account_name' => $player['account_name'],
-                            'category'     => 1,
-                            'status'       => 1,
-                            'status_scholar' => 1
+
+                        $newScholarNotification = NotificationScholars::CREATE([
+                            'player_id' => $player['p_id'],
+                            'category' => 1,
+                            'status' => 1
                         ]);
+
+                        for($j=0; $j<count($admins);$j++){
+
+                            Notification::CREATE([
+                                'admin_id' => $admins[$j]->id,
+                                'category'     => 1,
+                                'notification_reminder_id' => $newScholarNotification->id,
+                                'status' => 1
+                            ]);
+                        }
                     }
 
                     // Check MMR Penalty
                     if($json_response['mmr'] < $mmr){
                         $penalty = $penalty + 1;
-                        Notification::CREATE([
-                            'account_name' => $player['account_name'],
-                            'category'     => 2,
-                            'status'       => 1,
-                            'status_scholar' => 1,
+
+                        $newScholarNotification = NotificationScholars::CREATE([
+                            'player_id' => $player['p_id'],
+                            'category' => 2,
+                            'status' => 1
                         ]);
+
+                        for($j=0; $j<count($admins);$j++){
+                            Notification::CREATE([
+                                'admin_id' => $admins[$j]->id,
+                                'category'     => 1,
+                                'notification_reminder_id' => $newScholarNotification->id,
+                                'status' => 1
+                            ]);
+                        }
                     }
 
                     // Update Scholar Status

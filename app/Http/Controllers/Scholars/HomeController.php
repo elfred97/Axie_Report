@@ -17,6 +17,7 @@ use App\Models\Payroll;
 use Illuminate\Http\Request;
 use App\Imports\ScholarImport;
 use App\Imports\HistoryImport;
+use App\Models\NotificationScholars;
 use App\Models\PlayerScholarHistory;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -172,18 +173,29 @@ class HomeController extends Controller
 
             if($scholar['status'] == 'TERMINATED' || $scholar['status'] == 'RESIGNED'){
                 $scholarsAccounts = Scholar::where('id',$request->id)->where('username',filter_var($request->username,FILTER_SANITIZE_STRING))->with('accounts')->get()[0]->accounts;
-                $admins = User::select('id')->get();
+                $admins = User::select('id')->where('status',1)->get();
+                $scholarNotificationIDS = array();
                 for($i=0;$i<count($scholarsAccounts);$i++){
-                    for($j=0; $j<count($admins);$j++){
+                    $player = Player::where('account_name',$scholarsAccounts[$i]->account_name)->FIRST();
+                    $newScholarNotification = NotificationScholars::CREATE([
+                        'player_id' => $player->id,
+                        'category' => 3,
+                        'status' => 1
+                        ]);
+
+                    array_push($scholarNotificationIDS,$newScholarNotification->id);
+                }
+                for($j=0; $j<count($admins);$j++){
+                    for($i=0;$i<count($scholarNotificationIDS);$i++){
                         Notification::CREATE([
-                            'account_name' => $scholarsAccounts[$i]->account_name,
-                            'category'     => 3, // Scholar Terminated
-                            'status'       => 1,
-                            'status_scholar' => 1,
-                            'admin_id' => $admins[$j]->id
+                            'admin_id' => $admins[$j]->id,
+                            'category'     => 1,
+                            'notification_reminder_id' => $scholarNotificationIDS[$i],
+                            'status' => 1
                         ]);
                     }
                 }
+
                 PlayerScholarHistory::WHERE('scholar_id',$request->id)->UPDATE(['status' => 0]);
             }
 
@@ -328,16 +340,15 @@ class HomeController extends Controller
     }
 
     public function getScholarNotification(){
-        $username = Auth::user()->username;
-        return Notification::LEFTJOIN('players', 'notification.account_name', '=', 'players.account_name')
+        return NotificationScholars::LEFTJOIN('players', 'notification_scholars.player_id', '=', 'players.id')
             ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
             ->SELECT(
-                'notification.*',
+                'notification_scholars.*',
                 DB::RAW('CONCAT(scholars.first_name, " ", scholars.last_name) as scholar_name'),
-                'players.*'
+                'players.account_name'
             )
-        ->WHERE([['scholars.username', $username]])
+        ->WHERE([['scholars.id', Auth::id()]])
         ->GET();
 
     }
