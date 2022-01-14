@@ -135,6 +135,8 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
         Route::get('/getListOfAccounts','GlobalController@getListAccounts');
 
+        Route::get('/listOfCategory','GlobalController@getListofCategoryforPenalty');
+
         Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
 
         Route::middleware(['vue.components'])->group(function(){

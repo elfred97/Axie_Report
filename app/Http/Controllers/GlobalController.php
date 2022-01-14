@@ -113,6 +113,16 @@ class GlobalController extends Controller
         return in_array($scholarStatus,$inactiveStatuses) ? Scholar::where('id',$scholarID)->with('histories')->get() : Scholar::where('id',$scholarID)->with('accounts')->get();
     }
 
+    public function getListofCategoryforPenalty(){
+        $listOfCategory = [
+            array(1,'SLP Penalty'),
+            array(2,'MMR Penalty'),
+            array(3,'Terminated Scholar')
+        ];
+
+        return $listOfCategory;
+    }
+
     public function updateAccountInfo(Request $request){
         try {
             $user = User::UPDATEORCREATE(
