@@ -167,7 +167,7 @@ class FileController extends Controller
         }
 
         $notification = DB::TABLE('notification as n')
-        ->SELECT('n.*','ns.*', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr')
+        ->SELECT('n.*','ns.player_id','ns.account_name','ns.category','ns.created_at', DB::RAW('concat(s.first_name," ",s.last_name) as player_name'), 'r.gained_slp_today', 'r.mmr',)
             ->LEFTJOIN('notification_scholars as ns', 'n.notification_reminder_id', '=', 'ns.id')
             ->LEFTJOIN('players as p', 'ns.account_name', '=', 'p.account_name')
             ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
@@ -180,10 +180,10 @@ class FileController extends Controller
             ->ORDERBY($field,$direction);
         
             if($request->date == 'today') {
-                $notification = $notification->where('n.admin_id',Auth::id())->where('n.status',1)->get();
+                $notification = $notification->where('n.admin_id',Auth::id())->where('n.status',1)->addSelect('n.status as notif_status')->get();
             }
             else{
-                $notification = $notification->whereBetween('n.created_at', [$from, $to])->whereIn('n.status',[1,2])->where('n.admin_id',Auth::id())->PAGINATE(15);
+                $notification = $notification->whereBetween('n.created_at', [$from, $to])->whereIn('n.status',[1,2])->where('n.admin_id',Auth::id())->addSelect('n.status as notif_status')->PAGINATE(15);
             }
 
         return $notification;
@@ -191,7 +191,8 @@ class FileController extends Controller
 
     public function changeStatusNotification(){
         try {
-            $notif = DB::table('notification')->where('status', '=', 1)->update(array('status' => 2));
+            $adminID = Auth::id();
+            $notif = DB::table('notification')->where('status',1)->where('admin_id',$adminID)->update(array('status' => 2));
             if($notif)
                 return response()->json(['message' => 'Notification has been read!'], 200);
             else

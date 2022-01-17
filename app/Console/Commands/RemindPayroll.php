@@ -52,7 +52,7 @@ class RemindPayroll extends Command
         //put it on payroll table, tx_id is a unique generated string
         //make player.scholar_share = 0 after creating entry to payroll
 
-        $players = Player::all();
+        $players = Player::where('scholar_share','>',0)->get();
 
         foreach ($players as $player) {
             $total_slp = $player->scholar_share;
@@ -69,8 +69,8 @@ class RemindPayroll extends Command
                 ]);
 
 //                TODO - uncomment this
-//                $player->scholar_share = 0;
-//                $player->save();
+               $player->scholar_share = 0;
+               $player->save();
 
                 DB::commit();
             } catch (\Exception $e) {
