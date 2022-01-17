@@ -151,7 +151,7 @@ class FileController extends Controller
     }
 
     public function getNotification(Request $request){
-        $category  = $request->category ? null : $request->category;
+        $category  = $request->category;
         $queryRequest   = array_slice($request->all(), 3);
         $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'n.created_at';
         $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
