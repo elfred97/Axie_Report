@@ -57,13 +57,21 @@
                             <li class="dropdown dropdown-hover">
                                 <a href="#" class="header-cart" data-toggle="dropdown" v-if="getTotal > 0">
                                     <i class="fa fa-bell"></i>
-                                    <span class="total">{{ getTotal }}</span>
+                                    <span class="total" v-if="getTotal > 3"> 3 + </span>
+                                    <span class="total" v-else>{{ getTotal }}</span>
                                     <span class="arrow top"></span>
                                 </a>
                                 <div class="dropdown-menu media-list dropdown-menu-cart">
                                     <div v-if="notification_count > 0">
-                                        <div class="dropdown-header">Penalty</div>
-                                        <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="checkStatus(notification, 'notification')">
+                                        <div class="dropdown-header">Penalty
+                                            <span class="pull-right">
+                                                <span class="label label-default" v-if="notification_count > 3">3+</span>
+                                                <span class="label label-default" v-else>{{notification_count}}</span>
+
+                                                <a class="btn btn-white btn-xs onHover" @click="gotoNotification(notification)">View All</a>
+                                            </span>
+                                        </div>
+                                        <a href="javascript:;" class="dropdown-item media" v-for="(notification, notif_index) in notificationData" @click="gotoNotification(notification)" v-if="checkStatus(notification, 'notification') && notif_index < 3">
                                             <div class="media-left">
                                                 <i class="fa fa-exclamation-triangle media-object text-warning"></i>
                                             </div>
@@ -76,8 +84,15 @@
                                         </a>
                                     </div>
                                     <div v-if="announcement_count > 0">
-                                        <div class="dropdown-header">Announcement</div>
-                                        <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData" @click="gotoAnnouncement" v-if="checkStatus(announcement, 'announcement')">
+                                        <div class="dropdown-header">Announcement
+                                            <span class="pull-right">
+                                                <span class="label label-default" v-if="announcement_count > 3">3+</span>
+                                                <span class="label label-default" v-else>{{announcement_count}}</span>
+
+                                                <a class="btn btn-white btn-xs onHover" @click="gotoAnnouncement">View All</a>
+                                            </span>
+                                        </div>
+                                        <a href="javascript:;" class="dropdown-item media" v-for="(announcement, ann_index) in announcementsData" @click="gotoAnnouncement" v-if="checkStatus(announcement, 'announcement') && ann_index < 3">
                                             <div class="media-left">
                                                 <i class="fa fa-bullhorn media-object bg-silver-darker"></i>
                                             </div>

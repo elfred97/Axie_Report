@@ -5971,6 +5971,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -74081,9 +74096,13 @@ var render = function() {
                     [
                       _c("i", { staticClass: "fa fa-bell" }),
                       _vm._v(" "),
-                      _c("span", { staticClass: "total" }, [
-                        _vm._v(_vm._s(_vm.getTotal))
-                      ]),
+                      _vm.getTotal > 3
+                        ? _c("span", { staticClass: "total" }, [
+                            _vm._v(" 3 + ")
+                          ])
+                        : _c("span", { staticClass: "total" }, [
+                            _vm._v(_vm._s(_vm.getTotal))
+                          ]),
                       _vm._v(" "),
                       _c("span", { staticClass: "arrow top" })
                     ]
@@ -74099,11 +74118,47 @@ var render = function() {
                         "div",
                         [
                           _c("div", { staticClass: "dropdown-header" }, [
-                            _vm._v("Penalty")
+                            _vm._v(
+                              "Penalty\n                                        "
+                            ),
+                            _c("span", { staticClass: "pull-right" }, [
+                              _vm.notification_count > 3
+                                ? _c(
+                                    "span",
+                                    { staticClass: "label label-default" },
+                                    [_vm._v("3+")]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "label label-default" },
+                                    [_vm._v(_vm._s(_vm.notification_count))]
+                                  ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-white btn-xs onHover",
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.gotoNotification(
+                                        _vm.notification
+                                      )
+                                    }
+                                  }
+                                },
+                                [_vm._v("View All")]
+                              )
+                            ])
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.notificationData, function(notification) {
-                            return _vm.checkStatus(notification, "notification")
+                          _vm._l(_vm.notificationData, function(
+                            notification,
+                            notif_index
+                          ) {
+                            return _vm.checkStatus(
+                              notification,
+                              "notification"
+                            ) && notif_index < 3
                               ? _c(
                                   "a",
                                   {
@@ -74192,11 +74247,41 @@ var render = function() {
                         "div",
                         [
                           _c("div", { staticClass: "dropdown-header" }, [
-                            _vm._v("Announcement")
+                            _vm._v(
+                              "Announcement\n                                        "
+                            ),
+                            _c("span", { staticClass: "pull-right" }, [
+                              _vm.announcement_count > 3
+                                ? _c(
+                                    "span",
+                                    { staticClass: "label label-default" },
+                                    [_vm._v("3+")]
+                                  )
+                                : _c(
+                                    "span",
+                                    { staticClass: "label label-default" },
+                                    [_vm._v(_vm._s(_vm.announcement_count))]
+                                  ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-white btn-xs onHover",
+                                  on: { click: _vm.gotoAnnouncement }
+                                },
+                                [_vm._v("View All")]
+                              )
+                            ])
                           ]),
                           _vm._v(" "),
-                          _vm._l(_vm.announcementsData, function(announcement) {
-                            return _vm.checkStatus(announcement, "announcement")
+                          _vm._l(_vm.announcementsData, function(
+                            announcement,
+                            ann_index
+                          ) {
+                            return _vm.checkStatus(
+                              announcement,
+                              "announcement"
+                            ) && ann_index < 3
                               ? _c(
                                   "a",
                                   {
