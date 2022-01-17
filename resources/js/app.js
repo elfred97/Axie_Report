@@ -97,6 +97,7 @@ Vue.component('dialog-component', require('./components/layout/DialogComponent.v
 Vue.component('type-component', require('./components/layout/TypeComponent.vue').default);
 Vue.component('status-component', require('./components/layout/StatusComponent.vue').default);
 Vue.component('account-list-component', require('./components/layout/AccountListComponent.vue').default)
+Vue.component('category-list-component', require('./components/layout/CategoryListComponent.vue').default)
 Vue.component('header-component', require('./components/layout/HeaderComponent.vue').default);
 Vue.component('copyright-component', require('./components/layout/CopyRightComponent.vue').default);
 Vue.component('footer-component', require('./components/layout/FooterComponent.vue').default);

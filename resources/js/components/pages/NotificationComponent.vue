@@ -15,6 +15,9 @@
                                 @change="updateTable()"></v-datepicker>
                         </label>
 					</div>
+                    <div class="col-lg-3 col-md-3 col-sm-12">
+                        <category-list-component @updateCategoryList="filtersParam.category = $event"></category-list-component>
+                    </div>
 				</div>
 			
                 <div class="row no-margin mt-1">
@@ -88,7 +91,8 @@ export default {
 			notificationData : {},
 			date : null,
 			filtersParam : {
-                date : ""
+                date : "",
+                category : '',
             },
             isLoading : false,
             fullPage  : true, 
@@ -100,6 +104,11 @@ export default {
             ],
 		}
 	},
+    watch : {
+        'filtersParam.category': function(newVal){
+            this.updateTable();
+        },
+    },
 	methods: {
         getNotification(){
             this.axios.get('/getNotification',
