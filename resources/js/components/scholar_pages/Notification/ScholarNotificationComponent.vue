@@ -28,18 +28,29 @@
                                     <!-- begin scrollbar -->
                                     <div class="slimScrollDiv inbox" style="position: relative; overflow: hidden; width: auto; height: 100%;">
                                         <div data-scrollbar="true" data-height="100%" data-init="true" style="overflow: hidden; width: auto; height: 100%;">
-                                            <!-- begin list-email -->
+                                            <!-- begin list-email -->                                            
                                             <ul class="list-group list-group-lg no-radius list-email">
+                                                <li class="list-group-item list-group-item-title">
+                                                    <div class="email-user"></div>
+                                                    <div class="email-info">
+                                                        <div class="row no-margin">
+                                                            <div class="col-md-3 text-bold">Account Name</div>
+                                                            <div class="col-md-5 text-bold">Description</div>
+                                                            <div class="col-md-2 text-bold">Status</div>
+                                                            <div class="col-md-2 text-bold">Date</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                                 <li class="list-group-item" v-for="notification in notificationsData" :class="notification.status == 1 ? 'unread' : 'read'">
                                                     <a href="" class="email-user bg-blue">
                                                         <span class="text-white"><i class="fas fa-bullhorn"></i></span>
                                                     </a>
                                                     <div class="email-info">
-                                                        <a href="">
-                                                            <span class="email-title">
+                                                        <div class="row no-margin">
+                                                            <div class="col-md-3">
                                                                 {{ notification.account_name }}
-                                                            </span>
-                                                            <span class="email-desc">
+                                                            </div>
+                                                            <div class="col-md-5">
                                                                 <span v-if="notification.category != 3">
                                                                     Penalty: 
                                                                     {{ notification.penalty }} - 
@@ -50,12 +61,15 @@
                                                                 <span v-else>
                                                                     Terminated
                                                                 </span>
-                                                                
-                                                            </span>
-                                                            <span class="email-time">
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                <span v-if="notification.status == 1">Unread</span>
+                                                                <span v-else>Unread</span>
+                                                            </div>
+                                                            <div class="col-md-2">
                                                                 {{ notification.created_at | formatTimeDate }}
-                                                            </span>
-                                                        </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </li>
                                             </ul>

@@ -30,22 +30,36 @@
                                         <div data-scrollbar="true" data-height="100%" data-init="true" style="overflow: hidden; width: auto; height: 100%;">
                                             <!-- begin list-email -->
                                             <ul class="list-group list-group-lg no-radius list-email">
+                                                <li class="list-group-item list-group-item-title">
+                                                    <div class="email-user"></div>
+                                                    <div class="email-info">
+                                                        <div class="row no-margin">
+                                                            <div class="col-md-3 text-bold">Account Name</div>
+                                                            <div class="col-md-5 text-bold">Description</div>
+                                                            <div class="col-md-2 text-bold">Status</div>
+                                                            <div class="col-md-2 text-bold">Date</div>
+                                                        </div>
+                                                    </div>
+                                                </li>
                                                 <li class="list-group-item unread" v-for="announcement in announcementsData">
                                                     <a class="email-user bg-blue">
                                                         <span class="text-white"><i class="fas fa-bullhorn"></i></span>
                                                     </a>
                                                     <div class="email-info">
-                                                        <a href="">
-                                                            <span class="email-title">
+                                                        <div class="row no-margin">
+                                                            <div class="col-md-3">
                                                                 {{ announcement.title }}
-                                                            </span>
-                                                            <span class="email-desc">
+                                                            </div>
+                                                            <div class="col-md-5">
                                                                 {{ announcement.description }}
-                                                            </span>
-                                                            <span class="email-time">
+                                                            </div>
+                                                            <div class="col-md-2">
+                                                                {{ announcement.notif_status }}
+                                                            </div>
+                                                            <div class="col-md-2">
                                                                 {{ announcement.created_at | formatDate }}
-                                                            </span>
-                                                        </a>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </li>
                                             </ul>

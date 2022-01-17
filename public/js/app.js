@@ -10272,6 +10272,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -11129,6 +11143,20 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -82571,70 +82599,98 @@ var render = function() {
                                     staticClass:
                                       "list-group list-group-lg no-radius list-email"
                                   },
-                                  _vm._l(_vm.announcementsData, function(
-                                    announcement
-                                  ) {
-                                    return _c(
-                                      "li",
-                                      { staticClass: "list-group-item unread" },
-                                      [
-                                        _vm._m(0, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "email-info" },
-                                          [
-                                            _c("a", { attrs: { href: "" } }, [
+                                  [
+                                    _vm._m(0),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.announcementsData, function(
+                                      announcement
+                                    ) {
+                                      return _c(
+                                        "li",
+                                        {
+                                          staticClass: "list-group-item unread"
+                                        },
+                                        [
+                                          _vm._m(1, true),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "email-info" },
+                                            [
                                               _c(
-                                                "span",
-                                                { staticClass: "email-title" },
+                                                "div",
+                                                {
+                                                  staticClass: "row no-margin"
+                                                },
                                                 [
-                                                  _vm._v(
-                                                    "\n                                                                " +
-                                                      _vm._s(
-                                                        announcement.title
-                                                      ) +
-                                                      "\n                                                            "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "email-desc" },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                                " +
-                                                      _vm._s(
-                                                        announcement.description
-                                                      ) +
-                                                      "\n                                                            "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "email-time" },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                                " +
-                                                      _vm._s(
-                                                        _vm._f("formatDate")(
-                                                          announcement.created_at
-                                                        )
-                                                      ) +
-                                                      "\n                                                            "
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-3" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                                " +
+                                                          _vm._s(
+                                                            announcement.title
+                                                          ) +
+                                                          "\n                                                            "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-5" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                                " +
+                                                          _vm._s(
+                                                            announcement.description
+                                                          ) +
+                                                          "\n                                                            "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-2" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                                " +
+                                                          _vm._s(
+                                                            announcement.notif_status
+                                                          ) +
+                                                          "\n                                                            "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-2" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                                " +
+                                                          _vm._s(
+                                                            _vm._f(
+                                                              "formatDate"
+                                                            )(
+                                                              announcement.created_at
+                                                            )
+                                                          ) +
+                                                          "\n                                                            "
+                                                      )
+                                                    ]
                                                   )
                                                 ]
                                               )
-                                            ])
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  0
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
                                 )
                               ]
                             )
@@ -82658,6 +82714,30 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item list-group-item-title" }, [
+      _c("div", { staticClass: "email-user" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "email-info" }, [
+        _c("div", { staticClass: "row no-margin" }, [
+          _c("div", { staticClass: "col-md-3 text-bold" }, [
+            _vm._v("Account Name")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-5 text-bold" }, [
+            _vm._v("Description")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2 text-bold" }, [_vm._v("Status")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2 text-bold" }, [_vm._v("Date")])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -83854,101 +83934,125 @@ var render = function() {
                                     staticClass:
                                       "list-group list-group-lg no-radius list-email"
                                   },
-                                  _vm._l(_vm.notificationsData, function(
-                                    notification
-                                  ) {
-                                    return _c(
-                                      "li",
-                                      {
-                                        staticClass: "list-group-item",
-                                        class:
-                                          notification.status == 1
-                                            ? "unread"
-                                            : "read"
-                                      },
-                                      [
-                                        _vm._m(0, true),
-                                        _vm._v(" "),
-                                        _c(
-                                          "div",
-                                          { staticClass: "email-info" },
-                                          [
-                                            _c("a", { attrs: { href: "" } }, [
+                                  [
+                                    _vm._m(0),
+                                    _vm._v(" "),
+                                    _vm._l(_vm.notificationsData, function(
+                                      notification
+                                    ) {
+                                      return _c(
+                                        "li",
+                                        {
+                                          staticClass: "list-group-item",
+                                          class:
+                                            notification.status == 1
+                                              ? "unread"
+                                              : "read"
+                                        },
+                                        [
+                                          _vm._m(1, true),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            { staticClass: "email-info" },
+                                            [
                                               _c(
-                                                "span",
-                                                { staticClass: "email-title" },
+                                                "div",
+                                                {
+                                                  staticClass: "row no-margin"
+                                                },
                                                 [
-                                                  _vm._v(
-                                                    "\n                                                            " +
-                                                      _vm._s(
-                                                        notification.account_name
-                                                      ) +
-                                                      "\n                                                        "
-                                                  )
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "email-desc" },
-                                                [
-                                                  notification.category != 3
-                                                    ? _c("span", [
-                                                        _vm._v(
-                                                          "\n                                                                Penalty: \n                                                                " +
-                                                            _vm._s(
-                                                              notification.penalty
-                                                            ) +
-                                                            " - \n                                                                \n                                                                "
-                                                        ),
-                                                        notification.category ==
-                                                        1
-                                                          ? _c("span", [
-                                                              _vm._v(
-                                                                "Minimum SLP not met"
-                                                              )
-                                                            ])
-                                                          : notification.category ==
-                                                            2
-                                                          ? _c("span", [
-                                                              _vm._v(
-                                                                "Minimum MMR not met"
-                                                              )
-                                                            ])
-                                                          : _vm._e()
-                                                      ])
-                                                    : _c("span", [
-                                                        _vm._v(
-                                                          "\n                                                                Terminated\n                                                            "
-                                                        )
-                                                      ])
-                                                ]
-                                              ),
-                                              _vm._v(" "),
-                                              _c(
-                                                "span",
-                                                { staticClass: "email-time" },
-                                                [
-                                                  _vm._v(
-                                                    "\n                                                            " +
-                                                      _vm._s(
-                                                        _vm._f(
-                                                          "formatTimeDate"
-                                                        )(
-                                                          notification.created_at
-                                                        )
-                                                      ) +
-                                                      "\n                                                        "
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-3" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                            " +
+                                                          _vm._s(
+                                                            notification.account_name
+                                                          ) +
+                                                          "\n                                                        "
+                                                      )
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-5" },
+                                                    [
+                                                      notification.category != 3
+                                                        ? _c("span", [
+                                                            _vm._v(
+                                                              "\n                                                                Penalty: \n                                                                " +
+                                                                _vm._s(
+                                                                  notification.penalty
+                                                                ) +
+                                                                " - \n                                                                \n                                                                "
+                                                            ),
+                                                            notification.category ==
+                                                            1
+                                                              ? _c("span", [
+                                                                  _vm._v(
+                                                                    "Minimum SLP not met"
+                                                                  )
+                                                                ])
+                                                              : notification.category ==
+                                                                2
+                                                              ? _c("span", [
+                                                                  _vm._v(
+                                                                    "Minimum MMR not met"
+                                                                  )
+                                                                ])
+                                                              : _vm._e()
+                                                          ])
+                                                        : _c("span", [
+                                                            _vm._v(
+                                                              "\n                                                                Terminated\n                                                            "
+                                                            )
+                                                          ])
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-2" },
+                                                    [
+                                                      notification.status == 1
+                                                        ? _c("span", [
+                                                            _vm._v("Unread")
+                                                          ])
+                                                        : _c("span", [
+                                                            _vm._v("Unread")
+                                                          ])
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    { staticClass: "col-md-2" },
+                                                    [
+                                                      _vm._v(
+                                                        "\n                                                            " +
+                                                          _vm._s(
+                                                            _vm._f(
+                                                              "formatTimeDate"
+                                                            )(
+                                                              notification.created_at
+                                                            )
+                                                          ) +
+                                                          "\n                                                        "
+                                                      )
+                                                    ]
                                                   )
                                                 ]
                                               )
-                                            ])
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  }),
-                                  0
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    })
+                                  ],
+                                  2
                                 )
                               ]
                             )
@@ -83972,6 +84076,30 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item list-group-item-title" }, [
+      _c("div", { staticClass: "email-user" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "email-info" }, [
+        _c("div", { staticClass: "row no-margin" }, [
+          _c("div", { staticClass: "col-md-3 text-bold" }, [
+            _vm._v("Account Name")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-5 text-bold" }, [
+            _vm._v("Description")
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2 text-bold" }, [_vm._v("Status")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2 text-bold" }, [_vm._v("Date")])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -105550,7 +105678,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatDateTime', function (da
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.filter('formatTimeDate', function (date) {
   if (!date) return '';
-  return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('hh:mm MM-DD-YYYY');
+  return moment__WEBPACK_IMPORTED_MODULE_6___default()(date).format('ll hh:mm A');
 });
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('dialog-component', __webpack_require__(/*! ./components/layout/DialogComponent.vue */ "./resources/js/components/layout/DialogComponent.vue")["default"]);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('type-component', __webpack_require__(/*! ./components/layout/TypeComponent.vue */ "./resources/js/components/layout/TypeComponent.vue")["default"]);

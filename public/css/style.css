@@ -228,6 +228,9 @@ label{
     padding: .35rem .6rem !important;
 }
 /* List Group */
+.list-group-item-title .email-user{
+    background: transparent!important;
+}
 .list-group-item{
     border: 1px solid #ccc;
 }
