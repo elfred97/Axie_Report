@@ -60,8 +60,8 @@
                                     <span class="total">{{ getTotal }}</span>
                                     <span class="arrow top"></span>
                                 </a>
-                                <div class="dropdown-menu media-list dropdown-menu-cart p-0">
-                                    <div v-if="notificationData.length > 0">
+                                <div class="dropdown-menu media-list dropdown-menu-cart">
+                                    <div v-if="notification_count > 0">
                                         <div class="dropdown-header">Penalty</div>
                                         <a href="javascript:;" class="dropdown-item media" v-for="notification in notificationData" @click="gotoNotification(notification)" v-if="checkStatus(notification, 'notification')">
                                             <div class="media-left">
@@ -69,13 +69,13 @@
                                             </div>
                                             <div class="media-body">
                                                 <div class="text-muted f-s-10 pull-right">{{ notification.created_at | formatDate }}</div>
-                                                <h6 class="media-heading"> {{ notification.player_name }} ({{ notification.account_name }})</h6>
+                                                <h6 class="media-heading"> {{ notification.scholar_name }} ({{ notification.account_name }})</h6>
                                                 <p v-if="notification.category == 1"> {{ notification.gained_slp_today }} SLP </p>
                                                 <p v-if="notification.category == 2"> {{ notification.mmr }} MMR </p>
                                             </div>
                                         </a>
                                     </div>
-                                    <div v-if="announcementsData.length > 0">
+                                    <div v-if="announcement_count > 0">
                                         <div class="dropdown-header">Announcement</div>
                                         <a href="javascript:;" class="dropdown-item media" v-for="announcement in announcementsData" @click="gotoAnnouncement" v-if="checkStatus(announcement, 'announcement')">
                                             <div class="media-left">
@@ -97,21 +97,14 @@
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <div v-if="getGuardType == 'admins'">
-                                        <!-- <span href="javascript:;" class="dropdown-item">Settings</span> -->
                                         <router-link to="/settings" class="dropdown-item"><i class="fas fa-sliders-h"></i> Settings</router-link>
                                         <div class="dropdown-divider" ></div>
-                                        <!-- <router-link to="/audit" class="dropdown-item"><i class="fas fa-sliders-h"></i> Audit</router-link> -->
                                     </div>
                                     <!-- <a href="/api_sample" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> API Sample</a> -->
                                     <a href="/logout" class="dropdown-item"><i class="fas fa-sign-out-alt"></i> Log Out</a>
                                 </div>
                             </li>
                         </ul>
-                        <!-- <ul class="nav pull-right">
-                            <li>
-                                <a href="/logout">Log Out</a>
-                            </li>
-                        </ul> -->
                     </div>
                     <!-- END header-nav -->
                 </div>
@@ -133,25 +126,26 @@ export default {
             announcement_count : 0,
         }
     },
-    // watch: {
-    //     'notificationData': function(newVal){
-    //         if(newVal){
-    //             this.getTotalNotificationCount();
-    //         }
-    //     },
-    //     'announcementsData': function(newVal){
-    //         if(newVal){
-    //             this.getTotalNotificationCount();
-    //         }
-    //     }
-    // },
+    watch: {
+        'notificationData': function(newVal){
+            if(newVal){
+                // this.getTotal();
+            }
+        },
+        'announcementsData': function(newVal){
+            if(newVal){
+                // this.getTotal();
+            }
+        }
+    },
     computed : {
         getGuardType(){
             return this.$store.state.global_guard_type;
         },
+        
         getTotal(){
-            return this.notification_count + this.announcement_count;
-        }
+            return this.announcement_count + this.notification_count;
+        },
         
     },
     methods: {
@@ -160,39 +154,23 @@ export default {
 
             if(this.announcementsData.length > 0)
                 this.announcementsData.forEach((element, index) => {                                        
-                    if(this.$store.state.global_guard_type == 'admins'){
-                        if(element.status == 1)
-                            ann_count = ann_count + 1;
-                    }
-                    else{
-                        if(element.status_scholar == 1)
-                            ann_count = ann_count + 1;
-                    }
+                    if(element.notif_status == 1)
+                        ann_count = ann_count + 1;
                 });
         
             this.announcement_count = ann_count;
+            // return ann_count;
         },
         getTotalNotificationCount(){
             let notif_count = 0;
-            // let notificationCount = Object.keys(this.notificationData).length;
-            // let announcementCount = Object.keys(this.announcementsData).length;
             if(this.notificationData.length > 0){
                 this.notificationData.forEach((element, index) => {                                        
-                    if(this.$store.state.global_guard_type == 'admins'){
-                        if(element.status == 1)
-                            notif_count = notif_count + 1;
-                    }
-                    else{
-                        if(element.status_scholar == 1){
-                            notif_count = notif_count + 1;
-                        }
+                    if(element.status == 1){
+                        notif_count = notif_count + 1;
                     }
                 });
             }
-            // this.total_count =  notif_count + ann_count;
             this.notification_count = notif_count;
-            // console.log(notif_count);
-            // return notif_count + ann_count
         },
         getNotification(){
             if(this.$store.state.global_guard_type == 'admins'){
@@ -202,7 +180,8 @@ export default {
                     }
                 })
                 .then((response) => {
-                    this.notificationData = response.data;                    
+                    this.notificationData = response.data;
+                    this.getTotalNotificationCount();
                 })
                 .catch((error) => {
                     // this.clearAll();
@@ -220,6 +199,18 @@ export default {
                     console.log(error.response.data);
                 })
             }
+        },
+        getAnnouncement(){
+            let account_type = this.$store.state.global_guard_type;
+            this.axios.get('notifications/'+account_type)
+            .then(response => {
+                // console.log(response.data);
+                this.announcementsData = response.data;
+                this.getTotalAnnouncementCount();
+            })
+            .catch( error => {
+                console.log(error.response.data);
+            })
         },
         getAccountInfo(){
             // if(this.$store.state.global_guard_type == 'admins'){
@@ -267,19 +258,9 @@ export default {
 
             window.open('/scholar_announcement', '_self'); 
         },
-        getAnnouncement(){
-            let account_type = this.$store.state.global_guard_type;
-            this.axios.get('notifications/'+account_type)
-            .then(response => {
-                // console.log(response.data);
-                this.announcementsData = response.data;
-                this.getTotalAnnouncementCount();
-            })
-            .catch( error => {
-                console.log(error.response.data);
-            })
-        },
+        
         checkStatus(data, type){
+            
             if(this.$store.state.global_guard_type == 'admins'){
                 if(data.status == 1)
                     return true;
@@ -287,10 +268,18 @@ export default {
                     return false;
             }
             else{
-                if(data.status_scholar == 1)
-                    return true;
-                else
-                    return false;
+                if(type == 'notification'){
+                    if(data.status == 1)
+                        return true;                    
+                }
+                else if(type == 'announcement'){
+                    console.log(type);
+                    console.log(data);
+                    if(data.notif_status == 1)
+                        return true
+                }
+
+                return false;
             }
         }
     },

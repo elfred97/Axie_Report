@@ -5902,13 +5902,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5920,64 +5913,47 @@ __webpack_require__.r(__webpack_exports__);
       announcement_count: 0
     };
   },
-  // watch: {
-  //     'notificationData': function(newVal){
-  //         if(newVal){
-  //             this.getTotalNotificationCount();
-  //         }
-  //     },
-  //     'announcementsData': function(newVal){
-  //         if(newVal){
-  //             this.getTotalNotificationCount();
-  //         }
-  //     }
-  // },
+  watch: {
+    'notificationData': function notificationData(newVal) {
+      if (newVal) {// this.getTotal();
+      }
+    },
+    'announcementsData': function announcementsData(newVal) {
+      if (newVal) {// this.getTotal();
+      }
+    }
+  },
   computed: {
     getGuardType: function getGuardType() {
       return this.$store.state.global_guard_type;
     },
     getTotal: function getTotal() {
-      return this.notification_count + this.announcement_count;
+      return this.announcement_count + this.notification_count;
     }
   },
   methods: {
     getTotalAnnouncementCount: function getTotalAnnouncementCount() {
-      var _this = this;
-
       var ann_count = 0;
       if (this.announcementsData.length > 0) this.announcementsData.forEach(function (element, index) {
-        if (_this.$store.state.global_guard_type == 'admins') {
-          if (element.status == 1) ann_count = ann_count + 1;
-        } else {
-          if (element.status_scholar == 1) ann_count = ann_count + 1;
-        }
+        if (element.notif_status == 1) ann_count = ann_count + 1;
       });
-      this.announcement_count = ann_count;
+      this.announcement_count = ann_count; // return ann_count;
     },
     getTotalNotificationCount: function getTotalNotificationCount() {
-      var _this2 = this;
-
-      var notif_count = 0; // let notificationCount = Object.keys(this.notificationData).length;
-      // let announcementCount = Object.keys(this.announcementsData).length;
+      var notif_count = 0;
 
       if (this.notificationData.length > 0) {
         this.notificationData.forEach(function (element, index) {
-          if (_this2.$store.state.global_guard_type == 'admins') {
-            if (element.status == 1) notif_count = notif_count + 1;
-          } else {
-            if (element.status_scholar == 1) {
-              notif_count = notif_count + 1;
-            }
+          if (element.status == 1) {
+            notif_count = notif_count + 1;
           }
         });
-      } // this.total_count =  notif_count + ann_count;
+      }
 
-
-      this.notification_count = notif_count; // console.log(notif_count);
-      // return notif_count + ann_count
+      this.notification_count = notif_count;
     },
     getNotification: function getNotification() {
-      var _this3 = this;
+      var _this = this;
 
       if (this.$store.state.global_guard_type == 'admins') {
         this.axios.get('/getNotification', {
@@ -5985,7 +5961,9 @@ __webpack_require__.r(__webpack_exports__);
             date: 'today'
           }
         }).then(function (response) {
-          _this3.notificationData = response.data;
+          _this.notificationData = response.data;
+
+          _this.getTotalNotificationCount();
         })["catch"](function (error) {
           // this.clearAll();
           console.log(error.response.data);
@@ -5993,27 +5971,40 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         this.axios.get('getScholarNotification').then(function (response) {
           // console.log(response.data);
-          _this3.notificationData = response.data;
+          _this.notificationData = response.data;
 
-          _this3.getTotalNotificationCount();
+          _this.getTotalNotificationCount();
         })["catch"](function (error) {
           console.log(error.response.data);
         });
       }
     },
+    getAnnouncement: function getAnnouncement() {
+      var _this2 = this;
+
+      var account_type = this.$store.state.global_guard_type;
+      this.axios.get('notifications/' + account_type).then(function (response) {
+        // console.log(response.data);
+        _this2.announcementsData = response.data;
+
+        _this2.getTotalAnnouncementCount();
+      })["catch"](function (error) {
+        console.log(error.response.data);
+      });
+    },
     getAccountInfo: function getAccountInfo() {
-      var _this4 = this;
+      var _this3 = this;
 
       // if(this.$store.state.global_guard_type == 'admins'){
       this.axios.get('/getAccountInfo/' + this.$store.state.global_guard_type).then(function (response) {
-        _this4.accountData = response.data;
+        _this3.accountData = response.data;
       })["catch"](function (error) {
         // this.clearAll();
         console.log(error.response.data);
       }); // }
     },
     gotoNotification: function gotoNotification(data) {
-      var _this5 = this;
+      var _this4 = this;
 
       var url = '';
       var redirect = '';
@@ -6027,51 +6018,46 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.axios.post(redirect).then(function (response) {
-        _this5.getNotification();
+        _this4.getNotification();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
       window.open(url, '_self');
     },
     gotoAnnouncement: function gotoAnnouncement() {
-      var _this6 = this;
+      var _this5 = this;
 
       this.axios.post('changeStatusReminders').then(function (response) {
-        _this6.getAnnouncement();
+        _this5.getAnnouncement();
       })["catch"](function (error) {
         console.log(error.response.data);
       });
       window.open('/scholar_announcement', '_self');
     },
-    getAnnouncement: function getAnnouncement() {
-      var _this7 = this;
-
-      var account_type = this.$store.state.global_guard_type;
-      this.axios.get('notifications/' + account_type).then(function (response) {
-        // console.log(response.data);
-        _this7.announcementsData = response.data;
-
-        _this7.getTotalAnnouncementCount();
-      })["catch"](function (error) {
-        console.log(error.response.data);
-      });
-    },
     checkStatus: function checkStatus(data, type) {
       if (this.$store.state.global_guard_type == 'admins') {
         if (data.status == 1) return true;else return false;
       } else {
-        if (data.status_scholar == 1) return true;else return false;
+        if (type == 'notification') {
+          if (data.status == 1) return true;
+        } else if (type == 'announcement') {
+          console.log(type);
+          console.log(data);
+          if (data.notif_status == 1) return true;
+        }
+
+        return false;
       }
     }
   },
   created: function created() {
-    var _this8 = this;
+    var _this6 = this;
 
     this.getNotification();
     this.getAccountInfo();
     this.getAnnouncement();
     this.$events.on('update_notification', function (data) {
-      _this8.getNotification();
+      _this6.getNotification();
     });
   }
 });
@@ -73916,11 +73902,9 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                {
-                  staticClass: "dropdown-menu media-list dropdown-menu-cart p-0"
-                },
+                { staticClass: "dropdown-menu media-list dropdown-menu-cart" },
                 [
-                  _vm.notificationData.length > 0
+                  _vm.notification_count > 0
                     ? _c(
                         "div",
                         [
@@ -73970,7 +73954,9 @@ var render = function() {
                                         [
                                           _vm._v(
                                             " " +
-                                              _vm._s(notification.player_name) +
+                                              _vm._s(
+                                                notification.scholar_name
+                                              ) +
                                               " (" +
                                               _vm._s(
                                                 notification.account_name
@@ -74011,7 +73997,7 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _vm.announcementsData.length > 0
+                  _vm.announcement_count > 0
                     ? _c(
                         "div",
                         [

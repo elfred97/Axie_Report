@@ -579,6 +579,9 @@ select.form-control{
 .dropdown-menu.media-list .dropdown-footer{
     padding:10px 15px
 }
+.dropdown-menu-cart{
+    margin-right: 0!important;
+}
 /* Margin and Padding */
 .m-0{
     margin:0!important
