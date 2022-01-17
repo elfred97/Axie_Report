@@ -10,7 +10,7 @@
                     @change="updateCategory"
                     v-model="selected"
                     >
-                        <!-- <option value="">All</option> -->
+                        <option value="">All</option>
                         <option :value="category[0]" v-for="category in categoryList">
                             {{ category[1] }}
                         </option>
@@ -28,15 +28,15 @@ export default {
             selected   : ''
         }
     },
-    watch : {
-        'categoryList' : function(newVal){
-            if(newVal){
-                // console.log(newVal);
-                this.selected = newVal[0][0];
-                this.$emit('updateCategoryList', this.selected);
-            }
-        },
-    },
+    // watch : {
+    //     'categoryList' : function(newVal){
+    //         if(newVal){
+    //             // console.log(newVal);
+    //             this.selected = newVal[0][0];
+    //             this.$emit('updateCategoryList', this.selected);
+    //         }
+    //     },
+    // },
     methods : {
         getListOfCategory(){
             this.axios.get('/listOfCategory')
