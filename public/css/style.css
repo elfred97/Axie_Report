@@ -227,7 +227,16 @@ label{
     border-radius: 0 !important;
     padding: .35rem .6rem !important;
 }
-
+/* List Group */
+.list-group-item{
+    border: 1px solid #ccc;
+}
+.list-group-item.unread{
+    background-color: white;
+}
+.list-group-item.read{
+    background-color: #f9f9f9;
+}
 /* List Email */
 .inbox .list-email{
     border-top:1px solid #e4e7ea;
@@ -420,7 +429,7 @@ label{
     right:0;
     top:15px;
     height:20px;
-    background:#fff;
+    /* background:#fff; */
     display:-webkit-box;
     display:-ms-flexbox;
     display:flex;

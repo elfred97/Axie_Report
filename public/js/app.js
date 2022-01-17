@@ -83859,7 +83859,13 @@ var render = function() {
                                   ) {
                                     return _c(
                                       "li",
-                                      { staticClass: "list-group-item unread" },
+                                      {
+                                        staticClass: "list-group-item",
+                                        class:
+                                          notification.status == 1
+                                            ? "unread"
+                                            : "read"
+                                      },
                                       [
                                         _vm._m(0, true),
                                         _vm._v(" "),

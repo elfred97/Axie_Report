@@ -30,7 +30,7 @@
                                         <div data-scrollbar="true" data-height="100%" data-init="true" style="overflow: hidden; width: auto; height: 100%;">
                                             <!-- begin list-email -->
                                             <ul class="list-group list-group-lg no-radius list-email">
-                                                <li class="list-group-item unread" v-for="notification in notificationsData">
+                                                <li class="list-group-item" v-for="notification in notificationsData" :class="notification.status == 1 ? 'unread' : 'read'">
                                                     <a href="" class="email-user bg-blue">
                                                         <span class="text-white"><i class="fas fa-bullhorn"></i></span>
                                                     </a>
