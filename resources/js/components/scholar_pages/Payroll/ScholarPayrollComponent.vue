@@ -6,7 +6,7 @@
                     <div class="container">
                         <h3>Payroll History</h3>
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-8 col-xs-12">
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Search 
                                         <input 
@@ -18,6 +18,9 @@
                                             v-on:keyup.enter="getPayrollHistory()">
                                     </label>
                                 </div>
+                            </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
                             </div>
                         </div>
                         <div class="vertical-box-row" v-if="payrolls.length > 0">
@@ -89,13 +92,22 @@ export default {
         return {
             payrolls : {},
             search : '',
+            account_selected : ''
+        }
+    },
+    watch : {
+        'account_selected' : function(newVal){
+            if(newVal){
+                this.getPayrollHistory();
+            }
         }
     },
     methods : {
         getPayrollHistory(){
             this.axios.get('getScholarPayrollHistory', {
                 params: {
-                    search : this.search
+                    search : this.search,
+                    account_name : this.account_selected.account_name
                 }
             })
             .then(response => {

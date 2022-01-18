@@ -5598,6 +5598,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['account', 'type'],
   data: function data() {
@@ -10379,6 +10380,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -11332,12 +11334,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       notificationsData: {},
-      search: ''
+      search: '',
+      account_selected: ''
     };
+  },
+  watch: {
+    'account_selected': function account_selected(newVal) {
+      if (newVal) this.getNotification();
+    }
   },
   methods: {
     getNotification: function getNotification() {
@@ -11346,7 +11357,8 @@ __webpack_require__.r(__webpack_exports__);
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('getScholarNotification', {
         params: {
-          search: this.search
+          search: this.search,
+          account_name: this.account_selected.account_name
         }
       }).then(function (response) {
         // console.log(response.data);
@@ -11457,12 +11469,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       payrolls: {},
-      search: ''
+      search: '',
+      account_selected: ''
     };
+  },
+  watch: {
+    'account_selected': function account_selected(newVal) {
+      if (newVal) {
+        this.getPayrollHistory();
+      }
+    }
   },
   methods: {
     getPayrollHistory: function getPayrollHistory() {
@@ -11470,7 +11493,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.axios.get('getScholarPayrollHistory', {
         params: {
-          search: this.search
+          search: this.search,
+          account_name: this.account_selected.account_name
         }
       }).then(function (response) {
         _this.payrolls = response.data;
@@ -73660,6 +73684,7 @@ var render = function() {
       },
       [
         _c("label", [
+          _vm._v("\n            Account\n            "),
           _c(
             "select",
             {
@@ -82923,13 +82948,14 @@ var render = function() {
                                                     "div",
                                                     { staticClass: "col-md-2" },
                                                     [
-                                                      _vm._v(
-                                                        "\n                                                                " +
-                                                          _vm._s(
-                                                            announcement.notif_status
-                                                          ) +
-                                                          "\n                                                            "
-                                                      )
+                                                      announcement.notif_status ==
+                                                      1
+                                                        ? _c("span", [
+                                                            _vm._v("Unread")
+                                                          ])
+                                                        : _c("span", [
+                                                            _vm._v("Read")
+                                                          ])
                                                     ]
                                                   ),
                                                   _vm._v(" "),
@@ -84159,6 +84185,21 @@ var render = function() {
                     ]
                   )
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-6 col-lg-6 col-sm-6 col-xs-12" },
+                [
+                  _c("account-list-component", {
+                    on: {
+                      updateAccountList: function($event) {
+                        _vm.account_selected = $event
+                      }
+                    }
+                  })
+                ],
+                1
               )
             ]),
             _vm._v(" "),
@@ -84410,7 +84451,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-4 col-lg-4 col-sm-8 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
                 [
                   _c(
                     "div",
@@ -84466,6 +84507,21 @@ var render = function() {
                     ]
                   )
                 ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-6 col-lg-6 col-sm-6 col-xs-12" },
+                [
+                  _c("account-list-component", {
+                    on: {
+                      updateAccountList: function($event) {
+                        _vm.account_selected = $event
+                      }
+                    }
+                  })
+                ],
+                1
               )
             ]),
             _vm._v(" "),

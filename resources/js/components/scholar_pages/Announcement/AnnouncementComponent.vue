@@ -54,7 +54,8 @@
                                                                 {{ announcement.description }}
                                                             </div>
                                                             <div class="col-md-2">
-                                                                {{ announcement.notif_status }}
+                                                                <span v-if="announcement.notif_status == 1">Unread</span>
+                                                                <span v-else>Read</span>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 {{ announcement.created_at | formatDate }}

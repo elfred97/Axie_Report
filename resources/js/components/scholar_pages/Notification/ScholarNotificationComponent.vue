@@ -19,6 +19,9 @@
                                     </label>
                                 </div>
                             </div>
+                            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
+                                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
+                            </div>
                         </div>
                         <div class="vertical-box-row">
                             <!-- begin vertical-box-cell -->
@@ -100,6 +103,13 @@ export default {
         return {
             notificationsData : {},
             search: '',
+            account_selected : '',
+        }
+    },
+    watch : {
+        'account_selected' : function(newVal){
+            if(newVal)
+                this.getNotification();
         }
     },
     methods: {
@@ -107,7 +117,8 @@ export default {
             let account_type = this.$store.state.global_guard_type;
             this.axios.get('getScholarNotification', {
                 params : {
-                    search : this.search
+                    search : this.search,
+                    account_name : this.account_selected.account_name
                 }
             })
             .then(response => {
