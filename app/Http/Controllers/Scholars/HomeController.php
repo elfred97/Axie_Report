@@ -342,7 +342,7 @@ class HomeController extends Controller
 
     public function getScholarNotification(Request $request){
         $accountName = $request->account_name;
-
+        $category  = $request->category;
         return NotificationScholars::LEFTJOIN('players', 'notification_scholars.player_id', '=', 'players.id')
             ->LEFTJOIN('player_scholar_histories as history', 'history.player_id', '=', 'players.id')
             ->LEFTJOIN('scholars', 'history.scholar_id','=', 'scholars.id')
@@ -354,6 +354,9 @@ class HomeController extends Controller
         ->WHERE([['scholars.id', Auth::id()]])
         ->WHEN($accountName, function ($q) use($accountName){
             $q->where('notification_scholars.account_name',$accountName);
+        })
+        ->WHEN($category, function ($q) use ($category){
+            $q->where('notification_scholars.category',$category);
         })
         ->GET();
 
