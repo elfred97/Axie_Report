@@ -124,7 +124,6 @@ Route::middleware(['PreventBackHistory'])->group(function(){
     //put here route that was accessed by both admin and scholars
 
     Route::middleware(['auth:admins,scholars'])->group(function(){
-        Route::get('src/{file_name}', 'FileController@showFile');
         Route::get('/notifications/{account_type}', [NotificationController::class,'index'])->name('index');
 
         Route::get('/getAccountInfo/{type}', 'GlobalController@getAccountInfo');
