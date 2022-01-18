@@ -22,8 +22,6 @@ class Report extends Model
         'last_claim_days',
         'last_claim_date',
         'claimable_on',
-        'compensation',
-        'number_of_senior',
         'thirty_percent',
         'forty_percent',
         'manager_share',
@@ -31,8 +29,7 @@ class Report extends Model
         'manager_slp',
         'scholar_slp',
         'mmr',
-        'rank',
-        'import_id'
+        'rank'
 	];
 
     public static function getReport(){

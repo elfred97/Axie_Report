@@ -16,7 +16,8 @@ class CreateNotificationSettingsTable extends Migration
         if (!Schema::hasTable('notification_settings')) {
             Schema::create('notification_settings', function (Blueprint $table) {
                 $table->increments('id');
-                $table->text('username')->nullable();
+                $table->string('model', 50)->default('App\Models\User');
+                $table->integer('model_id')->nullable();
                 $table->text('options')->nullable()->default(NULL);
                 $table->text('status')->nullable()->default(NULL);
                 $table->timestamps();

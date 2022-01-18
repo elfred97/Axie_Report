@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class BattleLogs extends Model
+class APILogs extends Model
 {
-    public $table       = 'battle_logs';
+    public $table       = 'api_logs';
 	public $timestamps  = TRUE;
 	protected $fillable = [
         'ronin_address',
