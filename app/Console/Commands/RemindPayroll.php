@@ -69,8 +69,8 @@ class RemindPayroll extends Command
                 ]);
 
 //                TODO - uncomment this
-            //    $player->scholar_share = 0;
-            //    $player->save();
+               $player->scholar_share = 0;
+               $player->save();
 
                 DB::commit();
             } catch (\Exception $e) {
