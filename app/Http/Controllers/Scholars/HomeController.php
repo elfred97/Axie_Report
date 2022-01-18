@@ -307,7 +307,9 @@ class HomeController extends Controller
             'report.*'                
         )
         ->WHERE('scholars.username', $username)
-        ->WHERE('report.name', $accountName)
+        ->when($accountName, function ($query) use ($accountName) {
+            $query->WHERE('report.name', $accountName);
+        })
         ->when(is_null($date) == false, function ($query) use ($date,$from,$to) {
             $query->whereDateBetween('report.created_at',$from,$to);
         })

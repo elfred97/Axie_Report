@@ -9,7 +9,7 @@ class Report extends Model
 {
     //
     public $table       = 'report';
-	public $timestamps  = TRUE;
+	public $timestamps  = FALSE;
 	protected $fillable = [
 		'ronin_address',
 		'name',
