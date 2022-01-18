@@ -84568,7 +84568,7 @@ var render = function() {
                                                     },
                                                     [
                                                       _c("b", [
-                                                        _vm._v("TX ID:")
+                                                        _vm._v("TXN ID:")
                                                       ]),
                                                       _vm._v(
                                                         " " +
