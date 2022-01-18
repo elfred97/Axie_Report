@@ -6,7 +6,7 @@
                     <div class="container">
                         <h3>Notification</h3>
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-8 col-xs-12">
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Search 
                                         <input 
@@ -19,8 +19,11 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
-                                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                                <category-list-component @updateCategoryList="category = $event"></category-list-component>
+                            </div>
+                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                                <account-list-component :account='true' @updateAccountList="account_selected = $event"></account-list-component>
                             </div>
                         </div>
                         <div class="vertical-box-row">
@@ -67,7 +70,7 @@
                                                             </div>
                                                             <div class="col-md-2">
                                                                 <span v-if="notification.status == 1">Unread</span>
-                                                                <span v-else>Unread</span>
+                                                                <span v-else>Read</span>
                                                             </div>
                                                             <div class="col-md-2">
                                                                 {{ notification.created_at | formatTimeDate }}
@@ -101,15 +104,21 @@
 export default {
     data() {
         return {
-            notificationsData : {},
-            search: '',
+            notificationsData: {},
+            search           : '',
             account_selected : '',
+            category         : '',
         }
     },
     watch : {
         'account_selected' : function(newVal){
             if(newVal)
                 this.getNotification();
+        },
+        'category' : function(newVal){
+            if(newVal){
+                this.getNotification();
+            }
         }
     },
     methods: {
@@ -118,7 +127,8 @@ export default {
             this.axios.get('getScholarNotification', {
                 params : {
                     search : this.search,
-                    account_name : this.account_selected.account_name
+                    account_name : this.account_selected.account_name,
+                    category : this.category,
                 }
             })
             .then(response => {

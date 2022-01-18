@@ -5610,7 +5610,7 @@ __webpack_require__.r(__webpack_exports__);
   watch: {
     'accountList': function accountList(newVal) {
       if (newVal) {
-        this.selected = newVal[0];
+        if (!this.account) this.selected = newVal[0];
         this.$emit('updateAccountList', this.selected);
       }
     }
@@ -11337,17 +11337,26 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       notificationsData: {},
       search: '',
-      account_selected: ''
+      account_selected: '',
+      category: ''
     };
   },
   watch: {
     'account_selected': function account_selected(newVal) {
       if (newVal) this.getNotification();
+    },
+    'category': function category(newVal) {
+      if (newVal) {
+        this.getNotification();
+      }
     }
   },
   methods: {
@@ -11358,7 +11367,8 @@ __webpack_require__.r(__webpack_exports__);
       this.axios.get('getScholarNotification', {
         params: {
           search: this.search,
-          account_name: this.account_selected.account_name
+          account_name: this.account_selected.account_name,
+          category: this.category
         }
       }).then(function (response) {
         // console.log(response.data);
@@ -73721,16 +73731,20 @@ var render = function() {
                 ]
               }
             },
-            _vm._l(_vm.accountList, function(accounts) {
-              return _c("option", { domProps: { value: accounts } }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(accounts.account_name) +
-                    "\n                    "
-                )
-              ])
-            }),
-            0
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
+              _vm._v(" "),
+              _vm._l(_vm.accountList, function(accounts) {
+                return _c("option", { domProps: { value: accounts } }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(accounts.account_name) +
+                      "\n                    "
+                  )
+                ])
+              })
+            ],
+            2
           )
         ])
       ]
@@ -84129,7 +84143,7 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: "col-md-4 col-lg-4 col-sm-8 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
                 [
                   _c(
                     "div",
@@ -84189,9 +84203,25 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "col-md-6 col-lg-6 col-sm-6 col-xs-12" },
+                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
+                [
+                  _c("category-list-component", {
+                    on: {
+                      updateCategoryList: function($event) {
+                        _vm.category = $event
+                      }
+                    }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
                 [
                   _c("account-list-component", {
+                    attrs: { account: true },
                     on: {
                       updateAccountList: function($event) {
                         _vm.account_selected = $event
@@ -84331,7 +84361,7 @@ var render = function() {
                                                             _vm._v("Unread")
                                                           ])
                                                         : _c("span", [
-                                                            _vm._v("Unread")
+                                                            _vm._v("Read")
                                                           ])
                                                     ]
                                                   ),
@@ -84514,6 +84544,7 @@ var render = function() {
                 { staticClass: "col-md-6 col-lg-6 col-sm-6 col-xs-12" },
                 [
                   _c("account-list-component", {
+                    attrs: { account: true },
                     on: {
                       updateAccountList: function($event) {
                         _vm.account_selected = $event

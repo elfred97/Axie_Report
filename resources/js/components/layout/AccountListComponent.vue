@@ -10,7 +10,7 @@
                     @change="updateAccountName"
                     v-model="selected"
                     >
-                        <!-- <option value="">All</option> -->
+                        <option value="">All</option>
                         <option :value="accounts" v-for="accounts in accountList">
                             {{ accounts.account_name }}
                         </option>
@@ -31,7 +31,9 @@ export default {
     watch : {
         'accountList' : function(newVal){
             if(newVal){                
-                this.selected = newVal[0];
+                if(!this.account)
+                    this.selected = newVal[0];
+                    
                 this.$emit('updateAccountList', this.selected);
             }
         },

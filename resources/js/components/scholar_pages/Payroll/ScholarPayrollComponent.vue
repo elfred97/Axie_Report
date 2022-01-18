@@ -20,7 +20,7 @@
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-6 col-sm-6 col-xs-12">
-                                <account-list-component @updateAccountList="account_selected = $event"></account-list-component>
+                                <account-list-component :account='true' @updateAccountList="account_selected = $event"></account-list-component>
                             </div>
                         </div>
                         <div class="vertical-box-row" v-if="payrolls.length > 0">
