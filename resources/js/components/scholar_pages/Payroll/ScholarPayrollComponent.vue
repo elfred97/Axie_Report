@@ -39,7 +39,7 @@
                                                             <span class="email-sender">{{ payroll.account_name }}</span>
                                                             <span class="email-title">
                                                                 <p class="no-margin text-content">
-                                                                    <b>TX ID:</b> {{ payroll.txn_id }}
+                                                                    <b>TXN ID:</b> {{ payroll.txn_id }}
                                                                 </p>
                                                             </span>
                                                             <span class="email-desc">
@@ -97,9 +97,9 @@ export default {
     },
     watch : {
         'account_selected' : function(newVal){
-            if(newVal){
+            // if(newVal){
                 this.getPayrollHistory();
-            }
+            // }
         }
     },
     methods : {
