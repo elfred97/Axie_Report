@@ -17,7 +17,7 @@ class CreateTypeTable extends Migration
             Schema::create('type', function (Blueprint $table) {
                 $table->increments('id');
                 $table->text('name')->nullable();
-                $table->text('status')->nullable()->default(NULL);                
+                $table->text('status')->nullable()->default('Active');                
                 $table->timestamps();
             });
         }

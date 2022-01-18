@@ -27,8 +27,6 @@ class CreateReportTable extends Migration
                 $table->integer('last_claim_days')->nullable()->default(NULL);
                 $table->dateTime('last_claim_date')->nullable()->default(NULL);
                 $table->dateTime('claimable_on')->nullable()->default(NULL);
-                $table->integer('compensation')->nullable()->default(NULL);
-                $table->integer('number_of_senior')->nullable()->default(NULL);
                 $table->integer('thirty_percent')->nullable()->default(NULL);
                 $table->integer('forty_percent')->nullable()->default(NULL);
                 $table->integer('manager_share')->nullable()->default(NULL);
@@ -37,7 +35,6 @@ class CreateReportTable extends Migration
                 $table->integer('scholar_slp')->nullable()->default(NULL);
                 $table->integer('mmr')->nullable()->default(NULL);
                 $table->integer('rank')->nullable()->default(NULL);
-                $table->integer('import_id')->nullable()->default(NULL);
                 $table->timestamps();
             });
         }

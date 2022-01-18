@@ -2,7 +2,7 @@
 
 namespace App\Console\Commands;
 
-use App\Models\BattleLogs;
+use App\Models\APILogs;
 use App\Models\Notification;
 use App\Models\NotificationScholars;
 use App\Models\NotificationSettings;
@@ -14,21 +14,21 @@ use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-class GetBattleLogs extends Command
+class GetAPILogs extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'battle.logs';
+    protected $signature = 'api.logs';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Fetch data from API to be save in battle logs table';
+    protected $description = 'Fetch data from API to be save in api logs table';
 
     /**
      * Create a new command instance.
@@ -47,7 +47,7 @@ class GetBattleLogs extends Command
      */
     public function handle()
     {
-        $this->line('Fetching Battle Logs API Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
+        $this->line('Fetching API Logs Start: ' . Carbon::now()->format('Y-m-d H:i:s'));
 
         $players = Player::select('ronin_address','account_name','penalty','id as p_id')
                     ->join('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
@@ -73,7 +73,7 @@ class GetBattleLogs extends Command
                 $minimum_slp = $notification_settings->options['minimum_slp'] ?? 75;
             }
 
-            $report = BattleLogs::WHERE('account_name', $player['account_name'])->latest('created_at')->first();
+            $report = APILogs::WHERE('account_name', $player['account_name'])->latest('created_at')->first();
 
             $thirty_percent = 0;
             $forty_percent = 0;
@@ -197,7 +197,7 @@ class GetBattleLogs extends Command
 
             $managerSLP = round($json_response['in_game_slp'] * 0.7);
 
-            BattleLogs::create([
+            APILogs::create([
                 'ronin_address' => $player['ronin_address'],
                 'account_name' => $player['account_name'],
                 'average_per_day' => $json_response['in_game_slp'] == 0 ? 0 : ($lastClaimDays == 0 ? 0 : $json_response['in_game_slp'] / $lastClaimDays),
@@ -227,6 +227,6 @@ class GetBattleLogs extends Command
 
         }
 
-        $this->line('Fetching Battle Logs API Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
+        $this->line('Fetching API Logs Ending: ' . Carbon::now()->format('Y-m-d H:i:s'));
     }
 }

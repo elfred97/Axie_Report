@@ -16,10 +16,11 @@ class CreateNotificationTable extends Migration
         if (!Schema::hasTable('notification')) {
             Schema::create('notification', function(Blueprint $table){
                 $table->increments('id');
-                $table->text('account_name')->nullable();
+                $table->integer('scholar_id')->nullable();
+                $table->integer('admin_id')->nullable();
                 $table->tinyInteger('category')->nullable()->default(NULL);
-                $table->tinyInteger('status')->nullable()->default(NULL);           
-                $table->integer('reminder_id')->nullable()->default(NULL)->references('id')->on('reminders');
+                $table->integer('notification_reminder_id')->nullable();
+                $table->tinyInteger('status')->nullable()->default(1);           
                 $table->timestamps();
             });
         }

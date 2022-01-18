@@ -14,13 +14,13 @@ class CreateReminders extends Migration
     public function up()
     {
         Schema::create('reminders', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
             $table->dateTime('reminder_time');
             $table->tinyInteger('recurrence')->comment('1: monthly, 2: weekly, 3: daily');
             $table->string('title');
             $table->text('description')->nullable();
             $table->tinyInteger('type_id')->nullable();
-            $table->tinyInteger('status')->default(0)->nullable();
+            $table->tinyInteger('status')->nullable()->default(0);
             $table->timestamps();
         });
     }
