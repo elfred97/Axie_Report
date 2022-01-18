@@ -413,15 +413,22 @@ class GlobalController extends Controller
     }
 
     public function getScholarPayrollHistory(Request $request){
-        $username = Auth::user()->username;        
+        $scholarID = Auth::id();
+        $search = $request->search;
+        $accountName = $request->account_name;        
         return Payroll::LEFTJOIN('scholars', 'payrolls.scholar_id', '=', 'scholars.id')
                 ->LEFTJOIN('players', 'payrolls.player_id', '=', 'players.id')
                 ->SELECT(
                     'payrolls.*',
-                    'players.account_name as account_name'
+                    'players.account_name'
                 )
-                ->WHERE('scholars.username', $username)
-                ->WHERE('payrolls.txn_id', 'like', '%'.$request->search.'%')
+                ->WHERE('payrolls.scholar_id', $scholarID)
+                ->WHEN($search, function ($q) use($search){
+                    $q->where('payrolls.txn_id', 'LIKE', '%'.$search.'%');
+                })
+                ->WHEN($accountName, function ($q) use($accountName){
+                    $q->where('players.account_name',$accountName);
+                })
                 ->ORDERBY('payrolls.id', 'desc')
                 ->GET();
     }
