@@ -5678,15 +5678,15 @@ __webpack_require__.r(__webpack_exports__);
       selected: ''
     };
   },
-  watch: {
-    'categoryList': function categoryList(newVal) {
-      if (newVal) {
-        // console.log(newVal);
-        this.selected = newVal[0][0];
-        this.$emit('updateCategoryList', this.selected);
-      }
-    }
-  },
+  // watch : {
+  //     'categoryList' : function(newVal){
+  //         if(newVal){
+  //             // console.log(newVal);
+  //             this.selected = newVal[0][0];
+  //             this.$emit('updateCategoryList', this.selected);
+  //         }
+  //     },
+  // },
   methods: {
     getListOfCategory: function getListOfCategory() {
       var _this = this;
@@ -11372,6 +11372,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
 //
 //
 //
@@ -73778,16 +73780,20 @@ var render = function() {
                 ]
               }
             },
-            _vm._l(_vm.categoryList, function(category) {
-              return _c("option", { domProps: { value: category[0] } }, [
-                _vm._v(
-                  "\n                        " +
-                    _vm._s(category[1]) +
-                    "\n                    "
-                )
-              ])
-            }),
-            0
+            [
+              _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
+              _vm._v(" "),
+              _vm._l(_vm.categoryList, function(category) {
+                return _c("option", { domProps: { value: category[0] } }, [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(category[1]) +
+                      "\n                    "
+                  )
+                ])
+              })
+            ],
+            2
           )
         ])
       ]
@@ -84606,12 +84612,22 @@ var render = function() {
                                                                   "Status: "
                                                                 )
                                                               ]),
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  payroll.status
-                                                                ) +
-                                                                  "\n                                                                    "
-                                                              )
+                                                              _vm._v(" "),
+                                                              payroll.status ==
+                                                              0
+                                                                ? _c("span", [
+                                                                    _vm._v(
+                                                                      "Pending"
+                                                                    )
+                                                                  ])
+                                                                : payroll.status ==
+                                                                  1
+                                                                ? _c("span", [
+                                                                    _vm._v(
+                                                                      "Paid"
+                                                                    )
+                                                                  ])
+                                                                : _vm._e()
                                                             ]
                                                           )
                                                         ]
