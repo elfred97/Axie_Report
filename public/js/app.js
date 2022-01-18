@@ -5613,6 +5613,9 @@ __webpack_require__.r(__webpack_exports__);
         if (!this.account) this.selected = newVal[0];
         this.$emit('updateAccountList', this.selected);
       }
+    },
+    'selected': function selected(newVal) {
+      this.$emit('updateAccountList', newVal);
     }
   },
   methods: {
@@ -5629,6 +5632,7 @@ __webpack_require__.r(__webpack_exports__);
     updateAccountName: function updateAccountName(event) {
       // console.log(this.selected);
       // if(this.type){
+      console.log(this);
       this.$emit('updateAccountList', this.selected); // }    
       // else
       //     this.$emit('updateAccountList', this.selected.account_name);
@@ -11351,7 +11355,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     'account_selected': function account_selected(newVal) {
-      if (newVal) this.getNotification();
+      // if(newVal)
+      this.getNotification();
     },
     'category': function category(newVal) {
       if (newVal) {
@@ -11492,9 +11497,8 @@ __webpack_require__.r(__webpack_exports__);
   },
   watch: {
     'account_selected': function account_selected(newVal) {
-      if (newVal) {
-        this.getPayrollHistory();
-      }
+      // if(newVal){
+      this.getPayrollHistory(); // }
     }
   },
   methods: {

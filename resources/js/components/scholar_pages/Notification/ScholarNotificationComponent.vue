@@ -112,7 +112,7 @@ export default {
     },
     watch : {
         'account_selected' : function(newVal){
-            if(newVal)
+            // if(newVal)
                 this.getNotification();
         },
         'category' : function(newVal){

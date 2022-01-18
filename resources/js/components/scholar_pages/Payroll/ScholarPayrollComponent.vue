@@ -97,9 +97,9 @@ export default {
     },
     watch : {
         'account_selected' : function(newVal){
-            if(newVal){
+            // if(newVal){
                 this.getPayrollHistory();
-            }
+            // }
         }
     },
     methods : {
