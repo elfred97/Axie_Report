@@ -7082,16 +7082,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -7116,31 +7106,7 @@ __webpack_require__.r(__webpack_exports__);
         field: 'id',
         // Choose the Defualt Sorted Data by name
         direction: 'desc'
-      } // {
-      //     field    : 'account_name',// Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      // {
-      //     field    : 'gained_slp_today',// Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      // {
-      //     field    : 'average_per_day',// Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      // {
-      //     field    : 'total_slp',// Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      // {
-      //     field    : 'mmr',// Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      // {
-      //     field    : 'created_at',// Choose the Defualt Sorted Data by name
-      //     direction: 'desc',
-      // },
-      ]
+      }]
     };
   },
   watch: {
@@ -7149,9 +7115,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    // importFile(){
-    //     alert("File Imported")
-    // },
     importFile: function importFile() {
       var _this = this;
 
@@ -7160,11 +7123,12 @@ __webpack_require__.r(__webpack_exports__);
         return _this.uploadFile();
       }, function () {
         return _this.$alertify.error("Cancel");
-      }); // console.log(this.import_file);
+      });
     },
     uploadFile: function uploadFile() {
       var _this2 = this;
 
+      this.$refs.loader.style.display = 'block';
       var formData = new FormData();
       formData.append('file', this.import_file);
       this.axios.post('/importFile', formData, {
@@ -7172,7 +7136,7 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
-        // console.log(response.data);
+        _this2.$refs.loader.style.display = 'none';
         _this2.import_file = '';
         _this2.$refs.file.value = '';
 
@@ -7183,6 +7147,9 @@ __webpack_require__.r(__webpack_exports__);
         _this2.$events.fire('update_notification');
 
         _this2.$events.fire('update_scholars_table');
+      })["catch"](function (error) {
+        console.log(error.response.data);
+        _this2.$refs.loader.style.display = 'none';
       });
     }
   }
@@ -75910,6 +75877,8 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
+    _c("div", { ref: "loader", attrs: { id: "ajax-loading" } }),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -75927,7 +75896,7 @@ var render = function() {
               },
               [
                 _c("label", [
-                  _vm._v("Show \n                            "),
+                  _vm._v("Show \n                        "),
                   _c(
                     "select",
                     {
@@ -75977,7 +75946,7 @@ var render = function() {
                     ]
                   ),
                   _vm._v(
-                    " \n                            entries\n                        "
+                    " \n                        entries\n                    "
                   )
                 ])
               ]
@@ -76081,16 +76050,16 @@ var render = function() {
                             props.rowData.mmr < _vm.lowest_mmr
                               ? _c("span", { staticClass: "text-danger" }, [
                                   _vm._v(
-                                    "\n                                    " +
+                                    "\n                                " +
                                       _vm._s(props.rowData.mmr) +
-                                      "\n                                "
+                                      "\n                            "
                                   )
                                 ])
                               : _c("span", { staticClass: "text-default" }, [
                                   _vm._v(
-                                    "\n                                    " +
+                                    "\n                                " +
                                       _vm._s(props.rowData.mmr) +
-                                      "\n                                "
+                                      "\n                            "
                                   )
                                 ])
                           ])
@@ -76167,11 +76136,7 @@ var render = function() {
                     }
                   ])
                 },
-                [
-                  _vm._v(
-                    "\n                        >\n                        "
-                  )
-                ]
+                [_vm._v("\n                    >\n                    ")]
               )
             ],
             1
