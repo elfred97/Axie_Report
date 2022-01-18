@@ -29,7 +29,9 @@ class Report extends Model
         'manager_slp',
         'scholar_slp',
         'mmr',
-        'rank'
+        'rank',
+        'created_at',
+        'updated_at',
 	];
 
     public static function getReport(){

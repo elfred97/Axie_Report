@@ -175,8 +175,8 @@ class ReportImport implements ToCollection
                     'scholar_slp'      => is_string($row[12]) ? 0 : $row[12],
                     'mmr'              => $row[13],
                     'rank'             => $row[14],
-                    'created_at'       => $row[15] == '' ? Carbon::now() : date('Y-m-d' , strtotime($row[15])),
-                    'updated_at'       => $row[15] == '' ? Carbon::now() : date('Y-m-d' , strtotime($row[15])),
+                    'created_at'       => $row[15] == '' ? Carbon::now() : Carbon::parse($row[15]),
+                    'updated_at'       => $row[15] == '' ? Carbon::now() : Carbon::parse($row[15]),
                 ]);
             }
             $counter++;
