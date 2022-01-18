@@ -11344,7 +11344,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       notificationsData: {},
-      search: '',
+      // search           : '',
       account_selected: '',
       category: ''
     };
@@ -11366,7 +11366,7 @@ __webpack_require__.r(__webpack_exports__);
       var account_type = this.$store.state.global_guard_type;
       this.axios.get('getScholarNotification', {
         params: {
-          search: this.search,
+          // search : this.search,
           account_name: this.account_selected.account_name,
           category: this.category
         }
@@ -84141,66 +84141,6 @@ var render = function() {
             _c("h3", [_vm._v("Notification")]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
-              _c(
-                "div",
-                { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },
-                [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "dataTables_length",
-                      attrs: { id: "data-table-default_length" }
-                    },
-                    [
-                      _c("label", [
-                        _vm._v("Search \n                                    "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.search,
-                              expression: "search"
-                            }
-                          ],
-                          staticClass:
-                            "custom-input custom-input-sm form-control form-control-sm",
-                          attrs: {
-                            type: "text",
-                            "aria-controls": "data-table-default",
-                            placeholder: "Search Notification"
-                          },
-                          domProps: { value: _vm.search },
-                          on: {
-                            keyup: function($event) {
-                              if (
-                                !$event.type.indexOf("key") &&
-                                _vm._k(
-                                  $event.keyCode,
-                                  "enter",
-                                  13,
-                                  $event.key,
-                                  "Enter"
-                                )
-                              ) {
-                                return null
-                              }
-                              return _vm.getAnnouncement()
-                            },
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.search = $event.target.value
-                            }
-                          }
-                        })
-                      ])
-                    ]
-                  )
-                ]
-              ),
-              _vm._v(" "),
               _c(
                 "div",
                 { staticClass: "col-md-4 col-lg-4 col-sm-6 col-xs-12" },

@@ -6,7 +6,7 @@
                     <div class="container">
                         <h3>Notification</h3>
                         <div class="row">
-                            <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
+                            <!-- <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                 <div class="dataTables_length" id="data-table-default_length">
                                     <label>Search 
                                         <input 
@@ -18,7 +18,7 @@
                                             v-on:keyup.enter="getAnnouncement()">
                                     </label>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-4 col-lg-4 col-sm-6 col-xs-12">
                                 <category-list-component @updateCategoryList="category = $event"></category-list-component>
                             </div>
@@ -105,7 +105,7 @@ export default {
     data() {
         return {
             notificationsData: {},
-            search           : '',
+            // search           : '',
             account_selected : '',
             category         : '',
         }
@@ -126,7 +126,7 @@ export default {
             let account_type = this.$store.state.global_guard_type;
             this.axios.get('getScholarNotification', {
                 params : {
-                    search : this.search,
+                    // search : this.search,
                     account_name : this.account_selected.account_name,
                     category : this.category,
                 }
