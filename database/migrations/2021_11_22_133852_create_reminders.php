@@ -13,6 +13,8 @@ class CreateReminders extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('reminders');
+
         Schema::create('reminders', function (Blueprint $table) {
             $table->increments('id');
             $table->dateTime('reminder_time');
