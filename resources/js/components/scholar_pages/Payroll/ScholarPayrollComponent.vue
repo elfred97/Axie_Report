@@ -48,7 +48,9 @@
                                                                     </div>
                                                                     <div class="col-md-6">
                                                                         <p class="no-margin text-content">
-                                                                            <b>Status: </b>{{ payroll.status }}
+                                                                            <b>Status: </b>
+                                                                            <span v-if="payroll.status == 0">Pending</span>
+                                                                            <span v-else-if="payroll.status == 1">Paid</span>
                                                                         </p>
                                                                     </div>
                                                                 </div>
