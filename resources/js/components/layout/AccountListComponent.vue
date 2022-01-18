@@ -10,7 +10,7 @@
                     @change="updateAccountName"
                     v-model="selected"
                     >
-                        <option value="">All</option>
+                        <option value="" v-if="account">All</option>
                         <option :value="accounts" v-for="accounts in accountList">
                             {{ accounts.account_name }}
                         </option>

@@ -11326,9 +11326,8 @@ __webpack_require__.r(__webpack_exports__);
       this.getNotification();
     },
     'category': function category(newVal) {
-      if (newVal) {
-        this.getNotification();
-      }
+      // if(newVal){
+      this.getNotification(); // }
     }
   },
   methods: {
@@ -73703,7 +73702,9 @@ var render = function() {
               }
             },
             [
-              _c("option", { attrs: { value: "" } }, [_vm._v("All")]),
+              _vm.account
+                ? _c("option", { attrs: { value: "" } }, [_vm._v("All")])
+                : _vm._e(),
               _vm._v(" "),
               _vm._l(_vm.accountList, function(accounts) {
                 return _c("option", { domProps: { value: accounts } }, [

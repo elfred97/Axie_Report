@@ -116,9 +116,9 @@ export default {
                 this.getNotification();
         },
         'category' : function(newVal){
-            if(newVal){
+            // if(newVal){
                 this.getNotification();
-            }
+            // }
         }
     },
     methods: {
