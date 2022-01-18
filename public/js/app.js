@@ -10586,61 +10586,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-// import EyeComponent from './BodyParts/EyeComponent.vue';
-// import EarComponent from './BodyParts/EarComponent.vue';
-// import BackComponent from './BodyParts/BackComponent.vue';
-// import MouthComponent from './BodyParts/MouthComponent.vue';
-// import HornComponent from './BodyParts/HornComponent.vue';
-// import TailComponent from './BodyParts/TailComponent.vue';
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -10654,14 +10599,6 @@ __webpack_require__.r(__webpack_exports__);
       account_selected: ''
     };
   },
-  // components : {
-  //     'eye-component' : EyeComponent,
-  //     'ear-component' : EarComponent,
-  //     'back-component' : BackComponent,
-  //     'mouth-component' : MouthComponent,
-  //     'horn-component' : HornComponent,
-  //     'tail-component' : TailComponent,
-  // },
   watch: {
     'display': function display(newVal) {
       console.log(newVal);
@@ -10683,10 +10620,7 @@ __webpack_require__.r(__webpack_exports__);
     getAxieList: function getAxieList() {
       var _this = this;
 
-      // let ronin_address = "0x" + this.userData.ronin_address.split(":")[1];
-      var ronin_address = "0x" + this.account_selected.ronin_address.split(':')[1]; // let ronin_address = "0xc417a4b041f18d8cf2bb90b754969afb2146cc8c";
-      // console.log(ronin_address)
-
+      var ronin_address = "0x" + this.account_selected.ronin_address.split(':')[1];
       this.axios.get('https://graphql-gateway.axieinfinity.com/graphql', {
         params: {
           operationName: "GetAxieBriefList",
@@ -10716,8 +10650,7 @@ __webpack_require__.r(__webpack_exports__);
           query: "query GetAxieBriefList($auctionType: AuctionType, $criteria: AxieSearchCriteria, $from: Int, $sort: SortBy, $size: Int, $owner: String) {\n  axies(auctionType: $auctionType, criteria: $criteria, from: $from, sort: $sort, size: $size, owner: $owner) {\n    total\n    results {\n      ...AxieBrief\n      __typename\n    }\n    __typename\n  }\n}\n\nfragment AxieBrief on Axie {\n  id\n  name\n  stage\n  class\n birthDate\n breedCount\n  image\n  genes\n  title\n  battleInfo {\n    banned\n    __typename\n  }\n  auction {\n    currentPrice\n    currentPriceUSD\n    __typename\n  }\n  parts {\n    id\n    name\n    class\n    type\n    specialGenes\n    __typename\n  }\n  __typename\n}\n"
         }
       }).then(function (response) {
-        // console.log(response.data);
-        _this.axies = response.data.data.axies.results; // this.getSampleAxieDetails(this.axies[0].id);
+        _this.axies = response.data.data.axies.results;
       })["catch"](function (error) {
         console.log(error.response.data);
       });
@@ -10726,8 +10659,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.axios.get("getAccountInfo/scholars").then(function (response) {
-        // console.log(response.data);
-        _this2.userData = response.data; // this.getAxieList();
+        _this2.userData = response.data;
       })["catch"](function (error) {
         console.log(error.data);
       });
@@ -74195,10 +74127,7 @@ var render = function() {
                                     _c("div", { staticClass: "media-body" }, [
                                       _c(
                                         "div",
-                                        {
-                                          staticClass:
-                                            "text-muted f-s-10 pull-right"
-                                        },
+                                        { staticClass: "text-muted f-s-10" },
                                         [
                                           _vm._v(
                                             _vm._s(
@@ -74212,7 +74141,10 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "h6",
-                                        { staticClass: "media-heading" },
+                                        {
+                                          staticClass:
+                                            "media-heading text-content"
+                                        },
                                         [
                                           _vm._v(
                                             " " +
@@ -74312,10 +74244,7 @@ var render = function() {
                                     _c("div", { staticClass: "media-body" }, [
                                       _c(
                                         "div",
-                                        {
-                                          staticClass:
-                                            "text-muted f-s-10 pull-right"
-                                        },
+                                        { staticClass: "text-muted f-s-10" },
                                         [
                                           _vm._v(
                                             " " +
@@ -74330,7 +74259,10 @@ var render = function() {
                                       _vm._v(" "),
                                       _c(
                                         "h6",
-                                        { staticClass: "media-heading" },
+                                        {
+                                          staticClass:
+                                            "media-heading text-content"
+                                        },
                                         [_vm._v(_vm._s(announcement.title))]
                                       ),
                                       _vm._v(" "),
@@ -83291,6 +83223,7 @@ var render = function() {
         { staticClass: "col-md-3" },
         [
           _c("account-list-component", {
+            attrs: { account: true },
             on: {
               updateAccountList: function($event) {
                 _vm.account_selected = $event

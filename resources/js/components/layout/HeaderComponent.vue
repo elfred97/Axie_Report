@@ -76,8 +76,8 @@
                                                 <i class="fa fa-exclamation-triangle media-object text-warning"></i>
                                             </div>
                                             <div class="media-body">
-                                                <div class="text-muted f-s-10 pull-right">{{ notification.created_at | formatDate }}</div>
-                                                <h6 class="media-heading"> {{ notification.scholar_name }} ({{ notification.account_name }})</h6>
+                                                <div class="text-muted f-s-10">{{ notification.created_at | formatDate }}</div>
+                                                <h6 class="media-heading text-content"> {{ notification.scholar_name }} ({{ notification.account_name }})</h6>
                                                 <p v-if="notification.category == 1"> {{ notification.gained_slp_today }} SLP </p>
                                                 <p v-if="notification.category == 2"> {{ notification.mmr }} MMR </p>
                                             </div>
@@ -97,8 +97,8 @@
                                                 <i class="fa fa-bullhorn media-object bg-silver-darker"></i>
                                             </div>
                                             <div class="media-body">
-                                                <div class="text-muted f-s-10 pull-right"> {{ announcement.reminder_time | formatDateTime }}</div>
-                                                <h6 class="media-heading">{{ announcement.title }}</h6>
+                                                <div class="text-muted f-s-10"> {{ announcement.reminder_time | formatDateTime }}</div>
+                                                <h6 class="media-heading text-content">{{ announcement.title }}</h6>
                                                 <p>{{ announcement.description }}</p>
                                             </div>
                                         </a>
