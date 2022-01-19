@@ -22,6 +22,14 @@ use \App\Http\Controllers\NotificationController;
 Auth::routes();
 
 
+Route::get('/docs', function () {
+    return view('documentation');
+});
+
+Route::get('/help', function () {
+    return view('help');
+});
+
 
 //put dedicated scholars route here
 
