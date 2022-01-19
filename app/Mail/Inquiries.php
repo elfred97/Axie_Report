@@ -11,6 +11,7 @@ class Inquiries extends Mailable
 {
     use Queueable, SerializesModels;
 
+    public $request;
     /**
      * Create a new message instance.
      *
