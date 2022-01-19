@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\Type;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class TypeSeeder extends Seeder
 {
@@ -12,12 +12,13 @@ class TypeSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('type')->insert([
-            'name' => 'Decent',
+        Type::create([
+            'name' => 'Default',
             'status' => 'Active'
         ]);
-        DB::table('type')->insert([
-            'name' => 'Trust',
+
+        Type::create([
+            'name' => 'Not',
             'status' => 'Active'
         ]);
     }
