@@ -54,12 +54,12 @@
 						<strong>
 							Last Updated: January 19, 2022<br>
 							By: Codev PH<br>
-							Email: <a href="mailto:axie_tracker@codev-ph">axie_tracker@codev-ph</a>
+							Email: <a href="mailto:mailto:axie_tracker_report@admin.ventures">mailto:axie_tracker_report@admin.ventures</a>
 						</strong>
 					</p>
 					<p>
 						Thank you for choosing Axie Tracker Report by Codev PH.</br>
-						Feel free to email your question to my email <a href="mailTo:axie_tracker@codev-ph">axie_tracker@codev-ph</a> or go to our help page to send inquiries. Thanks so much!
+						Feel free to email your question to my email <a href="mailTo:mailto:axie_tracker_report@admin.ventures">mailto:axie_tracker_report@admin.ventures</a> or go to our help page to send inquiries. Thanks so much!
 					</p>
 			
 				</div>
@@ -197,12 +197,12 @@ axie_tracker_project/
 						<h5>Elfred G. Tapar</h5>
 						<ul>
 							<li>Email: <a href="mailto:elfredtapar@gmail.com">elfredtapar@gmail.com</li>
-							<li>Github: elfred97</li>
+							<li>Github: <a href="https://github.com/elfred97">https://github.com/elfred97</a></li>
 						</ul>
 						<h5>Glenwin Bernabe</h5>
 						<ul>
-							<li>EMail: <a href="mailto:"> </a></li>
-							<li>Github: </li>
+							<li>EMail: <a href="mailto:glenwinbernabe@gmail.com">glenwinbernabe@gmail.com</a></li>
+							<li>Github: <a href="https://github.com/GlenWinWin">https://github.com/GlenWinWin</a> </li>
 						</ul>
 					</div><!-- end span12 -->
 				</div><!-- end row-fluid -->
