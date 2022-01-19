@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InquiriesController;
 use Illuminate\Support\Facades\Route;
 
 use \App\Http\Controllers\Scholars\HomeController;
@@ -30,6 +31,7 @@ Route::get('/help', function () {
     return view('help');
 });
 
+Route::post('send_inquiries',[InquiriesController::class,'send']);
 
 //put dedicated scholars route here
 
