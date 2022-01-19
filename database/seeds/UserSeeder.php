@@ -1,7 +1,7 @@
 <?php
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -12,15 +12,8 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('user')->insert([
-            'first_name' => 'Mardy',
-            'middle_name' => 'A',
-            'last_name' => 'dela Cruz',
-            'username' => 'mhardz',
-            'password' => bcrypt('123456')
-        ]);
 
-        DB::table('user')->insert([
+        User::create([
             'first_name' => 'Admin',
             'middle_name' => 'A',
             'last_name' => 'Axie Report',

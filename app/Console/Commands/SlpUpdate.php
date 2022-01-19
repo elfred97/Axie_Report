@@ -87,7 +87,7 @@ class SlpUpdate extends Command
             return 0;
         }
 
-        if ($notif_options && $slp_value >= $notif_options['target_slp_price']) {
+        if ($notif_options && $notif_options['target_slp_price'] != null && $slp_value >= $notif_options['target_slp_price']) {
 
 
             $this->line('Will send email notif');
