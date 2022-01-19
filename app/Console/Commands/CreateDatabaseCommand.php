@@ -12,7 +12,7 @@ class CreateDatabaseCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'make:database {dbname} {connection?}';
+    protected $signature = 'make:database {dbname}';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class CreateDatabaseCommand extends Command
     {
         try{
             $dbname = $this->argument('dbname');
-            $connection = $this->hasArgument('connection') && $this->argument('connection') ? $this->argument('connection'): DB::connection()->getPDO()->getAttribute(PDO::ATTR_DRIVER_NAME);
+            $connection = 'mysql';
    
             $hasDb = DB::connection($connection)->select("SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "."'".$dbname."'");
    
