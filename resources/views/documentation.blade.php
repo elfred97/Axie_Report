@@ -41,8 +41,8 @@
 	</div>
 	<header class="jumbotron subhead" id="overview">
 		<div class="container">
-			<h1 class="text-center">Color Admin</h1>
-			<p class="lead text-center">&ldquo;Vue JS Version&rdquo; Documentation by &ldquo;Sean Ngu&rdquo; v4.4</p>
+			<h1 class="text-center">Documentation and Guide</h1>
+			<p class="lead text-center">Documentation for Axie Tracker Report by <a href="https://www.codev-ph.com/">Codev PH</a></p>
 		</div>
 		<div class="jumbotron-cover"></div>
 	</header>
@@ -50,17 +50,16 @@
 		<div class="row">
 			<div class="span12">
 				<div class="well with-cover">
-					<div class="well-cover" style="background-image: url(assets/images/vue.jpg); background-size: auto 80%; background-position: center; background-repeat: no-repeat; background-color: #fff;"><span style="position: absolute; bottom: 25px; right: 70px; font-weight: bold;">CLI</span></div>
 					<p>
 						<strong>
-							Last Updated: 05/August/2019<br>
-							By: Sean Ngu<br>
-							Email: <a href="mailto:nguoksiong@live.co.uk">nguoksiong@live.co.uk</a>
+							Last Updated: January 19, 2022<br>
+							By: Codev PH<br>
+							Email: <a href="mailto:axie_tracker@codev-ph">axie_tracker@codev-ph</a>
 						</strong>
 					</p>
 					<p>
-						Thank you for purchasing my theme. If you have any questions that are beyond the scope of this help file,
-						please feel free to email your question to my email <a href="mailTo:nguoksiong@live.co.uk">nguoksiong@live.co.uk</a>. Thanks so much!
+						Thank you for choosing Axie Tracker Report by Codev PH.</br>
+						Feel free to email your question to my email <a href="mailTo:axie_tracker@codev-ph">axie_tracker@codev-ph</a> or go to our help page to send inquiries. Thanks so much!
 					</p>
 			
 				</div>
@@ -70,11 +69,10 @@
 			<div class="span3 bs-docs-sidebar">
 				<ul class="nav nav-list bs-docs-sidenav affix-top">
 					<li><a href="#installation"><i class="icon-chevron-right"></i>Installation</a></li>
-					<li><a href="#fileStructure"><i class="icon-chevron-right"></i>File Structure</a></li>
-					<li><a href="#page-structure"><i class="icon-chevron-right"></i>Page Structure</a></li>
-					<li><a href="#page-components"><i class="icon-chevron-right"></i>Components</a></li>
-					<li><a href="#page-options"><i class="icon-chevron-right"></i>Page Options</a></li>
-					<li><a href="#page-scss"><i class="icon-chevron-right"></i>SCSS</a></li>
+					<li><a href="#configuration"><i class="icon-chevron-right"></i>Configuration Setup</a></li>
+					<li><a href="#feature"><i class="icon-chevron-right"></i>Feature</a></li>
+					<li><a href="#creator"><i class="icon-chevron-right"></i>Creator</a></li>
+					<li><a href="#author"><i class="icon-chevron-right"></i>Author</a></li>
 					<li><a href="#npm-package"><i class="icon-chevron-right"></i>NPM Package</a></li>
 				</ul>
 			</div>
@@ -85,212 +83,137 @@
 							<h3 id="installation"><strong>A) Installation</strong> - <a href="#top">top</a></h3>
 						</div>
 						<p>
-							Follow the following step to install the vue cli in your localhost<br />
+							Follow the following step to install the project on your localhost<br />
 							You may refer to their official documentation for how to setup the development environment. <br />
-							<a href="https://cli.vuejs.org/guide/installation.html" target="_blank">Setup Guide</a>
+							<a href="https://github.com/elfred97/Axie_Report" target="_blank">Github Link</a>
 						</p>
 <pre class="prettyprint linenums">
-&lt;!-- copy the following folder--&gt;
-/admin/template/assets/css
-/admin/template/assets/img
+# clone the repo
+$ git clone https://github.com/elfred97/Axie_Report.git
 
-&lt;!-- paste it into react folder --&gt;
-/admin/template/template_vue/src/assets/css
-/admin/template/template_vue/public/assets/img
+# go into app's directory
+$ cd axie_tracker_project
 
-&lt;!-- run the following command --&gt;
-cd /your-path-url/template_vue
-npm install 
-npm run serve
+# install app's dependencies
+$ composer install
 
-&lt;!-- browse the url --&gt;
-http://localhost:8081/
+# install app's dependencies
+$ npm install
 </pre>
-<pre class="prettyprint linenums">
-cd /your-path-url/template_vuejs
-npm install 
-npm run serve
-</pre>
-						<p>
-							Verify that you are running at least node <code>10.9.x</code> or later and <code>npm 6.x.x</code> by running <code>node -v</code> and <code>npm -v</code> in a terminal/console window. Older versions produce errors, but newer versions are fine.
-						</p>
 					</div><!-- end span12 -->
 				</div><!-- end row-fluid -->
 				<div class="row-fluid">
 					<div class="span12">
 						<div class="page-header">
-							<h3 id="fileStructure"><strong>B) File Structure</strong> - <a href="#top">top</a></h3>
+							<h3 id="configuration"><strong>B) Configuration Setup</strong> - <a href="#top">top</a></h3>
 						</div>
-						<p>File structure overview for Vue JS Version</p>
+						<p>Copy file ".env.example", and change its name to ".env". Then in file ".env" replace this database configuration:</p>
+						<ul>
+							<li>DB_CONNECTION=mysql</li>
+							<li>DB_HOST=127.0.0.1</li>
+							<li>DB_PORT=3306</li>
+							<li>DB_DATABASE=test</li>
+							<li>DB_USERNAME=root</li>
+							<li>DB_PASSWORD=</li>
+
+						</ul>
+						<p>Run the command to create the database</p>
+						<pre>
+php artisan make:database tracker_axie
+						</pre>
+						<p>Update again the DB_DATABASE to the database created "tracker_axie"</p>
+						<ul>
+							<li>DB_DATABASE=tracker_axie</li>
+						</ul>
+						<p>Run the command below:</p>
+						<pre>
+# Clear configuration
+php artisan config:clear
+							
+php artisan migrate:generate
+							
+php artisan db:seed
+							
+npm update
+						</pre>
+<p>Once npm is already updated. The node_modules will be added</p>
+<pre class="prettyprint linenums">
+axie_tracker_project/
+├── app
+├── config
+├── database
+└── node_modules
+</pre>
+					</div><!-- end span12 -->
+				</div><!-- end row-fluid -->
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="page-header">
+							<h3 id="feature"><strong>C) Feature</strong> - <a href="#top">top</a></h3>							
+						</div>
+						<h5>Table of Contents</h5>
+						<ul>
+							<li>Roles</li>
+							<li>Manage Settings</li>							
+							<li>Import</li>
+						</ul>
+						<h5>Role</h5>
+						<h6>Admin</h6>
+						<p>The responsibilities of the Admins are:</p>
+						<ul>
+							<li>Monitoring daily activities of the scholars</li>
+							<li>Importing Files for daily game</li>
+							<li>Managing Axie Account, Scholars, Type, Reminders, and Payroll</li>						
+						</ul>
+						<h6>Scholars</h6>
+						<p>The scholars can review the information about the Axie that they are managing</p>
+
+						<h5>Manage Settings</h5>
+						<p>The admin can manage the settings that are being check by the system to impose penalties and warnings to the scholars</p>
+						<ul>
+							<li>Type - scholars group</li>
+							<li>MMR - Minimum value of MMR per day of the scholars (Subject for transferring Axie Account to other scholars)</li>
+							<li>SLP - Minimum SLP value that is going to check by the system</li>
+							<li>Display - The list of tabs that are present in the Home Page</li>
+						</ul>
+
+						<h5>Import</h5>
+						<p>CSV File can be imported to the following:</p>
+						<ul>
+							<li>Game Logs</li>
+							<li>Payroll</li>
+							<li>Axie Account</li>
+							<li>Scholars</li>
+							<li>Player Scholar History</li>
+						</ul>
+					</div><!-- end span12 -->
+				</div><!-- end row-fluid -->
+				
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="page-header">
+							<h3 id="creator"><strong>D) Creator</strong> - <a href="#top">top</a></h3>
+						</div>
+						<h5>Elfred G. Tapar</h5>
+						<ul>
+							<li>Email: <a href="mailto:elfredtapar@gmail.com">elfredtapar@gmail.com</li>
+							<li>Github: elfred97</li>
+						</ul>
+						<h5>Glenwin Bernabe</h5>
+						<ul>
+							<li>EMail: <a href="mailto:"> </a></li>
+							<li>Github: </li>
+						</ul>
+					</div><!-- end span12 -->
+				</div><!-- end row-fluid -->
+				<div class="row-fluid">
+					<div class="span12">
+						<div class="page-header">
+							<h3 id="author"><strong>E) Author</strong> - <a href="#top">top</a></h3>
+						</div>
+						<img src="img/codev.png" alt="" class="company-logo">
+						<h5>Codev PH</h5>
 						
-<pre class="prettyprint linenums">
-template_vue/
-├── package.json
-├── babel.conf.js
-├── public/
-└── src/
-    ├── App.vue
-    ├── main.js
-    ├── assets/
-    ├── components/
-    ├── config/
-    ├── pages/
-    ├── plugins/
-    └── scss/
-</pre>
-					</div><!-- end span12 -->
-				</div><!-- end row-fluid -->
-				<div class="row-fluid">
-					<div class="span12">
-						<div class="page-header">
-							<h3 id="page-structure"><strong>C) Page Structure</strong> - <a href="#top">top</a></h3>
-						</div>
-						<p>Below is the code from <code>App.vue</code> which include the header, sidebar, right sidebar, top menu, page content and footer. You may remove the component if you are not using it.</p>
-<pre class="prettyprint linenums">
-&lt;template&gt;
-  &lt;div class="fade page-sidebar-fixed page-header-fixed show page-container" v-if="!pageOptions.pageEmpty" v-bind:class="{ 
-    'page-sidebar-minified': pageOptions.pageSidebarMinified, 
-    'page-content-full-height': pageOptions.pageContentFullHeight, 
-    'page-without-sidebar': pageOptions.pageWithoutSidebar, 
-    'page-with-right-sidebar': pageOptions.pageWithRightSidebar, 
-    'page-with-two-sidebar': pageOptions.pageWithTwoSidebar,
-    'page-with-wide-sidebar': pageOptions.pageWithWideSidebar,
-    'page-with-light-sidebar': pageOptions.pageWithLightSidebar,
-    'page-with-top-menu': pageOptions.pageWithTopMenu,
-    'page-sidebar-toggled': pageOptions.pageMobileSidebarToggled,
-    'page-right-sidebar-toggled': pageOptions.pageMobileRightSidebarToggled || pageOptions.pageRightSidebarToggled,
-    'page-right-sidebar-collapsed': pageOptions.pageRightSidebarCollapsed,
-    'has-scroll': pageOptions.pageBodyScrollTop
-  }"&gt;
-    &lt;Header /&gt;
-    &lt;TopMenu v-if="pageOptions.pageWithTopMenu" /&gt;
-    &lt;Sidebar v-if="!pageOptions.pageWithoutSidebar" /&gt;
-    &lt;SidebarRight v-if="pageOptions.pageWithTwoSidebar" /&gt;
-    &lt;div id="content" class="content" v-bind:class="{ 'content-full-width': pageOptions.pageContentFullWidth, 'content-inverse-mode': pageOptions.pageContentInverseMode }"&gt;
-      &lt;router-view&gt;&lt;/router-view&gt;
-      &lt;vue-ins-progress-bar&gt;&lt;/vue-ins-progress-bar&gt;
-    &lt;/div&gt;
-    &lt;Footer v-if="pageOptions.pageWithFooter" /&gt;
-  &lt;/div&gt;
-  &lt;div v-else&gt;
-    &lt;router-view&gt;&lt;/router-view&gt;
-    &lt;vue-ins-progress-bar&gt;&lt;/vue-ins-progress-bar&gt;
-  &lt;/div&gt;
-&lt;/template&gt;
-</pre>
-					</div><!-- end span12 -->
-				</div><!-- end row-fluid -->
-				<div class="row-fluid">
-					<div class="span12">
-						<div class="page-header">
-							<h3 id="page-components"><strong>D) Components</strong> - <a href="#top">top</a></h3>
-						</div>
-						<p>List of components inside the components folder</p>
-<pre class="prettyprint linenums">
-components/
-├── footer/
-├── header
-├── sidebar/
-├── sidebar-right/
-├── top-menu/
-└── vue-chartjs/
-</pre>
-					</div><!-- end span12 -->
-				</div><!-- end row-fluid -->
-				<div class="row-fluid">
-					<div class="span12">
-						<div class="page-header">
-							<h3 id="page-options"><strong>E) Page Options</strong> - <a href="#top">top</a></h3>
-						</div>
-						<p>File to configure the default page options & page routes</p>
-<pre class="prettyprint linenums">
-config/
-├── PageOptions.vue
-└── PageRoutes.vue
-</pre>
-						<p>Example of how to change page options in single page</p>
-<pre class="prettyprint linenums">
-&lt;script&gt;
-import PageOptions from '../config/PageOptions.vue'
-
-export default {
-  created() {
-    PageOptions.pageWithTopMenu = true;
-    PageOptions.pageWithoutSidebar = true;
-  },
-  beforeRouteLeave (to, from, next) {
-    // change back to default
-    PageOptions.pageWithTopMenu = false;
-    PageOptions.pageWithoutSidebar = false;
-    next();
-  }
-}
-&lt;/script&gt;
-</pre>
-						<p>List of options:</p>
-<pre class="prettyprint linenums">
-&lt;script&gt;
-const pageOptions = {
-  pageSidebarMinified: false,
-  pageContentFullWidth: false,
-  pageContentInverseMode: false,
-  pageContentFullHeight: false,
-  pageWithLanguageBar: false,
-  pageWithFooter: false,
-  pageWithoutSidebar: false,
-  pageWithRightSidebar: false,
-  pageWithTwoSidebar: false,
-  pageWithWideSidebar: false,
-  pageWithLightSidebar: false,
-  pageWithMegaMenu: false,
-  pageWithTopMenu: false,
-  pageSidebarTransparent: false,
-  pageEmpty: false,
-  pageMobileSidebarToggled: false,
-  pageMobileRightSidebarToggled: false,
-  pageMobileTopMenu: false,
-  pageMobileMegaMenu: false,
-  pageRightSidebarToggled: false,
-  pageBodyScrollTop: 0
-}
-
-export default pageOptions;
-&lt;/script&gt;
-</pre>
-					</div><!-- end span12 -->
-				</div><!-- end row-fluid -->
-				<div class="row-fluid">
-					<div class="span12">
-						<div class="page-header">
-							<h3 id="page-scss"><strong>F) Using SCSS</strong> - <a href="#top">top</a></h3>
-						</div>
-						<p>You may include the color admin theme scss file from <code>/admin/src/scss/default/</code> as well.</p>
-<pre class="prettyprint linenums">
-&lt;!-- copy the following folder --&gt;
-/admin/src/scss/default/
-
-&lt;!-- paste & replace the file inside the following folder --&gt;
-/admin/template/template_vue/src/scss/
-</pre>
-						<p>change the following code in <code>/template_vue/src/main.js</code></p>
-<pre class="prettyprint linenums">
-&lt;!-- from LINE 46 --&gt;
-import './assets/css/default/app.min.css'
-import './scss/vue.scss'
-import 'bootstrap-social/bootstrap-social.css'
-
-&lt;!-- to --&gt;
-import './scss/styles.scss'
-import 'bootstrap-social/bootstrap-social.css'
-</pre>
-						<p>add the following code to <code>/template_vue/src/scss/styles.scss</code></p>
-<pre class="prettyprint linenums">
-@import 'vue';
-</pre>
-						<p>after you done all the steps before this, you may run the following command to start your vue project.</p>
-<pre class="prettyprint linenums">
-npm run serve
-</pre>
 					</div><!-- end span12 -->
 				</div><!-- end row-fluid -->
 				<div class="row-fluid">
@@ -304,83 +227,53 @@ npm run serve
 						</p>
 <pre class="prettyprint linenums">
 {
-  "name": "color-admin",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
-  },
-  "dependencies": {
-    "@agametov/vueditor": "^0.4.1",
-    "@chenfengyuan/vue-countdown": "^1.1.2",
-    "apexcharts": "^3.8.3",
-    "bootstrap": "^4.3.1",
-    "bootstrap-social": "^5.1.1",
-    "bootstrap-vue": "^2.0.0-rc.27",
-    "chart.js": "^2.8.0",
-    "flag-icon-css": "^3.3.0",
-    "ionicons": "^4.6.2",
-    "moment": "^2.24.0",
-    "node-sass": "^4.12.0",
-    "sass-loader": "^7.1.0",
-    "simple-line-icons": "^2.4.1",
-    "v-autocomplete": "^1.8.2",
-    "vue": "^2.6.10",
-    "vue-apexcharts": "^1.4.0",
-    "vue-bootstrap-datetimepicker": "^5.0.1",
-    "vue-chartjs": "^3.4.2",
-    "vue-custom-scrollbar": "^1.1.0",
-    "vue-event-calendar": "^1.5.2",
-    "vue-full-calendar": "^2.7.0",
-    "vue-good-table": "^2.17.4",
-    "vue-hljs": "^1.1.2",
-    "vue-input-tag": "^2.0.6",
-    "vue-ins-progress-bar": "^1.0.0",
-    "vue-maskedinput": "^0.1.3",
-    "vue-notification": "^1.3.16",
-    "vue-nvd3": "^1.0.0",
-    "vue-pop-colorpicker": "^1.0.2",
-    "vue-router": "^3.0.7",
-    "vue-select": "^3.1.0",
-    "vue-slider-component": "^3.0.33",
-    "vue-sparklines": "^0.1.9",
-    "vue-sweetalert2": "^2.1.1",
-    "vue2-google-maps": "^0.10.7",
-    "vuejs-datepicker": "^1.6.2"
-  },
-  "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.9.2",
-    "@vue/cli-plugin-eslint": "^3.9.2",
-    "@vue/cli-service": "^3.9.3",
-    "vue-template-compiler": "^2.6.10"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --disable-host-check --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
+    "devDependencies": {
+        "axios": "^0.19",
+        "bootstrap": "^4.6.0",
+        "jquery": "^3.2",
+        "laravel-mix": "^5.0.1",
+        "cross-env": "^5.0.1",
+        "lodash": "^4.17.19",
+        "popper.js": "^1.12",
+        "resolve-url-loader": "^2.3.1",
+        "sass": "^1.20.1",
+        "sass-loader": "^8.0.0",
+        "vue": "^2.6.14",
+        "vue-template-compiler": "^2.6.10",
+        "vuetable-2": "^2.0.0-beta.4"
+    },
+    "dependencies": {
+        "@chenfengyuan/vue-qrcode": "^1.0.2",
+        "apollo-boost": "^0.4.9",
+        "footable": "^2.0.6",
+        "graphql": "^15.6.0",
+        "jscharting-vue": "^2.1.0",
+        "moment": "^2.29.1",
+        "vform": "^2.1.1",
+        "vue-alertify": "^1.1.0",
+        "vue-apollo": "^3.0.8",
+        "vue-axios": "^3.3.7",
+        "vue-events": "^3.1.0",
+        "vue-loading-overlay": "^3.4.2",
+        "vue-modaltor": "^1.3.12",
+        "vue-multiselect": "^2.1.6",
+        "vue-router": "^3.5.2",
+        "vue2-datepicker": "^3.10.2",
+        "vuejs-noty": "^0.1.4",
+        "vuex": "^3.6.2"
     }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
 }
+
 </pre>
 					</div>
 				</div><!-- end row-fluid -->
@@ -390,10 +283,9 @@ npm run serve
 	
 	<footer class="footer">
 		<div class="container text-left">
-			<p>Once again, thank you so much for purchasing this theme. As I said at the beginning, I'd be glad to help you if you have any questions relating to this theme. No guarantees, but I'll do my best to assist. If you have a more general question relating to the themes, you might consider visiting the forums and asking your question via <a href="mailTo:nguoksiong@live.co.uk">email</a>.</p> 
+			<p>Axie Tracker Report by Codev PH @2022</p> 
 			<br />
-			<p class="append-bottom alt large"><strong>Sean Ngu</strong></p>
-			<p><a href="#top">Go To Table of Contents</a></p>
+			<p><a href="#top">Go To Top</a></p>
 		</div>
 	</footer><!-- end footer -->
 	
