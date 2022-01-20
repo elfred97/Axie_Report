@@ -4,10 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\Payroll;
 use App\Models\Player;
-use App\Models\Scholar;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 

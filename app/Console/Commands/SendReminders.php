@@ -6,7 +6,6 @@ use App\Models\Notification;
 use App\Models\Reminder;
 use App\Models\Scholar;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Mail;
 

@@ -7,7 +7,6 @@ use App\Models\Scholar;
 use App\Models\SlpPriceNotificationHistory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
