@@ -49,18 +49,9 @@ class SendReminders extends Command
         $reminders = Reminder::all();
        $current_date = Carbon::now();
 
-//        $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
-
             foreach ($reminders as $reminder) {
                 $reminder_time = \Carbon\Carbon::parse($reminder->reminder_time);
                 $recurrence = $reminder->recurrence;
-
-//                $this->info('Type : ' . $recurrence);
-//                $this->info('once : ' . ($recurrence == Reminder::RECURRENCE_ONCE && $reminder_time->format('Y-m-d H:i') ==$current_date->format('Y-m-d H:i') ? 'true' : 'false'));
-//                $this->info('daily : ' . ($recurrence == Reminder::RECURRENCE_DAILY && $reminder_time->format('H:i') ==$current_date->format('H:i')? 'true' : 'false'));
-//                $this->info('weekly : ' . ($recurrence == Reminder::RECURRENCE_WEEKLY && $reminder_time->format('l H:i') ==$current_date->format('l H:i')? 'true' : 'false'));
-//                $this->info('monthly : ' . ($recurrence == Reminder::RECURRENCE_MONTHLY && $reminder_time->format('d H:i') ==$current_date->format('d H:i')? 'true' : 'false'));
-
                 if (
                     ($recurrence == Reminder::RECURRENCE_ONCE && $reminder_time->format('Y-m-d H:i') == $current_date->format('Y-m-d H:i'))
                     || ($recurrence == Reminder::RECURRENCE_DAILY && $reminder_time->format('H:i') == $current_date->format('H:i'))
