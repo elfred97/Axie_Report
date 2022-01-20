@@ -24,7 +24,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
         $schedule->command('slp-update')->everyMinute()->runInBackground()->withoutOverlapping();
         $schedule->command('remind-payroll')->monthlyOn(10, '09:00')->runInBackground()->withoutOverlapping();
         $schedule->command('reminders:check-and-send')->everyMinute()->runInBackground()->withoutOverlapping();
