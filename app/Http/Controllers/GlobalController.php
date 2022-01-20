@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Auth;
-use Session;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -12,6 +9,8 @@ use App\Models\Type;
 use App\Models\Payroll;
 use App\Models\Player;
 use App\Models\Scholar;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use App\Rules\IsUniqueExceptDeleted;

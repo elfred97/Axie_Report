@@ -7,7 +7,6 @@ use App\Models\Scholar;
 use App\Models\SlpPriceNotificationHistory;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 
@@ -53,11 +52,6 @@ class SlpUpdate extends Command
             $q->where('type_id', '=', $type);
         })->get();
 
-//        $scholar_emails = $scholars->pluck('email');
-//
-//        $this->line('Sending to : ' . $scholar_emails);
-
-
         $response = Http::get('https://api.coingecko.com/api/v3/simple/price?ids=smooth-love-potion&vs_currencies=php,jpy,usd');
         if ($response->failed()) {
             $this->error('Error: Can not access coingecko');
@@ -91,9 +85,6 @@ class SlpUpdate extends Command
 
 
             $this->line('Will send email notif');
-
-            //testing only for now
-//            $scholars = [new Scholar(['email' => 'mhardz07@gmail.com', 'first_name' => 'Mardy']), new Scholar(['email' => 'elfredtapar@gmail.com', 'first_name' => 'Elfred'])];
 
             if ($scholars) {
                 foreach ($scholars as $scholar) {

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\NotificationSettings;
 use Illuminate\Http\Request;
 
 class NotificationSettingControler extends Controller

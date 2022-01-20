@@ -3,19 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Imports\PayrollImport;
-use DB;
-use Auth;
-use File;
-use Excel;
 use Carbon\Carbon;
-use Storage;
 use Illuminate\Http\Request;
-use App\Models\Report;
 use App\Models\Player;
-use App\Models\Type;
 use App\Imports\ReportImport;
-use App\Models\Notification;
-use App\Models\importModel as ImportModel;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class FileController extends Controller
 {

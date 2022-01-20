@@ -7,7 +7,6 @@ use App\Models\Notification;
 use App\Models\NotificationScholars;
 use App\Models\NotificationSettings;
 use App\Models\Player;
-use App\Models\PlayerScholarHistory;
 use App\Models\Scholar;
 use App\Models\User;
 use Carbon\Carbon;
