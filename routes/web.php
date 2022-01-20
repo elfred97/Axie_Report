@@ -2,11 +2,12 @@
 
 use App\Http\Controllers\InquiriesController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\Scholars\HomeController;
 use \App\Http\Controllers\NotificationSettingControler;
 use \App\Http\Controllers\ReminderController;
 use \App\Http\Controllers\NotificationController;
+
 
 /*
 |--------------------------------------------------------------------------
