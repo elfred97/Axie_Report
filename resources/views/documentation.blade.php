@@ -1,7 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <head lang="en">
 	<meta http-equiv="content-type" content="text/html;charset=utf-8">
-	<title> Axie Tracker Report</title>
+	<title> Axie Tracker Report | Documentation</title>
+
+	<!-- ================== BEGIN FAVICON ================== -->
+	<link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+	<link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/favicon-32x32.png') }}">
+	<link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+	<link rel="manifest" href="{{ asset('favicon/site.webmanifest')}}">
+	<link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+	<meta name="msapplication-TileColor" content="#00aba9">
+	<meta name="theme-color" content="#ffffff">
+	<!-- ================== END FAVICON ================== -->  
+
 	<!-- Bootstrap styles -->
 	<link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="assets/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
@@ -30,9 +41,6 @@
 						
 						<li class="active">
 							<a href="/docs">Documentation</a>
-						</li>
-						<li class="">
-							<a href="help">Help</a>
 						</li>
 					</ul>
 				</div>
@@ -283,12 +291,17 @@ axie_tracker_project/
 	
 	<footer class="footer">
 		<div class="container text-left">
-			<p>Axie Tracker Report by Codev PH @2022</p> 
-			<br />
-			<p><a href="#top">Go To Top</a></p>
+			<div class="row">
+				<div class="col-md-6">
+					<p>Axie Tracker Report by Codev PH &copy; <?php echo date("Y"); ?>	</p> 
+				</div>
+				<div class="col-md-6 text-right">
+					<p><a href="#top">Go To Top</a></p>
+				</div>
+			</div>
 		</div>
 	</footer><!-- end footer -->
-	
+
 	<script src="assets/bootstrap/js/jquery.js"></script>
 	<script src="assets/bootstrap/js/bootstrap-transition.js"></script>
 	<script src="assets/bootstrap/js/bootstrap-alert.js"></script>

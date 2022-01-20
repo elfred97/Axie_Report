@@ -7,6 +7,18 @@
  *
  * Designed and built with all the love in the world @twitter by @mdo and @fat.
  */
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -15px;
+  margin-left: -15px;
+}
+@media (min-width: 768px){
+  .col-md-6 {
+      flex: 0 0 50%;
+      max-width: 50%;
+  }
+}
 .pull-right{
   float: right !important;
 }
