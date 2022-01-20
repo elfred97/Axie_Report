@@ -82,7 +82,7 @@ class RemindPayroll extends Command
         foreach ($payrolls as $payroll) {
             try {
                 $scholar = $payroll->scholar;
-                //Mail::to($scholar->email)->send(new \App\Mail\PayrollReminder($scholar, $payroll));
+                Mail::to($scholar->email)->send(new \App\Mail\PayrollReminder($scholar, $payroll));
                 $this->line('Sending Payroll email to: ' . $scholar->email);
             } catch (\Exception $e) {
                 $this->line('Error sending email to: ' . $scholar->email);
