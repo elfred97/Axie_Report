@@ -2,20 +2,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Type;
-use DB;
-use Auth;
-use File;
-use Storage;
-use Excel;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\report as ReportModel;
 use App\Models\Player;
 use App\Models\Payroll;
 use App\Imports\PlayerImport;
 use App\Models\PlayerScholarHistory;
-use App\Models\Scholar;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Storage;
 
 class PlayerController extends Controller
 {

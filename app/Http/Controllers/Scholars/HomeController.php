@@ -3,11 +3,6 @@
 namespace App\Http\Controllers\Scholars;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\GlobalController;
-use DB;
-use Auth;
-use File;
-use Excel;
 use Carbon\Carbon;
 use App\Models\Report;
 use App\Models\Player;
@@ -21,6 +16,9 @@ use App\Models\NotificationScholars;
 use App\Models\PlayerScholarHistory;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
