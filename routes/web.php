@@ -60,7 +60,6 @@ Route::middleware(['PreventBackHistory'])->group(function(){
         Route::get('scholars', [HomeController::class,'index'])->name('scholar.name');
         Route::get('getScholarImport', [HomeController::class, 'getImport'])->name('scholar.getImport');
         Route::get('getScholarReport', [HomeController::class, 'getScholarReport'])->name('scholar.getScholarReport');
-        // Route::get('getScholarInformation', [HomeController::class, 'getScholarInformation'])->name('scholar.getScholarInformation');
         Route::post('updateRoninWallet', [HomeController::class, 'updateRoninWallet'])->name('scholar.updateRoninWallet');
         Route::get('getScholarGraph', [HomeController::class, 'getScholarGraph'])->name('scholar.getScholarGraph');
         Route::get('getScholarPayrollHistory', 'GlobalController@getScholarPayrollHistory');

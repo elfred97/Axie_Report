@@ -147,6 +147,9 @@ class HomeController extends Controller
                         array_push($playerIDS,$player->id);
                     }
                 }
+                //create payroll when changing axie_Accounts
+                //$listOfHistories = PlayerScholarHistory::WHERENOTIN('player_id',$playerIDS)->WHERE('scholar_id', $request->id)->get();
+                //$this->payrollCreateForAssigningDifferentAccounts($listOfHistories);
                 PlayerScholarHistory::WHERENOTIN('player_id',$playerIDS)->WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
             }    
             else{
@@ -156,6 +159,9 @@ class HomeController extends Controller
                 $countScholarAccounts = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('status',1)->count();
 
                 if($playerHistories == 0 && $countScholarAccounts > 0){
+                    //create payroll when changing axie_Accounts
+                    //$scholarAccounts = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERE('status',1)->get();
+                    //$this->payrollCreateForAssigningDifferentAccounts($scholarAccounts);
                     PlayerScholarHistory::WHERE('scholar_id', $request->id)->UPDATE(['status' => 0]);
                     PlayerScholarHistory::CREATE(
                         [
@@ -165,6 +171,9 @@ class HomeController extends Controller
                     );
                 }
                 else{
+                    //create payroll when changing axie_Accounts
+                    //$scholarAccounts = PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERENOTIN('player_id',[$player->id])->get();
+                    //$this->payrollCreateForAssigningDifferentAccounts($scholarAccounts);
                     PlayerScholarHistory::WHERE('scholar_id', $request->id)->WHERENOTIN('player_id',[$player->id])->UPDATE(['status' => 0]);
                 }
             }
@@ -181,7 +190,10 @@ class HomeController extends Controller
                         'category' => 3,
                         'status' => 1
                         ]);
-
+                    
+                        // $this->createPayrollForTerminated($player,$request->id);
+                        // $player->scholar_share = 0;
+                        // $player->save();
                     array_push($scholarNotificationIDS,$newScholarNotification->id);
                 }
                 for($j=0; $j<count($admins);$j++){
@@ -206,6 +218,26 @@ class HomeController extends Controller
         catch (\Exception $e) {
 			return response()->json(['message' => $e->getMessage()], 500);
 		}
+    }
+
+    public function payrollCreateForAssigningDifferentAccounts($playerScholarHistories){
+        foreach($playerScholarHistories as $lH){
+            $player = Player::where('id',$lH->player_id)->FIRST();
+            $this->createPayroll($player,$lH->scholar_id);
+            //TODO - uncomment this
+            // $player->scholar_share = 0;
+            // $player->save();
+        }
+    }
+
+    //function for creating payroll for terminated scholar and moved account
+    public function createPayrollForTerminated($player,$scholar_id){
+        Payroll::create([
+            'player_id' => $player->id,
+            'scholar_id' => $scholar_id,
+            'total_slp' => $player->scholar_share,
+            'status' => 0
+        ]);
     }
 
     public function getImport(Request $request){
@@ -252,17 +284,6 @@ class HomeController extends Controller
             ->ORDERBY('scholars.id', 'desc')
             ->GET();
     }
-
-    // public function getScholarInformation(){
-    //     $username = Auth::user()->username;
-
-    //     return Scholar:: LEFTJOIN('player_scholar_histories as history', 'history.scholar_id', '=', 'scholars.id')
-    //         ->LEFTJOIN('players', 'history.player_id', '=', 'players.id')
-    //         ->LEFTJOIN('type', 'type.id', '=', 'scholars.type_id')
-    //         ->SELECT('scholars.*', 'players.*', 'type.name as type_name')
-    //         ->WHERE('scholars.username', $username)
-    //         ->FIRST();
-    // }
 
     public function updateRoninWallet(Request $request){
         $username = Auth::user()->username;

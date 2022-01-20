@@ -50,17 +50,18 @@ class RemindPayroll extends Command
         //put it on payroll table, tx_id is a unique generated string
         //make player.scholar_share = 0 after creating entry to payroll
 
-        $players = Player::where('scholar_share','>',0)->get();
+        $players = Player::select('scholar_share','psh.scholar_id','psh.player_id')
+        ->join('player_scholar_histories as psh', 'players.id', '=', 'psh.player_id')
+        ->where('psh.status',1)->where('scholar_share','>','0')->get();
 
         foreach ($players as $player) {
-            $total_slp = $player->scholar_share;
 
             try {
                 DB::beginTransaction();
                 Payroll::create([
-                    'player_id' => $player->id,
-                    'scholar_id' => $player->latestHistory()->scholar_id,
-                    'total_slp' => $total_slp,
+                    'player_id' => $player['player_id'],
+                    'scholar_id' => $player['scholar_id'],
+                    'total_slp' => $player['scholar_share'],
                     'status' => 0
                 ]);
 
@@ -81,7 +82,7 @@ class RemindPayroll extends Command
         foreach ($payrolls as $payroll) {
             try {
                 $scholar = $payroll->scholar;
-                Mail::to($scholar->email)->send(new \App\Mail\PayrollReminder($scholar, $payroll));
+                //Mail::to($scholar->email)->send(new \App\Mail\PayrollReminder($scholar, $payroll));
                 $this->line('Sending Payroll email to: ' . $scholar->email);
             } catch (\Exception $e) {
                 $this->line('Error sending email to: ' . $scholar->email);
