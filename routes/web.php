@@ -4,6 +4,7 @@ use App\Http\Controllers\InquiriesController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use \App\Http\Controllers\Scholars\HomeController;
+use \App\Http\Controllers\CuztomizationSettingsController;
 use \App\Http\Controllers\NotificationSettingControler;
 use \App\Http\Controllers\ReminderController;
 use \App\Http\Controllers\NotificationController;
@@ -34,26 +35,6 @@ Route::get('/help', function () {
 
 Route::post('send_inquiries',[InquiriesController::class,'send']);
 
-//put dedicated scholars route here
-
-//Route::middleware('auth')->group(function () {
-//    Route::match(['GET', 'POST'], '/logout', 'Auth\LoginController@logout');
-//});
-//
-
-//Route::get('',function () {
-//    if(Auth::id()) {
-//        if(Auth::guard('admins')->check()) {
-//            return redirect(url('home'));
-//        } else {
-//            return redirect(url('scholars'));
-//        }
-//
-//    } else {
-//        return redirect(url('login'));
-//    }
-//});
-//
 Route::middleware(['PreventBackHistory'])->group(function(){
 
     Route::middleware(['auth:scholars'])->group(function(){
@@ -70,8 +51,10 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
     Route::middleware(['auth:admins'])->group(function(){
 
-        Route::post('saveCuztomizationSettings', [CuztomizationSettingsController::class,'save'])->name('cuztomiation.save');
-        Route::get('getCuztomizationSettings', [CuztomizationSettingsController::class,'get'])->name('cuztomiation.get');
+        Route::post('saveCuztomizationSettings', [CuztomizationSettingsController::class,'save'])->name('cuztomization.save');
+        Route::get('getCuztomizationSettings', [CuztomizationSettingsController::class,'get'])->name('cuztomization.get');
+        Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('cuztomization.save');
+        Route::get('getNotificationSettings', [NotificationSettingControler::class,'get'])->name('cuztomization.get');
         Route::get('allNotificationSettings', [NotificationSettingControler::class,'getAllNotificationSettings'])->name('notification.all');
         Route::post('uploadQRCode', 'PlayerController@uploadQR');
 

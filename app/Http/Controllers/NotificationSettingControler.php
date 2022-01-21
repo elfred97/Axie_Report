@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NotificationSettings;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationSettingControler extends Controller
 {
 
     public function save(Request $request)
     {
-        $user = $request->user();
-        $user->load('customization_settings');
+        $options = $request->only('options');
+        $type_admin = Auth::user()->type;
+        $userNotificationSettings = NotificationSettings::UPDATEORCREATE(
+            [ 'type' => $type_admin ],
+                [
+                    'options' => $options
+                ]
+        );
 
-        $data = $request->only('options');
-
-        if ($user->customization_settings) {
-            $user->customization_settings()->update($data);
-        } else {
-            $user->customization_settings()->create($data);
-        }
-
-        $user->refresh();
-
-        return $this->buildJson(['notification_settings' => $user->customization_settings]);
+        return $this->buildJson(['notification_settings' => $userNotificationSettings]);
     }
 
-    public function get(Request $request)
+    public function get()
     {
-        $user = $request->user();
-        $user->load('customization_settings');
+        $type_admin = Auth::user()->type;
+        $userNotificationSettings = NotificationSettings::where('type',$type_admin)->select('options','type')->first();
+        return $this->buildJson(['notification_settings' => $userNotificationSettings]);
+    }
 
-        $notification_settings = $user->customization_settings;
-        return $this->buildJson(compact('notification_settings'));
+    public function getAllNotificationSettings(){
+        return NotificationSettings::select('type','options','created_at')->with('type')->get();
     }
 
 }

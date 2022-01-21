@@ -18,13 +18,8 @@ class NotificationSettings extends Model
         'options' => 'array',
     ];
 
-    // public function user()
-    // {
-    //     return $this->hasOne(User::class,'id','model_id')->where('model','App\Models\User');
-	// }
-
-    // public function scholar()
-    // {
-    //     return $this->hasOne(User::class,'id','model_id')->where('model','App\Models\Scholar');
-    // }
+    public function type()
+    {
+        return $this->hasOne(Type::class,'id','type')->select('id','name');
+	}
 }
