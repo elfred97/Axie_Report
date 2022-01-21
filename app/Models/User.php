@@ -22,7 +22,8 @@ class User extends Authenticatable
         'last_name',
         'username',
         'password',
-        'status'
+        'status',
+        'role'
     ];
 
     /**
@@ -43,8 +44,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function notification_settings()
+    public function customization_settings()
     {
-        return $this->hasOne(NotificationSettings::class,'model_id','id')->where('model','App\Models\User');
+        return $this->hasOne(CustomizationSettings::class,'user_id','id');
     }
 }

@@ -22,6 +22,8 @@ class CreateUserTable extends Migration
                 $table->string('username', 255)->nullable()->default(NULL);
                 $table->text('password')->nullable()->default(NULL);
                 $table->tinyInteger('status')->nullable()->default(1);
+                $table->tinyInteger('type')->nullable();
+                $table->tinyInteger('role')->nullable()->default(2);
                 $table->timestamps();
             });
         }

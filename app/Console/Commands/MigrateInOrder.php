@@ -53,6 +53,7 @@ class MigrateInOrder extends Command
                         '2021_11_10_004335_create_playerscholarhistories_table.php',
                         '2021_11_24_135540_create_payroll.php',
                         '2021_11_03_090327_create_notification_settings_table.php',
+                        '2022_01_21_132028_create_customization_settings.php',
                         '2021_10_21_081743_create_notification_table.php',
                         '2022_01_14_111403_create_notification_scholars_table.php',
                         '2021_11_22_133852_create_reminders.php',

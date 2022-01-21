@@ -13,12 +13,12 @@ class TypeSeeder extends Seeder
     public function run()
     {
         Type::create([
-            'name' => 'Default',
+            'name' => 'Decent',
             'status' => 'Active'
         ]);
 
         Type::create([
-            'name' => 'Not',
+            'name' => 'Trust',
             'status' => 'Active'
         ]);
     }

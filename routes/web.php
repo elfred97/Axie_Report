@@ -72,6 +72,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
         Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('notifications.save');
         Route::get('getNotificationSettings', [NotificationSettingControler::class,'get'])->name('notification.get');
+        Route::get('allNotificationSettings', [NotificationSettingControler::class,'getAllNotificationSettings'])->name('notification.all');
         Route::post('uploadQRCode', 'PlayerController@uploadQR');
 
         Route::get('/getGraph', 'FileController@getGraph');

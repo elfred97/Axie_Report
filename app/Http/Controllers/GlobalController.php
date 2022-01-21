@@ -18,9 +18,15 @@ class GlobalController extends Controller
 {
     //
     protected function index(Request $request){
-        $user = $request->user();
-        $user->load('notification_settings');
+        // $user = $request->user();
+        // $user->load('notification_settings');
 
+        // if(Auth::user()->type == 2){
+            
+        // }
+        // else{
+            
+        // }
         // $notification_settings = $user->notification_settings;
         // return view('main', compact('notification_settings'));
         return view('main');

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateNotificationSettingsTable extends Migration
+class CreateCustomizationSettings extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,11 @@ class CreateNotificationSettingsTable extends Migration
      * @return void
      */
     public function up()
-    {
-        if (!Schema::hasTable('notification_settings')) {
-            Schema::create('notification_settings', function (Blueprint $table) {
+    {   
+        if (!Schema::hasTable('customization_settings')) {
+            Schema::create('customization_settings', function (Blueprint $table) {
                 $table->increments('id');
-                $table->integer('type')->nullable();
+                $table->integer('user_id')->nullable();
                 $table->text('options')->nullable()->default(NULL);
                 $table->timestamps();
             });
@@ -30,6 +30,6 @@ class CreateNotificationSettingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notification_settings');
+        Schema::dropIfExists('customization_settings');
     }
 }

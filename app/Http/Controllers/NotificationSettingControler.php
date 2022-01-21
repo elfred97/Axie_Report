@@ -10,29 +10,27 @@ class NotificationSettingControler extends Controller
     public function save(Request $request)
     {
         $user = $request->user();
-        $user->load('notification_settings');
+        $user->load('customization_settings');
 
-        $data = $request->only('options', 'status');
-        $data['model_id'] = $user->id;
-        $data['model'] = get_class($user);
+        $data = $request->only('options');
 
-        if ($user->notification_settings) {
-            $user->notification_settings()->update($data);
+        if ($user->customization_settings) {
+            $user->customization_settings()->update($data);
         } else {
-            $user->notification_settings()->create($data);
+            $user->customization_settings()->create($data);
         }
 
         $user->refresh();
 
-        return $this->buildJson(['notification_settings' => $user->notification_settings]);
+        return $this->buildJson(['notification_settings' => $user->customization_settings]);
     }
 
     public function get(Request $request)
     {
         $user = $request->user();
-        $user->load('notification_settings');
+        $user->load('customization_settings');
 
-        $notification_settings = $user->notification_settings;
+        $notification_settings = $user->customization_settings;
         return $this->buildJson(compact('notification_settings'));
     }
 
