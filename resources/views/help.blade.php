@@ -62,94 +62,219 @@
 	<div class="content">
 		<!-- begin container -->
 		<div class="container">
-			<!-- begin #accordion -->
-            <div id="accordion" class="accordion">
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center" data-toggle="collapse" data-target="#collapseOne">
-								<i class="fas fa-circle fa-fw text-blue mr-2 f-s-8"></i> Collapsible Group Item #1
-							</div>
-							<div id="collapseOne" class="collapse show" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			<!-- begin tabs -->
+			<ul class="nav nav-tabs" data-sortable-id="index-2">
+						<li class="nav-item"><a href="#admin" data-toggle="tab" class="nav-link active"><span class="d-none d-md-inline">Admin</span></a></li>
+						<li class="nav-item"><a href="#scholars" data-toggle="tab" class="nav-link"> <span class="d-none d-md-inline">Scholars</span></a></li>
+					</ul>
+					<div class="tab-content" data-sortable-id="index-3">
+						<div class="tab-pane fade active show" id="admin">
+							<div class="row">
+								<div class="col-md-12">
+									<!-- begin #accordion -->
+									<div id="admin_accordion" class="accordion">
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center" data-toggle="collapse" data-target="#collapseOne">
+												<i class="fas fa-circle fa-fw text-blue mr-2 f-s-8"></i> What is Axie Tracker Report?
+											</div>
+											<div id="collapseOne" class="collapse show" data-parent="#admin_accordion">
+												<div class="card-body">
+												- Axie Tracker Report is a system to monitor and analyze daily scholars game activity
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseTwo">
+												<i class="fas fa-circle fa-fw text-indigo mr-2 f-s-8"></i> What can I do inside the system?
+											</div>
+											<div id="collapseTwo" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+												- Inside the system, you can import files to insert game logs, axie accounts, scholar informations, and payroll.
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseThree">
+												<i class="fas fa-circle fa-fw text-teal mr-2 f-s-8"></i> What is Axie Account?
+											</div>
+											<div id="collapseThree" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+													- List of all the axie account that can be use by the scholars
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseFour">
+												<i class="fas fa-circle fa-fw text-info mr-2 f-s-8"></i> What is Scholars?
+											</div>
+											<div id="collapseFour" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+												- List of people that are ready to use the axie accounts and can view the system as scholars.
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseFive">
+												<i class="fas fa-circle fa-fw text-warning mr-2 f-s-8"></i> What is the payroll schedule?
+											</div>
+											<div id="collapseFive" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+													- Every  10th of the month, the system will generate a payroll for every scholars that have an axie account and played.
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseSix">
+												<i class="fas fa-circle fa-fw text-danger mr-2 f-s-8"></i> How can I add a Type?
+											</div>
+											<div id="collapseSix" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+													<p>A type is basically the group to which the scholars will be assign.</p>
+													- Inside the settings you can see the type panel. You can add, delete or edit the type name
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseSeven">
+												<i class="fas fa-circle fa-fw text-muted mr-2 f-s-8"></i> Setup Notification Settings?
+											</div>
+											<div id="collapseSeven" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+													<ul>
+														<li>The admin can setup the a settings that will be check by the system to impose penalty</li>
+														<li>Minimum SLP
+															<ul>
+																<li>Minimum SLP per day, once not met by the scholars will result to penalty</li>
+															</ul>
+														</li>
+														<li>Target SLP Value
+															<ul>
+																<li>System will generate an email to every scholars if the SLP Value in the marketplace met the Target SLP Value.</li>
+															</ul>
+														</li>
+														<li>Target SLP Unit
+															<ul>
+																<li>Unit in which the Target SLP will be converted.</li>
+															</ul>
+														</li>
+														<li>MMR
+															<ul>
+																<li>Minimum MMR of the axie account that should be maintained by the scholars</li>
+																<li>Subject for transferring axie account to other scholar if not maintained.</li>
+															</ul>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseEight">
+												<i class="fas fa-circle fa-fw text-info mr-2 f-s-8"></i> Announcement
+											</div>
+											<div id="collapseEight" class="collapse" data-parent="#admin_accordion">
+												<div class="card-body">
+												- An admin can an announcement that will be sent to every scholars.
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+									</div>
+									<!-- end #accordion -->
 								</div>
 							</div>
 						</div>
-						<!-- end card -->
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseTwo">
-								<i class="fas fa-circle fa-fw text-indigo mr-2 f-s-8"></i> Collapsible Group Item #2
-							</div>
-							<div id="collapseTwo" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+						<div class="tab-pane fade" id="scholars">
+							<div class="row">
+								<div class="col-md-12">
+									<!-- begin #accordion -->
+									<div id="scholars_accordion" class="accordion">
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center" data-toggle="collapse" data-target="#collapseOne">
+												<i class="fas fa-circle fa-fw text-blue mr-2 f-s-8"></i> What can I do inside the system?
+											</div>
+											<div id="collapseOne" class="collapse show" data-parent="#scholars_accordion">
+												<div class="card-body">
+													- The scholar can view, monitor and add ronin wallet.
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseTwo">
+												<i class="fas fa-circle fa-fw text-indigo mr-2 f-s-8"></i> What is ronin wallet?
+											</div>
+											<div id="collapseTwo" class="collapse" data-parent="#scholars_accordion">
+												<div class="card-body">
+													- This is the ronin address where the payroll will be sent
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseThree">
+												<i class="fas fa-circle fa-fw text-teal mr-2 f-s-8"></i> About payroll
+											</div>
+											<div id="collapseThree" class="collapse" data-parent="#scholars_accordion">
+												<div class="card-body">
+													- Scholars can view the payroll that will be generated every 10th of the month
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseFour">
+												<i class="fas fa-circle fa-fw text-info mr-2 f-s-8"></i> Scholars Contract
+											</div>
+											<div id="collapseFour" class="collapse" data-parent="#scholars_accordion">
+												<div class="card-body">
+													<ul>
+														<li>The scholars contract is 2 months.</li>
+														<li>The scholar will receive 30% for the 1st month of playing from the stated date.</li>
+														<li>The scholar will receive 40% of daily SLP per day after playing for 1 month.</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+										<!-- begin card -->
+										<div class="card">
+											<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseFive">
+												<i class="fas fa-circle fa-fw text-warning mr-2 f-s-8"></i> QR Code
+											</div>
+											<div id="collapseFive" class="collapse" data-parent="#scholars_accordion">
+												<div class="card-body">
+													- Every week, the QR Code of the axie account will be change and need to scan the new one inside the Account Tab.
+												</div>
+											</div>
+										</div>
+										<!-- end card -->
+									</div>
+									<!-- end #accordion -->
 								</div>
 							</div>
 						</div>
-						<!-- end card -->
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseThree">
-								<i class="fas fa-circle fa-fw text-teal mr-2 f-s-8"></i> Collapsible Group Item #3
-							</div>
-							<div id="collapseThree" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseFour">
-								<i class="fas fa-circle fa-fw text-info mr-2 f-s-8"></i> Collapsible Group Item #4
-							</div>
-							<div id="collapseFour" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseFive">
-								<i class="fas fa-circle fa-fw text-warning mr-2 f-s-8"></i> Collapsible Group Item #5
-							</div>
-							<div id="collapseFive" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseSix">
-								<i class="fas fa-circle fa-fw text-danger mr-2 f-s-8"></i> Collapsible Group Item #6
-							</div>
-							<div id="collapseSix" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
-						<!-- begin card -->
-						<div class="card">
-							<div class="card-header pointer-cursor d-flex align-items-center collapsed" data-toggle="collapse" data-target="#collapseSeven">
-								<i class="fas fa-circle fa-fw text-muted mr-2 f-s-8"></i> Collapsible Group Item #7
-							</div>
-							<div id="collapseSeven" class="collapse" data-parent="#accordion">
-								<div class="card-body">
-									Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-								</div>
-							</div>
-						</div>
-						<!-- end card -->
 					</div>
-					<!-- end #accordion -->
+					<!-- end tabs -->
+					
 					<div class="row">
 						<div class="col-md-12">
 							<hr>
@@ -247,6 +372,7 @@
             success: function (data) {
                 console.log(data);
 				$("p.response").text("Submission was successful").css({'color':'green', 'display':'block'});
+				$(this).closest('form').find("input, textarea").val("");
             },
             error: function (data) {
                 console.log(data.responseJSON.message);
