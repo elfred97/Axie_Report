@@ -70,8 +70,8 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
     Route::middleware(['auth:admins'])->group(function(){
 
-        Route::post('saveNotificationSettings', [NotificationSettingControler::class,'save'])->name('notifications.save');
-        Route::get('getNotificationSettings', [NotificationSettingControler::class,'get'])->name('notification.get');
+        Route::post('saveCuztomizationSettings', [CuztomizationSettingsController::class,'save'])->name('cuztomiation.save');
+        Route::get('getCuztomizationSettings', [CuztomizationSettingsController::class,'get'])->name('cuztomiation.get');
         Route::get('allNotificationSettings', [NotificationSettingControler::class,'getAllNotificationSettings'])->name('notification.all');
         Route::post('uploadQRCode', 'PlayerController@uploadQR');
 
