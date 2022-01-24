@@ -11,7 +11,7 @@ class NotificationSettingControler extends Controller
 
     public function save(Request $request)
     {
-        $options = $request->only('options');
+        $options = $request->options;
         $type_admin = Auth::user()->type;
         $userNotificationSettings = NotificationSettings::UPDATEORCREATE(
             [ 'type' => $type_admin ],
