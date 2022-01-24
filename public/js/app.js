@@ -9587,6 +9587,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -81499,16 +81500,17 @@ var render = function() {
                   _c("div", { staticClass: "widget-list-content" }, [
                     _c("h4", { staticClass: "widget-list-title" }, [
                       _vm._v(
-                        _vm._s(user.first_name) +
-                          " " +
-                          _vm._s(user.last_name) +
-                          "\n                                    \n                                "
+                        _vm._s(user.first_name) + " " + _vm._s(user.last_name)
                       )
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "widget-list-desc" }, [
                       _vm._v(_vm._s(user.username))
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "widget-list-type" }, [
+                    _c("span", [_vm._v(_vm._s(user.type_name))])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "widget-list-status" }, [

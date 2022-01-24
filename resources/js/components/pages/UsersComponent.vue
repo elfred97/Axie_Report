@@ -21,10 +21,11 @@
                                     </span>
                                 </div>
                                 <div class="widget-list-content">
-                                    <h4 class="widget-list-title">{{ user.first_name }} {{ user.last_name }}
-                                        
-                                    </h4>
+                                    <h4 class="widget-list-title">{{ user.first_name }} {{ user.last_name }}</h4>
                                     <p class="widget-list-desc">{{ user.username }}</p>
+                                </div>
+                                <div class="widget-list-type">
+                                    <span>{{user.type_name}}</span>
                                 </div>
                                 <div class="widget-list-status">
                                     <span v-if="user.status == 1">

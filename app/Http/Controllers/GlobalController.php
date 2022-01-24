@@ -93,7 +93,11 @@ class GlobalController extends Controller
     }
 
     public function getUsers(){
-        return User::WHERE([['username', '!=', Auth::user()->username], ['status', '!=', 3]])->GET();
+        return User::LEFTJOIN('type', 'type.id', '=', 'user.type')
+        ->SELECT(
+            DB::RAW('type.name as type_name'),
+            'user.*'
+        )->WHERE([['user.username', '!=', Auth::user()->username], ['user.status', '!=', 3]])->GET();
     }
 
     public function getStatuses(){
@@ -177,6 +181,7 @@ class GlobalController extends Controller
                     'last_name'   => filter_var($request->last_name,FILTER_SANITIZE_STRING),
                     'password'    => filter_var(Hash::make($request->new_password),FILTER_SANITIZE_STRING),
                     'status'      => $request->status,
+                    'type'        => $request->type_id
                 ]
             );
             if($user)

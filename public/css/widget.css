@@ -146,7 +146,7 @@
 .widget-list .widget-list-item>div:last-child{
     padding-right:15px
 }
-.widget-list .widget-list-item+.widget-list-item .widget-list-action,.widget-list .widget-list-item+.widget-list-item .widget-list-content, .widget-list .widget-list-item+.widget-list-item .widget-list-status{
+.widget-list .widget-list-item+.widget-list-item .widget-list-action,.widget-list .widget-list-item+.widget-list-item .widget-list-content, .widget-list .widget-list-item+.widget-list-item .widget-list-status, .widget-list .widget-list-item+.widget-list-item .widget-list-type{
     border-top:1px solid #e4e7ea
 }
 .widget-list .widget-list-item .widget-list-media{
@@ -179,7 +179,7 @@
     max-width:100%;
     max-height:100%
 }
-.widget-list .widget-list-item .widget-list-content, .widget-list .widget-list-item .widget-list-status {
+.widget-list .widget-list-item .widget-list-content, .widget-list .widget-list-item .widget-list-type, .widget-list .widget-list-item .widget-list-status {
     padding:10px;
     display:table-cell;
     vertical-align:middle
