@@ -49,6 +49,7 @@
 	<script>
         var global_guard_type = "<?php if(\auth()->guard('admins')->check()) echo 'admins'; else echo 'scholars';?>";
 		var global_guard_username = '<?php echo Auth::user()->username; ?>';
+		var global_guard_role = '<?php echo Auth::user()->role?>';
 		
 		// alert(global_guard_type);
     </script>

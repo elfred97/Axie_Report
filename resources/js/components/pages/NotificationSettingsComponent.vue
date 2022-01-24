@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="panel-body">
-                <div class="row">
+                <div class="row" v-if="getGuardRole == 2">
                     <div class="col-md-3">
                         <label for="">MMR</label>
                         <input type="number" class="form-control" v-model="options.mmr">
@@ -33,71 +33,28 @@
                         </select>
                     </div>
                 </div>
-                <p class="mt-2 mb-2">Show / Hide</p>
-                <div class="row">
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="total_slp" v-model="options.total_slp">
-                            <label class="custom-control-label" for="total_slp">Total SLP</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="total_unclaimed" v-model="options.total_unclaimed">
-                            <label class="custom-control-label" for="total_unclaimed">Total Unclaimed</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="total_claimed" v-model="options.total_claimed">
-                            <label class="custom-control-label" for="total_claimed">Total Claimed</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="total_slp_today" v-model="options.total_slp_today">
-                            <label class="custom-control-label" for="total_slp_today">Total SLP Today</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="total_slp_yesterday" v-model="options.total_slp_yesterday">
-                            <label class="custom-control-label" for="total_slp_yesterday">Total SLP Yesterday</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="total_average" v-model="options.total_average">
-                            <label class="custom-control-label" for="total_average">Total Average</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="penalty" v-model="options.penalty">
-                            <label class="custom-control-label" for="penalty">Penalty</label>
-                        </div>
-                        <!-- end custom-switches -->
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-2">
-                        <!-- begin custom-switches -->
-                        <div class="custom-control custom-switch">
-                            <input type="checkbox" class="custom-control-input" id="lowest_mmr" v-model="options.lowest_mmr">
-                            <label class="custom-control-label" for="lowest_mmr">Lowest MMR</label>
-                        </div>
-                        <!-- end custom-switches -->
+                <div class="row" v-else-if="getGuardRole == 1">
+                    <div class="col-md-12">
+                        <ul class="list-group h-15">
+                            <li class="list-group-item">
+                                <div class="row no-margin">
+                                    <div class="col-md-3 text-center">Type</div>
+                                    <div class="col-md-3 text-center">SLP</div>
+                                    <div class="col-md-3 text-center">MMR</div>
+                                    <div class="col-md-3 text-center">Target SLP</div>
+                                </div>
+                            </li>
+                            <li class="list-group-item" v-for="notification in NotificationList">
+                                <div class="row no-margin text-center">
+                                    <div class="col-md-3 text-bold">
+                                        <span v-if="notification.type != null">{{notification.type.name}}</span>
+                                    </div>
+                                    <div class="col-md-3">{{notification.options.minimum_slp}}</div>
+                                    <div class="col-md-3">{{notification.options.mmr}}</div>
+                                    <div class="col-md-3">{{notification.options.target_slp_price}} <span class="pull-right">{{notification.options.target_slp_unit}}</span></div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -105,9 +62,7 @@
     </div>
 </template>
 <script>
-import { NotificationSettingsMixins } from './NotificationSettingsMixins';
 export default {
-    mixins : [ NotificationSettingsMixins ],
     data(){
         return {
             settings : {},
@@ -116,18 +71,36 @@ export default {
                 minimum_slp        : '',
                 target_slp_price   : '',
                 target_slp_unit    : '',
-                total_slp          : true,
-                total_unclaimed    : true,
-                total_claimed      : true,
-                total_slp_today    : true,
-                total_slp_yesterday: false,
-                total_average      : false,
-                penalty            : true,
-                lowest_mmr         : false,
-            }
+                
+            },
+            NotificationList : {}
         }
     },
-    methods: {
+    computed : {
+        getGuardRole(){
+            return this.$store.state.global_guard_role;
+        },
+    },
+    methods : {
+        getSettings(){
+            let url = (this.$store.state.global_guard_role == 1) ? 'allNotificationSettings' : 'getNotificationSettings';
+            this.axios.get(url)
+            .then((response) =>{
+                // console.log(response.data.notification_settings.options);
+                if(this.$store.state.global_guard_role == 2){
+                    if(response.data.notification_settings)
+                        this.options = response.data.notification_settings.options;
+                }
+                else{
+                    console.log(response.data);
+                    this.NotificationList = response.data;
+                }
+                
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+        },
         saveSettings(){
             this.axios.post('saveNotificationSettings', {
                 status : 1,

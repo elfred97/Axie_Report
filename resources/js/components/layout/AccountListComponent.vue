@@ -58,7 +58,6 @@ export default {
         updateAccountName(event){
             // console.log(this.selected);
             // if(this.type){
-                console.log(this);
                 this.$emit('updateAccountList', this.selected);
             // }    
             // else

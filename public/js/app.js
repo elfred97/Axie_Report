@@ -5632,7 +5632,6 @@ __webpack_require__.r(__webpack_exports__);
     updateAccountName: function updateAccountName(event) {
       // console.log(this.selected);
       // if(this.type){
-      console.log(this);
       this.$emit('updateAccountList', this.selected); // }    
       // else
       //     this.$emit('updateAccountList', this.selected.account_name);
@@ -6016,6 +6015,9 @@ __webpack_require__.r(__webpack_exports__);
     getGuardType: function getGuardType() {
       return this.$store.state.global_guard_type;
     },
+    getGuardRole: function getGuardRole() {
+      return this.$store.state.global_guard_role;
+    },
     getTotal: function getTotal() {
       return this.announcement_count + this.notification_count;
     }
@@ -6130,8 +6132,8 @@ __webpack_require__.r(__webpack_exports__);
         if (type == 'notification') {
           if (data.status == 1) return true;
         } else if (type == 'announcement') {
-          console.log(type);
-          console.log(data);
+          // console.log(type);
+          // console.log(data);
           if (data.notif_status == 1) return true;
         }
 
@@ -6487,14 +6489,15 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _NotificationSettingsComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationSettingsComponent.vue */ "./resources/js/components/pages/NotificationSettingsComponent.vue");
-/* harmony import */ var _AccountInformationComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AccountInformationComponent.vue */ "./resources/js/components/pages/AccountInformationComponent.vue");
-/* harmony import */ var _ReminderComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./ReminderComponent.vue */ "./resources/js/components/pages/ReminderComponent.vue");
-/* harmony import */ var _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./UsersComponent.vue */ "./resources/js/components/pages/UsersComponent.vue");
-/* harmony import */ var _TypeListComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./TypeListComponent.vue */ "./resources/js/components/pages/TypeListComponent.vue");
-/* harmony import */ var _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./changePasswordComponent.vue */ "./resources/js/components/pages/changePasswordComponent.vue");
-/* harmony import */ var _addReminderFormComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./addReminderFormComponent.vue */ "./resources/js/components/pages/addReminderFormComponent.vue");
-/* harmony import */ var _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./newUserFormComponent.vue */ "./resources/js/components/pages/newUserFormComponent.vue");
-/* harmony import */ var _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./updateTypeInfoComponent.vue */ "./resources/js/components/pages/updateTypeInfoComponent.vue");
+/* harmony import */ var _CustomSettingsComponent_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CustomSettingsComponent.vue */ "./resources/js/components/pages/CustomSettingsComponent.vue");
+/* harmony import */ var _AccountInformationComponent_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./AccountInformationComponent.vue */ "./resources/js/components/pages/AccountInformationComponent.vue");
+/* harmony import */ var _ReminderComponent_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./ReminderComponent.vue */ "./resources/js/components/pages/ReminderComponent.vue");
+/* harmony import */ var _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./UsersComponent.vue */ "./resources/js/components/pages/UsersComponent.vue");
+/* harmony import */ var _TypeListComponent_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./TypeListComponent.vue */ "./resources/js/components/pages/TypeListComponent.vue");
+/* harmony import */ var _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./changePasswordComponent.vue */ "./resources/js/components/pages/changePasswordComponent.vue");
+/* harmony import */ var _addReminderFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./addReminderFormComponent.vue */ "./resources/js/components/pages/addReminderFormComponent.vue");
+/* harmony import */ var _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./newUserFormComponent.vue */ "./resources/js/components/pages/newUserFormComponent.vue");
+/* harmony import */ var _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./updateTypeInfoComponent.vue */ "./resources/js/components/pages/updateTypeInfoComponent.vue");
 //
 //
 //
@@ -6533,6 +6536,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
 
 
 
@@ -6561,19 +6569,23 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    'account-information': _AccountInformationComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    'reminder-component': _ReminderComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    'users-component': _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
-    'type-component': _TypeListComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    'account-information': _AccountInformationComponent_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    'reminder-component': _ReminderComponent_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    'users-component': _UsersComponent_vue__WEBPACK_IMPORTED_MODULE_4__["default"],
+    'type-component': _TypeListComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
     'notification-settings': _NotificationSettingsComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    'custom-settings': _CustomSettingsComponent_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     // Dialog Components
-    'changePassword-form': _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
-    'newUser-form': _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"],
-    'updateTypeInfo-form': _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
-    'add-reminder-form': _addReminderFormComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+    'changePassword-form': _changePasswordComponent_vue__WEBPACK_IMPORTED_MODULE_6__["default"],
+    'newUser-form': _newUserFormComponent_vue__WEBPACK_IMPORTED_MODULE_8__["default"],
+    'updateTypeInfo-form': _updateTypeInfoComponent_vue__WEBPACK_IMPORTED_MODULE_9__["default"],
+    'add-reminder-form': _addReminderFormComponent_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
   },
   methods: {},
   computed: {
+    getGuardRole: function getGuardRole() {
+      return this.$store.state.global_guard_role;
+    },
     object_values: function object_values() {
       //created to manipulate passed props in each components rendered
       if (this.isOpenDialogComponent === 'changePassword-form') return {
@@ -6692,6 +6704,142 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.getAccountInfo();
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CustomizationMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CustomizationMixins */ "./resources/js/components/pages/CustomizationMixins.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  mixins: [_CustomizationMixins__WEBPACK_IMPORTED_MODULE_0__["CustomizationMixins"]],
+  data: function data() {
+    return {
+      options: {
+        mmr: '',
+        minimum_slp: '',
+        target_slp_price: '',
+        target_slp_unit: '',
+        total_slp: true,
+        total_unclaimed: true,
+        total_claimed: true,
+        total_slp_today: true,
+        total_slp_yesterday: false,
+        total_average: false,
+        penalty: true,
+        lowest_mmr: false
+      }
+    };
+  },
+  methods: {
+    saveSettings: function saveSettings() {
+      var _this = this;
+
+      this.axios.post('saveCuztomizationSettings', {
+        options: this.options
+      }).then(function (response) {
+        if (response.data.is_error == false) _this.$noty.success("Settings Saved");
+
+        _this.getSettings();
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getSettings();
   }
 });
 
@@ -7325,7 +7473,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationSettingsMixins */ "./resources/js/components/pages/NotificationSettingsMixins.js");
 //
 //
 //
@@ -7389,52 +7536,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__["NotificationSettingsMixins"]],
   data: function data() {
     return {
       settings: {},
@@ -7442,27 +7544,41 @@ __webpack_require__.r(__webpack_exports__);
         mmr: '',
         minimum_slp: '',
         target_slp_price: '',
-        target_slp_unit: '',
-        total_slp: true,
-        total_unclaimed: true,
-        total_claimed: true,
-        total_slp_today: true,
-        total_slp_yesterday: false,
-        total_average: false,
-        penalty: true,
-        lowest_mmr: false
-      }
+        target_slp_unit: ''
+      },
+      NotificationList: {}
     };
   },
+  computed: {
+    getGuardRole: function getGuardRole() {
+      return this.$store.state.global_guard_role;
+    }
+  },
   methods: {
-    saveSettings: function saveSettings() {
+    getSettings: function getSettings() {
       var _this = this;
+
+      var url = this.$store.state.global_guard_role == 1 ? 'allNotificationSettings' : 'getNotificationSettings';
+      this.axios.get(url).then(function (response) {
+        // console.log(response.data.notification_settings.options);
+        if (_this.$store.state.global_guard_role == 2) {
+          if (response.data.notification_settings) _this.options = response.data.notification_settings.options;
+        } else {
+          console.log(response.data);
+          _this.NotificationList = response.data;
+        }
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    saveSettings: function saveSettings() {
+      var _this2 = this;
 
       this.axios.post('saveNotificationSettings', {
         status: 1,
         options: this.options
       }).then(function (response) {
-        if (response.data.is_error == false) _this.$noty.success("Notification Settings Saved");
+        if (response.data.is_error == false) _this2.$noty.success("Notification Settings Saved");
       })["catch"](function (error) {
         console.log(error);
       });
@@ -7484,7 +7600,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./NotificationSettingsMixins */ "./resources/js/components/pages/NotificationSettingsMixins.js");
+/* harmony import */ var _CustomizationMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CustomizationMixins */ "./resources/js/components/pages/CustomizationMixins.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -7655,7 +7771,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_NotificationSettingsMixins__WEBPACK_IMPORTED_MODULE_0__["NotificationSettingsMixins"]],
+  mixins: [_CustomizationMixins__WEBPACK_IMPORTED_MODULE_0__["CustomizationMixins"]],
   data: function data() {
     return {
       data: {},
@@ -9776,6 +9892,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['usersListInfo'],
   data: function data() {
@@ -9787,7 +9911,8 @@ __webpack_require__.r(__webpack_exports__);
         last_name: null,
         new_password: null,
         confirm_password: null,
-        status: 1
+        status: 1,
+        type_id: null
       })
     };
   },
@@ -75258,23 +75383,32 @@ var render = function() {
             _c("div", { staticClass: "row" }, [
               _c(
                 "div",
-                { staticClass: " col-lg-7 col-md-6 col-sm-12 col-xs-12" },
+                {
+                  class:
+                    _vm.getGuardRole == 1
+                      ? "col-lg-7 col-md-6 col-sm-12 col-xs-12"
+                      : "col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                },
                 [
                   _c("account-information"),
                   _vm._v(" "),
                   _c("notification-settings"),
+                  _vm._v(" "),
+                  _c("custom-settings"),
                   _vm._v(" "),
                   _c("reminder-component")
                 ],
                 1
               ),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-lg-5 col-md-6 col-sm-12 col-xs-12" },
-                [_c("users-component"), _vm._v(" "), _c("type-component")],
-                1
-              )
+              _vm.getGuardRole == 1
+                ? _c(
+                    "div",
+                    { staticClass: "col-lg-5 col-md-6 col-sm-12 col-xs-12" },
+                    [_c("users-component"), _vm._v(" "), _c("type-component")],
+                    1
+                  )
+                : _vm._e()
             ])
           ])
         ]
@@ -75490,6 +75624,520 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div")
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=template&id=f67b33fa&":
+/*!********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=template&id=f67b33fa& ***!
+  \********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "panel panel-default" }, [
+      _c("div", { staticClass: "panel-heading" }, [
+        _c("h4", { staticClass: "panel-title" }, [_vm._v("Custom Settings")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "panel-heading-btn" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-xs btn-success",
+              on: {
+                click: function($event) {
+                  return _vm.saveSettings()
+                }
+              }
+            },
+            [
+              _c("i", { staticClass: "fas fa-check" }),
+              _vm._v(" Update Custom Settings\n                ")
+            ]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "panel-body" }, [
+        _c("p", { staticClass: "mt-2 mb-2" }, [_vm._v("Show / Hide")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_slp,
+                    expression: "options.total_slp"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_slp" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_slp)
+                    ? _vm._i(_vm.options.total_slp, null) > -1
+                    : _vm.options.total_slp
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_slp,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.options, "total_slp", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_slp", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_slp" }
+                },
+                [_vm._v("Total SLP")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_unclaimed,
+                    expression: "options.total_unclaimed"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_unclaimed" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_unclaimed)
+                    ? _vm._i(_vm.options.total_unclaimed, null) > -1
+                    : _vm.options.total_unclaimed
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_unclaimed,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_unclaimed",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_unclaimed",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_unclaimed", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_unclaimed" }
+                },
+                [_vm._v("Total Unclaimed")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_claimed,
+                    expression: "options.total_claimed"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_claimed" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_claimed)
+                    ? _vm._i(_vm.options.total_claimed, null) > -1
+                    : _vm.options.total_claimed
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_claimed,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_claimed",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_claimed",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_claimed", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_claimed" }
+                },
+                [_vm._v("Total Claimed")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_slp_today,
+                    expression: "options.total_slp_today"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_slp_today" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_slp_today)
+                    ? _vm._i(_vm.options.total_slp_today, null) > -1
+                    : _vm.options.total_slp_today
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_slp_today,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_today",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_today",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_slp_today", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_slp_today" }
+                },
+                [_vm._v("Total SLP Today")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_slp_yesterday,
+                    expression: "options.total_slp_yesterday"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_slp_yesterday" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_slp_yesterday)
+                    ? _vm._i(_vm.options.total_slp_yesterday, null) > -1
+                    : _vm.options.total_slp_yesterday
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_slp_yesterday,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_yesterday",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_slp_yesterday",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_slp_yesterday", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_slp_yesterday" }
+                },
+                [_vm._v("Total SLP Yesterday")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.total_average,
+                    expression: "options.total_average"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "total_average" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.total_average)
+                    ? _vm._i(_vm.options.total_average, null) > -1
+                    : _vm.options.total_average
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.total_average,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_average",
+                            $$a.concat([$$v])
+                          )
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "total_average",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "total_average", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "total_average" }
+                },
+                [_vm._v("Total Average")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.penalty,
+                    expression: "options.penalty"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "penalty" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.penalty)
+                    ? _vm._i(_vm.options.penalty, null) > -1
+                    : _vm.options.penalty
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.penalty,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.options, "penalty", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "penalty",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "penalty", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "penalty" }
+                },
+                [_vm._v("Penalty")]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
+            _c("div", { staticClass: "custom-control custom-switch" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.options.lowest_mmr,
+                    expression: "options.lowest_mmr"
+                  }
+                ],
+                staticClass: "custom-control-input",
+                attrs: { type: "checkbox", id: "lowest_mmr" },
+                domProps: {
+                  checked: Array.isArray(_vm.options.lowest_mmr)
+                    ? _vm._i(_vm.options.lowest_mmr, null) > -1
+                    : _vm.options.lowest_mmr
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.options.lowest_mmr,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 &&
+                          _vm.$set(_vm.options, "lowest_mmr", $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          _vm.$set(
+                            _vm.options,
+                            "lowest_mmr",
+                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                          )
+                      }
+                    } else {
+                      _vm.$set(_vm.options, "lowest_mmr", $$c)
+                    }
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "label",
+                {
+                  staticClass: "custom-control-label",
+                  attrs: { for: "lowest_mmr" }
+                },
+                [_vm._v("Lowest MMR")]
+              )
+            ])
+          ])
+        ])
+      ])
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -76410,600 +77058,218 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "panel-body" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-3" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("MMR")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.options.mmr,
-                  expression: "options.mmr"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number" },
-              domProps: { value: _vm.options.mmr },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.options, "mmr", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Minimum SLP")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.options.minimum_slp,
-                  expression: "options.minimum_slp"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number" },
-              domProps: { value: _vm.options.minimum_slp },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.options, "minimum_slp", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Value")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.options.target_slp_price,
-                  expression: "options.target_slp_price"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "number" },
-              domProps: { value: _vm.options.target_slp_price },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(_vm.options, "target_slp_price", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3" }, [
-            _c("label", { attrs: { for: "" } }, [_vm._v("Target SLP Unit")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.target_slp_unit,
-                    expression: "options.target_slp_unit"
-                  }
-                ],
-                staticClass: "form-control",
-                attrs: { id: "target_slp_unit" },
-                on: {
-                  change: function($event) {
-                    var $$selectedVal = Array.prototype.filter
-                      .call($event.target.options, function(o) {
-                        return o.selected
-                      })
-                      .map(function(o) {
-                        var val = "_value" in o ? o._value : o.value
-                        return val
-                      })
-                    _vm.$set(
-                      _vm.options,
-                      "target_slp_unit",
-                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-                    )
-                  }
-                }
-              },
-              [
-                _c("option", { attrs: { value: "" } }),
+        _vm.getGuardRole == 2
+          ? _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("MMR")]),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "PHP" } }, [_vm._v("PHP")]),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.options.mmr,
+                      expression: "options.mmr"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number" },
+                  domProps: { value: _vm.options.mmr },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.options, "mmr", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("label", { attrs: { for: "" } }, [_vm._v("Minimum SLP")]),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "USD" } }, [_vm._v("USD")]),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.options.minimum_slp,
+                      expression: "options.minimum_slp"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number" },
+                  domProps: { value: _vm.options.minimum_slp },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.options, "minimum_slp", $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("label", { attrs: { for: "" } }, [
+                  _vm._v("Target SLP Value")
+                ]),
                 _vm._v(" "),
-                _c("option", { attrs: { value: "JPY" } }, [_vm._v("JPY")])
-              ]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("p", { staticClass: "mt-2 mb-2" }, [_vm._v("Show / Hide")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.total_slp,
-                    expression: "options.total_slp"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "total_slp" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.total_slp)
-                    ? _vm._i(_vm.options.total_slp, null) > -1
-                    : _vm.options.total_slp
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.total_slp,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(_vm.options, "total_slp", $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_slp",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.options.target_slp_price,
+                      expression: "options.target_slp_price"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "number" },
+                  domProps: { value: _vm.options.target_slp_price },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
                       }
-                    } else {
-                      _vm.$set(_vm.options, "total_slp", $$c)
+                      _vm.$set(
+                        _vm.options,
+                        "target_slp_price",
+                        $event.target.value
+                      )
                     }
                   }
-                }
-              }),
+                })
+              ]),
               _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "total_slp" }
-                },
-                [_vm._v("Total SLP")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
+              _c("div", { staticClass: "col-md-3" }, [
+                _c("label", { attrs: { for: "" } }, [
+                  _vm._v("Target SLP Unit")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "select",
                   {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.total_unclaimed,
-                    expression: "options.total_unclaimed"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "total_unclaimed" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.total_unclaimed)
-                    ? _vm._i(_vm.options.total_unclaimed, null) > -1
-                    : _vm.options.total_unclaimed
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.total_unclaimed,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_unclaimed",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_unclaimed",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.options.target_slp_unit,
+                        expression: "options.target_slp_unit"
                       }
-                    } else {
-                      _vm.$set(_vm.options, "total_unclaimed", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "total_unclaimed" }
-                },
-                [_vm._v("Total Unclaimed")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.total_claimed,
-                    expression: "options.total_claimed"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "total_claimed" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.total_claimed)
-                    ? _vm._i(_vm.options.total_claimed, null) > -1
-                    : _vm.options.total_claimed
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.total_claimed,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_claimed",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_claimed",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
+                    ],
+                    staticClass: "form-control",
+                    attrs: { id: "target_slp_unit" },
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.$set(
+                          _vm.options,
+                          "target_slp_unit",
+                          $event.target.multiple
+                            ? $$selectedVal
+                            : $$selectedVal[0]
+                        )
                       }
-                    } else {
-                      _vm.$set(_vm.options, "total_claimed", $$c)
                     }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "total_claimed" }
-                },
-                [_vm._v("Total Claimed")]
-              )
+                  },
+                  [
+                    _c("option", { attrs: { value: "" } }),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "PHP" } }, [_vm._v("PHP")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "USD" } }, [_vm._v("USD")]),
+                    _vm._v(" "),
+                    _c("option", { attrs: { value: "JPY" } }, [_vm._v("JPY")])
+                  ]
+                )
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.total_slp_today,
-                    expression: "options.total_slp_today"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "total_slp_today" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.total_slp_today)
-                    ? _vm._i(_vm.options.total_slp_today, null) > -1
-                    : _vm.options.total_slp_today
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.total_slp_today,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_slp_today",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_slp_today",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(_vm.options, "total_slp_today", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "total_slp_today" }
-                },
-                [_vm._v("Total SLP Today")]
-              )
+          : _vm.getGuardRole == 1
+          ? _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-12" }, [
+                _c(
+                  "ul",
+                  { staticClass: "list-group h-15" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.NotificationList, function(notification) {
+                      return _c("li", { staticClass: "list-group-item" }, [
+                        _c(
+                          "div",
+                          { staticClass: "row no-margin text-center" },
+                          [
+                            _c("div", { staticClass: "col-md-3 text-bold" }, [
+                              notification.type != null
+                                ? _c("span", [
+                                    _vm._v(_vm._s(notification.type.name))
+                                  ])
+                                : _vm._e()
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-3" }, [
+                              _vm._v(_vm._s(notification.options.minimum_slp))
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-3" }, [
+                              _vm._v(_vm._s(notification.options.mmr))
+                            ]),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "col-md-3" }, [
+                              _vm._v(
+                                _vm._s(notification.options.target_slp_price) +
+                                  " "
+                              ),
+                              _c("span", { staticClass: "pull-right" }, [
+                                _vm._v(
+                                  _vm._s(notification.options.target_slp_unit)
+                                )
+                              ])
+                            ])
+                          ]
+                        )
+                      ])
+                    })
+                  ],
+                  2
+                )
+              ])
             ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.total_slp_yesterday,
-                    expression: "options.total_slp_yesterday"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "total_slp_yesterday" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.total_slp_yesterday)
-                    ? _vm._i(_vm.options.total_slp_yesterday, null) > -1
-                    : _vm.options.total_slp_yesterday
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.total_slp_yesterday,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_slp_yesterday",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_slp_yesterday",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(_vm.options, "total_slp_yesterday", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "total_slp_yesterday" }
-                },
-                [_vm._v("Total SLP Yesterday")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.total_average,
-                    expression: "options.total_average"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "total_average" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.total_average)
-                    ? _vm._i(_vm.options.total_average, null) > -1
-                    : _vm.options.total_average
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.total_average,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_average",
-                            $$a.concat([$$v])
-                          )
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "total_average",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(_vm.options, "total_average", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "total_average" }
-                },
-                [_vm._v("Total Average")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.penalty,
-                    expression: "options.penalty"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "penalty" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.penalty)
-                    ? _vm._i(_vm.options.penalty, null) > -1
-                    : _vm.options.penalty
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.penalty,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(_vm.options, "penalty", $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "penalty",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(_vm.options, "penalty", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "penalty" }
-                },
-                [_vm._v("Penalty")]
-              )
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-3 col-sm-6 mb-2" }, [
-            _c("div", { staticClass: "custom-control custom-switch" }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.options.lowest_mmr,
-                    expression: "options.lowest_mmr"
-                  }
-                ],
-                staticClass: "custom-control-input",
-                attrs: { type: "checkbox", id: "lowest_mmr" },
-                domProps: {
-                  checked: Array.isArray(_vm.options.lowest_mmr)
-                    ? _vm._i(_vm.options.lowest_mmr, null) > -1
-                    : _vm.options.lowest_mmr
-                },
-                on: {
-                  change: function($event) {
-                    var $$a = _vm.options.lowest_mmr,
-                      $$el = $event.target,
-                      $$c = $$el.checked ? true : false
-                    if (Array.isArray($$a)) {
-                      var $$v = null,
-                        $$i = _vm._i($$a, $$v)
-                      if ($$el.checked) {
-                        $$i < 0 &&
-                          _vm.$set(_vm.options, "lowest_mmr", $$a.concat([$$v]))
-                      } else {
-                        $$i > -1 &&
-                          _vm.$set(
-                            _vm.options,
-                            "lowest_mmr",
-                            $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                          )
-                      }
-                    } else {
-                      _vm.$set(_vm.options, "lowest_mmr", $$c)
-                    }
-                  }
-                }
-              }),
-              _vm._v(" "),
-              _c(
-                "label",
-                {
-                  staticClass: "custom-control-label",
-                  attrs: { for: "lowest_mmr" }
-                },
-                [_vm._v("Lowest MMR")]
-              )
-            ])
-          ])
-        ])
+          : _vm._e()
       ])
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("li", { staticClass: "list-group-item" }, [
+      _c("div", { staticClass: "row no-margin" }, [
+        _c("div", { staticClass: "col-md-3 text-center" }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-center" }, [_vm._v("SLP")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-center" }, [_vm._v("MMR")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-3 text-center" }, [
+          _vm._v("Target SLP")
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -81883,8 +82149,36 @@ var render = function() {
     _c("hr"),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-4" },
+        [
+          _vm._m(2),
+          _vm._v(" "),
+          _c("type-component", {
+            on: {
+              updateType: function($event) {
+                _vm.form.type_id = $event
+              }
+            }
+          }),
+          _vm._v(" "),
+          _vm.form.errors.has("type_id")
+            ? _c("div", {
+                staticClass: "text-danger",
+                domProps: { innerHTML: _vm._s(_vm.form.errors.get("type_id")) }
+              })
+            : _vm._e()
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-4" }, [
-        _vm._m(2),
+        _vm._m(3),
         _vm._v(" "),
         _c("input", {
           directives: [
@@ -81922,7 +82216,7 @@ var render = function() {
     !_vm.usersListInfo
       ? _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-4" }, [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -81957,7 +82251,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-md-4" }, [
-            _vm._m(4),
+            _vm._m(5),
             _vm._v(" "),
             _c("input", {
               directives: [
@@ -82016,6 +82310,15 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("label", { attrs: { for: "" } }, [
       _vm._v("Last Name "),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Select Type "),
       _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
     ])
   },
@@ -106743,6 +107046,102 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/CustomSettingsComponent.vue":
+/*!*******************************************************************!*\
+  !*** ./resources/js/components/pages/CustomSettingsComponent.vue ***!
+  \*******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CustomSettingsComponent_vue_vue_type_template_id_f67b33fa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CustomSettingsComponent.vue?vue&type=template&id=f67b33fa& */ "./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=template&id=f67b33fa&");
+/* harmony import */ var _CustomSettingsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CustomSettingsComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CustomSettingsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CustomSettingsComponent_vue_vue_type_template_id_f67b33fa___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CustomSettingsComponent_vue_vue_type_template_id_f67b33fa___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/CustomSettingsComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************!*\
+  !*** ./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CustomSettingsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./CustomSettingsComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CustomSettingsComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=template&id=f67b33fa&":
+/*!**************************************************************************************************!*\
+  !*** ./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=template&id=f67b33fa& ***!
+  \**************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CustomSettingsComponent_vue_vue_type_template_id_f67b33fa___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./CustomSettingsComponent.vue?vue&type=template&id=f67b33fa& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/CustomSettingsComponent.vue?vue&type=template&id=f67b33fa&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CustomSettingsComponent_vue_vue_type_template_id_f67b33fa___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CustomSettingsComponent_vue_vue_type_template_id_f67b33fa___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/CustomizationMixins.js":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/pages/CustomizationMixins.js ***!
+  \**************************************************************/
+/*! exports provided: CustomizationMixins */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CustomizationMixins", function() { return CustomizationMixins; });
+var CustomizationMixins = {
+  methods: {
+    getSettings: function getSettings() {
+      var _this = this;
+
+      this.axios.get('getCuztomizationSettings').then(function (response) {
+        // console.log(response.data);
+        if (response.data.notification_settings) _this.options = response.data.notification_settings.options;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/FieldsDef.js":
 /*!****************************************************!*\
   !*** ./resources/js/components/pages/FieldsDef.js ***!
@@ -107400,32 +107799,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_NotificationSettingsComponent_vue_vue_type_template_id_e74b016e___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/pages/NotificationSettingsMixins.js":
-/*!*********************************************************************!*\
-  !*** ./resources/js/components/pages/NotificationSettingsMixins.js ***!
-  \*********************************************************************/
-/*! exports provided: NotificationSettingsMixins */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NotificationSettingsMixins", function() { return NotificationSettingsMixins; });
-var NotificationSettingsMixins = {
-  methods: {
-    getSettings: function getSettings() {
-      var _this = this;
-
-      this.axios.get('getNotificationSettings').then(function (response) {
-        if (response.data.notification_settings) _this.options = response.data.notification_settings.options;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    }
-  }
-};
 
 /***/ }),
 
@@ -110120,7 +110493,8 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     global_guard_type: global_guard_type,
-    global_guard_username: global_guard_username
+    global_guard_username: global_guard_username,
+    global_guard_role: global_guard_role
   }
 });
 

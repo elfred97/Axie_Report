@@ -28,6 +28,14 @@
         </div>
         <hr>
         <div class="row">
+            <div class="col-md-4">
+                <p>Select Type <span class="text-danger">*</span></p>
+                <type-component @updateType="form.type_id = $event"></type-component>
+                <div v-if="form.errors.has('type_id')" v-html="form.errors.get('type_id')" class="text-danger"/>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
             <div class="col-md-4"> 
                 <label for="">Username <span class="text-danger">*</span></label>
                 <input type="text" class="form-control mb-2" placeholder="Username" v-model="form.username">
@@ -63,7 +71,8 @@ export default {
                 last_name       : null,
                 new_password    : null,
                 confirm_password: null,
-                status          : 1
+                status          : 1,
+                type_id : null,
             }),
         }
     },

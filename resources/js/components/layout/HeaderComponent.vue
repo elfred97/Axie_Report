@@ -157,7 +157,9 @@ export default {
         getGuardType(){
             return this.$store.state.global_guard_type;
         },
-        
+        getGuardRole(){
+            return this.$store.state.global_guard_role;
+        },
         getTotal(){
             return this.announcement_count + this.notification_count;
         },
@@ -288,8 +290,8 @@ export default {
                         return true;                    
                 }
                 else if(type == 'announcement'){
-                    console.log(type);
-                    console.log(data);
+                    // console.log(type);
+                    // console.log(data);
                     if(data.notif_status == 1)
                         return true
                 }

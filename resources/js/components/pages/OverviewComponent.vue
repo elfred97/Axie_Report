@@ -155,9 +155,9 @@
     </div>
 </template>
 <script>
-import { NotificationSettingsMixins } from './NotificationSettingsMixins';
+import { CustomizationMixins } from './CustomizationMixins';
 export default {
-    mixins : [ NotificationSettingsMixins ],
+    mixins : [ CustomizationMixins ],
     data(){
         return {            
             data             : {},

@@ -9,20 +9,24 @@
         <div class="section-container main-content-view bg-white">
             <div class="container">
                 <div class="row">
-                    <div class=" col-lg-7 col-md-6 col-sm-12 col-xs-12">
+                    <div :class="getGuardRole == 1 ? 'col-lg-7 col-md-6 col-sm-12 col-xs-12' : 'col-lg-12 col-md-12 col-sm-12 col-xs-12'">
                         <!-- Begin Account Settings -->
                         <account-information></account-information>
                         <!-- End Account Settings -->
                         
                         <!-- Begin Notification Settings -->
-                        <notification-settings></notification-settings>
+                        <notification-settings></notification-settings>                        
                         <!-- End Notification Settings -->
+
+                        <!-- Begin Custom Settings -->
+                        <custom-settings></custom-settings>
+                        <!-- End Custom Settings -->
 
                         <!-- Begin Notification Settings -->
                         <reminder-component></reminder-component>
                         <!-- End Notification Settings -->
                     </div>
-                    <div class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
+                    <div v-if="getGuardRole == 1" class="col-lg-5 col-md-6 col-sm-12 col-xs-12">
                         <!-- Begin Users List -->
                         <users-component></users-component>
                         <!-- End Users List -->
@@ -38,6 +42,7 @@
 </template>
 <script>
 import NotificationSettingsComponent from './NotificationSettingsComponent.vue'
+import CustomSettingsComponent from './CustomSettingsComponent.vue'
 import AccountInformationComponent from './AccountInformationComponent.vue';
 import ReminderComponent from './ReminderComponent.vue';
 import UsersComponent from './UsersComponent.vue';
@@ -71,6 +76,7 @@ export default {
         'users-component'      : UsersComponent,
         'type-component'       : TypeComponent,
         'notification-settings': NotificationSettingsComponent,
+        'custom-settings': CustomSettingsComponent,
         // Dialog Components
         'changePassword-form': changePasswordComponent,
         'newUser-form'       : newUserFormComponent,
@@ -81,6 +87,9 @@ export default {
         
     },
     computed: {
+        getGuardRole(){
+            return this.$store.state.global_guard_role;
+        },
         object_values: function(){ //created to manipulate passed props in each components rendered
             if(this.isOpenDialogComponent === 'changePassword-form')
                 return  { userInfo : this.componentsProps.userInfo }

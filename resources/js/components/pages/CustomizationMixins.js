@@ -1,8 +1,9 @@
-export const NotificationSettingsMixins = {
+export const CustomizationMixins = {
     methods : {
         getSettings(){
-            this.axios.get('getNotificationSettings')
+            this.axios.get('getCuztomizationSettings')
             .then((response) =>{
+                // console.log(response.data);
                 if(response.data.notification_settings)
                     this.options = response.data.notification_settings.options;
                 
@@ -10,6 +11,6 @@ export const NotificationSettingsMixins = {
             .catch((error) => {
                 console.log(error);
             })
-        },
+        }
     }
 }

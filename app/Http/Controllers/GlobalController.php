@@ -160,7 +160,7 @@ class GlobalController extends Controller
 				'username'    => $ruleUsername,
 				'first_name'  => 'required',
 				'last_name'   => 'required',
-				// 'middle_name' => 'required',
+				'type_id'     => 'required',
 			]
 		);
 
