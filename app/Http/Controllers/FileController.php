@@ -100,6 +100,37 @@ class FileController extends Controller
         return $reports;
     }
 
+    public function getTotalSLPs(Request $request){
+        $year  = $request->year;
+        $month = $request->month;
+        $type  = $request->type;
+        $where = [];
+        
+        if ($year)
+            array_push($where, [DB::raw('YEAR(r.created_at)'), '=', $year]);
+
+        if ($month)
+            array_push($where, [DB::raw('MONTH(r.created_at)'), '=', $month]);
+
+        if ($type)
+            array_push($where, ['s.type_id', '=', $type]);
+
+        $reports =  DB::TABLE('report as r')
+            ->LEFTJOIN('players as p', 'p.account_name', '=', 'r.name')
+            ->LEFTJOIN('player_scholar_histories as psh', 'p.id', '=', 'psh.player_id')
+            ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
+            ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
+            ->SELECT(
+                DB::RAW('SUM(r.total_slp)'),
+                DB::RAW('SUM(r.unclaimed)'),
+                DB::RAW('SUM(r.claimed)'),
+            )
+            ->WHERE($where)
+            ->get();
+
+        return $reports;
+    }
+
     public function getTotalReportbyDate(Request $request){
         return DB::TABLE('report')->GET();
     }
