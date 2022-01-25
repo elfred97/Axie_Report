@@ -237,11 +237,12 @@ export default {
             })
         },
         getTotal(){
-            this.axios.get('/getReport', {
+            this.axios.get('/getTotalSLPs', {
                 params:{
-                    type     : this.type,
-                    sortType : null,
-                    sortOrder: 'desc',
+                    year     : this.filters.selected_year,
+                    month     : this.filters.selected_month,
+                    type     : this.filters.selected_type,
+                    // account_name     : data.selected_type,
                 }
             })
             .then((response) => {
@@ -314,6 +315,8 @@ export default {
         this.getSettings();
         this.$events.$on('graph-filter-set', (eventData) => {
             this.filters = eventData;
+            console.log(eventData);
+            this.getTotal();
             this.onFilterSet(eventData);
             this.getPenalties(eventData);
             this.getLowestMMR(eventData);
