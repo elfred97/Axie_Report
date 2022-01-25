@@ -9,7 +9,7 @@
         <div class="section-container main-content-view bg-white">
             <div class="container">
                 <div class="row">
-                    <div :class="getGuardRole == 1 ? 'col-lg-7 col-md-6 col-sm-12 col-xs-12' : 'col-lg-12 col-md-12 col-sm-12 col-xs-12'">
+                    <div :class="getGuardRole == 1 ? 'col-lg-7 col-md-6 col-sm-12 col-xs-12' : 'col-lg-8 offset-lg-2 col-md-8 offset-md-2 col-sm-12 col-xs-12'">
                         <!-- Begin Account Settings -->
                         <account-information></account-information>
                         <!-- End Account Settings -->

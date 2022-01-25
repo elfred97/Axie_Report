@@ -141,6 +141,7 @@ class GlobalController extends Controller
                     'middle_name'=> $request->middle_name,
                     'last_name'  => $request->last_name,
                     'username'   => $request->username,
+                    'type'       => $request->type,
                 ]
             );
             if($user)

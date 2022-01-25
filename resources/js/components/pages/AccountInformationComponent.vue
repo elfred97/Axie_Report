@@ -21,16 +21,21 @@
                         <label for="">Last Name</label>
                         <input type="text" class="form-control mb-2" v-model="form.last_name" name="last_name">
 
+                    </div>
+                    <div class="col-md-6">
                         <label for="">Username</label>
                         <input type="text" class="form-control mb-2" v-model="form.username" name="username">
-                    </div>
-                    <div class="offset-md-2 col-md-4">
+
+                        <div v-if="getGuardRole == 2">
+                            <label for="">Type</label>
+                            <select name="" id="" v-model="form.type" class="form-control">
+                                <option :value="type_data.id" v-for="type_data in typeData">{{ type_data.name }}</option>
+                            </select>
+                        </div>
+                        <hr>
                         <p class="mb-0">Change Password?</p>
                         <span class="text-blue onHover" @click="$root.$emit('showDialog', true, 'changePassword-form', 'Change Password', '30%')">Click Here</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
+
                     </div>
                 </div>
 
@@ -45,6 +50,7 @@ export default {
         return{
             form       : new Form(),
             accountData: {},
+            typeData : {},
         }
     },
     watch: {
@@ -52,6 +58,11 @@ export default {
             if(newVal)
                 this.form = new Form(newVal);
         }
+    },
+    computed : {
+        getGuardRole(){
+            return this.$store.state.global_guard_role;
+        },
     },
     methods: {
         getAccountInfo(){
@@ -74,9 +85,26 @@ export default {
                 console.log(error.response.data)
             })
         },
+        getType(){
+            this.axios.get('getType', {
+                params : {
+                    status : 'Active'
+                }
+            })
+            .then((response) => {
+                this.typeData = response.data;
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            })
+        },
+        updateType(event) {
+            this.$emit('updateType', event.target.value);
+        },
     },
     mounted() {
         this.getAccountInfo();
+        this.getType();
     },
 }
 </script>

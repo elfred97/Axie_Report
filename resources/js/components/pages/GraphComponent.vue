@@ -1,3 +1,8 @@
+<style scoped>
+.multiselect, .multiselect__content-wrapper{
+    width: 300px;
+}
+</style>
 <template>
     <div>
         <!-- BEGIN #graph -->
@@ -133,6 +138,9 @@ export default {
         }
     },
     watch : {
+        'selected_player' : function(newVal){
+            console.log(newVal);
+        },
         'filter.selected_type': function(newVal){
             this.getGraph();
         }
@@ -180,6 +188,7 @@ export default {
             .then((response) => {
                 // console.log(response.data);
                 this.options = response.data
+                this.selected_player = response.data[0];
             })
             .catch((error) => {
                 console.log(error)

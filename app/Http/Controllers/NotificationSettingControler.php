@@ -16,7 +16,7 @@ class NotificationSettingControler extends Controller
         $userNotificationSettings = NotificationSettings::UPDATEORCREATE(
             [ 'type' => $type_admin ],
                 [
-                    'options' => $options
+                    'options' => $request->options
                 ]
         );
 

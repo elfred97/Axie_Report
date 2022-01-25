@@ -4,7 +4,7 @@
             <div class="panel-heading">
                 <h4 class="panel-title">Settings</h4>
                 <div class="panel-heading-btn">                                    
-                    <button class="btn btn-xs btn-success" @click="saveSettings()">
+                    <button class="btn btn-xs btn-success" @click="saveSettings()" v-if="getGuardRole == 2">
                         <i class="fas fa-check"></i> Update Settings
                     </button>
                 </div>
@@ -87,12 +87,12 @@ export default {
             this.axios.get(url)
             .then((response) =>{
                 // console.log(response.data.notification_settings.options);
+                console.log(response.data);
                 if(this.$store.state.global_guard_role == 2){
                     if(response.data.notification_settings)
                         this.options = response.data.notification_settings.options;
                 }
                 else{
-                    console.log(response.data);
                     this.NotificationList = response.data;
                 }
                 
