@@ -245,21 +245,10 @@ export default {
                     // account_name     : data.selected_type,
                 }
             })
-            .then((response) => {
-                this.total_data = response.data.data;
-
-                let total_slp = 0;
-                let total_claimed = 0;
-                let total_unclaimed = 0;
-
-                for (const [key, value] of Object.entries(response.data.data)) {
-                    total_slp += parseInt(value.total_slp);
-                    total_claimed += parseInt(value.claimed);
-                    total_unclaimed += parseInt(value.unclaimed);
-                }
-                this.total_slp = total_slp;
-                this.total_claimed = total_claimed;
-                this.total_unclaimed = total_unclaimed;
+            .then((response) => {                
+                this.total_slp = response.data[0].total_slp;
+                this.total_claimed = response.data[0].claimed;
+                this.total_unclaimed = response.data[0].unclaimed;
                 
             })
             .catch((error) => {
@@ -315,7 +304,6 @@ export default {
         this.getSettings();
         this.$events.$on('graph-filter-set', (eventData) => {
             this.filters = eventData;
-            console.log(eventData);
             this.getTotal();
             this.onFilterSet(eventData);
             this.getPenalties(eventData);

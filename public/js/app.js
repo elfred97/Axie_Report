@@ -7707,18 +7707,6 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _CustomizationMixins__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CustomizationMixins */ "./resources/js/components/pages/CustomizationMixins.js");
-function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
-
-function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
-function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
-
-function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
-
 //
 //
 //
@@ -7962,24 +7950,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
         }
       }).then(function (response) {
-        _this2.total_data = response.data.data;
-        var total_slp = 0;
-        var total_claimed = 0;
-        var total_unclaimed = 0;
-
-        for (var _i = 0, _Object$entries = Object.entries(response.data.data); _i < _Object$entries.length; _i++) {
-          var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
-              key = _Object$entries$_i[0],
-              value = _Object$entries$_i[1];
-
-          total_slp += parseInt(value.total_slp);
-          total_claimed += parseInt(value.claimed);
-          total_unclaimed += parseInt(value.unclaimed);
-        }
-
-        _this2.total_slp = total_slp;
-        _this2.total_claimed = total_claimed;
-        _this2.total_unclaimed = total_unclaimed;
+        _this2.total_slp = response.data[0].total_slp;
+        _this2.total_claimed = response.data[0].claimed;
+        _this2.total_unclaimed = response.data[0].unclaimed;
       })["catch"](function (error) {
         // this.clearAll();
         console.log("error");
@@ -8030,7 +8003,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
     this.getSettings();
     this.$events.$on('graph-filter-set', function (eventData) {
       _this5.filters = eventData;
-      console.log(eventData);
 
       _this5.getTotal();
 

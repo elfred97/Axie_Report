@@ -121,9 +121,9 @@ class FileController extends Controller
             ->LEFTJOIN('scholars as s', 's.id', '=', 'psh.scholar_id')
             ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->SELECT(
-                DB::RAW('SUM(r.total_slp)'),
-                DB::RAW('SUM(r.unclaimed)'),
-                DB::RAW('SUM(r.claimed)'),
+                DB::RAW('SUM(r.total_slp) as total_slp'),
+                DB::RAW('SUM(r.unclaimed) as unclaimed'),
+                DB::RAW('SUM(r.claimed) as claimed'),
             )
             ->WHERE($where)
             ->get();
