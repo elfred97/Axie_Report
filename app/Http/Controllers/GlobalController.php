@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\NotificationSettings;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -315,6 +316,8 @@ class GlobalController extends Controller
                     'status'      => 'Deleted',
                 ]
             );
+            NotificationSettings::where('type',$request->id)->DELETE();
+            
             if($user)
                 return response()->json(['message' => 'Type deleted'], 200);
             else
