@@ -45,7 +45,7 @@ class SendReminders extends Command
         $this->line('Send Reminder Start: ' . \Carbon\Carbon::now()->format('Y-m-d H:i:s'));
 
 
-        $reminders = Reminder::all();
+        $reminders = Reminder::where('status',0)->get();
        $current_date = Carbon::now();
 
             foreach ($reminders as $reminder) {

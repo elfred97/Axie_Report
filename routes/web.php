@@ -60,6 +60,7 @@ Route::middleware(['PreventBackHistory'])->group(function(){
 
         Route::get('/getGraph', 'FileController@getGraph');
         Route::get('/getReport', 'FileController@getReport');
+        Route::get('/getTotalSLPs', 'FileController@getTotalSLPs');
         Route::post('/importFile', 'FileController@import');
         Route::get('/getTotalReport', 'FileController@getTotalReport');
         Route::get('/getImportedReport', 'FileController@getImportedReport');

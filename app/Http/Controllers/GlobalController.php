@@ -180,7 +180,7 @@ class GlobalController extends Controller
                     'first_name'  => filter_var($request->first_name,FILTER_SANITIZE_STRING),
                     'middle_name' => filter_var($request->middle_name,FILTER_SANITIZE_STRING),
                     'last_name'   => filter_var($request->last_name,FILTER_SANITIZE_STRING),
-                    'password'    => filter_var(Hash::make($request->new_password),FILTER_SANITIZE_STRING),
+                    'password'    => isset($request->id) ? filter_var(Hash::make($request->new_password),FILTER_SANITIZE_STRING) : bcrypt('@dminUser'),
                     'status'      => $request->status,
                     'type'        => $request->type_id
                 ]
