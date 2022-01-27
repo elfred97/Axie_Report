@@ -26,8 +26,8 @@ class PlayerController extends Controller
 
         $status = 1;    
         
-            $field          = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
-        $direction      = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
+            $field  = ($queryRequest) ? str_replace("_field","",explode('|', $request->sort)[0]) : 'created_at';
+        $direction  = ($queryRequest) ? explode('|', $request->sort)[1] : 'desc';
         
         return Player::
             SELECT(
@@ -42,7 +42,7 @@ class PlayerController extends Controller
             ->LEFTJOIN('type as t', 't.id', '=', 's.type_id')
             ->WHERE($where)
             ->when($status, function ($q) use ($status) {
-                $q->whereRaw('psh.status=1');
+                $q->whereRaw('psh.status='.$status);
             })
             ->ORDERBY($field,$direction)
             ->PAGINATE($request->per_page);
