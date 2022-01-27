@@ -30,10 +30,12 @@ class HistoryImport implements ToCollection,WithHeadingRow,WithValidation,SkipsO
             $player = Player::WHERE('ronin_address',$roninAddress)->first();
             $scholar = Scholar::WHERE('email',$scholarEmail)->first();
 
+            $inactiveStatuses = array('RESIGNED','TERMINATED');
+
             PlayerScholarHistory::CREATE([
                 'scholar_id'   => $scholar->id,
                 'player_id'   => $player->id,
-                'status' => ($scholar['status'] != 'TERMINATED' && $scholar['status'] != 'RESIGNED') ? 1 : 0   
+                'status' => in_array($scholar['status'],$inactiveStatuses) ? 0 : 1   
             ]);    
 
             
