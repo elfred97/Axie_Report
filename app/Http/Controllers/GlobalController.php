@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\NotificationSettings;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\Models\Type;
 use App\Models\Payroll;
-use App\Models\Player;
 use App\Models\Scholar;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -18,18 +16,7 @@ use App\Rules\IsUniqueExceptDeleted;
 class GlobalController extends Controller
 {
     //
-    protected function index(Request $request){
-        // $user = $request->user();
-        // $user->load('notification_settings');
-
-        // if(Auth::user()->type == 2){
-            
-        // }
-        // else{
-            
-        // }
-        // $notification_settings = $user->notification_settings;
-        // return view('main', compact('notification_settings'));
+    protected function index(){
         return view('main');
     }
 
